@@ -175,214 +175,129 @@
             <!-- form start -->
             <form id="articleForm" method="POST" action="ajoutLot.php" class="form-horizontal">
               <div class="box-body">
+                
                 <div class="form-group">
                   <label for="inputNom" class="col-sm-2 control-label">Nom</label>
 
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputNom" placeholder="Nom">
+                    <input type="text" class="form-control" value="" id="inputNom" name="inputNom" placeholder="Nom">
                   </div>
                 </div>
+
                 <div class="form-group">
                   <label for="inputPrenom" class="col-sm-2 control-label">Prénom</label>
 
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputPrenom" placeholder="Prénom">
+                    <input type="text" class="form-control" value="" id="inputPrenom" name="inputPrenom" placeholder="Prénom">
                   </div>
                 </div>
+
                 <div class="form-group">
                   <label for="inputTelephone" class="col-sm-2 control-label">Téléphone</label>
 
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputTelephone" placeholder="Phone number">
+                    <input type="text" class="form-control" value="" id="inputTelephone" name="inputTelephone" placeholder="Phone number">
                   </div>
                 </div>
+
                 <div class="form-group">
                   <label for="inputEmail" class="col-sm-2 control-label">Email</label>
 
                   <div class="col-sm-10">
-                    <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                    <input type="email" class="form-control" value="" id="inputEmail" name="inputEmail" placeholder="Email">
                   </div>
                 </div>
+
                 <!-- The template for adding new field -->
+                  
                 <div class="col-sm-12 form-group">
-                  
-                  <div class="col-sm-12 form-group">
-                      <label>Type d'article</label>
-                      <select class="col-sm-5 form-control" id="article[0].inputtypedematos" name="article[0].typedematos">
-                        <option value="0">Voile</option>
-                        <option value="1">Selette</option>
-                        <option value="2">Parachute de secours</option>
-                        <option value="3">Accessoire</option>
-                      </select>
-                  </div>
+                    <label>Type d'article</label>
+                    <select class="col-sm-5 form-control" id="article[0].inputtypedematos" name="article[0][typedematos]" data-index='0' onchange="handleTypeChange(this)">
+                      <option value="0">Voile</option>
+                      <option value="1">Selette</option>
+                      <option value="2">Parachute de secours</option>
+                      <option value="3">Accessoire</option>
+                    </select>
+                </div>
 
-                  <div class="form-group" name="article[0].marque">
-                    <label for="inputmarque" class="col-sm-2 control-label">Marque</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="article[0].inputmarque"  placeholder="Marque" />
-                    </div>
-                  </div>
-
-
-                  <div class="form-group" name="article[0].modele">
-                    <label for="inputmodele" class="col-sm-2 control-label">Modele</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="article[0].inputmodele"  placeholder="Modele" />
-                    </div>
-                  </div>
-
-                  <div class="form-group" id="article[0].ptvmaxgroup" name="article[0].ptvmax">
-                    <label for="inputptvmax" class="col-sm-2 control-label">PTV Max</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="article[0].inputptvmax"  placeholder="PTV Maximum" />
-                    </div>
-                  </div>
-
-                  <div class="form-group" id="article[0].ptvmingroup" name="article[0].ptvmin">
-                    <label for="inputptvmin" class="col-sm-2 control-label">PTV Min</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="article[0].inputptvmin"  placeholder="PTV Minimum" />
-                    </div>
-                  </div>
-
-                  <div class="form-group" id="article[0].taillegroup" name="article[0].taille">
-                    <label for="inputtaille" class="col-sm-2 control-label">Taille</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="article[0].inputtaille"  placeholder="Taille" />
-                    </div>
-                  </div>
-
-                  <div class="form-group" id="article[0].surfacegroup" name="article[0].surface">
-                    <label for="inputsurface" class="col-sm-2 control-label">Surface</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="article[0].inputsurface"  placeholder="Surface" />
-                    </div>
-                  </div>
-
-                  <div class="form-group" id="article[0].couleurgroup" name="article[0].couleur">
-                    <label for="inputcouleur" class="col-sm-2 control-label">Couleur</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="article[0].inputcouleur"  placeholder="Couleur" />
-                    </div>
-                  </div>
-
-                  <div class="form-group" id="article[0].heuregroup" name="article[0].heure">
-                    <label for="inputheuresdevol" class="col-sm-2 control-label">Heures de vol</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="article[0].inputheuresdevol"  placeholder="Heures de vol" />
-                    </div>
-                  </div>
-
-                  <div class="form-group" id="article[0].typeaccessoiregroup" style="display:none" name="article[0].typeaccessoire">
-                    <label for="inputtypeaccessoire" class="col-sm-2 control-label">Type d'accessoire</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="article[0].inputtypeaccessoire"  placeholder="Type d'accessoire" />
-                    </div>
-                  </div>
-                  
-                  <div class="checkbox" name="article[0].certificat" id="article[0].certificatgroup">
-                    <label>
-                      <input type="checkbox" id="article[0].inputcertificat"  > Certificat de révision <output></output>
-                    </label>
-                  </div>
-                  
-                  <div class="col-xs-1">
-                    <button type="button" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>
+                <div class="form-group" name="article[0].marque">
+                  <label for="inputmarque" class="col-sm-2 control-label">Marque</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="article[0].inputmarque" value="" name="article[0][inputmarque]" placeholder="Marque" />
                   </div>
                 </div>
 
-                <div class="col-sm-12 form-group hide" id="articleTemplate">
-                  
-                  <div class="col-sm-12 form-group">
-                      <label>Type d'article</label>
-                      <select class="col-sm-5 form-control" id="inputtypedematos" name="typedematos">
-                        <option value="0">Voile</option>
-                        <option value="1">Selette</option>
-                        <option value="2">Parachute de secours</option>
-                        <option value="3">Accessoire</option>
-                      </select>
-                  </div>
 
-                  <div class="form-group" name="marque">
-                    <label for="inputmarque" class="col-sm-2 control-label">Marque</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputmarque"  placeholder="Marque" />
-                    </div>
-                  </div>
-
-
-                  <div class="form-group" name="modele">
-                    <label for="inputmodele" class="col-sm-2 control-label">Modele</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputmodele"  placeholder="Modele" />
-                    </div>
-                  </div>
-
-                  <div class="form-group" name="ptvmax" id="ptvmaxgroup">
-                    <label for="inputptvmax" class="col-sm-2 control-label">PTV Max</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputptvmax"  placeholder="PTV Maximum" />
-                    </div>
-                  </div>
-
-                  <div class="form-group" name="ptvmin" id="ptvmingroup">
-                    <label for="inputptvmin" class="col-sm-2 control-label">PTV Min</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputptvmin"  placeholder="PTV Minimum" />
-                    </div>
-                  </div>
-
-                  <div class="form-group" name="taille" id="taillegroup">
-                    <label for="inputtaille" class="col-sm-2 control-label">Taille</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputtaille"  placeholder="Taille" />
-                    </div>
-                  </div>
-
-                  <div class="form-group" name="surface" id="surfacegroup">
-                    <label for="inputsurface" class="col-sm-2 control-label">Surface</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputsurface"  placeholder="Surface" />
-                    </div>
-                  </div>
-
-                  <div class="form-group" name="couleur" id="couleurgroup">
-                    <label for="inputcouleur" class="col-sm-2 control-label">Couleur</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputcouleur"  placeholder="Couleur" />
-                    </div>
-                  </div>
-
-                  <div class="form-group" name="heure" id="heuregroup">
-                    <label for="inputheuresdevol" class="col-sm-2 control-label">Heures de vol</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputheuresdevol"  placeholder="Heures de vol" />
-                    </div>
-                  </div>
-
-                  <div class="form-group" name="typeaccessoire" id="typeaccessoiregroup" style="display:none">
-                    <label for="inputtypeaccessoire" class="col-sm-2 control-label">Type d'accessoire</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputtypeaccessoire"  placeholder="Type d'accessoire" />
-                    </div>
-                  </div>
-                  
-                  <div class="checkbox" name="certificat" id="certificatgroup">
-                    <label>
-                      <input type="checkbox" id="inputcertificat"  > Certificat de révision <output></output>
-                    </label>
-                  </div>
-                  
-                  <div class="col-xs-1">
-                    <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
+                <div class="form-group" name="article[0].modele">
+                  <label for="inputmodele" class="col-sm-2 control-label">Modele</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="article[0].inputmodele" value="" name="article[0][inputmodele]"  placeholder="Modele" />
                   </div>
                 </div>
 
+                <div class="form-group" id="article[0].ptvmaxgroup" name="article[0].ptvmax">
+                  <label for="inputptvmax" class="col-sm-2 control-label">PTV Max</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="article[0].inputptvmax" value="" name="article[0][inputptvmax]"  placeholder="PTV Maximum" />
+                  </div>
+                </div>
+
+                <div class="form-group" id="article[0].ptvmingroup" name="article[0].ptvmin">
+                  <label for="inputptvmin" class="col-sm-2 control-label">PTV Min</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="article[0].inputptvmin"  name="article[0][inputptvmin]"  placeholder="PTV Minimum" />
+                  </div>
+                </div>
+
+                <div class="form-group" id="article[0].taillegroup" name="article[0].taille">
+                  <label for="inputtaille" class="col-sm-2 control-label">Taille</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="article[0].inputtaille"  name="article[0][inputtaille]"  placeholder="Taille" />
+                  </div>
+                </div>
+
+                <div class="form-group" id="article[0].surfacegroup" name="article[0].surface">
+                  <label for="inputsurface" class="col-sm-2 control-label">Surface</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="article[0].inputsurface" name="article[0][inputsurface]"  placeholder="Surface" />
+                  </div>
+                </div>
+
+                <div class="form-group" id="article[0].couleurgroup" name="article[0].couleur">
+                  <label for="inputcouleur" class="col-sm-2 control-label">Couleur</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="article[0].inputcouleur" name="article[0][inputcouleur]"  placeholder="Couleur" />
+                  </div>
+                </div>
+
+                <div class="form-group" id="article[0].heuregroup" name="article[0].heure">
+                  <label for="inputheuresdevol" class="col-sm-2 control-label">Heures de vol</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="article[0].inputheuresdevol"  name="article[0][inputheuresdevol]"  placeholder="Heures de vol" />
+                  </div>
+                </div>
+
+                <div class="form-group" id="article[0].typeaccessoiregroup" style="display:none" name="article[0].typeaccessoire">
+                  <label for="inputtypeaccessoire" class="col-sm-2 control-label">Type d'accessoire</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="article[0].inputtypeaccessoire"  name="article[0][inputtypeaccessoire]"  placeholder="Type d'accessoire" />
+                  </div>
+                </div>
+                
+                <div class="checkbox" name="article[0].certificat" id="article[0].certificatgroup">
+                  <label>
+                    <input type="checkbox" id="article[0].inputcertificat"  name="article[0][inputcertificat]"  > Certificat de révision <output></output>
+                  </label>
+                </div>
+                
+                <div class="col-xs-1">
+                  <button type="button" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>
+                </div>
               </div>
               <!-- /.box-body -->
               <div class="box-footer">
                 <button type="submit" class="btn btn-default">Annuler</button>
-                <button type="submit" class="btn btn-info pull-right">Ajouter</button>
+                <button type="submit" value="Submit" class="btn btn-info pull-right">Ajouter</button>
               </div>
               <!-- /.box-footer -->
             </form>
@@ -394,6 +309,97 @@
 
     </section>
     <!-- /.content -->
+
+                <div class="col-sm-12 form-group hide" id="articleTemplate">
+                  
+                  <div class="col-sm-12 form-group">
+                      <label>Type d'article</label>
+                      <select class="col-sm-5 form-control" id="inputtypedematos" name="typedematos" data-index='0' onchange="handleTypeChange(this)">
+                        <option value="0">Voile</option>
+                        <option value="1">Selette</option>
+                        <option value="2">Parachute de secours</option>
+                        <option value="3">Accessoire</option>
+                      </select>
+                  </div>
+
+                  <div class="form-group" name="marque">
+                    <label for="inputmarque" class="col-sm-2 control-label">Marque</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputmarque" name="inputmarque" value="" placeholder="Marque" />
+                    </div>
+                  </div>
+
+                  <input type="hidden" class="form-control" id="index" name="index" value="0" />
+                  
+                  <div class="form-group" name="modele">
+                    <label for="inputmodele" class="col-sm-2 control-label">Modele</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputmodele" name="inputmodele" value="" placeholder="Modele" />
+                    </div>
+                  </div>
+
+                  <div class="form-group" name="ptvmax" id="ptvmaxgroup">
+                    <label for="inputptvmax" class="col-sm-2 control-label">PTV Max</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputptvmax" name="inputptvmax" value="" placeholder="PTV Maximum" />
+                    </div>
+                  </div>
+
+                  <div class="form-group" name="ptvmin" id="ptvmingroup">
+                    <label for="inputptvmin" class="col-sm-2 control-label">PTV Min</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputptvmin" name="inputptvmin" value="" placeholder="PTV Minimum" />
+                    </div>
+                  </div>
+
+                  <div class="form-group" name="taille" id="taillegroup">
+                    <label for="inputtaille" class="col-sm-2 control-label">Taille</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputtaille" name="inputtaille" value="" placeholder="Taille" />
+                    </div>
+                  </div>
+
+                  <div class="form-group" name="surface" id="surfacegroup">
+                    <label for="inputsurface" class="col-sm-2 control-label">Surface</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputsurface" name="inputsurface" value="" placeholder="Surface" />
+                    </div>
+                  </div>
+
+                  <div class="form-group" name="couleur" id="couleurgroup">
+                    <label for="inputcouleur" class="col-sm-2 control-label">Couleur</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputcouleur" name="inputcouleur" value="" placeholder="Couleur" />
+                    </div>
+                  </div>
+
+                  <div class="form-group" name="heure" id="heuregroup">
+                    <label for="inputheuresdevol" class="col-sm-2 control-label">Heures de vol</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputheuresdevol" name="inputheuresdevol" value="" placeholder="Heures de vol" />
+                    </div>
+                  </div>
+
+                  <div class="form-group" name="typeaccessoire" id="typeaccessoiregroup" style="display:none">
+                    <label for="inputtypeaccessoire" class="col-sm-2 control-label">Type d'accessoire</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputtypeaccessoire" name="inputtypeaccessoire" value="" placeholder="Type d'accessoire" />
+                    </div>
+                  </div>
+                  
+                  <div class="checkbox" name="certificat" id="certificatgroup">
+                    <label>
+                      <input type="checkbox" id="inputcertificat" name="inputcertificat" value="" > Certificat de révision <output></output>
+                    </label>
+                  </div>
+                  
+                  <div class="col-xs-1">
+                    <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
+                  </div>
+                </div>
+
+
+
   </div>
   <!-- /.content-wrapper -->
 
@@ -497,7 +503,105 @@
 
 
 <script>
+// $('#articleForm').on('submit', function(e) {
+//     //prevent the default submithandling
+//     e.preventDefault();
+//     //send the data of 'this' (the matched form) to yourURL
+//     $.post('http://clubhilaire-madonna.rhcloud.com/ajoutLot.php', $(this).serialize());
+
+// });
+</script>
+
+
+<script>
 var articleIndex = 0;
+var handleTypeChange = function(e) {
+  console.log(e.value);
+  console.log(e.dataset);
+  console.log(e.dataset.index);
+
+  var articleIndex = e.dataset.index;
+  if ( e.value == '0') // Voile
+  {
+    console.log('TRACE voile');
+    var ptvmaxgroup = document.getElementById("article[" + articleIndex + "].ptvmaxgroup");
+    ptvmaxgroup.style.display = "block"
+    var ptvmingroup = document.getElementById("article[" + articleIndex + "].ptvmingroup");
+    ptvmingroup.style.display = "block"
+    var taillegroup = document.getElementById("article[" + articleIndex + "].taillegroup");
+    taillegroup.style.display = "block"
+    var surfacegroup = document.getElementById("article[" + articleIndex + "].surfacegroup");
+    surfacegroup.style.display = "block"
+    var couleurgroup = document.getElementById("article[" + articleIndex + "].couleurgroup");
+    couleurgroup.style.display = "block"
+    var heuregroup = document.getElementById("article[" + articleIndex + "].heuregroup");
+    heuregroup.style.display = "block"
+    var certificatgroup = document.getElementById("article[" + articleIndex + "].certificatgroup");
+    certificatgroup.style.display = "blocks"
+    var typeaccessoiregroup = document.getElementById("article[" + articleIndex + "].typeaccessoiregroup");
+    typeaccessoiregroup.style.display = "none";
+  }
+  else if ( e.value == '1') // Selette
+  {
+    console.log('TRACE selette');
+    var ptvmaxgroup = document.getElementById("article[" + articleIndex + "].ptvmaxgroup");
+    ptvmaxgroup.style.display = "none";
+    var ptvmingroup = document.getElementById("article[" + articleIndex + "].ptvmingroup");
+    ptvmingroup.style.display = "none";
+    var taillegroup = document.getElementById("article[" + articleIndex + "].taillegroup");
+    taillegroup.style.display = "block";
+    var surfacegroup = document.getElementById("article[" + articleIndex + "].surfacegroup");
+    surfacegroup.style.display = "none";
+    var couleurgroup = document.getElementById("article[" + articleIndex + "].couleurgroup");
+    couleurgroup.style.display = "none";
+    var heuregroup = document.getElementById("article[" + articleIndex + "].heuregroup");
+    heuregroup.style.display = "none";
+    var certificatgroup = document.getElementById("article[" + articleIndex + "].certificatgroup");
+    certificatgroup.style.display = "none";
+    var typeaccessoiregroup = document.getElementById("article[" + articleIndex + "].typeaccessoiregroup");
+    typeaccessoiregroup.style.display = "none";
+  }
+  else if ( e.value == '2') // Parachute de secours
+  {
+    console.log('TRACE para');
+    var ptvmaxgroup = document.getElementById("article[" + articleIndex + "].ptvmaxgroup");
+    ptvmaxgroup.style.display = "block";
+    var ptvmingroup = document.getElementById("article[" + articleIndex + "].ptvmingroup");
+    ptvmingroup.style.display = "block";
+    var taillegroup = document.getElementById("article[" + articleIndex + "].taillegroup");
+    taillegroup.style.display = "none";
+    var surfacegroup = document.getElementById("article[" + articleIndex + "].surfacegroup");
+    surfacegroup.style.display = "none";
+    var couleurgroup = document.getElementById("article[" + articleIndex + "].couleurgroup");
+    couleurgroup.style.display = "none";
+    var heuregroup = document.getElementById("article[" + articleIndex + "].heuregroup");
+    heuregroup.style.display = "none";
+    var certificatgroup = document.getElementById("article[" + articleIndex + "].certificatgroup");
+    certificatgroup.style.display = "none";
+    var typeaccessoiregroup = document.getElementById("article[" + articleIndex + "].typeaccessoiregroup");
+    typeaccessoiregroup.style.display = "none";
+  }
+  else if ( e.value == '3') // Accessoire
+  {
+    console.log('TRACE accessoire');
+    var ptvmaxgroup = document.getElementById("article[" + articleIndex + "].ptvmaxgroup");
+    ptvmaxgroup.style.display = "none";
+    var ptvmingroup = document.getElementById("article[" + articleIndex + "].ptvmingroup");
+    ptvmingroup.style.display = "none";
+    var taillegroup = document.getElementById("article[" + articleIndex + "].taillegroup");
+    taillegroup.style.display = "none";
+    var surfacegroup = document.getElementById("article[" + articleIndex + "].surfacegroup");
+    surfacegroup.style.display = "none";
+    var couleurgroup = document.getElementById("article[" + articleIndex + "].couleurgroup");
+    couleurgroup.style.display = "none";
+    var heuregroup = document.getElementById("article[" + articleIndex + "].heuregroup");
+    heuregroup.style.display = "none";
+    var certificatgroup = document.getElementById("article[" + articleIndex + "].certificatgroup");
+    certificatgroup.style.display = "none";
+    var typeaccessoiregroup = document.getElementById("article[" + articleIndex + "].typeaccessoiregroup");
+    typeaccessoiregroup.style.display = "block";
+  }
+}
 $(document).ready(function() {
     
     var marqueValidators = {
@@ -544,13 +648,14 @@ $(document).ready(function() {
             console.log('TRACE');
             articleIndex++;
             console.log(articleIndex);
+            var $form = $('#articleForm .box-body');
             var $template = $('#articleTemplate'),
                 $clone    = $template
                                 .clone()
                                 .removeClass('hide')
                                 .removeAttr('id')
-                                .attr('data-article-index', articleIndex)
-                                .insertBefore($template);
+                                .attr('data-article-index', articleIndex);
+            $form.append($clone);
 
             // Update the name attributes
             $clone
@@ -566,6 +671,7 @@ $(document).ready(function() {
                 .find('[name="typeaccessoire"]').attr('name', 'article[' + articleIndex + '].typeaccessoire').end()
                 .find('[name="certificat"]').attr('name', 'article[' + articleIndex + '].certificat').end()
                 // Ici on clone les identifiants
+                .find('[id="inputtypedematos"]').attr('data-index', '' + articleIndex).end()
                 .find('[id="inputtypedematos"]').attr('id', 'article[' + articleIndex + '].inputtypedematos').end()
                 .find('[id="marquegroup"]').attr('id', 'article[' + articleIndex + '].marquegroup').end()
                 .find('[id="modelegroup"]').attr('id', 'article[' + articleIndex + '].modelegroup').end()
@@ -576,7 +682,29 @@ $(document).ready(function() {
                 .find('[id="couleurgroup"]').attr('id', 'article[' + articleIndex + '].couleurgroup').end()
                 .find('[id="heuregroup"]').attr('id', 'article[' + articleIndex + '].heuregroup').end()
                 .find('[id="typeaccessoiregroup"]').attr('id', 'article[' + articleIndex + '].typeaccessoiregroup').end()
-                .find('[id="certificatgroup"]').attr('id', 'article[' + articleIndex + '].certificatgroup').end();
+                .find('[id="certificatgroup"]').attr('id', 'article[' + articleIndex + '].certificatgroup').end()
+
+                .find('[name="inputmarque"]').attr('name', 'article[' + articleIndex + '][inputmarque]').end()
+                .find('[name="inputmodele"]').attr('name', 'article[' + articleIndex + '][inputmodele]').end()
+                .find('[name="inputptvmax"]').attr('name', 'article[' + articleIndex + '][inputptvmax]').end()
+                .find('[name="inputptvmin"]').attr('name', 'article[' + articleIndex + '][inputptvmin]').end()
+                .find('[name="inputtaille"]').attr('name', 'article[' + articleIndex + '][inputtaille]').end()
+                .find('[name="inputsurface"]').attr('name', 'article[' + articleIndex + '][inputsurface]').end()
+                .find('[name="inputcouleur"]').attr('name', 'article[' + articleIndex + '][inputcouleur]').end()
+                .find('[name="inputheuresdevol"]').attr('name', 'article[' + articleIndex + '][inputheuresdevol]').end()
+                .find('[name="inputtypeaccessoire"]').attr('name', 'article[' + articleIndex + '][inputtypeaccessoire]').end()
+                .find('[name="inputcertificat"]').attr('name', 'article[' + articleIndex + '][inputcertificat]').end()
+
+                .find('[id="inputmarque"]').attr('id', 'article[' + articleIndex + '][inputmarque]').end()
+                .find('[id="inputmodele"]').attr('id', 'article[' + articleIndex + '][inputmodele]').end()
+                .find('[id="inputptvmax"]').attr('id', 'article[' + articleIndex + '][inputptvmax]').end()
+                .find('[id="inputptvmin"]').attr('id', 'article[' + articleIndex + '][inputptvmin]').end()
+                .find('[id="inputtaille"]').attr('id', 'article[' + articleIndex + '][inputtaille]').end()
+                .find('[id="inputsurface"]').attr('id', 'article[' + articleIndex + '][inputsurface]').end()
+                .find('[id="inputcouleur"]').attr('id', 'article[' + articleIndex + '][inputcouleur]').end()
+                .find('[id="inputheuresdevol"]').attr('id', 'article[' + articleIndex + '][inputheuresdevol]').end()
+                .find('[id="inputtypeaccessoire"]').attr('id', 'article[' + articleIndex + '][inputtypeaccessoire]').end()
+                .find('[id="inputcertificat"]').attr('id', 'article[' + articleIndex + '][inputcertificat]').end();
 
             // Add new fields
             // Note that we also pass the validator rules for new field as the third parameter
@@ -617,89 +745,11 @@ $(document).ready(function() {
             $row.remove();
         });
 
-        $(document).on('change', $('#article['+ articleIndex +'].inputtypedematos'), function() {
-            var e = document.getElementById("article["+ articleIndex +"].inputtypedematos");
-            if ( e.value == '0') // Voile
-            {
-              console.log('TRACE voile');
-              var ptvmaxgroup = document.getElementById("article[" + articleIndex + "].ptvmaxgroup");
-              ptvmaxgroup.style.display = "block"
-              var ptvmingroup = document.getElementById("article[" + articleIndex + "].ptvmingroup");
-              ptvmingroup.style.display = "block"
-              var taillegroup = document.getElementById("article[" + articleIndex + "].taillegroup");
-              taillegroup.style.display = "block"
-              var surfacegroup = document.getElementById("article[" + articleIndex + "].surfacegroup");
-              surfacegroup.style.display = "block"
-              var couleurgroup = document.getElementById("article[" + articleIndex + "].couleurgroup");
-              couleurgroup.style.display = "block"
-              var heuregroup = document.getElementById("article[" + articleIndex + "].heuregroup");
-              heuregroup.style.display = "block"
-              var certificatgroup = document.getElementById("article[" + articleIndex + "].certificatgroup");
-              certificatgroup.style.display = "blocks"
-              var typeaccessoiregroup = document.getElementById("article[" + articleIndex + "].typeaccessoiregroup");
-              typeaccessoiregroup.style.display = "none";
-            }
-            else if ( e.value == '1') // Selette
-            {
-              console.log('TRACE selette');
-              var ptvmaxgroup = document.getElementById("article[" + articleIndex + "].ptvmaxgroup");
-              ptvmaxgroup.style.display = "none";
-              var ptvmingroup = document.getElementById("article[" + articleIndex + "].ptvmingroup");
-              ptvmingroup.style.display = "none";
-              var taillegroup = document.getElementById("article[" + articleIndex + "].taillegroup");
-              taillegroup.style.display = "block";
-              var surfacegroup = document.getElementById("article[" + articleIndex + "].surfacegroup");
-              surfacegroup.style.display = "none";
-              var couleurgroup = document.getElementById("article[" + articleIndex + "].couleurgroup");
-              couleurgroup.style.display = "none";
-              var heuregroup = document.getElementById("article[" + articleIndex + "].heuregroup");
-              heuregroup.style.display = "none";
-              var certificatgroup = document.getElementById("article[" + articleIndex + "].certificatgroup");
-              certificatgroup.style.display = "none";
-              var typeaccessoiregroup = document.getElementById("article[" + articleIndex + "].typeaccessoiregroup");
-              typeaccessoiregroup.style.display = "none";
-            }
-            else if ( e.value == '2') // Parachute de secours
-            {
-              console.log('TRACE para');
-              var ptvmaxgroup = document.getElementById("article[" + articleIndex + "].ptvmaxgroup");
-              ptvmaxgroup.style.display = "block";
-              var ptvmingroup = document.getElementById("article[" + articleIndex + "].ptvmingroup");
-              ptvmingroup.style.display = "block";
-              var taillegroup = document.getElementById("article[" + articleIndex + "].taillegroup");
-              taillegroup.style.display = "none";
-              var surfacegroup = document.getElementById("article[" + articleIndex + "].surfacegroup");
-              surfacegroup.style.display = "none";
-              var couleurgroup = document.getElementById("article[" + articleIndex + "].couleurgroup");
-              couleurgroup.style.display = "none";
-              var heuregroup = document.getElementById("article[" + articleIndex + "].heuregroup");
-              heuregroup.style.display = "none";
-              var certificatgroup = document.getElementById("article[" + articleIndex + "].certificatgroup");
-              certificatgroup.style.display = "none";
-              var typeaccessoiregroup = document.getElementById("article[" + articleIndex + "].typeaccessoiregroup");
-              typeaccessoiregroup.style.display = "none";
-            }
-            else if ( e.value == '3') // Accessoire
-            {
-              console.log('TRACE accessoire');
-              var ptvmaxgroup = document.getElementById("article[" + articleIndex + "].ptvmaxgroup");
-              ptvmaxgroup.style.display = "none";
-              var ptvmingroup = document.getElementById("article[" + articleIndex + "].ptvmingroup");
-              ptvmingroup.style.display = "none";
-              var taillegroup = document.getElementById("article[" + articleIndex + "].taillegroup");
-              taillegroup.style.display = "none";
-              var surfacegroup = document.getElementById("article[" + articleIndex + "].surfacegroup");
-              surfacegroup.style.display = "none";
-              var couleurgroup = document.getElementById("article[" + articleIndex + "].couleurgroup");
-              couleurgroup.style.display = "none";
-              var heuregroup = document.getElementById("article[" + articleIndex + "].heuregroup");
-              heuregroup.style.display = "none";
-              var certificatgroup = document.getElementById("article[" + articleIndex + "].certificatgroup");
-              certificatgroup.style.display = "none";
-              var typeaccessoiregroup = document.getElementById("article[" + articleIndex + "].typeaccessoiregroup");
-              typeaccessoiregroup.style.display = "block";
-            }
-          });
+        // $(document).on('change', $('#article['+ articleIndex +'].inputtypedematos'), function() {
+        //     var e = document.getElementById("article["+ articleIndex +"].inputtypedematos");
+        //     console.log(articleIndex);
+        //     
+        //   });
 
 });
 </script>
