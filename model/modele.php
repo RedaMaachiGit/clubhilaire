@@ -1,6 +1,8 @@
 <?php
 //Cette classe représente les modèles des articles vendus par l'ecole saint Hilare
 require_once('db.php');
+require_once('marque.php');
+
 
 class Modele
 {
@@ -8,6 +10,7 @@ class Modele
   private $_libelle;
   private $_categorie;
   private $_homologation;
+  private $_marque;
    
    
    
@@ -15,11 +18,11 @@ class Modele
 /////CONSTRUCTEUR////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  
-	 public function __construct($id, $libelle, $categorie, $homologation){	 
-	    $this->setId($id);
+	 public function __construct($libelle, $categorie, $homologation,$marque){	 
 		$this->setLibelle($libelle); // Initialisation du libelle
 		$this->setCategorie($categorie); // Initialisation de la categorie
 		$this->setHomologation($homologation); // Initialisation de l'homologation
+		$this->setMarque($marque);
 	}
   
   
@@ -33,7 +36,7 @@ class Modele
 		return $this->_idModele;
 	  }
 	  
-	// Getter ID 
+	// Setter ID 
 	 public function setId($id){
 		return $this->_idModele = $id;
 	 }
@@ -82,6 +85,16 @@ class Modele
 		}
 		$this->_homologation = $homologation;
 	  }
+	  
+	 //Getter marque
+	 public function getMarque(){
+		 return $this->_marque;
+	 }
+	 
+	 //Setter marque
+	 public function setMarque($marque){
+		$this->_marque = $marque;
+	  }
  
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////FunctionToDataBase//////////////////////////////////////////////////////////////////////////////////////
@@ -98,9 +111,10 @@ class Modele
 	  $libelle = $this->getLibelle();
 	  $categorie = $this->getCategorie();
 	  $homologation = $this->getHomologation();
+	  $idMarque = $this->getMarque()->getId();
 	  
-	  $query = "INSERT INTO Modele (idModele, libelle, categorie, homologation)
-	  VALUES ('','".$libelle."','".$categorie."','".$homologation."')";
+	  $query = "INSERT INTO Modele (idModele, libelle, categorie, homologation,idMarque)
+	  VALUES ('','".$libelle."','".$categorie."','".$homologation."','".$idMarque."')";
 	  
 	  $db = new DB();
 	  $db->connect();
@@ -177,7 +191,34 @@ class Modele
 	 }
 	 
 	 public Static function deleteModeleById($id) {
-	  $query = "DELETE FROM Modele WHERE idModele=".$id;
+	  $query = "DELETE FROM Modele WHERE idMarque=".$id;
+	  $db = new DB();
+	  $db->connect();
+	  $conn = $db->getConnectDb();
+	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $db->close();
+	 }
+	 
+	 public static function updateLibelleById($id,$libelle) {
+	  $query = "UPDATE Modele SET libelle ='$libelle' WHERE idModele=".$id;
+	  $db = new DB();
+	  $db->connect();
+	  $conn = $db->getConnectDb();
+	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $db->close();
+	 }
+	 
+	 public static function updateCategorieById($id,$categorie) {
+	  $query = "UPDATE Modele SET categorie ='$categorie' WHERE idModele=".$id;
+	  $db = new DB();
+	  $db->connect();
+	  $conn = $db->getConnectDb();
+	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $db->close();
+	 }
+	 
+	 public static function updateHomologationById($id,$homologation) {
+	  $query = "UPDATE Modele SET homologation ='$homologation' WHERE idModele=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -186,6 +227,5 @@ class Modele
 	 }
 	 
 }
-Modele::deleteModeleById(3);
 
 ?>
