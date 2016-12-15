@@ -31,12 +31,12 @@ class Acheteur
 
 	// Getter ID 
 	 public function getId(){
-		return $this->_idMarque;
+		return $this->_idAcheteur;
 	  }
   
 	 // Setter ID 
 	 public function setId($id){
-		return $this->_idMarque = $id;
+		return $this->_idAcheteur = $id;
 	 }
 	 
 	//Getter nom 
