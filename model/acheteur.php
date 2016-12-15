@@ -308,7 +308,7 @@ class Acheteur
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
-	  $db->close();
+	  $db->close();  
 	 }
 	 
 }
