@@ -138,7 +138,9 @@ class Modele
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	  $row = $res->fetch_row();
-	  return $row;
+	  $modele = new Modele((String)$row[1],(String)$row[2],(String)$row[3],(int)$row[4]);
+	  $modele->setId((int)$row[0]);
+	  return $modele;
 	 }
 	 
 	 
@@ -155,7 +157,10 @@ class Modele
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
-	  return $res;
+	  $row = $res->fetch_row();
+	  $modele = new Modele((String)$row[1],(String)$row[2],(String)$row[3],(int)$row[4]);
+	  $modele->setId((int)$row[0]);
+	  return $modele;
 	 }
 	 
 	 /* 
@@ -190,7 +195,8 @@ class Modele
 	  return $res;
 	 }
 	 
-	 public Static function deleteModeleById($id) {
+	 public function delete() {
+	  $id = $this>getId();
 	  $query = "DELETE FROM Modele WHERE idMarque=".$id;
 	  $db = new DB();
 	  $db->connect();
@@ -199,7 +205,8 @@ class Modele
 	  $db->close();
 	 }
 	 
-	 public static function updateLibelleById($id,$libelle) {
+	 public function updateLibelle($libelle) {
+	  $id = $this>getId();
 	  $query = "UPDATE Modele SET libelle ='$libelle' WHERE idModele=".$id;
 	  $db = new DB();
 	  $db->connect();
@@ -208,7 +215,8 @@ class Modele
 	  $db->close();
 	 }
 	 
-	 public static function updateCategorieById($id,$categorie) {
+	 public function updateCategorie($categorie) {
+	  $id = $this>getId();
 	  $query = "UPDATE Modele SET categorie ='$categorie' WHERE idModele=".$id;
 	  $db = new DB();
 	  $db->connect();
@@ -217,7 +225,8 @@ class Modele
 	  $db->close();
 	 }
 	 
-	 public static function updateHomologationById($id,$homologation) {
+	 public function updateHomologation($homologation) {
+	  $id = $this>getId();
 	  $query = "UPDATE Modele SET homologation ='$homologation' WHERE idModele=".$id;
 	  $db = new DB();
 	  $db->connect();

@@ -179,12 +179,13 @@ class Vendeur
 	 
 	 
 	/* 
-		public static function delete($id) -> delete en base de données l'instance ayant l'id $id
-		Input : $id 
+		public function delete() -> delete en base de données l'instance
+		Input : Void
 	    Output : Void
 	*/ 
 	
-	public static function delete($id) {
+	public function delete() {
+		$id = $this->getId();
 		$query = "DELETE FROM Vendeur WHERE idVendeur=".$id;
 		$db = new DB();
 		$db->connect();
@@ -209,7 +210,9 @@ class Vendeur
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	  $row = $res->fetch_row();
-	  return $row;
+	  $vendeur = new Vendeur((String)$row[1],(String)$row[2],(String)$row[3],(String)$row[4],(String)$row[5],(String)$row[6],(String)$row[7]);
+	  $vendeur->setId((int)$row[0]);
+	  return $vendeur;
 	 }
 	 
 	 
@@ -227,7 +230,9 @@ class Vendeur
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	  $row = $res->fetch_row();
-	  return $row;
+	  $vendeur = new Vendeur((String)$row[1],(String)$row[2],(String)$row[3],(String)$row[4],(String)$row[5],(String)$row[6],(String)$row[7]);
+	  $vendeur->setId((int)$row[0]);
+	  return $vendeur;
 	}
 	
  /* 
@@ -244,7 +249,9 @@ class Vendeur
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	  $row = $res->fetch_row();
-	  return $row;
+	  $vendeur = new Vendeur((String)$row[1],(String)$row[2],(String)$row[3],(String)$row[4],(String)$row[5],(String)$row[6],(String)$row[7]);
+	  $vendeur->setId((int)$row[0]);
+	  return $vendeur;
 	}
 	
 	 /* 
@@ -277,7 +284,7 @@ class Vendeur
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	  $row = $res->fetch_row();
-	  return $row;
+	  return (int)$row[0];
 	}
 	
 	
@@ -303,12 +310,13 @@ class Vendeur
 	}
 	
 	/* 
-		public static function updateNomById($id,$nom) -> update en base de données le nom du vendeur ayant l'id $id
-		Input : $nom et $id
+		public  function updateNom(,$nom) -> update en base de données le nom du vendeur
+		Input : $nom
 	    Output : Void
 	*/
 	
-	public static function updateNomById($id,$nom) {
+	public function updateNom($nom) {
+	  $id = $this->getId();
 	  $query = "UPDATE Vendeur SET nom ='$nom' WHERE idVendeur=".$id;
 	  $db = new DB();
 	  $db->connect();
@@ -318,12 +326,13 @@ class Vendeur
 	 } 
 	
 	/* 
-		public static function updatePrenomById($id,$prenom) -> update en base de données le prenom du vendeur ayant l'id $id
-		Input : $prenom et $id
+		public function updatePrenom($prenom) -> update en base de données le prenom du vendeur
+		Input : $prenom
 	    Output : Void
 	*/
 	
-	public static function updatePrenomById($id,$prenom) {
+	public function updatePrenom($prenom) {
+	  $id = $this->getId();
 	  $query = "UPDATE Vendeur SET prenom ='$prenom' WHERE idVendeur=".$id;
 	  $db = new DB();
 	  $db->connect();
@@ -335,12 +344,13 @@ class Vendeur
 	 
 	
 	/* 
-		public static function updateMailyId($id,$mail) -> update en base de données le mail du vendeur ayant l'id $id
-		Input : $mail et $id
+		public function updateMail($mail) -> update en base de données le mail du vendeur
+		Input : $mail
 	    Output : Void
 	*/
 	
-	public static function updateMailById($id,$mail) {
+	public function updateMail($mail) {
+	  $id = $this->getId();
 	  $query = "UPDATE Vendeur SET mail ='$mail' WHERE idVendeur=".$id;
 	  $db = new DB();
 	  $db->connect();
@@ -351,12 +361,13 @@ class Vendeur
 	
 	
 	/* 
-		public static function updateAddresseById($id,$adresse) -> update en base de données l'adresse du vendeur ayant l'id $id
-		Input : $adresse et $id
+		public function updateAddresse($adresse) -> update en base de données l'adresse du vendeur ayant l'id $id
+		Input : $adresse
 	    Output : Void
 	*/
 	
-	public static function updateAdresseById($id,$adresse) {
+	public function updateAdresse($adresse) {
+	  $id = $this->getId();
 	  $query = "UPDATE Vendeur SET adresse ='$adresse' WHERE idVendeur=".$id;
 	  $db = new DB();
 	  $db->connect();
@@ -366,12 +377,13 @@ class Vendeur
 	 }
 	
 	/* 
-		public static function updateTelById($id,$tel) -> update en base de données le telephone du vendeur ayant l'id $id
-		Input : $tel et $id
+		public function updateTel($tel) -> update en base de données le telephone du vendeur
+		Input : $tel
 	    Output : Void
 	*/
 	
-	public static function updateTelById($id,$tel) {
+	public function updateTel($tel) {
+	  $id = $this->getId();
 	  $query = "UPDATE Vendeur SET telephone ='$tel' WHERE idVendeur=".$id;
 	  $db = new DB();
 	  $db->connect();
@@ -380,13 +392,14 @@ class Vendeur
 	  $db->close();
 	 }
 	 
-		/* 
-		public static function updateTypeById($id,$tel) -> update en base de données le type du vendeur ayant l'id $id
-		Input : $type et $id
+		/*
+		public function updateType($tel) -> update en base de données le type du vendeur
+		Input : $type
 	    Output : Void
 	*/
 	
-	public static function updateTypeById($id,$type) {
+	public function updateType($type) {
+	  $id = $this->getId();
 	  $query = "UPDATE Vendeur SET type ='$type' WHERE idVendeur=".$id;
 	  $db = new DB();
 	  $db->connect();
@@ -396,12 +409,13 @@ class Vendeur
 	 }
 	 
 		/* 
-		public static function updateNumPreById($id,$tel) -> update en base de données le num de préinscription du vendeur ayant l'id $id
-		Input : $numPre et $id
+		public static function updateNumPre($tel) -> update en base de données le num de préinscription du vendeur
+		Input : $numPre
 	    Output : Void
 	*/
 	
-	public static function updateNumPreById($id,$numPre) {
+	public function updateNumPreById($numPre) {
+	  $id = $this->getId();
 	  $query = "UPDATE Vendeur SET telephone ='$numPre' WHERE idVendeur=".$id;
 	  $db = new DB();
 	  $db->connect();
