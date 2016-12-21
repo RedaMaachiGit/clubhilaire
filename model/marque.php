@@ -1,7 +1,7 @@
 <?php
 //Cette classe représente les marques des articles vendus par l'ecole saint Hilare
 require_once('db.php');
-
+require_once('modele.php');
 class Marque
 {
   private $_idMarque;
@@ -25,7 +25,6 @@ class Marque
 	 public function getId(){
 		return $this->_idMarque;
 	  }
-
 	  
 	 // Setter ID 
 	 public function setId($id){
@@ -73,6 +72,22 @@ class Marque
 	 }
 	 
 	/* 
+		public function delete() -> delete en base de données l'instance
+		Input : void
+	    Output : Void
+	*/ 
+	
+	public function delete() {
+	  $id = $this->getId();
+	  $query = "DELETE FROM Marque WHERE idMarque=".$id;
+	  $db = new DB();
+	  $db->connect();
+	  $conn = $db->getConnectDb();
+	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $db->close();
+	}
+	 
+	/* 
 		public static function getMarqueById($id) -> Recherche en bd la marque ayant l'id $id
 		Input : l'id de la marque voulu
 	    Output : la marque en base de donnée ayant l'id passé en input
@@ -87,7 +102,9 @@ class Marque
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	  $row = $res->fetch_row();
-	  return $row;
+	  $marque = new Marque((String)$row[1]);
+	  $marque->setId((int)$row[0]);
+	  return $marque;
 	 }
 	 
 	 
@@ -104,19 +121,12 @@ class Marque
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
-	  return $res;
+	  $row = $res->fetch_row();
+	  $marque = new Marque((String)$row[1]);
+	  $marque->setId((int)$row[0]);
+	  return $marque;
 	 }
-	 
-	 public Static function deleteMarqueById($id) {
-	  $query = "DELETE FROM Marque WHERE idMarque=".$id;
-	  $db = new DB();
-	  $db->connect();
-	  $conn = $db->getConnectDb();
-	  $res = $conn->query($query) or die(mysqli_error($conn));
-	  $db->close();
-	 }
-	 
-	 
+	 	 	 
 	 public static function getIdMarqueByName($nameMarque) {
 	  $query = "SELECT idMarque FROM Marque WHERE libelle='$nameMarque'";
 	  $db = new DB();
@@ -136,7 +146,10 @@ class Marque
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
-	  return $res;
+	  $row = $res->fetch_row();
+	  $modele = new Modele((String)$row[1],(String)$row[2],(String)row[3],(String)$row[4]);
+	  $modele->setId((String)row[0]);
+	  return $modele;
 	}
 	
 	public static function marqueExistByLibelle($libelle){
@@ -154,7 +167,8 @@ class Marque
 	  }
 	}
 	
-	public static function updateLibelleById($id,$libelle) {
+	public function updateLibelleById($libelle) {
+	  $id = $this->getId();	
 	  $query = "UPDATE Marque SET libelle ='$libelle' WHERE idMarque=".$id;
 	  $db = new DB();
 	  $db->connect();
