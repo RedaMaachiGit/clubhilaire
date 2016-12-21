@@ -1,4 +1,5 @@
 <?php
+
 //Cette classe représente les lot des articles vendus par l'ecole saint Hilare
 require_once('db.php');
 
@@ -181,6 +182,7 @@ class Lot
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	  $row = $res->fetch_row();
+	  
 	  $lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],(String)$row[4],(int)$row[5]);
 	  $lot->setId((int)$row[0]);
 	  $lot->setAcheteur((int)$row[6]);
@@ -195,6 +197,7 @@ class Lot
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	  $row = $res->fetch_row();
+	  
 	  $lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],(String)$row[4],(int)$row[5]);
 	  $lot->setId((int)$row[0]);
 	  $lot->setAcheteur((int)$row[6]);
