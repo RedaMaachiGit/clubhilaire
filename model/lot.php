@@ -2,6 +2,8 @@
 
 //Cette classe représente les lot des articles vendus par l'ecole saint Hilare
 require_once('db.php');
+require_once('Vendeur.php');
+require_once('Acheteur.php');
 
 
 class Lot
@@ -13,7 +15,8 @@ class Lot
   private $_status;
   private $_acheteur;
   private $_vendeur;
-  private $_date;
+  private $_dateDepot;
+  private $_dateVente;
    
    
    
@@ -152,6 +155,10 @@ class Lot
 	  $db->close();
 	 }
 	 
+	public function acheter($idVendeur){
+		l
+	}
+	 
 		/* 
 		public function delete() -> delete en base de données l'instance
 		Input : Void
@@ -182,10 +189,11 @@ class Lot
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	  $row = $res->fetch_row();
-	  
-	  $lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],(String)$row[4],(int)$row[5]);
+	  $vendeur = Vendeur::getVendeurById((int)$row[5]);
+	  $acheteur = Acheteur::getAcheteurById((int)$row[6]);
+	  $lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],(String)$row[4],$vendeur);
 	  $lot->setId((int)$row[0]);
-	  $lot->setAcheteur((int)$row[6]);
+	  $lot->setAcheteur(acheteur);
 	  return $lot;
 	 }
 	 
@@ -197,10 +205,11 @@ class Lot
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	  $row = $res->fetch_row();
-	  
-	  $lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],(String)$row[4],(int)$row[5]);
+	  $vendeur = Vendeur::getVendeurById((int)$row[5]);
+	  $acheteur = Acheteur::getAcheteurById((int)$row[6]);
+	  $lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],(String)$row[4],$vendeur);
 	  $lot->setId((int)$row[0]);
-	  $lot->setAcheteur((int)$row[6]);
+	  $lot->setAcheteur(acheteur);
 	  return $lot;
 	 }
 	 
@@ -211,7 +220,12 @@ class Lot
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
-	  return res;
+	  $vendeur = Vendeur::getVendeurById((int)$row[5]);
+	  $acheteur = Acheteur::getAcheteurById((int)$row[6]);
+	  $lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],(String)$row[4],$vendeur);
+	  $lot->setId((int)$row[0]);
+	  $lot->setAcheteur(acheteur);
+	  return $lot;
 	 }
 	 
 	 public function updatePrix($prix){
@@ -221,6 +235,7 @@ class Lot
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $this->setPrix($prix);
 	  $db->close();	 
 	 }
 	
@@ -231,6 +246,7 @@ class Lot
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $this->setStatus($status);
 	  $db->close();	 
 	 }
 	 
@@ -241,6 +257,7 @@ class Lot
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $this->setNumeroLotVendeur($numeroLotVendeur);
 	  $db->close();	 
 	 }
 }

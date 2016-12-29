@@ -138,7 +138,8 @@ class Modele
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	  $row = $res->fetch_row();
-	  $modele = new Modele((String)$row[1],(String)$row[2],(String)$row[3],(int)$row[4]);
+	  $marque::getMarqueById((int)$row[4]);
+	  $modele = new Modele((String)$row[1],(String)$row[2],(String)$row[3],$marque);
 	  $modele->setId((int)$row[0]);
 	  return $modele;
 	 }
@@ -158,7 +159,8 @@ class Modele
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	  $row = $res->fetch_row();
-	  $modele = new Modele((String)$row[1],(String)$row[2],(String)$row[3],(int)$row[4]);
+	  $marque = Marque::getMarqueById((int)$row[4]);
+	  $modele = new Modele((String)$row[1],(String)$row[2],(String)$row[3],$marque);
 	  $modele->setId((int)$row[0]);
 	  return $modele;
 	 }
@@ -212,6 +214,7 @@ class Modele
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $this->setLibelle($libelle);
 	  $db->close();
 	 }
 	 
@@ -222,6 +225,7 @@ class Modele
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $this->setCategorie($categorie);
 	  $db->close();
 	 }
 	 
@@ -232,6 +236,7 @@ class Modele
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $this->setHomologation($homologation);
 	  $db->close();
 	 }
 	 

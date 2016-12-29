@@ -249,6 +249,7 @@ class Acheteur
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $this->setNom($nom);
 	  $db->close();
 	 } 
 	
@@ -265,6 +266,7 @@ class Acheteur
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $this->setPrenom($prenom);
 	  $db->close();
 	 } 
 	 
@@ -283,6 +285,7 @@ class Acheteur
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $this->setEmail($mail);
 	  $db->close();
 	 } 
 	
@@ -299,6 +302,7 @@ class Acheteur
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
+	  $this->setAdresse($adresse);
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	 }
@@ -309,13 +313,14 @@ class Acheteur
 	    Output : Void
 	*/
 	
-	public function updateTel($id) {
+	public function updateTel($tel) {
 	  $id = $this->getId();
 	  $query = "UPDATE Acheteur SET telephone ='$tel' WHERE idAcheteur=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $this->setTel($tel);
 	  $db->close();  
 	 }
 	 
