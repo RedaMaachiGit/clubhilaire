@@ -147,8 +147,8 @@ class Marque
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	  $row = $res->fetch_row();
-	  $modele = new Modele((String)$row[1],(String)$row[2],(String)row[3],(String)$row[4]);
-	  $modele->setId((String)row[0]);
+	  $modele = new Modele((String)$row[1],(String)$row[2],(String)$row[3],(String)$row[4]);
+	  $modele->setId((String)$row[0]);
 	  return $modele;
 	}
 	
@@ -174,6 +174,7 @@ class Marque
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $this->setLibelle($libelle);
 	  $db->close();
 	 }
 	 

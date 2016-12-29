@@ -12,12 +12,13 @@ class Vendeur
   private $_adresse;
   private $_type;
   private $_numPre;
+  private $_cheque;
    
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////CONSTRUCTEUR////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  
-	 public function __construct($nom,$prenom,$tel,$email,$adresse,$type,$numPre){	 
+	 public function __construct($nom,$prenom,$tel,$email,$adresse,$type,$numPre,$cheque){	 
 		$this->setNom($nom);
 		$this->setPrenom($prenom); 
 		$this->setTel($tel); 
@@ -25,6 +26,7 @@ class Vendeur
 		$this->setAdresse($adresse); 	
 		$this->setTypeVendeur($type);
 		$this->setNumPre($numPre);
+		$this->setCheque($cheque);
 	}
   
   
@@ -148,6 +150,16 @@ class Vendeur
 		$this->_numPre = $numPre;
 	 
 	 }
+	 
+	 //Getter cheque 
+	 public function getCheque(){
+		return $this->_cheque;
+	  }
+
+	//Setter cheque 
+	 public function setTel($cheque){
+		$this->_cheque = $cheque;
+	  }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////FunctionToDataBase//////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -322,6 +334,7 @@ class Vendeur
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $this->setNom($nom);
 	  $db->close();
 	 } 
 	
@@ -338,6 +351,7 @@ class Vendeur
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $this->setPrenom($prenom);
 	  $db->close();
 	 } 
 	 
@@ -356,6 +370,7 @@ class Vendeur
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $this->setEmail($mail);
 	  $db->close();
 	 } 
 	
@@ -373,6 +388,7 @@ class Vendeur
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $this->setAdresse($adresse);
 	  $db->close();
 	 }
 	
@@ -389,6 +405,7 @@ class Vendeur
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $this->setTel($tel);
 	  $db->close();
 	 }
 	 
@@ -405,6 +422,7 @@ class Vendeur
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $this->setTypeVendeur($type);
 	  $db->close();
 	 }
 	 
@@ -421,6 +439,7 @@ class Vendeur
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $this->setNumPre($numPre);
 	  $db->close();
 	 }
 	 
