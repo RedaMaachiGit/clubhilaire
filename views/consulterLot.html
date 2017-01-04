@@ -118,8 +118,54 @@
 
     <!-- Your Page Content Here -->
       <div class="row">
+        <!-- left column -->
+        <div class="col-md-6">
+          <!-- general form elements -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Ajouter des lots à partir d'un fichier</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form role="form">
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="exampleInputFile">File input</label>
+                  <input type="file" id="exampleInputFile">
+
+                  <p class="help-block">Le fichier à importer ici doit être propre.</p>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"> <output></output>
+                  </label>
+                </div>
+              </div>
+              <!-- /.box-body -->
+
+              <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Valider</button>
+              </div>
+            </form>
+          </div>
+          <!-- /.box -->
+
+          <!-- general button import all files -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Ajouter des lots à partir de tous les fichiers CSV</h3>
+            </div>
+            <div class="box-footer">
+              <button type="button" class="btn btn-block btn-danger btn-lg">IMPORTER TOUS LES FICHIERS</button>
+              <p class="help-block">Les fichiers qui seront importés se trouvent dans le dossier NomDeDossier.</p>
+            </div>
+          </div>
+
+
+        </div>
+        <!--/.col (left) -->
         <!-- right column -->
-        <div class="col-md-12">
+        <div class="col-md-6">
           <!-- Horizontal Form -->
           <div class="box box-info">
             <div class="box-header with-border">
@@ -129,7 +175,7 @@
             <!-- form start -->
             <form id="articleForm" method="POST" action="ajoutLot.php" class="form-horizontal">
               <div class="box-body">
-
+                
                 <div class="form-group">
                   <label for="inputNom" class="col-sm-2 control-label">Nom</label>
 
@@ -163,7 +209,7 @@
                 </div>
 
                 <!-- The template for adding new field -->
-
+                  
                 <div class="col-sm-12 form-group">
                     <label>Type d'article</label>
                     <select class="col-sm-5 form-control" id="article[0].inputtypedematos" name="article[0][typedematos]" data-index='0' onchange="handleTypeChange(this)">
@@ -173,8 +219,6 @@
                       <option value="3">Accessoire</option>
                     </select>
                 </div>
-
-                <input type="hidden" class="form-control" id="index" name="index" value="0" />
 
                 <div class="form-group" name="article[0].marque">
                   <label for="inputmarque" class="col-sm-2 control-label">Marque</label>
@@ -239,20 +283,20 @@
                     <input type="text" class="form-control" id="article[0].inputtypeaccessoire"  name="article[0][inputtypeaccessoire]"  placeholder="Type d'accessoire" />
                   </div>
                 </div>
-
+                
                 <div class="checkbox" name="article[0].certificat" id="article[0].certificatgroup">
                   <label>
-                    <input type="checkbox" id="article[0].inputcertificat"  name="article[0][inputcertificat]"> Certificat de révision <output></output>
+                    <input type="checkbox" id="article[0].inputcertificat"  name="article[0][inputcertificat]"  > Certificat de révision <output></output>
                   </label>
                 </div>
-
+                
                 <div class="col-xs-1">
                   <button type="button" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>
                 </div>
               </div>
               <!-- /.box-body -->
               <div class="box-footer">
-                <!-- <button type="submit" class="btn btn-default">Annuler</button> -->
+                <button type="submit" class="btn btn-default">Annuler</button>
                 <button type="submit" value="Submit" class="btn btn-info pull-right">Ajouter</button>
               </div>
               <!-- /.box-footer -->
@@ -267,7 +311,7 @@
     <!-- /.content -->
 
                 <div class="col-sm-12 form-group hide" id="articleTemplate">
-
+                  
                   <div class="col-sm-12 form-group">
                       <label>Type d'article</label>
                       <select class="col-sm-5 form-control" id="inputtypedematos" name="typedematos" data-index='0' onchange="handleTypeChange(this)">
@@ -285,6 +329,8 @@
                     </div>
                   </div>
 
+                  <input type="hidden" class="form-control" id="index" name="index" value="0" />
+                  
                   <div class="form-group" name="modele">
                     <label for="inputmodele" class="col-sm-2 control-label">Modele</label>
                     <div class="col-sm-10">
@@ -340,13 +386,13 @@
                       <input type="text" class="form-control" id="inputtypeaccessoire" name="inputtypeaccessoire" value="" placeholder="Type d'accessoire" />
                     </div>
                   </div>
-
+                  
                   <div class="checkbox" name="certificat" id="certificatgroup">
                     <label>
                       <input type="checkbox" id="inputcertificat" name="inputcertificat" value="" > Certificat de révision <output></output>
                     </label>
                   </div>
-
+                  
                   <div class="col-xs-1">
                     <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
                   </div>
@@ -457,6 +503,17 @@
 
 
 <script>
+// $('#articleForm').on('submit', function(e) {
+//     //prevent the default submithandling
+//     e.preventDefault();
+//     //send the data of 'this' (the matched form) to yourURL
+//     $.post('http://clubhilaire-madonna.rhcloud.com/ajoutLot.php', $(this).serialize());
+
+// });
+</script>
+
+
+<script>
 var articleIndex = 0;
 var handleTypeChange = function(e) {
   console.log(e.value);
@@ -546,7 +603,7 @@ var handleTypeChange = function(e) {
   }
 }
 $(document).ready(function() {
-
+    
     var marqueValidators = {
             row: '.col-xs-4',   // The title is placed inside a <div class="col-xs-4"> element
             validators: {
@@ -591,8 +648,6 @@ $(document).ready(function() {
             console.log('TRACE');
             articleIndex++;
             console.log(articleIndex);
-            document.getElementById("index").value = articleIndex + 1;
-            console.log(document.getElementById("index").value);
             var $form = $('#articleForm .box-body');
             var $template = $('#articleTemplate'),
                 $clone    = $template
@@ -665,8 +720,8 @@ $(document).ready(function() {
             //     .formValidation('addField', 'article[' + articleIndex + '].heure', heureValidators)
             //     .formValidation('addField', 'article[' + articleIndex + '].typeaccessoire', typeaccessoireValidators)
             //     .formValidation('addField', 'article[' + articleIndex + '].certificat', certificatValidators);
-
         })
+
         // Remove button click handler
         .on('click', '.removeButton', function() {
             var $row  = $(this).parents('.form-group'),
@@ -693,7 +748,7 @@ $(document).ready(function() {
         // $(document).on('change', $('#article['+ articleIndex +'].inputtypedematos'), function() {
         //     var e = document.getElementById("article["+ articleIndex +"].inputtypedematos");
         //     console.log(articleIndex);
-        //
+        //     
         //   });
 
 });
