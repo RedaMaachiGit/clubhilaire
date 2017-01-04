@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Club Saint Hilaire | Parapente</title>
+  <title>Ajout lot</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -104,102 +104,36 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Page Header
-        <small>Optional description</small>
+        Vente de lots
+        <small>Modifiez avec précaution</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
+        <li><a href="index.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Saisie numéro lot</li>
       </ol>
     </section>
 
     <!-- Main content -->
     <section class="content">
-
-      <!-- Your Page Content Here -->
-      <div class="row">
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-aqua">
-            <div class="inner">
-              <h4>Ajout fichier</h4>
-
-              <p>Nouveau lot</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-bag"></i>
-            </div>
-            <a href="nouveauLotFichier.html" class="small-box-footer">CLIQUEZ ICI <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
+      <!-- Form Element sizes -->
+      <div class="box box-success">
+        <div class="box-header with-border">
+          <h3 class="box-title">Veuillez saisir le numéro du lot</h3>
         </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-aqua">
-            <div class="inner">
-              <h4>Ajout manuel</h4>
-
-              <p>Nouveau lot</p>
+        <form id="numeroLotForm" method="POST" action="venteLot.php" class="form-horizontal">
+          <div class="box-body">
+            <input class="form-control input-lg" name="numeroLot"  type="text" placeholder="Numéro lot">
+            <div class="box-footer">
+              <button type="submit" value="Submit" class="btn btn-info center-block">Vendre</button>
             </div>
-            <div class="icon">
-              <i class="ion ion-bag"></i>
-            </div>
-            <a href="nouveauLot.html" class="small-box-footer">CLIQUEZ ICI <i class="fa fa-arrow-circle-right"></i></a>
           </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-green">
-            <div class="inner">
-              <h4>Modification</h4>
-
-              <p>Modifier lot</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-stats-bars"></i>
-            </div>
-            <a href="numeroLotModification.html" class="small-box-footer">CLIQUEZ ICI <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-yellow">
-            <div class="inner">
-              <h4>Vendeur</h4>
-
-              <p>Nouveau vendeur</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-person-add"></i>
-            </div>
-            <a href="#" class="small-box-footer">CLIQUEZ ICI <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-red">
-            <div class="inner">
-              <h4>Vente</h4>
-
-              <p>Vendre lot</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-pie-graph"></i>
-            </div>
-            <a href="numeroLotVente.html" class="small-box-footer">CLIQUEZ ICI <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
+        </form>
+        <!-- /.box-body -->
       </div>
-
-
-
-
+      <!-- /.box -->
     </section>
     <!-- /.content -->
+
   </div>
   <!-- /.content-wrapper -->
 
@@ -301,9 +235,5 @@
 <!-- AdminLTE App -->
 <script src="dist/js/app.min.js"></script>
 
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
-     Both of these plugins are recommended to enhance the
-     user experience. Slimscroll is required when using the
-     fixed layout. -->
 </body>
 </html>
