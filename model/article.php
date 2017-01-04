@@ -12,11 +12,13 @@ class Article
   private $_type;
   private $_lot;
   private $_marque;
+  private $_modele;
   private $_ptvMin;
   private $_ptvMax;
   private $_taille;
   private $_annee;
-  
+  private $_commentaire;
+  private $_homologation;
   private $_surfaceVoile;
   private $_couleurVoile;
   private $_heureVolesVoile;
@@ -30,21 +32,24 @@ class Article
 /////CONSTRUCTEUR////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  
-	 public function __construct($type, $lot, $marque, $ptvMin, $ptvMax, $taille, $surfaceVoile,
-	 $couleurVoile, $heureVolesVoile, $certificatRevisionVoile, $typeProtectionSelette, $typeAccessoire, $annee){	 
+	 public function __construct($type, $lot, $marque,$modele, $ptvMin, $ptvMax, $taille, $surfaceVoile,
+	 $couleurVoile, $heureVolesVoile, $certificatRevisionVoile, $typeProtectionSelette, $typeAccessoire, $annee, $commentaire, $homologation){	 
 		$this->setTypeArticle($type);
 		$this->setLot($lot);
 		$this->setMarque($marque);
+		$this->setModele($modele);
 		$this->setPtvMin($ptvMin); 
 		$this->setPtvMax($ptvMax);
 		$this->setTaille($taille);
 		$this->setSurfaceVoile($surfaceVoile);
 		$this->setCouleurVoile($couleurVoile);
 		$this->setHeureVoile($heureVolesVoile);
-		$this->setCertification($certificationRevisionVoile);
+		$this->setCertificat($certificatRevisionVoile);
 		$this->setTypeProtectionSelette($typeProtectionSelette);
-		$this->setTypeAccesoire($typeAccessoire);
+		$this->setTypeAccessoire($typeAccessoire);
 		$this->setAnnee($annee);
+		$this->setCommentaire($commentaire);
+		$this->setHomologation($homologation);
 		
 	}
   
@@ -64,6 +69,12 @@ class Article
 		$this->_idArticle = $idArticle;
 	 }
 	 
+	//setter TypeArticle
+	public function setTypeArticle($typeArticle){
+		$this->_type = $typeArticle;
+	}
+
+	 
 	 // Getter Lot 
 	 public function getLot(){
 		return $this->_lot;
@@ -74,14 +85,24 @@ class Article
 		$this->_lot = $lot;
 	 }
 	 
-	// Getter Article 
+	// Getter Marque 
 	 public function getMarque(){
 		return $this->_marque;
 	  }
 	  
-	// Setter Article 
+	// Setter Marque 
 	 public function setMarque($marque){
 		$this->_marque = $marque;
+	 }
+	 
+	// Getter Modele 
+	 public function getModele(){
+		return $this->_modele;
+	  }
+	  
+	// Setter Modele 
+	 public function setModele($modele){
+		$this->_modele = $modele;
 	 }
 	 
 	//Getter typeArticle 
@@ -166,11 +187,6 @@ class Article
 	 
 	 //Setter certificat
 	 public function setCertificat($certificat){
-		if (!is_String($certificat)) // S'il ne s'agit pas d'unne chaine de charatère
-		{
-		  trigger_error('Le typeCertificat d\'un article doit être une chaine de charactère', E_USER_WARNING);
-		  return;
-		}
 		$this->_certificatRevisionVoile = $certificat;
 	  }
 	  
@@ -181,11 +197,6 @@ class Article
 	 
 	 //Setter typeProtectionSelette
 	 public function setTypeProtectionSelette($typeProtectionSelette){
-		if (!is_String($typeProtectionSelette)) // S'il ne s'agit pas d'unne chaine de charatère
-		{
-		  trigger_error('Le typeProtectionSelette d\'un article doit être une chaine de charactère', E_USER_WARNING);
-		  return;
-		}
 		$this->_typeProtectonSelette = $typeProtectionSelette;
 	  }
 	  
@@ -196,11 +207,6 @@ class Article
 	 
 	 //Setter typeAccessoire
 	 public function setTypeAccessoire($typeAccessoire){
-		 if (!is_String($typeAccessoire)) // S'il ne s'agit pas d'unne chaine de charatère
-		{
-		  trigger_error('Le typeAccessoire d\'un article doit être une chaine de charactère', E_USER_WARNING);
-		  return;
-		}
 		$this->_typeAccessoire = $typeAccessoire;
 	  }
 	  
@@ -213,6 +219,26 @@ class Article
 	 public function getAnnee(){
 		return $this->_annee;
 	 }
+	 
+	//Setter commentaire
+	public function setCommentaire($commentaire){
+		$this->_commnentaire = $commentaire;
+	}
+	
+	//Getter commentaire
+	public function getCommentaire(){
+		return $this->_commentaire;
+	}
+	
+	//Setter homologation	
+	public function setHomologation($homologation){
+		$this->_homologation = $homologation;
+	}
+	
+	//getter homologation 
+	public function getHomologation(){
+		return $this->_homologation;
+	}
 	  
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////FunctionToDataBase//////////////////////////////////////////////////////////////////////////////////////
@@ -229,6 +255,7 @@ class Article
 	  $type = $this->getTypeArticle();
 	  $lot = $this->getLot();
 	  $marque = $this->getMarque();
+	  $modele = $this->getModele();
 	  $ptvMin = $this->getPtvMin();
 	  $ptvMax = $this->getPtvMax();
 	  $taile = $this->getTaille();
@@ -238,18 +265,24 @@ class Article
 	  $certificat = $this->getCertificat();
 	  $typeSelette = $this->getTypeProtectionSelette();
 	  $typeAccessoire = $this->getTypeAccessoire();
+	  $annee = $this->getAnnee();
+	  $homologation = $this->getHomologation();
+	  $commentaire = $this->getCommentaire();
 	  $idL=null;
 	  $idM=null;
 	  if($marque!=null){
 		  $idM=$marque->getId();
 	  }
+	  if($modele!=null){
+		  $idMod=$modele->getId();
+	  }
 	  if($lot!=null){
 		  $idL=$lot->getId();
 	  }
 	  
-	  $query = "INSERT INTO Article (idArticle, idLot, idMarque, type, ptvMin, ptvMax, taile, surfaceVoile, couleurVoile, certificat, typeSelette,
-	  typeAccesoire) VALUES ('','".$idL."','".$idM."','".$type."','".$ptvMin."','".$ptvMax."','".$taile."','".$surfaceVoile."'
-	  ,'".$couleurVoile."','".$heureVoile."','".$certificat."','".$typeSelette."','".$typeAccessoire."')";
+	  $query = "INSERT INTO Article (idArticle, idLot, idMarque, idModele, type, ptvMinimum, ptvMaximum, taille, annee, surfaceVoile, couleurVoile,heureVolesVoile, certificatRevisionVoile, typeProtectionSelette,
+	  typeAccessoire, commentaire, homologation) VALUES ('','".$idL."','".$idM."','".$idMod."','".$type."','".$ptvMin."','".$ptvMax."','".$taile."','".$annee."','".$surfaceVoile."'
+	  ,'".$couleurVoile."','".$heureVoile."','".$certificat."','".$typeSelette."','".$typeAccessoire."','".$commentaire."','".$homologation."')";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -289,8 +322,9 @@ class Article
 	  $row = $res->fetch_row();
 	  $lot = Lot::getLotById((int)$row[1]);
 	  $marque = Marque::getMarqueById((int)$row[2]);
-	  $article = new Article($lot,$marque,(String)$row[3],(int)$row[4],(int)$row[5],(String)$row[6],(int)$row[7]
-	  ,(String)$row[8],(int)$row[9],(string)$row[10],(string)$row[11],(string)$row[12]);
+	  $modele = Modele::getModeleById((int)$row[3]);
+	  $article = new Article($lot,$marque, $modele,(String)$row[4],(int)$row[5],(int)$row[6],(String)$row[7],(int)$row[8]
+	  ,(String)$row[9],(int)$row[10],(string)$row[11],(string)$row[12],(string)$row[13],(string)$row[14],(string)$row[15]);
 	  $article->setId((int)$row[0]);
 	  return $article;
 	 }
@@ -338,8 +372,9 @@ class Article
 	  $row = $res->fetch_row();
 	  $lot = Lot::getLotById((int)$row[1]);
 	  $marque = Marque::getMarqueById((int)$row[2]);
-	  $article = new Article($lot,$marque,(String)$row[3],(int)$row[4],(int)$row[5],(String)$row[6],(int)$row[7]
-	  ,(String)$row[8],(int)$row[9],(string)$row[10],(string)$row[11],(string)$row[12]);
+	  $modele = Modele::getModeleById((int)$row[3]);
+	  $article = new Article($lot,$marque, $modele,(String)$row[4],(int)$row[5],(int)$row[6],(String)$row[7],(int)$row[8]
+	  ,(String)$row[9],(int)$row[10],(string)$row[11],(string)$row[12],(string)$row[13],(string)$row[14],(string)$row[15]);
 	  $article->setId((int)$row[0]);
 	  return $article;
 

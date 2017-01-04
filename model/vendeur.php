@@ -52,11 +52,6 @@ class Vendeur
 
 	//Setter nom 
 	 public function setNom($nom){
-		if (!is_String($nom)) // S'il ne s'agit pas d'unne chaine de charatère
-		{
-		  trigger_error('Le nom d\'un vendeur doit être une chaine de charactère', E_USER_WARNING);
-		  return;
-		}
 		$this->_nom = $nom;
 	  }
 	  
@@ -67,11 +62,6 @@ class Vendeur
 
 	//Setter prenom 
 	 public function setPrenom($prenom){
-		if (!is_String($prenom)) // S'il ne s'agit pas d'unne chaine de charatère
-		{
-		  trigger_error('Le prenom d\'un vendeur doit être une chaine de charactère', E_USER_WARNING);
-		  return;
-		}
 		$this->_prenom = $prenom;
 	  }
 	  
@@ -82,11 +72,6 @@ class Vendeur
 
 	//Setter tel 
 	 public function setTel($tel){
-		if (!is_String($tel)) // S'il ne s'agit pas d'unne chaine de charatère
-		{
-		  trigger_error('Le tel d\'un vendeur doit être une chaine de charactère', E_USER_WARNING);
-		  return;
-		}
 		$this->_tel = $tel;
 	  }
 	  
@@ -97,11 +82,6 @@ class Vendeur
 
 	//Setter email 
 	 public function setEmail($email){
-		if (!is_String($email)) // S'il ne s'agit pas d'unne chaine de charatère
-		{
-		  trigger_error('Le email d\'un vendeur doit être une chaine de charactère', E_USER_WARNING);
-		  return;
-		}
 		$this->_email = $email;
 	  }
 	  
@@ -112,11 +92,6 @@ class Vendeur
 
 	//Setter adresse 
 	 public function setAdresse($adresse){
-		if (!is_String($adresse)) // S'il ne s'agit pas d'unne chaine de charatère
-		{
-		  trigger_error('Le type d\'un vendeur doit être une chaine de charactère', E_USER_WARNING);
-		  return;
-		}
 		$this->_adresse = $adresse;
 	  }
 	  
@@ -127,11 +102,6 @@ class Vendeur
 
 	//Setter type 
 	 public function setTypeVendeur($type){
-		if (!is_String($type)) // S'il ne s'agit pas d'unne chaine de charatère
-		{
-		  trigger_error('Le type d\'un vendeur doit être une chaine de charactère', E_USER_WARNING);
-		  return;
-		}
 		$this->_type = $type;
 	 }
 	 
@@ -142,11 +112,6 @@ class Vendeur
 
 	//Setter numPre 
 	 public function setNumPre($numPre){
-		if (!is_String($numPre)) // S'il ne s'agit pas d'unne chaine de charatère
-		{
-		  trigger_error('Le numPre d\'un vendeur doit être une chaine de charactère', E_USER_WARNING);
-		  return;
-		}
 		$this->_numPre = $numPre;
 	 
 	 }
@@ -157,7 +122,7 @@ class Vendeur
 	  }
 
 	//Setter cheque 
-	 public function setTel($cheque){
+	 public function setCheque($cheque){
 		$this->_cheque = $cheque;
 	  }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -186,6 +151,8 @@ class Vendeur
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $idVendeur = $conn->insert_id;
+	  $this->setId($idVendeur);
 	  $db->close();
 	 }
 	 
@@ -222,7 +189,7 @@ class Vendeur
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	  $row = $res->fetch_row();
-	  $vendeur = new Vendeur((String)$row[1],(String)$row[2],(String)$row[3],(String)$row[4],(String)$row[5],(String)$row[6],(String)$row[7]);
+	  $vendeur = new Vendeur((String)$row[1],(String)$row[2],(String)$row[3],(String)$row[4],(String)$row[5],(String)$row[6],(String)$row[7], (Int)$row[8]);
 	  $vendeur->setId((int)$row[0]);
 	  return $vendeur;
 	 }
@@ -242,7 +209,7 @@ class Vendeur
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	  $row = $res->fetch_row();
-	  $vendeur = new Vendeur((String)$row[1],(String)$row[2],(String)$row[3],(String)$row[4],(String)$row[5],(String)$row[6],(String)$row[7]);
+	  $vendeur = new Vendeur((String)$row[1],(String)$row[2],(String)$row[3],(String)$row[4],(String)$row[5],(String)$row[6],(String)$row[7], (Int)$row[8]);
 	  $vendeur->setId((int)$row[0]);
 	  return $vendeur;
 	}
@@ -261,7 +228,7 @@ class Vendeur
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	  $row = $res->fetch_row();
-	  $vendeur = new Vendeur((String)$row[1],(String)$row[2],(String)$row[3],(String)$row[4],(String)$row[5],(String)$row[6],(String)$row[7]);
+	  $vendeur = new Vendeur((String)$row[1],(String)$row[2],(String)$row[3],(String)$row[4],(String)$row[5],(String)$row[6],(String)$row[7], (Int)$row[8]);
 	  $vendeur->setId((int)$row[0]);
 	  return $vendeur;
 	}

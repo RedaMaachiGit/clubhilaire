@@ -34,7 +34,7 @@ class Administration
 	*/ 
 	
 	public Static function addFraisDepot($niveau, $frais){ 
-	  $query = "INSERT INTO FraisDepot (idDepot,niveau,frais)";
+	  $query = "INSERT INTO FraisDepotAdmin (idDepotAdmin,niveauDepotAdmin,fraisDepotAdmin) VALUES ('','".$niveau."','".$frais."')";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -43,16 +43,27 @@ class Administration
 	 }
 	 
 	public Static function deleteFraisDepotById($id){ 
-	  $query = "DELETE FROM FraisDepot idDepot=".$id;
+	  $query = "DELETE FROM FraisDepotAdmin idDepotAdmin=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	 }
+	 
+	public static function getFraisDepotByNiveeau($niveau){
+	  $query = "SELECT * FROM FraisDepotAdmin where niveauDepotAdmin <=".$niveau." ORDER BY fraisDepotAdmin desc";
+	  $db = new DB();
+	  $db->connect();
+	  $conn = $db->getConnectDb();
+	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $row = $res->fetch_row();
+	  $db->close();
+	  return (int)$row[2];
+	}
 	
 	public Static function updateNiveauFraisDepotById($id,$niveau){ 
-	  $query = "UPDATE fraisDepot SET niveau ='$niveau' WHERE idDepot=".$id;
+	  $query = "UPDATE fraisDepot SET niveauDepotAdmin ='$niveau' WHERE idDepotAdmin=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -61,12 +72,15 @@ class Administration
 	 } 
 	
 	public Static function updateFraisDepotById($id,$frais){ 
-	  $query = "UPDATE fraisDepot SET frais ='$frais' WHERE idDepot=".$id;
+	  $query = "UPDATE fraisDepot SET fraisDepotAdmin ='$frais' WHERE idDepotAdmin=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	 } 
+}
+
+
 
 ?>

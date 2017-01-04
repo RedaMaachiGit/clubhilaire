@@ -8,8 +8,8 @@ class Modele
 {
   private $_idModele;
   private $_libelle;
-  private $_categorie;
   private $_homologation;
+  private $_categorie;
   private $_marque;
    
    
@@ -18,11 +18,11 @@ class Modele
 /////CONSTRUCTEUR////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  
-	 public function __construct($libelle, $categorie, $homologation,$marque){	 
+	 public function __construct($libelle, $homologation,$marque,$categorie){	 
 		$this->setLibelle($libelle); // Initialisation du libelle
-		$this->setCategorie($categorie); // Initialisation de la categorie
 		$this->setHomologation($homologation); // Initialisation de l'homologation
 		$this->setMarque($marque);
+		$this->setCategorie($categorie);
 	}
   
   
@@ -56,20 +56,6 @@ class Modele
 		$this->_libelle = $libelle;
 	  }
 	 
-	//Getter categorie 
-	 public function getCategorie(){
-		return $this->_categorie; 
-	 }
- 
-	 //Setter categorie
-	 public function setCategorie($categorie){
-		if (!is_String($categorie)) // S'il ne s'agit pas d'unne chaine de charatère
-		{
-		  trigger_error('La categorie d\'un modele doit être une chaine de charactère', E_USER_WARNING);
-		  return;
-		}
-		$this->_categorie = $categorie;
-	  }
 	  
 	 //Getter homologation
 	 public function getHomologation(){
@@ -78,11 +64,6 @@ class Modele
 	 
 	 //Setter homologation
 	 public function setHomologation($homologation){
-		if (!is_String($homologation)) // S'il ne s'agit pas d'unne chaine de charatère
-		{
-		  trigger_error('L\'homologation d\'un modele doit être une chaine de charactère', E_USER_WARNING);
-		  return;
-		}
 		$this->_homologation = $homologation;
 	  }
 	  
@@ -94,6 +75,16 @@ class Modele
 	 //Setter marque
 	 public function setMarque($marque){
 		$this->_marque = $marque;
+	  }
+	  
+	//Getter categorie
+	 public function getCategorie(){
+		 return $this->_categorie;
+	 }
+	 
+	 //Setter marque
+	 public function setCategorie($categorie){
+		$this->_categorie = $categorie;
 	  }
  
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -113,8 +104,8 @@ class Modele
 	  $homologation = $this->getHomologation();
 	  $idMarque = $this->getMarque()->getId();
 	  
-	  $query = "INSERT INTO Modele (idModele, libelle, categorie, homologation,idMarque)
-	  VALUES ('','".$libelle."','".$categorie."','".$homologation."','".$idMarque."')";
+	  $query = "INSERT INTO Modele (idModele, libelle, homologation,idMarque)
+	  VALUES ('','".$libelle."','".$homologation."','".$idMarque."')";
 	  
 	  $db = new DB();
 	  $db->connect();
@@ -129,8 +120,7 @@ class Modele
 	    Output : le modele en base de donnée ayant l'id passé en input
 	*/
 	
-	 public Static function getModeleById($id){
-		 
+	 public Static function getModeleById($id){	 
 	  $query = "SELECT * FROM Modele WHERE idModele=".$id;
 	  $db = new DB();
 	  $db->connect();
@@ -138,8 +128,8 @@ class Modele
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	  $row = $res->fetch_row();
-	  $marque::getMarqueById((int)$row[4]);
-	  $modele = new Modele((String)$row[1],(String)$row[2],(String)$row[3],$marque);
+	  $marque = Marque::getMarqueById((int)$row[4]);
+	  $modele = new Modele((String)$row[1],(String)$row[2],$marque,(String)$row[3]);
 	  $modele->setId((int)$row[0]);
 	  return $modele;
 	 }
@@ -160,7 +150,7 @@ class Modele
 	  $db->close();
 	  $row = $res->fetch_row();
 	  $marque = Marque::getMarqueById((int)$row[4]);
-	  $modele = new Modele((String)$row[1],(String)$row[2],(String)$row[3],$marque);
+	  $modele = new Modele((String)$row[1],(String)$row[2],$marque,(String)$row[3]);
 	  $modele->setId((int)$row[0]);
 	  return $modele;
 	 }
@@ -197,6 +187,21 @@ class Modele
 	  return $res;
 	 }
 	 
+	public static function modeleExistByLibelle($libelle){
+	  $query = "SELECT * FROM Modele WHERE libelle='$libelle'";
+	  $db = new DB();
+	  $db->connect();
+	  $conn = $db->getConnectDb();
+	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $db->close();
+	  echo($res->num_rows);
+	  if($res->num_rows == 0 ){
+		  return false;
+	  }else{
+		  return true;
+	  }
+	}
+	 
 	 public function delete() {
 	  $id = $this>getId();
 	  $query = "DELETE FROM Modele WHERE idMarque=".$id;
@@ -217,17 +222,7 @@ class Modele
 	  $this->setLibelle($libelle);
 	  $db->close();
 	 }
-	 
-	 public function updateCategorie($categorie) {
-	  $id = $this>getId();
-	  $query = "UPDATE Modele SET categorie ='$categorie' WHERE idModele=".$id;
-	  $db = new DB();
-	  $db->connect();
-	  $conn = $db->getConnectDb();
-	  $res = $conn->query($query) or die(mysqli_error($conn));
-	  $this->setCategorie($categorie);
-	  $db->close();
-	 }
+
 	 
 	 public function updateHomologation($homologation) {
 	  $id = $this>getId();

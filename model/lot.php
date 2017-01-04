@@ -24,12 +24,14 @@ class Lot
 /////CONSTRUCTEUR////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  
-	 public function __construct($numeroCoupon, $numeroLotVendeur, $prix, $status, $vendeur){	 
+	 public function __construct($numeroCoupon, $numeroLotVendeur, $prix, $vendeur){	 
 		$this->setCoupon($numeroCoupon);
 		$this->setNumeroLotVendeur($numeroLotVendeur);
 		$this->setPrix($prix); 
-		$this->setStatus($status);
+		$this->setStatus("En vente");
 		$this->setVendeur($vendeur);
+		$today = date("d-m-Y H:i:s");  
+		$this->setDateDepot($today);
 	}
   
   
@@ -80,11 +82,6 @@ class Lot
 	 
 	//Setter numeroLotVendeur 
 	 public function setNumeroLotVendeur($numeroLotVendeur){
-		if (!is_String($numeroLotVendeur)) // S'il ne s'agit pas d'unne chaine de charatère
-		{
-		  trigger_error('Le numeroLotVendeur d\'un lot doit être une chaine de charactère', E_USER_WARNING);
-		  return;
-		}
 		$this->_numeroLotVendeur = $numeroLotVendeur;
 	  }
 	 
@@ -119,6 +116,17 @@ class Lot
 		$this->_vendeur = $vendeur;
 	  }
 	  
+	//Setter dateDepot
+	public function setDateDepot($date){
+		$this->_dateDepot = $date;
+	}
+	
+	//getter dateDepot
+	public function getDateDepot(){
+		return $this->_dateDepot;
+	}
+	
+	  
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////FunctionToDataBase//////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -136,18 +144,18 @@ class Lot
 	  $prix = $this->getPrix();
 	  $status = $this->getStatus();
 	  $acheteur = $this->getAcheteur();
+	  $vendeur = $this->getVendeur();
+	  $dateDepot = $this->getDateDepot();
 	  $idA=null;
 	  $idV=null;
 	  if($acheteur!=null){
 		  $idA=$acheteur->getId();
 	  }
-	  $vendeur = $this->getVendeur();
 	  if($vendeur!=null){
 		  $idV=$vendeur->getId();
 	  }
-	  $query = "INSERT INTO Lot (idLot, numeroCoupon, numeroLotVendeur, prixVente, statut, idAcheteur, idVendeur)
-	  VALUES ('','".$coupon."','".$numeroLotVendeur."','".$prix."','".$status."','".$idA."','".$idV."')";
-	  
+	  $query = "INSERT INTO Lot (idLot, numeroCoupon, numeroLotVendeur, prixVente, statut, idAcheteur, idVendeur,dateDepot)
+	  VALUES ('','".$coupon."','".$numeroLotVendeur."','".$prix."','".$status."','".$idA."','".$idV."','".$dateDepot."')";	  
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -155,9 +163,6 @@ class Lot
 	  $db->close();
 	 }
 	 
-	public function acheter($idVendeur){
-		l
-	}
 	 
 		/* 
 		public function delete() -> delete en base de données l'instance
@@ -261,10 +266,4 @@ class Lot
 	  $db->close();	 
 	 }
 }
-
-$lot = new Lot("coupon","numeroLotVendeur",100,"enregistre",NULL);
-$lot->save();
-$Lelot = Lot::getLotById(3);
-
-
 ?>
