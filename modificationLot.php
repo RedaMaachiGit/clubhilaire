@@ -136,7 +136,7 @@
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form id="articleForm" method="POST" action="ajoutLot.php" class="form-horizontal">
+            <form id="articleForm" method="POST" action="ControlleurLot.php" class="form-horizontal">
               <div class="box-body">
 
                 <div class="form-group">
@@ -613,7 +613,7 @@ $(document).ready(function() {
 
             // Update the name attributes
             $clone
-                .find('[name="typedematos"]').attr('name', 'article[' + articleIndex + '].typedematos').end()
+                .find('[name="typedematos"]').attr('name', 'article[' + articleIndex + '][typedematos]').end()
                 .find('[name="marque"]').attr('name', 'article[' + articleIndex + '].marque').end()
                 .find('[name="modele"]').attr('name', 'article[' + articleIndex + '].modele').end()
                 .find('[name="ptvmax"]').attr('name', 'article[' + articleIndex + '].ptvmax').end()
@@ -649,6 +649,7 @@ $(document).ready(function() {
                 .find('[name="inputtypeaccessoire"]').attr('name', 'article[' + articleIndex + '][inputtypeaccessoire]').end()
                 .find('[name="inputcertificat"]').attr('name', 'article[' + articleIndex + '][inputcertificat]').end()
 
+                .find('[id="inputtypedematos"]').attr('id', 'article[' + articleIndex + '][inputtypedematos]').end()
                 .find('[id="inputmarque"]').attr('id', 'article[' + articleIndex + '][inputmarque]').end()
                 .find('[id="inputmodele"]').attr('id', 'article[' + articleIndex + '][inputmodele]').end()
                 .find('[id="inputptvmax"]').attr('id', 'article[' + articleIndex + '][inputptvmax]').end()

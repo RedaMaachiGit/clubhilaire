@@ -125,10 +125,73 @@
     <!-- Main content -->
     <section class="content">
 
-    <!-- Your Page Content Here -->
-      <div class="row">
-
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">Ce lot contient</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <table id="example1" class="table table-bordered table-striped">
+            <thead>
+            <tr>
+              <th>Numéro lot</th>
+              <th>Coupon</th>
+              <th>Nom</th>
+              <th>Email</th>
+              <th>Prix</th>
+              <th>État</th>
+              <th>Édition</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>123</td>
+              <td>1</td>
+              <td>Durand</td>
+              <td>durand@gmail.com</td>
+              <td>100</td>
+              <td>en préparation</td>
+              <td>False</td>
+            </tr>
+            <tr>
+              <td>123</td>
+              <td>1</td>
+              <td>Durand</td>
+              <td>durand@gmail.com</td>
+              <td>100</td>
+              <td>en préparation</td>
+              <td>False</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+              <th>Numéro lot</th>
+              <th>Coupon</th>
+              <th>Nom</th>
+              <th>Email</th>
+              <th>Prix</th>
+              <th>État</th>
+              <th>Édition</th>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
+        <!-- /.box-body -->
       </div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-aqua"><i class="fa fa-eur"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Prix du lot</span>
+              <span class="info-box-number" style="font-size:30px">1,410</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+
 
     </section>
     <!-- /.content -->
