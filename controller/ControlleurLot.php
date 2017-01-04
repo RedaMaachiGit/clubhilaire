@@ -7,7 +7,6 @@
 	echo("Last name: " . $_POST['inputPrenom'] . "<br />\n");
 	echo("Phone: " . $_POST['inputTelephone'] . "<br />\n");
 	echo("Email: " . $_POST['inputEmail'] . "<br />\n");
-	echo("Marque: " . $_POST['article'][0][inputmarque] . "<br />\n");
 	echo("Index of products: " . $_POST['index'] . "<br />\n");
 	if(isset($_POST['index']) && !empty($_POST['index'])) {
 		$numberOfProducts = $_POST['index'];
