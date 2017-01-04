@@ -1,9 +1,18 @@
 <!DOCTYPE html>
+<?php
+  //echo("Numero lot: " . $_POST['numeroLot'] . "<br />\n"); //TRACE
+  $id = $_POST['numeroLot'];
+//  $connect = ConnexionDB(); // Je me connecte à la base de donnée
+
+//  $updateLot = "SELECT * FROM Lot WHERE numeroLot = '$id'" or die("Erreur lors de la consultation de données (updateLot)" . mysqli_error($connect));
+//  $req = $connect->query($updateLot);
+?>
+
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Ajout lot</title>
+  <title>Vendre un lot</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -104,12 +113,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Ajout de lots
-        <small>Ajoutez avec précaution</small>
+        Vente du lot numéro <?php echo $_POST['numeroLot'] ?>
+        <small>Vous êtes sur le point de vendre un lot</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="index.html"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Nouveau lot</li>
+        <li class="active">Vente lot</li>
       </ol>
     </section>
 
@@ -118,200 +127,14 @@
 
     <!-- Your Page Content Here -->
       <div class="row">
-        <!-- left column -->
-        <div class="col-md-6">
-          <!-- general form elements -->
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Ajouter des lots à partir d'un fichier</h3>
-            </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-            <form role="form">
-              <div class="box-body">
-                <div class="form-group">
-                  <label for="exampleInputFile">File input</label>
-                  <input type="file" id="exampleInputFile">
 
-                  <p class="help-block">Le fichier à importer ici doit être propre.</p>
-                </div>
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"> <output></output>
-                  </label>
-                </div>
-              </div>
-              <!-- /.box-body -->
-
-              <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Valider</button>
-              </div>
-            </form>
-          </div>
-          <!-- /.box -->
-
-          <!-- general button import all files -->
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Ajouter des lots à partir de tous les fichiers CSV</h3>
-            </div>
-            <div class="box-footer">
-              <button type="button" class="btn btn-block btn-danger btn-lg">IMPORTER TOUS LES FICHIERS</button>
-              <p class="help-block">Les fichiers qui seront importés se trouvent dans le dossier NomDeDossier.</p>
-            </div>
-          </div>
-
-
-        </div>
-        <!--/.col (left) -->
-        <!-- right column -->
-        <div class="col-md-6">
-          <!-- Horizontal Form -->
-          <div class="box box-info">
-            <div class="box-header with-border">
-              <h3 class="box-title">Ajouter un lot à la main</h3>
-            </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-            <form id="articleForm" method="POST" action="ajoutLot.php" class="form-horizontal">
-              <div class="box-body">
-                
-                <div class="form-group">
-                  <label for="inputNom" class="col-sm-2 control-label">Nom</label>
-
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" value="" id="inputNom" name="inputNom" placeholder="Nom">
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="inputPrenom" class="col-sm-2 control-label">Prénom</label>
-
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" value="" id="inputPrenom" name="inputPrenom" placeholder="Prénom">
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="inputTelephone" class="col-sm-2 control-label">Téléphone</label>
-
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" value="" id="inputTelephone" name="inputTelephone" placeholder="Phone number">
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="inputEmail" class="col-sm-2 control-label">Email</label>
-
-                  <div class="col-sm-10">
-                    <input type="email" class="form-control" value="" id="inputEmail" name="inputEmail" placeholder="Email">
-                  </div>
-                </div>
-
-                <!-- The template for adding new field -->
-                  
-                <div class="col-sm-12 form-group">
-                    <label>Type d'article</label>
-                    <select class="col-sm-5 form-control" id="article[0].inputtypedematos" name="article[0][typedematos]" data-index='0' onchange="handleTypeChange(this)">
-                      <option value="0">Voile</option>
-                      <option value="1">Selette</option>
-                      <option value="2">Parachute de secours</option>
-                      <option value="3">Accessoire</option>
-                    </select>
-                </div>
-
-                <div class="form-group" name="article[0].marque">
-                  <label for="inputmarque" class="col-sm-2 control-label">Marque</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="article[0].inputmarque" value="" name="article[0][inputmarque]" placeholder="Marque" />
-                  </div>
-                </div>
-
-
-                <div class="form-group" name="article[0].modele">
-                  <label for="inputmodele" class="col-sm-2 control-label">Modele</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="article[0].inputmodele" value="" name="article[0][inputmodele]"  placeholder="Modele" />
-                  </div>
-                </div>
-
-                <div class="form-group" id="article[0].ptvmaxgroup" name="article[0].ptvmax">
-                  <label for="inputptvmax" class="col-sm-2 control-label">PTV Max</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="article[0].inputptvmax" value="" name="article[0][inputptvmax]"  placeholder="PTV Maximum" />
-                  </div>
-                </div>
-
-                <div class="form-group" id="article[0].ptvmingroup" name="article[0].ptvmin">
-                  <label for="inputptvmin" class="col-sm-2 control-label">PTV Min</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="article[0].inputptvmin"  name="article[0][inputptvmin]"  placeholder="PTV Minimum" />
-                  </div>
-                </div>
-
-                <div class="form-group" id="article[0].taillegroup" name="article[0].taille">
-                  <label for="inputtaille" class="col-sm-2 control-label">Taille</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="article[0].inputtaille"  name="article[0][inputtaille]"  placeholder="Taille" />
-                  </div>
-                </div>
-
-                <div class="form-group" id="article[0].surfacegroup" name="article[0].surface">
-                  <label for="inputsurface" class="col-sm-2 control-label">Surface</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="article[0].inputsurface" name="article[0][inputsurface]"  placeholder="Surface" />
-                  </div>
-                </div>
-
-                <div class="form-group" id="article[0].couleurgroup" name="article[0].couleur">
-                  <label for="inputcouleur" class="col-sm-2 control-label">Couleur</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="article[0].inputcouleur" name="article[0][inputcouleur]"  placeholder="Couleur" />
-                  </div>
-                </div>
-
-                <div class="form-group" id="article[0].heuregroup" name="article[0].heure">
-                  <label for="inputheuresdevol" class="col-sm-2 control-label">Heures de vol</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="article[0].inputheuresdevol"  name="article[0][inputheuresdevol]"  placeholder="Heures de vol" />
-                  </div>
-                </div>
-
-                <div class="form-group" id="article[0].typeaccessoiregroup" style="display:none" name="article[0].typeaccessoire">
-                  <label for="inputtypeaccessoire" class="col-sm-2 control-label">Type d'accessoire</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="article[0].inputtypeaccessoire"  name="article[0][inputtypeaccessoire]"  placeholder="Type d'accessoire" />
-                  </div>
-                </div>
-                
-                <div class="checkbox" name="article[0].certificat" id="article[0].certificatgroup">
-                  <label>
-                    <input type="checkbox" id="article[0].inputcertificat"  name="article[0][inputcertificat]"  > Certificat de révision <output></output>
-                  </label>
-                </div>
-                
-                <div class="col-xs-1">
-                  <button type="button" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>
-                </div>
-              </div>
-              <!-- /.box-body -->
-              <div class="box-footer">
-                <button type="submit" class="btn btn-default">Annuler</button>
-                <button type="submit" value="Submit" class="btn btn-info pull-right">Ajouter</button>
-              </div>
-              <!-- /.box-footer -->
-            </form>
-          </div>
-          <!-- /.box -->
-        </div>
-        <!--/.col (right) -->
       </div>
 
     </section>
     <!-- /.content -->
 
                 <div class="col-sm-12 form-group hide" id="articleTemplate">
-                  
+
                   <div class="col-sm-12 form-group">
                       <label>Type d'article</label>
                       <select class="col-sm-5 form-control" id="inputtypedematos" name="typedematos" data-index='0' onchange="handleTypeChange(this)">
@@ -329,8 +152,6 @@
                     </div>
                   </div>
 
-                  <input type="hidden" class="form-control" id="index" name="index" value="0" />
-                  
                   <div class="form-group" name="modele">
                     <label for="inputmodele" class="col-sm-2 control-label">Modele</label>
                     <div class="col-sm-10">
@@ -386,13 +207,13 @@
                       <input type="text" class="form-control" id="inputtypeaccessoire" name="inputtypeaccessoire" value="" placeholder="Type d'accessoire" />
                     </div>
                   </div>
-                  
+
                   <div class="checkbox" name="certificat" id="certificatgroup">
                     <label>
                       <input type="checkbox" id="inputcertificat" name="inputcertificat" value="" > Certificat de révision <output></output>
                     </label>
                   </div>
-                  
+
                   <div class="col-xs-1">
                     <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
                   </div>
@@ -503,17 +324,6 @@
 
 
 <script>
-// $('#articleForm').on('submit', function(e) {
-//     //prevent the default submithandling
-//     e.preventDefault();
-//     //send the data of 'this' (the matched form) to yourURL
-//     $.post('http://clubhilaire-madonna.rhcloud.com/ajoutLot.php', $(this).serialize());
-
-// });
-</script>
-
-
-<script>
 var articleIndex = 0;
 var handleTypeChange = function(e) {
   console.log(e.value);
@@ -603,7 +413,7 @@ var handleTypeChange = function(e) {
   }
 }
 $(document).ready(function() {
-    
+
     var marqueValidators = {
             row: '.col-xs-4',   // The title is placed inside a <div class="col-xs-4"> element
             validators: {
@@ -648,6 +458,8 @@ $(document).ready(function() {
             console.log('TRACE');
             articleIndex++;
             console.log(articleIndex);
+            document.getElementById("index").value = articleIndex + 1;
+            console.log(document.getElementById("index").value);
             var $form = $('#articleForm .box-body');
             var $template = $('#articleTemplate'),
                 $clone    = $template
@@ -720,8 +532,8 @@ $(document).ready(function() {
             //     .formValidation('addField', 'article[' + articleIndex + '].heure', heureValidators)
             //     .formValidation('addField', 'article[' + articleIndex + '].typeaccessoire', typeaccessoireValidators)
             //     .formValidation('addField', 'article[' + articleIndex + '].certificat', certificatValidators);
-        })
 
+        })
         // Remove button click handler
         .on('click', '.removeButton', function() {
             var $row  = $(this).parents('.form-group'),
@@ -748,7 +560,7 @@ $(document).ready(function() {
         // $(document).on('change', $('#article['+ articleIndex +'].inputtypedematos'), function() {
         //     var e = document.getElementById("article["+ articleIndex +"].inputtypedematos");
         //     console.log(articleIndex);
-        //     
+        //
         //   });
 
 });
