@@ -12,24 +12,24 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Vendre un lot</title>
+  <title>Modifier un lot</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
-  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
-  <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
+  <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="../dist/css/skins/skin-blue.min.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <script src="../https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="../https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
 
@@ -40,7 +40,7 @@
   <header class="main-header">
 
     <!-- Logo -->
-    <a href="index.html" class="logo">
+    <a href="../index.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>ST</b>H</span>
       <!-- logo for regular state and mobile devices -->
@@ -64,7 +64,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+          <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p>Vendeur dashboard</p>
@@ -113,85 +113,164 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Vente du lot numéro <?php echo $_POST['numeroLot'] ?>
-        <small>Vous êtes sur le point de vendre un lot</small>
+        Modification du lot numéro <?php echo $_POST['numeroLot'] ?>
+        <small>Modifiez avec précaution</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="index.html"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Vente lot</li>
+        <li class="active">Nouveau lot</li>
       </ol>
     </section>
 
     <!-- Main content -->
     <section class="content">
 
-      <div class="box">
-        <div class="box-header">
-          <h3 class="box-title">Ce lot contient</h3>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body">
-          <table id="example1" class="table table-bordered table-striped">
-            <thead>
-            <tr>
-              <th>Numéro lot</th>
-              <th>Coupon</th>
-              <th>Nom</th>
-              <th>Email</th>
-              <th>Prix</th>
-              <th>État</th>
-              <th>Édition</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td>123</td>
-              <td>1</td>
-              <td>Durand</td>
-              <td>durand@gmail.com</td>
-              <td>100</td>
-              <td>en préparation</td>
-              <td>False</td>
-            </tr>
-            <tr>
-              <td>123</td>
-              <td>1</td>
-              <td>Durand</td>
-              <td>durand@gmail.com</td>
-              <td>100</td>
-              <td>en préparation</td>
-              <td>False</td>
-            </tr>
-            </tbody>
-            <tfoot>
-            <tr>
-              <th>Numéro lot</th>
-              <th>Coupon</th>
-              <th>Nom</th>
-              <th>Email</th>
-              <th>Prix</th>
-              <th>État</th>
-              <th>Édition</th>
-            </tr>
-            </tfoot>
-          </table>
-        </div>
-        <!-- /.box-body -->
-      </div>
-
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon bg-aqua"><i class="fa fa-eur"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Prix du lot</span>
-              <span class="info-box-number" style="font-size:30px">1,410</span>
+    <!-- Your Page Content Here -->
+      <div class="row">
+        <!-- right column -->
+        <div class="col-md-12">
+          <!-- Horizontal Form -->
+          <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">Modifier un lot à la main</h3>
             </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form id="articleForm" method="POST" action="ControlleurLot.php" class="form-horizontal">
+              <div class="box-body">
 
+                <div class="form-group">
+                  <label for="inputNom" class="col-sm-2 control-label">Nom</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" value="" id="inputNom" name="inputNom" placeholder="Nom">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="inputPrenom" class="col-sm-2 control-label">Prénom</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" value="" id="inputPrenom" name="inputPrenom" placeholder="Prénom">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="inputTelephone" class="col-sm-2 control-label">Téléphone</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" value="" id="inputTelephone" name="inputTelephone" placeholder="Phone number">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+
+                  <div class="col-sm-10">
+                    <input type="email" class="form-control" value="" id="inputEmail" name="inputEmail" placeholder="Email">
+                  </div>
+                </div>
+
+                <!-- The template for adding new field -->
+
+                <div class="col-sm-12 form-group">
+                    <label>Type d'article</label>
+                    <select class="col-sm-5 form-control" id="article[0].inputtypedematos" name="article[0][typedematos]" data-index='0' onchange="handleTypeChange(this)">
+                      <option value="0">Voile</option>
+                      <option value="1">Selette</option>
+                      <option value="2">Parachute de secours</option>
+                      <option value="3">Accessoire</option>
+                    </select>
+                </div>
+
+                <input type="hidden" class="form-control" id="index" name="index" value="0" />
+
+                <div class="form-group" name="article[0].marque">
+                  <label for="inputmarque" class="col-sm-2 control-label">Marque</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="article[0].inputmarque" value="" name="article[0][inputmarque]" placeholder="Marque" />
+                  </div>
+                </div>
+
+
+                <div class="form-group" name="article[0].modele">
+                  <label for="inputmodele" class="col-sm-2 control-label">Modele</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="article[0].inputmodele" value="" name="article[0][inputmodele]"  placeholder="Modele" />
+                  </div>
+                </div>
+
+                <div class="form-group" id="article[0].ptvmaxgroup" name="article[0].ptvmax">
+                  <label for="inputptvmax" class="col-sm-2 control-label">PTV Max</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="article[0].inputptvmax" value="" name="article[0][inputptvmax]"  placeholder="PTV Maximum" />
+                  </div>
+                </div>
+
+                <div class="form-group" id="article[0].ptvmingroup" name="article[0].ptvmin">
+                  <label for="inputptvmin" class="col-sm-2 control-label">PTV Min</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="article[0].inputptvmin"  name="article[0][inputptvmin]"  placeholder="PTV Minimum" />
+                  </div>
+                </div>
+
+                <div class="form-group" id="article[0].taillegroup" name="article[0].taille">
+                  <label for="inputtaille" class="col-sm-2 control-label">Taille</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="article[0].inputtaille"  name="article[0][inputtaille]"  placeholder="Taille" />
+                  </div>
+                </div>
+
+                <div class="form-group" id="article[0].surfacegroup" name="article[0].surface">
+                  <label for="inputsurface" class="col-sm-2 control-label">Surface</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="article[0].inputsurface" name="article[0][inputsurface]"  placeholder="Surface" />
+                  </div>
+                </div>
+
+                <div class="form-group" id="article[0].couleurgroup" name="article[0].couleur">
+                  <label for="inputcouleur" class="col-sm-2 control-label">Couleur</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="article[0].inputcouleur" name="article[0][inputcouleur]"  placeholder="Couleur" />
+                  </div>
+                </div>
+
+                <div class="form-group" id="article[0].heuregroup" name="article[0].heure">
+                  <label for="inputheuresdevol" class="col-sm-2 control-label">Heures de vol</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="article[0].inputheuresdevol"  name="article[0][inputheuresdevol]"  placeholder="Heures de vol" />
+                  </div>
+                </div>
+
+                <div class="form-group" id="article[0].typeaccessoiregroup" style="display:none" name="article[0].typeaccessoire">
+                  <label for="inputtypeaccessoire" class="col-sm-2 control-label">Type d'accessoire</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="article[0].inputtypeaccessoire"  name="article[0][inputtypeaccessoire]"  placeholder="Type d'accessoire" />
+                  </div>
+                </div>
+
+                <div class="checkbox" name="article[0].certificat" id="article[0].certificatgroup">
+                  <label>
+                    <input type="checkbox" id="article[0].inputcertificat"  name="article[0][inputcertificat]"> Certificat de révision <output></output>
+                  </label>
+                </div>
+
+                <div class="col-xs-1">
+                  <button type="button" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>
+                </div>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <!-- <button type="submit" class="btn btn-default">Annuler</button> -->
+                <button type="submit" value="Submit" class="btn btn-info pull-right">Modifier</button>
+              </div>
+              <!-- /.box-footer -->
+            </form>
+          </div>
+          <!-- /.box -->
+        </div>
+        <!--/.col (right) -->
+      </div>
 
     </section>
     <!-- /.content -->
@@ -379,11 +458,11 @@
 <!-- REQUIRED JS SCRIPTS -->
 
 <!-- jQuery 2.2.3 -->
-<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
-<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="../bootstrap/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
-<script src="dist/js/app.min.js"></script>
+<script src="../dist/js/app.min.js"></script>
 
 
 <script>
@@ -534,7 +613,7 @@ $(document).ready(function() {
 
             // Update the name attributes
             $clone
-                .find('[name="typedematos"]').attr('name', 'article[' + articleIndex + '].typedematos').end()
+                .find('[name="typedematos"]').attr('name', 'article[' + articleIndex + '][typedematos]').end()
                 .find('[name="marque"]').attr('name', 'article[' + articleIndex + '].marque').end()
                 .find('[name="modele"]').attr('name', 'article[' + articleIndex + '].modele').end()
                 .find('[name="ptvmax"]').attr('name', 'article[' + articleIndex + '].ptvmax').end()
@@ -570,6 +649,7 @@ $(document).ready(function() {
                 .find('[name="inputtypeaccessoire"]').attr('name', 'article[' + articleIndex + '][inputtypeaccessoire]').end()
                 .find('[name="inputcertificat"]').attr('name', 'article[' + articleIndex + '][inputcertificat]').end()
 
+                .find('[id="inputtypedematos"]').attr('id', 'article[' + articleIndex + '][inputtypedematos]').end()
                 .find('[id="inputmarque"]').attr('id', 'article[' + articleIndex + '][inputmarque]').end()
                 .find('[id="inputmodele"]').attr('id', 'article[' + articleIndex + '][inputmodele]').end()
                 .find('[id="inputptvmax"]').attr('id', 'article[' + articleIndex + '][inputptvmax]').end()

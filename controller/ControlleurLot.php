@@ -7,7 +7,6 @@
 	echo("Last name: " . $_POST['inputPrenom'] . "<br />\n");
 	echo("Phone: " . $_POST['inputTelephone'] . "<br />\n");
 	echo("Email: " . $_POST['inputEmail'] . "<br />\n");
-	echo("Marque: " . $_POST['article'][0][inputmarque] . "<br />\n");
 	echo("Index of products: " . $_POST['index'] . "<br />\n");
 	if(isset($_POST['index']) && !empty($_POST['index'])) {
 		$numberOfProducts = $_POST['index'];
@@ -16,18 +15,19 @@
 	}
 	for ($i = 0; $i <= $numberOfProducts-1; $i++) {
 		$Type = $_POST['article'][$i][typedematos];
+		$Marque = $_POST['article'][$i][inputmarque];
+		$Modele = $_POST['article'][$i][inputmodele];
+		$Ptvmax = $_POST['article'][$i][inputptvmax];
+		$Ptvmin = $_POST['article'][$i][inputptvmin];
+		$Taille = $_POST['article'][$i][inputtaille];
+		$Surface = $_POST['article'][$i][inputsurface];
+		$Couleur = $_POST['article'][$i][inputcouleur];
+		$Heuresdevol = $_POST['article'][$i][inputheuresdevol];
+		$Certificat = $_POST['article'][$i][inputcertificat];
+		$Typeaccessoire = $_POST['article'][$i][inputtypeaccessoire];
+
 		if($Type == 0){
  			echo("Il s'agit d'une voile<br />\n");
-			$Marque = $_POST['article'][$i][inputmarque];
-			$Modele = $_POST['article'][$i][inputmodele];
-			$Ptvmax = $_POST['article'][$i][inputptvmax];
-			$Ptvmin = $_POST['article'][$i][inputptvmin];
-			$Taille = $_POST['article'][$i][inputtaille];
-			$Surface = $_POST['article'][$i][inputsurface];
-			$Couleur = $_POST['article'][$i][inputcouleur];
-			$Heuresdevol = $_POST['article'][$i][inputheuresdevol];
-			$Certificat = $_POST['article'][$i][inputcertificat];
-
 			echo("Marque: " . $Marque . "<br />\n");
 			echo("Modele: " . $Modele . "<br />\n");
 			echo("Ptvmax: " . $Ptvmax . "<br />\n");
@@ -39,28 +39,17 @@
 			echo("Certificat: " . $Certificat . "<br />\n");
 		} else if ($Type == 1){
  			echo("Il s'agit d'une selette<br />\n");
-			$Marque = $_POST['article'][$i][inputmarque];
-			$Modele = $_POST['article'][$i][inputmodele];
-			$Taille = $_POST['article'][$i][inputtaille];
-
 			echo("Marque: " . $Marque . "<br />\n");
 			echo("Modele: " . $Modele . "<br />\n");
 			echo("Taille: " . $Taille . "<br />\n");
 		} else if ($Type == 2){
  			echo("Il s'agit d'un parachute de secours<br />\n");
-			$Marque = $_POST['article'][$i][inputmarque];
-			$Modele = $_POST['article'][$i][inputmodele];
-			$Ptvmax = $_POST['article'][$i][inputptvmax];
-			$Ptvmin = $_POST['article'][$i][inputptvmin];
 			echo("Marque: " . $Marque . "<br />\n");
 			echo("Modele: " . $Modele . "<br />\n");
 			echo("Ptvmax: " . $Ptvmax . "<br />\n");
 			echo("Ptvmin: " . $Ptvmin . "<br />\n");
 		} else if ($Type == 3){
  			echo("Il s'agit d'un accessoire<br />\n");
-			$Marque = $_POST['article'][$i][inputmarque];
-			$Modele = $_POST['article'][$i][inputmodele];
-			$Typeaccessoire = $_POST['article'][$i][inputtypeaccessoire];
 			echo("Marque: " . $Marque . "<br />\n");
 			echo("Modele: " . $Modele . "<br />\n");
 			echo("Type accessoire: " . $Typeaccessoire . "<br />\n");
