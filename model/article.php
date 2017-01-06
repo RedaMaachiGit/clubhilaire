@@ -270,6 +270,7 @@ class Article
 	  $commentaire = $this->getCommentaire();
 	  $idL=null;
 	  $idM=null;
+	  $idMod=null;
 	  if($marque!=null){
 		  $idM=$marque->getId();
 	  }
@@ -287,6 +288,8 @@ class Article
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $idArticle = $conn->insert_id;
+	  $this->setId($idArticle);
 	  $db->close();
 	 }
 	 
