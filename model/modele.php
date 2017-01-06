@@ -111,6 +111,8 @@ class Modele
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $idModele = $conn->insert_id;
+	  $this->setId($idModele);
 	  $db->close();
 	 }
 	 
