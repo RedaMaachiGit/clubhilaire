@@ -160,6 +160,8 @@ class Lot
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $idLot = $conn->insert_id;
+	  $this->setId($idLot);
 	  $db->close();
 	 }
 	 

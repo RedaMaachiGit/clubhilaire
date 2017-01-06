@@ -68,6 +68,8 @@ class Marque
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $idMarque = $conn->insert_id;
+	  $this->setId($idMarque);
 	  $db->close();
 	 }
 	 
