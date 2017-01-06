@@ -1,26 +1,35 @@
 <!DOCTYPE html>
+<?php
+  //echo("Numero lot: " . $_POST['numeroLot'] . "<br />\n"); //TRACE
+  $id = $_POST['numeroLot'];
+//  $connect = ConnexionDB(); // Je me connecte à la base de donnée
+
+//  $updateLot = "SELECT * FROM Lot WHERE numeroLot = '$id'" or die("Erreur lors de la consultation de données (updateLot)" . mysqli_error($connect));
+//  $req = $connect->query($updateLot);
+?>
+
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Club Saint Hilaire | Parapente</title>
+  <title>Vendre un lot</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
-  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
-  <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
+  <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="../dist/css/skins/skin-blue.min.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <script src="../https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="../https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
 
@@ -31,7 +40,7 @@
   <header class="main-header">
 
     <!-- Logo -->
-    <a href="index.html" class="logo">
+    <a href="../index.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>ST</b>H</span>
       <!-- logo for regular state and mobile devices -->
@@ -55,7 +64,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+          <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p>Vendeur dashboard</p>
@@ -104,175 +113,101 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Page Header
-        <small>Optional description</small>
+        Vente du lot numéro <?php echo $_POST['numeroLot'] ?>
+        <small>Vous êtes sur le point de vendre un lot</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
+        <li><a href="index.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Vente lot</li>
       </ol>
     </section>
 
     <!-- Main content -->
     <section class="content">
 
-      <!-- Your Page Content Here -->
-      <div class="row">
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-aqua">
-            <div class="inner">
-              <h4>Ajout fichier</h4>
-
-              <p>Nouveau lot</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-plus-circled"></i>
-            </div>
-            <a href="views/nouveauLotFichier.html" class="small-box-footer">CLIQUEZ ICI <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">Ce lot contient</h3>
         </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-primary">
-            <div class="inner">
-              <h4>Ajout manuel</h4>
-
-              <p>Nouveau lot</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-plus-circled"></i>
-            </div>
-            <a href="views/nouveauLot.html" class="small-box-footer">CLIQUEZ ICI <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <table id="example1" class="table table-bordered table-striped">
+            <thead>
+            <tr>
+              <th>Numéro lot</th>
+              <th>Coupon</th>
+              <th>Nom</th>
+              <th>Email</th>
+              <th>Prix</th>
+              <th>État</th>
+              <th>Édition</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>123</td>
+              <td>1</td>
+              <td>Durand</td>
+              <td>durand@gmail.com</td>
+              <td>100</td>
+              <td>en préparation</td>
+              <td>False</td>
+            </tr>
+            <tr>
+              <td>123</td>
+              <td>1</td>
+              <td>Durand</td>
+              <td>durand@gmail.com</td>
+              <td>100</td>
+              <td>en préparation</td>
+              <td>False</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+              <th>Numéro lot</th>
+              <th>Coupon</th>
+              <th>Nom</th>
+              <th>Email</th>
+              <th>Prix</th>
+              <th>État</th>
+              <th>Édition</th>
+            </tr>
+            </tfoot>
+          </table>
         </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-green">
-            <div class="inner">
-              <h4>Modification</h4>
-
-              <p>Modifier lot</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-edit"></i>
-            </div>
-            <a href="views/numeroLotModification.html" class="small-box-footer">CLIQUEZ ICI <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-yellow">
-            <div class="inner">
-              <h4>Vendeur</h4>
-
-              <p>Nouveau vendeur</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-person-add"></i>
-            </div>
-            <a href="#" class="small-box-footer">CLIQUEZ ICI <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-maroon">
-            <div class="inner">
-              <h4>Consulter les lots</h4>
-
-              <p>Lots disponible</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-ios-eye"></i>
-            </div>
-            <a href="views/consulterLot.html" class="small-box-footer">CLIQUEZ ICI <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-purple">
-            <div class="inner">
-              <h4>Comptabilité</h4>
-
-              <p>Consulter la compta</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-cash"></i>
-            </div>
-            <a href="views/consulterComptabilite.html" class="small-box-footer">CLIQUEZ ICI <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-red">
-            <div class="inner">
-              <h4>Vente</h4>
-
-              <p>Vendre lot</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-ios-cart"></i>
-            </div>
-            <a href="views/numeroLotVente.html" class="small-box-footer">CLIQUEZ ICI <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-teal">
-            <div class="inner">
-              <h4>Restitution</h4>
-
-              <p>Restituer un lot</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-ios-box"></i>
-            </div>
-            <a href="views/Resititution.html" class="small-box-footer">CLIQUEZ ICI <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-orange">
-            <div class="inner">
-              <h4>Paiement</h4>
-
-              <p>Payer un/des lot(s)</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-pricetags"></i>
-            </div>
-            <a href="views/PaiementVendeur.html" class="small-box-footer">CLIQUEZ ICI <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
+        <!-- /.box-body -->
       </div>
 
+      <div class="box box-info">
+        <div class="info-box">
+          <span class="info-box-icon bg-aqua"><i class="fa fa-eur"></i></span>
 
+          <div class="info-box-content">
+            <span class="info-box-text">Prix du lot</span>
+            <span class="info-box-number" style="font-size:30px">1,410</span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
 
-
+      <div class="box box-info">
+        <form id="paiementForm" class="form-horizontal" method="POST" action="restitutionController.php" class="form-horizontal">
+          <div class="box-footer">
+            <!-- <button type="submit" class="btn btn-default">Annuler</button> -->
+            <button type="submit" value="Submit" class="btn btn-info center-block">Valider restitution</button>
+          </div>
+        </form>
+      </div>
     </section>
     <!-- /.content -->
+
   </div>
   <!-- /.content-wrapper -->
 
   <!-- Main Footer -->
   <footer class="main-footer">
-    <!-- To the right -->
-    <div class="pull-right hidden-xs">
-      Anything you want
-    </div>
     <!-- Default to the left -->
     <strong>Copyright &copy; 2016 <a href="https://clubsthilair.wordpress.com/">Club Hilaire</a>.</strong> All rights reserved.
   </footer>
@@ -359,11 +294,11 @@
 <!-- REQUIRED JS SCRIPTS -->
 
 <!-- jQuery 2.2.3 -->
-<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
-<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="../bootstrap/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
-<script src="dist/js/app.min.js"></script>
+<script src="../dist/js/app.min.js"></script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
