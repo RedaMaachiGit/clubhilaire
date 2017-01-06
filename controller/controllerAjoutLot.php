@@ -84,6 +84,8 @@ class ControllerAjoutLot {
 		$prenom = $_POST['inputPrenom'];
 		$tel = $_POST['inputTelephone'];
 		$email = $_POST['inputEmail'];
+		$adressePostale = $_POST['inputAdresse'];
+		$prixLot = $_POST['inputPrix'];
 
 		// echo("Index of products: " . $_POST['index'] . "<br />\n"); //TRACE
 		if(isset($_POST['index']) && !empty($_POST['index'])) {
