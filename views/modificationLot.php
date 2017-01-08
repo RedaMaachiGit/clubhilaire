@@ -1,11 +1,21 @@
 <!DOCTYPE html>
 <?php
+include_once('../model/Vendeur.php');
+include_once('../model/Lot.php');
+include_once('../model/Article.php');
+include_once('../model/modele.php');
+include_once('../model/marque.php');
   //echo("Numero lot: " . $_POST['numeroLot'] . "<br />\n"); //TRACE
-  $id = $_POST['numeroLot'];
+	//$id = $_POST['numeroLot'];
 //  $connect = ConnexionDB(); // Je me connecte à la base de donnée
 
 //  $updateLot = "SELECT * FROM Lot WHERE numeroLot = '$id'" or die("Erreur lors de la consultation de données (updateLot)" . mysqli_error($connect));
 //  $req = $connect->query($updateLot);
+	$lot= unserialize(urldecode(($_GET['lot'])));
+	$vendeur = $lot->getVendeur();
+	$articles = unserialize(urldecode($_GET['listArticle']));
+	echo($articles[0]->getId());
+	
 ?>
 
 <html>
@@ -113,7 +123,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Modification du lot numéro <?php echo $_POST['numeroLot'] ?>
+        Modification du lot numéro <?php echo $lot->getCoupon() ?>
         <small>Modifiez avec précaution</small>
       </h1>
       <ol class="breadcrumb">
@@ -136,14 +146,14 @@
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form id="articleForm" method="POST" action="ControlleurLot.php" class="form-horizontal">
+            <form id="articleForm" method="POST" action="../controller/controllerModificationLot.php" class="form-horizontal">
               <div class="box-body">
 
                 <div class="form-group">
                   <label for="inputNom" class="col-sm-2 control-label">Nom</label>
 
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" value="" id="inputNom" name="inputNom" placeholder="Nom">
+                    <input type="text" class="form-control" value="<?php echo($lot->getVendeur()->getNom()) ?>" id="inputNom" name="inputNom" placeholder=<?php echo($lot->getVendeur()->getNom()) ?>>
                   </div>
                 </div>
 
@@ -151,7 +161,7 @@
                   <label for="inputPrenom" class="col-sm-2 control-label">Prénom</label>
 
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" value="" id="inputPrenom" name="inputPrenom" placeholder="Prénom">
+                    <input type="text" class="form-control" value="<?php echo($lot->getVendeur()->getPrenom()) ?>" id="inputPrenom" name="inputPrenom" placeholder=<?php echo($lot->getVendeur()->getPrenom()) ?>>
                   </div>
                 </div>
 
@@ -159,7 +169,7 @@
                   <label for="inputTelephone" class="col-sm-2 control-label">Téléphone</label>
 
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" value="" id="inputTelephone" name="inputTelephone" placeholder="Phone number">
+                    <input type="text" class="form-control" value="<?php echo($lot->getVendeur()->getTel()) ?>" id="inputTelephone" name="inputTelephone" placeholder=<?php echo($lot->getVendeur()->getTel()) ?>>
                   </div>
                 </div>
 
@@ -167,7 +177,15 @@
                   <label for="inputEmail" class="col-sm-2 control-label">Email</label>
 
                   <div class="col-sm-10">
-                    <input type="email" class="form-control" value="" id="inputEmail" name="inputEmail" placeholder="Email">
+                    <input type="email" class="form-control" value="<?php echo($lot->getVendeur()->getEMail()) ?>" id="inputEmail" name="inputEmail" placeholder=<?php echo($lot->getVendeur()->getEMail()) ?>>
+                  </div>
+                </div>
+				
+				<div class="form-group">
+                  <label for="inputNom" class="col-sm-2 control-label">Nom</label>
+
+                  <div class="col-sm-10">
+                    <input type="hidden" class="form-control" value="<?php echo($lot->getVendeur()->getId()) ?>" id="inputIdVendeur" name="inputIdVendeur" placeholder=<?php echo($lot->getVendeur()->getId()) ?>>
                   </div>
                 </div>
 
