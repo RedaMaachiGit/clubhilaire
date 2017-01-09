@@ -281,7 +281,7 @@ class Article
 		  $idL=$lot->getId();
 	  }
 	  
-	  $query = "INSERT INTO Article (idLot, idMarque, idModele, type, ptvMinimum, ptvMaximum, taille, annee, surfaceVoile, couleurVoile,heureVolesVoile, certificatRevisionVoile, typeProtectionSelette,
+	  $query = "INSERT INTO article (idLot, idMarque, idModele, type, ptvMinimum, ptvMaximum, taille, annee, surfaceVoile, couleurVoile,heureVolesVoile, certificatRevisionVoile, typeProtectionSelette,
 	  typeAccessoire, commentaire, homologation) VALUES ('".$idL."','".$idM."','".$idMod."','".$type."','".$ptvMin."','".$ptvMax."','".$taille."','".$annee."','".$surfaceVoile."'
 	  ,'".$couleurVoile."','".$heureVoile."','".$certificat."','".$typeSelette."','".$typeAccessoire."','".$commentaire."','".$homologation."')";
 	  $db = new DB();
@@ -301,7 +301,7 @@ class Article
 	
 	public function delete() {
 		$id = $this->getId();
-		$query = "DELETE FROM Lot WHERE idLot=".$id;
+		$query = "DELETE FROM article WHERE idArticle=".$id;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
@@ -316,7 +316,7 @@ class Article
 	*/ 
 	 
 	public Static function getArticleById($id){ 
-	  $query = "SELECT * FROM Article WHERE idArticle=".$id;
+	  $query = "SELECT * FROM article WHERE idArticle=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -333,7 +333,7 @@ class Article
 	 }
 	 
 	public Static function gettAllArticle(){ 
-	  $query = "SELECT * FROM Article";
+	  $query = "SELECT * FROM article";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -344,7 +344,7 @@ class Article
 	 }
 	 
 	public Static function gettAllArticleGroupByLot(){ 
-	  $query = "SELECT * FROM Article GROUP BY idLot";
+	  $query = "SELECT * FROM article GROUP BY idLot";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -355,7 +355,7 @@ class Article
 	 }
 	
 	public Static function gettAllArticleGroupByMarque(){ 
-	  $query = "SELECT * FROM Article GROUP BY idMarque";
+	  $query = "SELECT * FROM article GROUP BY idMarque";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -366,7 +366,7 @@ class Article
 	 }
 	 
 	public Static function getLotByCertificat(){ 
-	  $query = "SELECT * FROM Article WHERE certificat=true";
+	  $query = "SELECT * FROM article WHERE certificat=true";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -383,7 +383,7 @@ class Article
 	 
 	public Static function getArticleByMarque($libelleMarque){
 		$marque = Marque::getMarqueByLibelle($libelleMarque);
-		$query = "SELECT * FROM Article WHERE idMarque=".$marque->getId();
+		$query = "SELECT * FROM article WHERE idMarque=".$marque->getId();
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
@@ -394,7 +394,7 @@ class Article
 
 	
 	 public static function getArticlesByLot($idLot){
-		$query = "SELECT * FROM Article WHERE idLot=".$idLot;
+		$query = "SELECT * FROM article WHERE idLot=".$idLot;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
@@ -414,7 +414,7 @@ class Article
 	 }
 	 
 	public function getArticleByPtvMin($ptvMin){
-		$query = "SELECT * FROM Article WHERE ptvMin >=".$ptvMin;
+		$query = "SELECT * FROM article WHERE ptvMin >=".$ptvMin;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
@@ -424,7 +424,7 @@ class Article
 	 }
 	 
 	public function getArticleByPtvMax($ptvMin){
-		$query = "SELECT * FROM Article WHERE ptvMax <=".$ptvMax;
+		$query = "SELECT * FROM article WHERE ptvMax <=".$ptvMax;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
@@ -434,7 +434,7 @@ class Article
 	 }
 	 
 	public function getArticleByPtvMinAndMax($ptvMin,$ptvMax){
-		$query = "SELECT * FROM Article WHERE ptvMin >=".$ptvMin."AND ptvMax <=".$ptvMax;
+		$query = "SELECT * FROM article WHERE ptvMin >=".$ptvMin."AND ptvMax <=".$ptvMax;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
@@ -445,7 +445,7 @@ class Article
 	
 	public function updatePtvMin($ptvMin){
 		$id = $this->getId();
-		$query = "UPDATE Article SET ptvMin =".$ptvMin." WHERE idLot=".$id;
+		$query = "UPDATE article SET ptvMin =".$ptvMin." WHERE idLot=".$id;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
@@ -456,7 +456,7 @@ class Article
 	 
 	public function updatePtvMax($ptvMax){
 		$id = $this->getId();
-		$query = "UPDATE Article SET ptvMax =".$ptvMax." WHERE idLot=".$id;
+		$query = "UPDATE article SET ptvMax =".$ptvMax." WHERE idLot=".$id;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
@@ -467,7 +467,7 @@ class Article
 	 
 	 public function updateSurface($surface){
 		$id = $this->getId();
-		$query = "UPDATE Article SET surfaceVoile =".$surface." WHERE idLot=".$id;
+		$query = "UPDATE article SET surfaceVoile =".$surface." WHERE idLot=".$id;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
@@ -478,7 +478,7 @@ class Article
 	 
 	 public function updateTypeArticle($typeArticle){
 		$id = $this->getId();
-		$query = "UPDATE Article SET typeArticle ='$typeArticle' WHERE idLot=".$id;
+		$query = "UPDATE article SET typeArticle ='$typeArticle' WHERE idLot=".$id;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
@@ -489,7 +489,7 @@ class Article
 	 
 	public function updateTypeAccessoire($typeAccessoire){
 		$id = $this->getId();
-		$query = "UPDATE Article SET typeAccessoire ='$typeAccessoire' WHERE idLot=".$id;
+		$query = "UPDATE article SET typeAccessoire ='$typeAccessoire' WHERE idLot=".$id;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
@@ -500,7 +500,7 @@ class Article
 	 
 	public function updateCouleurVoile($couleurVoile){
 		$id = $this->getId();
-		$query = "UPDATE Article SET couleurVoile ='$couleurVoile' WHERE idLot=".$id;
+		$query = "UPDATE article SET couleurVoile ='$couleurVoile' WHERE idLot=".$id;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
@@ -511,7 +511,7 @@ class Article
 	 
 	public function updateHeureVoile($heureVoile){
 		$id = $this->getId();
-		$query = "UPDATE Article SET heureVoile ='$heureVoile' WHERE idLot=".$id;
+		$query = "UPDATE article SET heureVoile ='$heureVoile' WHERE idLot=".$id;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
@@ -522,7 +522,7 @@ class Article
 	 
 	public function updateCertificat($certificat){
 		$id = $this->getId();
-		$query = "UPDATE Article SET certificat ='$certificat' WHERE idLot=".$id;
+		$query = "UPDATE article SET certificat ='$certificat' WHERE idLot=".$id;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
@@ -533,7 +533,7 @@ class Article
 	 
 	public function updateTypeProtectionSelette($typeProtectionSelette){
 		$id = $this->getId();
-		$query = "UPDATE Article SET typeProtectionSelette ='$typeProtectionSelette' WHERE idLot=".$id;
+		$query = "UPDATE article SET typeProtectionSelette ='$typeProtectionSelette' WHERE idLot=".$id;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();

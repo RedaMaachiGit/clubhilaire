@@ -104,7 +104,7 @@ class Modele
 	  $homologation = $this->getHomologation();
 	  $idMarque = $this->getMarque()->getId();
 	  
-	  $query = "INSERT INTO Modele (libelle, homologation,idMarque)
+	  $query = "INSERT INTO modele (libelle, homologation,idMarque)
 	  VALUES ('".$libelle."','".$homologation."','".$idMarque."')";
 	  
 	  $db = new DB();
@@ -123,7 +123,7 @@ class Modele
 	*/
 	
 	 public Static function getModeleById($id){	 
-	  $query = "SELECT * FROM Modele WHERE idModele=".$id;
+	  $query = "SELECT * FROM modele WHERE idModele=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -144,7 +144,7 @@ class Modele
 	*/	
 	
 	 public Static function getModeleByLibelle($libelle){
-	  $query = "SELECT * FROM Modele WHERE libelle = '$libelle'";
+	  $query = "SELECT * FROM modele WHERE libelle = '$libelle'";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -164,7 +164,7 @@ class Modele
 	*/	
 	
 	 public Static function getModeleByCategorie($categorie){
-	  $query = "SELECT * FROM Modele WHERE categorie = '$categorie'";
+	  $query = "SELECT * FROM modele WHERE categorie = '$categorie'";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -180,7 +180,7 @@ class Modele
 	*/	
 	
 	 public Static function getModeleByHomologation($homologation){
-	  $query = "SELECT * FROM Modele WHERE homologation = '$homologation'";
+	  $query = "SELECT * FROM modele WHERE homologation = '$homologation'";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -190,7 +190,7 @@ class Modele
 	 }
 	 
 	public static function modeleExistByLibelle($libelle){
-	  $query = "SELECT * FROM Modele WHERE libelle='$libelle'";
+	  $query = "SELECT * FROM modele WHERE libelle='$libelle'";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -206,7 +206,7 @@ class Modele
 	 
 	 public function delete() {
 	  $id = $this>getId();
-	  $query = "DELETE FROM Modele WHERE idMarque=".$id;
+	  $query = "DELETE FROM modele WHERE idMarque=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -216,7 +216,7 @@ class Modele
 	 
 	 public function updateLibelle($libelle) {
 	  $id = $this>getId();
-	  $query = "UPDATE Modele SET libelle ='$libelle' WHERE idModele=".$id;
+	  $query = "UPDATE modele SET libelle ='$libelle' WHERE idModele=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -228,7 +228,7 @@ class Modele
 	 
 	 public function updateHomologation($homologation) {
 	  $id = $this>getId();
-	  $query = "UPDATE Modele SET homologation ='$homologation' WHERE idModele=".$id;
+	  $query = "UPDATE modele SET homologation ='$homologation' WHERE idModele=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();

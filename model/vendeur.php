@@ -144,7 +144,7 @@ class Vendeur
 	  $adresse = $this->getAdresse();
 	  $type = $this->getTypeVendeur();
 	  $numPre = $this->getNumPre();
-	  $query = "INSERT INTO Vendeur (nom, prenom, telephone, mail, adresse, type, numPre)
+	  $query = "INSERT INTO vendeur (nom, prenom, telephone, mail, adresse, type, numPre)
 	  VALUES ('".$nom."','".$prenom."','".$tel."','".$email."','".$adresse."','".$type."','".$numPre."')";
 	   
 	  $db = new DB();
@@ -165,7 +165,7 @@ class Vendeur
 	
 	public function delete() {
 		$id = $this->getId();
-		$query = "DELETE FROM Vendeur WHERE idVendeur=".$id;
+		$query = "DELETE FROM vendeur WHERE idVendeur=".$id;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
@@ -182,7 +182,7 @@ class Vendeur
 	
 	public Static function getVendeurById($id){
 		 
-	  $query = "SELECT * FROM Vendeur WHERE idVendeur=".$id;
+	  $query = "SELECT * FROM vendeur WHERE idVendeur=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -202,7 +202,7 @@ class Vendeur
 	*/
 	
 	public Static function getVendeurByMail($mail){
-	  $query = "SELECT * FROM Vendeur WHERE mail = '$mail'";
+	  $query = "SELECT * FROM vendeur WHERE mail = '$mail'";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -221,7 +221,7 @@ class Vendeur
 	*/
 	
 	public Static function getVendeurByNumPre($numPre){
-	  $query = "SELECT * FROM Vendeur WHERE numPre = '$numPre'";
+	  $query = "SELECT * FROM vendeur WHERE numPre = '$numPre'";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -240,7 +240,7 @@ class Vendeur
 	*/
 	
 	public Static function getVendeurByType($Type){
-	  $query = "SELECT * FROM Vendeur WHERE type = '$type'";
+	  $query = "SELECT * FROM vendeur WHERE type = '$type'";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -256,7 +256,7 @@ class Vendeur
 	*/
 	
 	public static function getIdVendeurByMail($mail) {
-	  $query = "SELECT idVendeur FROM Vendeur WHERE mail='$mail'";
+	  $query = "SELECT idVendeur FROM vendeur WHERE mail='$mail'";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -274,7 +274,7 @@ class Vendeur
 	*/
 	
 	public static function vendeurExistByMail($mail){
-	  $query = "SELECT * FROM Vendeur WHERE mail='$mail'";
+	  $query = "SELECT * FROM vendeur WHERE mail='$mail'";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -296,7 +296,7 @@ class Vendeur
 	
 	public function updateNom($nom) {
 	  $id = $this->getId();
-	  $query = "UPDATE Vendeur SET nom ='$nom' WHERE idVendeur=".$id;
+	  $query = "UPDATE vendeur SET nom ='$nom' WHERE idVendeur=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -313,7 +313,7 @@ class Vendeur
 	
 	public function updatePrenom($prenom) {
 	  $id = $this->getId();
-	  $query = "UPDATE Vendeur SET prenom ='$prenom' WHERE idVendeur=".$id;
+	  $query = "UPDATE vendeur SET prenom ='$prenom' WHERE idVendeur=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -332,7 +332,7 @@ class Vendeur
 	
 	public function updateMail($mail) {
 	  $id = $this->getId();
-	  $query = "UPDATE Vendeur SET mail ='$mail' WHERE idVendeur=".$id;
+	  $query = "UPDATE vendeur SET mail ='$mail' WHERE idVendeur=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -350,7 +350,7 @@ class Vendeur
 	
 	public function updateAdresse($adresse) {
 	  $id = $this->getId();
-	  $query = "UPDATE Vendeur SET adresse ='$adresse' WHERE idVendeur=".$id;
+	  $query = "UPDATE vendeur SET adresse ='$adresse' WHERE idVendeur=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -367,7 +367,7 @@ class Vendeur
 	
 	public function updateTel($tel) {
 	  $id = $this->getId();
-	  $query = "UPDATE Vendeur SET telephone ='$tel' WHERE idVendeur=".$id;
+	  $query = "UPDATE vendeur SET telephone ='$tel' WHERE idVendeur=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -384,7 +384,7 @@ class Vendeur
 	
 	public function updateType($type) {
 	  $id = $this->getId();
-	  $query = "UPDATE Vendeur SET type ='$type' WHERE idVendeur=".$id;
+	  $query = "UPDATE vendeur SET type ='$type' WHERE idVendeur=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -401,7 +401,7 @@ class Vendeur
 	
 	public function updateNumPreById($numPre) {
 	  $id = $this->getId();
-	  $query = "UPDATE Vendeur SET telephone ='$numPre' WHERE idVendeur=".$id;
+	  $query = "UPDATE vendeur SET telephone ='$numPre' WHERE idVendeur=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -412,7 +412,7 @@ class Vendeur
 	 
 	public function updateVendeur($nom,$prenom,$addresse,$tel,$type,$cheque) {
 	  $id = $this->getId();
-	  $query = "UPDATE Vendeur SET nom ='$nom' , prenom ='$prenom', telephone='$tel', type='$type', adresse='$addresse' , cheque='$cheque' WHERE idVendeur=".$id;
+	  $query = "UPDATE vendeur SET nom ='$nom' , prenom ='$prenom', telephone='$tel', type='$type', adresse='$addresse' , cheque='$cheque' WHERE idVendeur=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();

@@ -131,7 +131,7 @@ class Acheteur
 	  $tel = $this->getTel();
 	  $email = $this->getEmail();
 	  $adresse = $this->getAdresse();
-	  $query = "INSERT INTO Acheteur (nom, prenom, telephone, mail, adresse)
+	  $query = "INSERT INTO acheteur (nom, prenom, telephone, mail, adresse)
 	  VALUES ('".$nom."','".$prenom."','".$tel."','".$email."','".$adresse."')";
 	  $db = new DB();
 	  $db->connect();
@@ -151,7 +151,7 @@ class Acheteur
 	
 	public function delete() {
 		$id = $this->getId();
-		$query = "DELETE FROM Acheteur WHERE idAcheteur=".$id;
+		$query = "DELETE FROM acheteur WHERE idAcheteur=".$id;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
@@ -167,7 +167,7 @@ class Acheteur
 	*/ 
 	
 	public Static function getAcheteurById($id){ 
-	  $query = "SELECT * FROM Acheteur WHERE idAcheteur=".$id;
+	  $query = "SELECT * FROM acheteur WHERE idAcheteur=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -187,7 +187,7 @@ class Acheteur
 	*/
 	
 	public Static function getAcheteurByMail($mail){
-	  $query = "SELECT * FROM Acheteur WHERE mail = '$mail'";
+	  $query = "SELECT * FROM acheteur WHERE mail = '$mail'";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -206,7 +206,7 @@ class Acheteur
 	*/
 	
 	public static function getIdAcheteurByMail($mail) {
-	  $query = "SELECT idAcheteur FROM 	Acheteur WHERE mail='$mail'";
+	  $query = "SELECT idAcheteur FROM 	acheteur WHERE mail='$mail'";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -224,7 +224,7 @@ class Acheteur
 	*/
 	
 	public static function acheteurExistByMail($mail){
-	  $query = "SELECT * FROM Acheteur WHERE mail='$mail'";
+	  $query = "SELECT * FROM acheteur WHERE mail='$mail'";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -245,7 +245,7 @@ class Acheteur
 	*/
 	
 	public static function updateNom($nom) {
-	  $query = "UPDATE Acheteur SET nom ='$nom' WHERE idAcheteur=".$id;
+	  $query = "UPDATE acheteur SET nom ='$nom' WHERE idAcheteur=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -262,7 +262,7 @@ class Acheteur
 	
 	public static function updatePrenom($prenom) {
 	  $id = $this->getId();
-	  $query = "UPDATE Acheteur SET prenom ='$prenom' WHERE idAcheteur=".$id;
+	  $query = "UPDATE acheteur SET prenom ='$prenom' WHERE idAcheteur=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -281,7 +281,7 @@ class Acheteur
 	
 	public static function updateMail($mail) {
    	  $id = $this->getId();
-	  $query = "UPDATE Acheteur SET mail ='$mail' WHERE idAcheteur=".$id;
+	  $query = "UPDATE acheteur SET mail ='$mail' WHERE idAcheteur=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -299,7 +299,7 @@ class Acheteur
 	
 	public function updateAdresse($adresse) {
 	  $id = $this->getId();
-	  $query = "UPDATE Acheteur SET adresse ='$adresse' WHERE idAcheteur=".$id;
+	  $query = "UPDATE acheteur SET adresse ='$adresse' WHERE idAcheteur=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -316,7 +316,7 @@ class Acheteur
 	
 	public function updateTel($tel) {
 	  $id = $this->getId();
-	  $query = "UPDATE Acheteur SET telephone ='$tel' WHERE idAcheteur=".$id;
+	  $query = "UPDATE acheteur SET telephone ='$tel' WHERE idAcheteur=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
