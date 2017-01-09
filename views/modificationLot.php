@@ -136,7 +136,7 @@
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form id="articleForm" method="POST" action="ControlleurLot.php" class="form-horizontal">
+            <form id="articleForm" method="POST" action="../controller/ControlleurLot.php" class="form-horizontal">
               <div class="box-body">
 
                 <div class="form-group">
@@ -251,7 +251,13 @@
 
                 <div class="checkbox" name="article[0].certificat" id="article[0].certificatgroup">
                   <label>
-                    <input type="checkbox" id="article[0].inputcertificat"  name="article[0][inputcertificat]"> Certificat de révision <output></output>
+                    <input type="checkbox" id="article[0].inputcertificat"  name="article[0][inputcertificat]" value="YES"> Certificat de révision <output></output>
+                  </label>
+                </div>
+
+                <div class="checkbox" name="article[0].suppression" id="article[0].suppressiongroup">
+                  <label>
+                    <input type="checkbox" id="article[0].inputsuppression"  name="article[0][inputsuppression]" value="YES"> Supprimer article ? <output></output>
                   </label>
                 </div>
 
@@ -353,6 +359,12 @@
                   <div class="checkbox" name="certificat" id="certificatgroup">
                     <label>
                       <input type="checkbox" id="inputcertificat" name="inputcertificat" value="" > Certificat de révision <output></output>
+                    </label>
+                  </div>
+
+                  <div class="checkbox" name="suppression" id="suppressiongroup">
+                    <label>
+                      <input type="checkbox" id="inputsuppression"  name="inputsuppression" value=""> Supprimer article ? <output></output>
                     </label>
                   </div>
 
@@ -490,6 +502,8 @@ var handleTypeChange = function(e) {
     heuregroup.style.display = "block"
     var certificatgroup = document.getElementById("article[" + articleIndex + "].certificatgroup");
     certificatgroup.style.display = "blocks"
+    var suppressiongroup = document.getElementById("article[" + articleIndex + "].suppressiongroup");
+    suppressiongroup.style.display = "blocks"
     var typeaccessoiregroup = document.getElementById("article[" + articleIndex + "].typeaccessoiregroup");
     typeaccessoiregroup.style.display = "none";
   }
@@ -510,6 +524,8 @@ var handleTypeChange = function(e) {
     heuregroup.style.display = "none";
     var certificatgroup = document.getElementById("article[" + articleIndex + "].certificatgroup");
     certificatgroup.style.display = "none";
+    var suppressiongroup = document.getElementById("article[" + articleIndex + "].suppressiongroup");
+    suppressiongroup.style.display = "blocks"
     var typeaccessoiregroup = document.getElementById("article[" + articleIndex + "].typeaccessoiregroup");
     typeaccessoiregroup.style.display = "none";
   }
@@ -530,6 +546,8 @@ var handleTypeChange = function(e) {
     heuregroup.style.display = "none";
     var certificatgroup = document.getElementById("article[" + articleIndex + "].certificatgroup");
     certificatgroup.style.display = "none";
+    var suppressiongroup = document.getElementById("article[" + articleIndex + "].suppressiongroup");
+    suppressiongroup.style.display = "blocks"
     var typeaccessoiregroup = document.getElementById("article[" + articleIndex + "].typeaccessoiregroup");
     typeaccessoiregroup.style.display = "none";
   }
@@ -550,6 +568,8 @@ var handleTypeChange = function(e) {
     heuregroup.style.display = "none";
     var certificatgroup = document.getElementById("article[" + articleIndex + "].certificatgroup");
     certificatgroup.style.display = "none";
+    var suppressiongroup = document.getElementById("article[" + articleIndex + "].suppressiongroup");
+    suppressiongroup.style.display = "blocks"
     var typeaccessoiregroup = document.getElementById("article[" + articleIndex + "].typeaccessoiregroup");
     typeaccessoiregroup.style.display = "block";
   }
@@ -624,6 +644,7 @@ $(document).ready(function() {
                 .find('[name="heure"]').attr('name', 'article[' + articleIndex + '].heure').end()
                 .find('[name="typeaccessoire"]').attr('name', 'article[' + articleIndex + '].typeaccessoire').end()
                 .find('[name="certificat"]').attr('name', 'article[' + articleIndex + '].certificat').end()
+                .find('[name="suppression"]').attr('name', 'article[' + articleIndex + '].suppression').end()
                 // Ici on clone les identifiants
                 .find('[id="inputtypedematos"]').attr('data-index', '' + articleIndex).end()
                 .find('[id="inputtypedematos"]').attr('id', 'article[' + articleIndex + '].inputtypedematos').end()
@@ -637,6 +658,7 @@ $(document).ready(function() {
                 .find('[id="heuregroup"]').attr('id', 'article[' + articleIndex + '].heuregroup').end()
                 .find('[id="typeaccessoiregroup"]').attr('id', 'article[' + articleIndex + '].typeaccessoiregroup').end()
                 .find('[id="certificatgroup"]').attr('id', 'article[' + articleIndex + '].certificatgroup').end()
+                .find('[id="suppressiongroup"]').attr('id', 'article[' + articleIndex + '].suppressiongroup').end()
 
                 .find('[name="inputmarque"]').attr('name', 'article[' + articleIndex + '][inputmarque]').end()
                 .find('[name="inputmodele"]').attr('name', 'article[' + articleIndex + '][inputmodele]').end()
@@ -648,6 +670,7 @@ $(document).ready(function() {
                 .find('[name="inputheuresdevol"]').attr('name', 'article[' + articleIndex + '][inputheuresdevol]').end()
                 .find('[name="inputtypeaccessoire"]').attr('name', 'article[' + articleIndex + '][inputtypeaccessoire]').end()
                 .find('[name="inputcertificat"]').attr('name', 'article[' + articleIndex + '][inputcertificat]').end()
+                .find('[name="inputsuppression"]').attr('name', 'article[' + articleIndex + '][inputsuppression]').end()
 
                 .find('[id="inputtypedematos"]').attr('id', 'article[' + articleIndex + '][inputtypedematos]').end()
                 .find('[id="inputmarque"]').attr('id', 'article[' + articleIndex + '][inputmarque]').end()
@@ -659,7 +682,8 @@ $(document).ready(function() {
                 .find('[id="inputcouleur"]').attr('id', 'article[' + articleIndex + '][inputcouleur]').end()
                 .find('[id="inputheuresdevol"]').attr('id', 'article[' + articleIndex + '][inputheuresdevol]').end()
                 .find('[id="inputtypeaccessoire"]').attr('id', 'article[' + articleIndex + '][inputtypeaccessoire]').end()
-                .find('[id="inputcertificat"]').attr('id', 'article[' + articleIndex + '][inputcertificat]').end();
+                .find('[id="inputcertificat"]').attr('id', 'article[' + articleIndex + '][inputcertificat]').end()
+                .find('[id="inputsuppression"]').attr('id', 'article[' + articleIndex + '][inputsuppression]').end();
 
             // Add new fields
             // Note that we also pass the validator rules for new field as the third parameter

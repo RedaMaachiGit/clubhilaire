@@ -8,7 +8,7 @@ include_once('../model/marque.php');
 
 
 class ControllerAjoutLot {
-	
+
 		public static function ajoutArticle($i,$lot,$marque,$modele){
 			$ptvMax ="";
 			$ptvMin ="";
@@ -73,6 +73,7 @@ class ControllerAjoutLot {
 			$Heuresdevol = $_POST['article'][$index][inputheuresdevol];
 			$ProtectionSelette = $_POST['article'][$index][inputprotectionSelette];
 			$Certificat = $_POST['article'][$index][inputcertificat];
+			$Suppression = $_POST['article'][$index][inputsuppression];
 			$Typeaccessoire = $_POST['article'][$index][inputtypeaccessoire];
 
 			if($Type == 0){
@@ -89,6 +90,11 @@ class ControllerAjoutLot {
 				    echo "Possede un certificat.<br />\n"; //TRACE
 				} else	{
 				    echo "Ne possede pas un certificat.<br />\n"; //TRACE
+				}
+				if($Suppression == 'Yes'){
+						echo "Va être supprimé.<br />\n"; //TRACE
+				} else	{
+						echo "Ne va être supprimé.<br />\n"; //TRACE
 				}
 			} else if ($Type == 1){
 				echo("Il s'agit d'une selette<br />\n"); //TRACE
@@ -121,18 +127,18 @@ class ControllerAjoutLot {
 		$addresse ="3 rue des ponay";
 		$type = "pro";
 		$numPreInscription = "";
-		$cheque = 1;	
+		$cheque = 1;
 		if(!Vendeur::vendeurExistByMail($email)){  //L'adresse mail du vendeur de correspond à aucun vendeur en bd
 			$vendeur = new Vendeur($nom,$prenom,$tel,$email,$addresse,$type,$numPreInscription,$cheque);  //On crée le vendeur
 			$vendeur->save();
 		}
 		else{ //L'adresse mail du vendeur correspond à un vendeur en bd
 			$vendeur = Vendeur::getVendeurByMail($email); //On récupère se vendeur
-		}	
+		}
 		return $vendeur;
 	}
-	
-	
+
+
 	public static function ajoutMarque($i){
 		if (!empty($_POST['article'][$i]['inputmarque'])) {
 			$marque = $_POST['article'][$i]['inputmarque'];
@@ -145,7 +151,7 @@ class ControllerAjoutLot {
 			return $newMarque;
 		}
 	}
-	
+
 	public static function ajoutModele($i,$marque){
 		if (!empty($_POST['article'][$i]['inputmodele'])) {
 			$modele = $_POST['article'][$i]['inputmodele'];
@@ -158,8 +164,8 @@ class ControllerAjoutLot {
 			return $newModele;
 		}
 	}
-	
-		
+
+
 	public static function ajouterLot(){
 		$numeroCoupon = "";
 		$numeroLotVendeur = "numeroLotVendeur";

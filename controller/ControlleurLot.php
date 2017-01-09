@@ -24,6 +24,7 @@
 		$Couleur = $_POST['article'][$i][inputcouleur];
 		$Heuresdevol = $_POST['article'][$i][inputheuresdevol];
 		$Certificat = $_POST['article'][$i][inputcertificat];
+		$Suppression = $_POST['article'][$i][inputsuppression];
 		$Typeaccessoire = $_POST['article'][$i][inputtypeaccessoire];
 
 		if($Type == 0){
@@ -37,22 +38,26 @@
 			echo("Couleur: " . $Couleur . "<br />\n");
 			echo("Heures de vol: " . $Heuresdevol . "<br />\n");
 			echo("Certificat: " . $Certificat . "<br />\n");
+			echo("Suppression: " . $Suppression . "<br />\n");
 		} else if ($Type == 1){
  			echo("Il s'agit d'une selette<br />\n");
 			echo("Marque: " . $Marque . "<br />\n");
 			echo("Modele: " . $Modele . "<br />\n");
 			echo("Taille: " . $Taille . "<br />\n");
+			echo("Suppression: " . $Suppression . "<br />\n");
 		} else if ($Type == 2){
  			echo("Il s'agit d'un parachute de secours<br />\n");
 			echo("Marque: " . $Marque . "<br />\n");
 			echo("Modele: " . $Modele . "<br />\n");
 			echo("Ptvmax: " . $Ptvmax . "<br />\n");
 			echo("Ptvmin: " . $Ptvmin . "<br />\n");
+			echo("Suppression: " . $Suppression . "<br />\n");
 		} else if ($Type == 3){
  			echo("Il s'agit d'un accessoire<br />\n");
 			echo("Marque: " . $Marque . "<br />\n");
 			echo("Modele: " . $Modele . "<br />\n");
 			echo("Type accessoire: " . $Typeaccessoire . "<br />\n");
+			echo("Suppression: " . $Suppression . "<br />\n");
 		}
 	}
 
