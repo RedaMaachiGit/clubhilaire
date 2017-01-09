@@ -25,20 +25,20 @@ class Article
   private $_certificatRevisionVoile;
   private $_typeProtectonSelette;
   private $_typeAccessoire;
-
-
-
+  
+   
+   
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////CONSTRUCTEUR////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ 
 	 public function __construct($type, $lot, $marque,$modele, $ptvMin, $ptvMax, $taille, $surfaceVoile,
-	 $couleurVoile, $heureVolesVoile, $certificatRevisionVoile, $typeProtectionSelette, $typeAccessoire, $annee, $commentaire, $homologation){
+	 $couleurVoile, $heureVolesVoile, $certificatRevisionVoile, $typeProtectionSelette, $typeAccessoire, $annee, $commentaire, $homologation){	 
 		$this->setTypeArticle($type);
 		$this->setLot($lot);
 		$this->setMarque($marque);
 		$this->setModele($modele);
-		$this->setPtvMin($ptvMin);
+		$this->setPtvMin($ptvMin); 
 		$this->setPtvMax($ptvMax);
 		$this->setTaille($taille);
 		$this->setSurfaceVoile($surfaceVoile);
@@ -50,67 +50,67 @@ class Article
 		$this->setAnnee($annee);
 		$this->setCommentaire($commentaire);
 		$this->setHomologation($homologation);
-
+		
 	}
-
-
+  
+  
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////GETTER/SETTER///////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ 
 
-
-	// Getter ID
+	// Getter ID 
 	 public function getId(){
 		return $this->_idArticle;
 	  }
-
-	// Setter ID
+	  
+	// Setter ID 
 	 public function setId($idArticle){
 		$this->_idArticle = $idArticle;
 	 }
-
+	 
 	//setter TypeArticle
 	public function setTypeArticle($typeArticle){
 		$this->_type = $typeArticle;
 	}
 
-
-	 // Getter Lot
+	 
+	 // Getter Lot 
 	 public function getLot(){
 		return $this->_lot;
 	  }
-
-	// Setter Lot
+	  
+	// Setter Lot 
 	 public function setLot($lot){
 		$this->_lot = $lot;
 	 }
-
-	// Getter Marque
+	 
+	// Getter Marque 
 	 public function getMarque(){
 		return $this->_marque;
 	  }
-
-	// Setter Marque
+	  
+	// Setter Marque 
 	 public function setMarque($marque){
 		$this->_marque = $marque;
 	 }
-
-	// Getter Modele
+	 
+	// Getter Modele 
 	 public function getModele(){
 		return $this->_modele;
 	  }
-
-	// Setter Modele
+	  
+	// Setter Modele 
 	 public function setModele($modele){
 		$this->_modele = $modele;
 	 }
-
-	//Getter typeArticle
+	 
+	//Getter typeArticle 
 	 public function getTypeArticle(){
 		return $this->_type;
 	  }
-
-	//Setter typeArticle
+	 
+	//Setter typeArticle 
 	 public function setCoupon($type){
 		if (!is_String($type)) // S'il ne s'agit pas d'unne chaine de charatère
 		{
@@ -118,139 +118,139 @@ class Article
 		  return;
 		}
 		$this->_type = $type;
-	  }
-
-	//Getter ptvMin
+	  }	 
+	 
+	//Getter ptvMin 
 	 public function getPtvMin(){
-		return $this->_ptvMin;
+		return $this->_ptvMin; 
 	 }
-
+ 
 	 //Setter ptvMin
 	 public function setPtvMin($ptvMin){
 		$this->_ptvMin = $ptvMin;
 	  }
-
-	 //Getter ptvMax
+	  
+	 //Getter ptvMax 
 	 public function getPtvMax(){
-		return $this->_ptvMax;
+		return $this->_ptvMax; 
 	 }
-
+ 
 	 //Setter ptvMax
 	 public function setPtvMax($ptvMax){
 		$this->_ptvMax = $ptvMax;
 	  }
-
+	  
 	 //Getter taille
 	 public function getTaille(){
 		 return $this->_taille;
 	 }
-
+	 
 	 //Setter taille
 	 public function setTaille($taille){
 		$this->_taille = $taille;
 	  }
-
+	  
 	 //Getter surfaceVoile
 	 public function getSurfaceVoile(){
 		 return $this->_surfaceVoile;
 	 }
-
+	 
 	 //Setter surfaceVoile
 	 public function setSurfaceVoile($surfaceVoile){
 		$this->_surfaceVoile = $surfaceVoile;
 	  }
-
+	  
 	 //Getter couleurVoile
 	 public function getCouleurVoile(){
 		 return $this->_couleurVoile;
 	 }
-
+	 
 	 //Setter couleurVoile
 	 public function setCouleurVoile($couleurVoile){
 		$this->_couleurVoile = $couleurVoile;
 	  }
-
+	 
 	//Getter heureVolesVoile
 	 public function getHeureVoile(){
 		 return $this->_heureVoile;
 	 }
-
+	 
 	 //Setter heureVolesVoile
 	 public function setHeureVoile($heureVoile){
 		$this->_heureVoile = $heureVoile;
 	  }
-
+	  
 	//Getter certificat
 	 public function getCertificat(){
 		 return $this->_certificatRevisionVoile;
 	 }
-
+	 
 	 //Setter certificat
 	 public function setCertificat($certificat){
 		$this->_certificatRevisionVoile = $certificat;
 	  }
-
+	  
 	 //Getter typeProtectionSelette
 	 public function getTypeProtectionSelette(){
 		 return $this->_typeProtectonSelette;
 	 }
-
+	 
 	 //Setter typeProtectionSelette
 	 public function setTypeProtectionSelette($typeProtectionSelette){
 		$this->_typeProtectonSelette = $typeProtectionSelette;
 	  }
-
+	  
 	//Getter typeAccessoire
 	 public function getTypeAccessoire(){
 		 return $this->_typeAccessoire;
 	 }
-
+	 
 	 //Setter typeAccessoire
 	 public function setTypeAccessoire($typeAccessoire){
 		$this->_typeAccessoire = $typeAccessoire;
 	  }
-
+	  
 	 //Setter annee
 	 public function setAnnee($annee){
 		 $this->_annee = $annee;
 	 }
-
+	 
 	 //Getter Annne
 	 public function getAnnee(){
 		return $this->_annee;
 	 }
-
+	 
 	//Setter commentaire
 	public function setCommentaire($commentaire){
 		$this->_commnentaire = $commentaire;
 	}
-
+	
 	//Getter commentaire
 	public function getCommentaire(){
 		return $this->_commentaire;
 	}
-
-	//Setter homologation
+	
+	//Setter homologation	
 	public function setHomologation($homologation){
 		$this->_homologation = $homologation;
 	}
-
-	//getter homologation
+	
+	//getter homologation 
 	public function getHomologation(){
 		return $this->_homologation;
 	}
-
+	  
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////FunctionToDataBase//////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-	/*
+  
+	/* 
 		public function save() -> Sauvegarder en base de données l'instance
-		Input : Void
+		Input : Void 
 	    Output : Void
 	*/
-
+	
 	public function save(){
 	  $type = $this->getTypeArticle();
 	  $lot = $this->getLot();
@@ -280,9 +280,9 @@ class Article
 	  if($lot!=null){
 		  $idL=$lot->getId();
 	  }
-
-	  $query = "INSERT INTO article (idArticle, idLot, idMarque, idModele, type, ptvMinimum, ptvMaximum, taille, annee, surfaceVoile, couleurVoile,heureVolesVoile, certificatRevisionVoile, typeProtectionSelette,
-	  typeAccessoire, commentaire, homologation) VALUES ('','".$idL."','".$idM."','".$idMod."','".$type."','".$ptvMin."','".$ptvMax."','".$taile."','".$annee."','".$surfaceVoile."'
+	  
+	  $query = "INSERT INTO Article (idLot, idMarque, idModele, type, ptvMinimum, ptvMaximum, taille, annee, surfaceVoile, couleurVoile,heureVolesVoile, certificatRevisionVoile, typeProtectionSelette,
+	  typeAccessoire, commentaire, homologation) VALUES ('".$idL."','".$idM."','".$idMod."','".$type."','".$ptvMin."','".$ptvMax."','".$taile."','".$annee."','".$surfaceVoile."'
 	  ,'".$couleurVoile."','".$heureVoile."','".$certificat."','".$typeSelette."','".$typeAccessoire."','".$commentaire."','".$homologation."')";
 	  $db = new DB();
 	  $db->connect();
@@ -292,13 +292,13 @@ class Article
 	  $this->setId($idArticle);
 	  $db->close();
 	 }
-
-		/*
+	 
+		/* 
 		public function delete() -> delete en base de données l'instance
 		Input : Void
 	    Output : Void
-	*/
-
+	*/ 
+	
 	public function delete() {
 		$id = $this->getId();
 		$query = "DELETE FROM Lot WHERE idLot=".$id;
@@ -308,15 +308,15 @@ class Article
 		$res = $conn->query($query) or die(mysqli_error($conn));
 		$db->close();
 	}
-
-		/*
+	
+		/* 
 		public Static function getArticleById($id) -> get en base de données l'instance ayant l'id $id
-		Input : $id
+		Input : $id 
 	    Output : l'article ayant l'id îd
-	*/
-
-	public Static function getArticleById($id){
-	  $query = "SELECT * FROM article WHERE idArticle=".$id;
+	*/ 
+	 
+	public Static function getArticleById($id){ 
+	  $query = "SELECT * FROM Article WHERE idArticle=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -331,8 +331,8 @@ class Article
 	  $article->setId((int)$row[0]);
 	  return $article;
 	 }
-
-	public Static function gettAllArticle(){
+	 
+	public Static function gettAllArticle(){ 
 	  $query = "SELECT * FROM Article";
 	  $db = new DB();
 	  $db->connect();
@@ -342,9 +342,9 @@ class Article
 	  $row = $res->fetch_row();
 	  return $res;
 	 }
-
-	public Static function gettAllArticleGroupByLot(){
-	  $query = "SELECT * FROM article GROUP BY idLot";
+	 
+	public Static function gettAllArticleGroupByLot(){ 
+	  $query = "SELECT * FROM Article GROUP BY idLot";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -353,9 +353,9 @@ class Article
 	  $row = $res->fetch_row();
 	  return $res;
 	 }
-
-	public Static function gettAllArticleGroupByMarque(){
-	  $query = "SELECT * FROM article GROUP BY idMarque";
+	
+	public Static function gettAllArticleGroupByMarque(){ 
+	  $query = "SELECT * FROM Article GROUP BY idMarque";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -364,9 +364,9 @@ class Article
 	  $row = $res->fetch_row();
 	  return $res;
 	 }
-
-	public Static function getLotByCertificat(){
-	  $query = "SELECT * FROM article WHERE certificat=true";
+	 
+	public Static function getLotByCertificat(){ 
+	  $query = "SELECT * FROM Article WHERE certificat=true";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -381,10 +381,10 @@ class Article
 	  $article->setId((int)$row[0]);
 	  return $article;
 	 }
-
+	 
 	public Static function getArticleByMarque($libelleMarque){
 		$marque = Marque::getMarqueByLibelle($libelleMarque);
-		$query = "SELECT * FROM article WHERE idMarque=".$marque->getId();
+		$query = "SELECT * FROM Article WHERE idMarque=".$marque->getId();
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
@@ -392,9 +392,9 @@ class Article
 		$db->close();
 		return res;
 	 }
-
+	
 	 public static function getArticlesByLot($idLot){
-		$query = "SELECT * FROM article WHERE idLot=".$idLot;
+		$query = "SELECT * FROM Article WHERE idLot=".$idLot;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
@@ -409,109 +409,109 @@ class Article
 			,(String)$row[8],(int)$row[9],(string)$row[10],(string)$row[11],(string)$row[5],(string)$row[16],(string)$row[15]);
 			$article->setId((int)$row[0]);
 			array_push($articles,$article);
-		}
+		}		
 		return $articles;
 	 }
-
+	 
 	public function getArticleByPtvMin($ptvMin){
-		$query = "SELECT * FROM article WHERE ptvMin >=".$ptvMin;
+		$query = "SELECT * FROM Article WHERE ptvMin >=".$ptvMin;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
 		$res = $conn->query($query) or die(mysqli_error($conn));
-		$db->close();
+		$db->close();	 
 		return res;
 	 }
-
+	 
 	public function getArticleByPtvMax($ptvMin){
-		$query = "SELECT * FROM article WHERE ptvMax <=".$ptvMax;
+		$query = "SELECT * FROM Article WHERE ptvMax <=".$ptvMax;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
 		$res = $conn->query($query) or die(mysqli_error($conn));
-		$db->close();
+		$db->close();	 
 		return res;
 	 }
-
+	 
 	public function getArticleByPtvMinAndMax($ptvMin,$ptvMax){
-		$query = "SELECT * FROM article WHERE ptvMin >=".$ptvMin."AND ptvMax <=".$ptvMax;
+		$query = "SELECT * FROM Article WHERE ptvMin >=".$ptvMin."AND ptvMax <=".$ptvMax;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
 		$res = $conn->query($query) or die(mysqli_error($conn));
-		$db->close();
+		$db->close();	 
 		return res;
 	 }
-
+	
 	public function updatePtvMin($ptvMin){
 		$id = $this->getId();
-		$query = "UPDATE article SET ptvMin =".$ptvMin." WHERE idLot=".$id;
+		$query = "UPDATE Article SET ptvMin =".$ptvMin." WHERE idLot=".$id;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
 		$res = $conn->query($query) or die(mysqli_error($conn));
-		$db->close();
+		$db->close();	
 		$this->setPtvMin($ptvMin);
 	 }
-
+	 
 	public function updatePtvMax($ptvMax){
 		$id = $this->getId();
-		$query = "UPDATE article SET ptvMax =".$ptvMax." WHERE idLot=".$id;
+		$query = "UPDATE Article SET ptvMax =".$ptvMax." WHERE idLot=".$id;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
 		$res = $conn->query($query) or die(mysqli_error($conn));
-		$db->close();
+		$db->close();	
 		$this->setPtvMax($ptvMax);
 	 }
-
+	 
 	 public function updateSurface($surface){
 		$id = $this->getId();
-		$query = "UPDATE article SET surfaceVoile =".$surface." WHERE idLot=".$id;
+		$query = "UPDATE Article SET surfaceVoile =".$surface." WHERE idLot=".$id;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
 		$res = $conn->query($query) or die(mysqli_error($conn));
-		$db->close();
+		$db->close();	
 		$this->setSurfaceVoile($surface);
 	 }
-
+	 
 	 public function updateTypeArticle($typeArticle){
 		$id = $this->getId();
-		$query = "UPDATE article SET typeArticle ='$typeArticle' WHERE idLot=".$id;
+		$query = "UPDATE Article SET typeArticle ='$typeArticle' WHERE idLot=".$id;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
 		$res = $conn->query($query) or die(mysqli_error($conn));
-		$db->close();
+		$db->close();	
 		$this->setTypeArticle($typeActicle);
 	 }
-
+	 
 	public function updateTypeAccessoire($typeAccessoire){
 		$id = $this->getId();
-		$query = "UPDATE article SET typeAccessoire ='$typeAccessoire' WHERE idLot=".$id;
+		$query = "UPDATE Article SET typeAccessoire ='$typeAccessoire' WHERE idLot=".$id;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
 		$res = $conn->query($query) or die(mysqli_error($conn));
-		$db->close();
+		$db->close();	
 		$this->setTypeAccessoire($typeAccessoire);
 	 }
-
+	 
 	public function updateCouleurVoile($couleurVoile){
 		$id = $this->getId();
-		$query = "UPDATE article SET couleurVoile ='$couleurVoile' WHERE idLot=".$id;
+		$query = "UPDATE Article SET couleurVoile ='$couleurVoile' WHERE idLot=".$id;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
 		$res = $conn->query($query) or die(mysqli_error($conn));
-		$db->close();
+		$db->close();	
 		$this->setCouleurVoile($couleurVoile);
 	 }
-
+	 
 	public function updateHeureVoile($heureVoile){
 		$id = $this->getId();
-		$query = "UPDATE article SET heureVoile ='$heureVoile' WHERE idLot=".$id;
+		$query = "UPDATE Article SET heureVoile ='$heureVoile' WHERE idLot=".$id;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
@@ -519,26 +519,26 @@ class Article
 		$db->close();	
 		$this->setHeureVoile($heureVoile);
 	 }
-
+	 
 	public function updateCertificat($certificat){
 		$id = $this->getId();
-		$query = "UPDATE article SET certificat ='$certificat' WHERE idLot=".$id;
+		$query = "UPDATE Article SET certificat ='$certificat' WHERE idLot=".$id;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
 		$res = $conn->query($query) or die(mysqli_error($conn));
-		$db->close();
+		$db->close();	
 		$this->setCertificat($certificat);
 	 }
-
+	 
 	public function updateTypeProtectionSelette($typeProtectionSelette){
 		$id = $this->getId();
-		$query = "UPDATE article SET typeProtectionSelette ='$typeProtectionSelette' WHERE idLot=".$id;
+		$query = "UPDATE Article SET typeProtectionSelette ='$typeProtectionSelette' WHERE idLot=".$id;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
 		$res = $conn->query($query) or die(mysqli_error($conn));
-		$db->close();
+		$db->close();	
 		$this->setTypeProtectionSelette($typeProtectionSelette);
 	 }
 }
