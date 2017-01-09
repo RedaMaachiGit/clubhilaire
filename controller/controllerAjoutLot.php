@@ -16,7 +16,7 @@ class ControllerAjoutLot {
 			$certificat ="";
 			$surface ="";
 			$typeProtectionSelette=""; //A rajouter ?
-			$annee=""; //Arajouter
+			$annee=2000; //Arajouter
 			$typeAccessoire="";
 			$type = $_POST['article'][$i]['typedematos'];
 			if($type == 0){

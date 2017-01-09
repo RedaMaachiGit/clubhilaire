@@ -13,8 +13,7 @@ class Controllerrestitution {
 		//$numeroLot = $_POST['numeroLot'];
 		$numeroLot = 1;
 		$lot = Lot::getLotByCoupon($numeroLot);
-		$lot->setStatut("Restitué");
-		$lot->save();
+		$lot->updateStatut("Restitue");
 		header('location:../index.html');
 	}
 	
