@@ -410,5 +410,15 @@ class Vendeur
 	  $db->close();
 	 }
 	 
+	public function updateVendeur($nom,$prenom,$addresse,$tel,$type,$cheque) {
+	  $id = $this->getId();
+	  $query = "UPDATE Vendeur SET nom ='$nom' , prenom ='$prenom', telephone='$tel', type='$type', adresse='$addresse' , cheque='$cheque' WHERE idVendeur=".$id;
+	  $db = new DB();
+	  $db->connect();
+	  $conn = $db->getConnectDb();
+	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $db->close();
+	 }
+	 
 }
 ?>

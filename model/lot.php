@@ -28,7 +28,7 @@ class Lot
 		$this->setCoupon($numeroCoupon);
 		$this->setNumeroLotVendeur($numeroLotVendeur);
 		$this->setPrix($prix); 
-		$this->setStatus("En vente");
+		$this->setStatut("En préparation");
 		$this->setVendeur($vendeur);
 		$today = date("d-m-Y H:i:s");  
 		$this->setDateDepot($today);
@@ -51,12 +51,12 @@ class Lot
 	 }
 	 
 	 // Getter ID 
-	 public function getStatus(){
+	 public function getStatut(){
 		return $this->_status;
 	  }
 	  
 	// Setter ID 
-	 public function setStatus($status){
+	 public function setStatut($status){
 		$this->_status = $status;
 	 }
 	 
@@ -67,11 +67,6 @@ class Lot
 	 
 	//Setter coupon 
 	 public function setCoupon($coupon){
-		if (!is_String($coupon)) // S'il ne s'agit pas d'unne chaine de charatère
-		{
-		  trigger_error('Le coupon d\'un lot doit être une chaine de charactère', E_USER_WARNING);
-		  return;
-		}
 		$this->_numeroCoupon = $coupon;
 	  }
 	  
@@ -142,7 +137,7 @@ class Lot
 	  $coupon = $this->getCoupon();
 	  $numeroLotVendeur = $this->getNumeroLotVendeur();
 	  $prix = $this->getPrix();
-	  $status = $this->getStatus();
+	  $status = $this->getStatut();
 	  $acheteur = $this->getAcheteur();
 	  $vendeur = $this->getVendeur();
 	  $dateDepot = $this->getDateDepot();
@@ -200,7 +195,7 @@ class Lot
 	  $acheteur = Acheteur::getAcheteurById((int)$row[5]);
 	  $lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],$vendeur);
 	  $lot->setId((int)$row[0]);
-	  $lot->setStatus((String)$row[4]);
+	  $lot->setStatut((String)$row[4]);
 	  $lot->setAcheteur($acheteur);
 	  return $lot;
 	 }
@@ -217,7 +212,7 @@ class Lot
 	  $acheteur = Acheteur::getAcheteurById((int)$row[5]);
 	  $lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],$vendeur);
 	  $lot->setId((int)$row[0]);
-	  $lot->setStatus((String)$row[4]);
+	  $lot->setStatut((String)$row[4]);
 	  $lot->setAcheteur($acheteur);
 	  return $lot;
 	 }
@@ -234,7 +229,7 @@ class Lot
 	  $acheteur = Acheteur::getAcheteurById((int)$row[5]);
 	  $lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],$vendeur);
 	  $lot->setId((int)$row[0]);
-	  $lot->setStatus((String)$row[4]);
+	  $lot->setStatut((String)$row[4]);
 	  $lot->setAcheteur($acheteur);
 	  return $lot;
 	 }
@@ -257,7 +252,7 @@ class Lot
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
-	  $this->setStatus($status);
+	  $this->setStatut($status);
 	  $db->close();	 
 	 }
 	 
