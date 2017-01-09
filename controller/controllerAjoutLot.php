@@ -5,7 +5,7 @@ include_once('../model/Article.php');
 include_once('../model/modele.php');
 include_once('../model/marque.php');
 class ControllerAjoutLot {
-	
+
 		public static function ajoutArticle($i,$lot,$marque,$modele){
 			$ptvMax ="";
 			$ptvMin ="";
@@ -50,18 +50,18 @@ class ControllerAjoutLot {
 		$addresse ="3rue des ponay";
 		$type = "pro";
 		$numPreInscription = "";
-		$cheque = 1;	
+		$cheque = 1;
 		if(!Vendeur::vendeurExistByMail($email)){  //L'adresse mail du vendeur de correspond à aucun vendeur en bd
 			$vendeur = new Vendeur($nom,$prenom,$tel,$email,$addresse,$type,$numPreInscription,$cheque);  //On crée le vendeur
 			$vendeur->save();
 		}
 		else{ //L'adresse mail du vendeur correspond à un vendeur en bd
 			$vendeur = Vendeur::getVendeurByMail($email); //On récupère se vendeur
-		}	
+		}
 		return $vendeur;
 	}
-	
-	
+
+
 	public static function ajoutMarque($i){
 		if (!empty($_POST['article'][$i]['inputmarque'])) {
 			$marque = $_POST['article'][$i]['inputmarque'];
@@ -74,7 +74,7 @@ class ControllerAjoutLot {
 			return $newMarque;
 		}
 	}
-	
+
 	public static function ajoutModele($i,$marque){
 		if (!empty($_POST['article'][$i]['inputmodele'])) {
 			$modele = $_POST['article'][$i]['inputmodele'];
@@ -87,8 +87,8 @@ class ControllerAjoutLot {
 			return $newModele;
 		}
 	}
-	
-		
+
+
 	public static function ajouterLot(){
 		$numeroCoupon = 1;
 		$numeroLotVendeur = "numeroLotVendeur";
