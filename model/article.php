@@ -380,7 +380,6 @@ class Article
 	  ,(String)$row[9],(int)$row[10],(string)$row[11],(string)$row[12],(string)$row[13],(string)$row[14],(string)$row[15]);
 	  $article->setId((int)$row[0]);
 	  return $article;
-
 	 }
 	 
 	public Static function getArticleByMarque($libelleMarque){
@@ -393,15 +392,25 @@ class Article
 		$db->close();
 		return res;
 	 }
-	 
-	 public function getArticleByLot($idLot){
+	
+	 public static function getArticlesByLot($idLot){
 		$query = "SELECT * FROM Article WHERE idLot=".$idLot;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
 		$res = $conn->query($query) or die(mysqli_error($conn));
-		$db->close();	 
-		return res;
+		$db->close();
+		$articles = Array();
+		while ($row = $res->fetch_row()) {
+			$lot = Lot::getLotById((int)$row[14]);
+			$marque = Marque::getMarqueById((int)$row[12]);
+			$modele = Modele::getModeleById((int)$row[13]);
+			$article = new Article((String)$row[1],$lot,$marque, $modele,(String)$row[2],(int)$row[3],(int)$row[4],(String)$row[6],(int)$row[7]
+			,(String)$row[8],(int)$row[9],(string)$row[10],(string)$row[11],(string)$row[5],(string)$row[16],(string)$row[15]);
+			$article->setId((int)$row[0]);
+			array_push($articles,$article);
+		}		
+		return $articles;
 	 }
 	 
 	public function getArticleByPtvMin($ptvMin){
