@@ -170,7 +170,7 @@
 	                  <label for="inputTelephone" class="col-sm-2 control-label">Téléphone</label>
 
 	                  <div class="col-sm-10">
-	                    <input type="text" class="form-control" value="<?php echo($lot->getVendeur()->getTel()) ?>" id="inputTelephone" name="inputTelephone" placeholder=<?php echo($lot->getVendeur()->getTel()) ?>
+	                    <input type="text" class="form-control" value="<?php echo($lot->getVendeur()->getTel()) ?>" id="inputTelephone" name="inputTelephone" placeholder=<?php echo($lot->getVendeur()->getTel()) ?>>
 	                  </div>
 	                </div>
 

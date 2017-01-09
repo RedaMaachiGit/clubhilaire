@@ -301,7 +301,7 @@ class Article
 
 	public function delete() {
 		$id = $this->getId();
-		$query = "DELETE FROM Lot WHERE idLot=".$id;
+		$query = "DELETE FROM lot WHERE idLot=".$id;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
@@ -333,7 +333,7 @@ class Article
 	 }
 
 	public Static function gettAllArticle(){
-	  $query = "SELECT * FROM Article";
+	  $query = "SELECT * FROM article";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();

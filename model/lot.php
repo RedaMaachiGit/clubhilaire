@@ -28,7 +28,7 @@ class Lot
 		$this->setCoupon($numeroCoupon);
 		$this->setNumeroLotVendeur($numeroLotVendeur);
 
-		$this->setPrix($prix); 
+		$this->setPrix($prix);
 		$this->setStatut("En préparation");
 
 		$this->setVendeur($vendeur);
@@ -51,13 +51,13 @@ class Lot
 	 public function setId($id){
 		$this->_idLot = $id;
 	 }
-	 
-	 // Getter ID 
+
+	 // Getter ID
 	 public function getStatut(){
 		return $this->_status;
 	  }
-	  
-	// Setter ID 
+
+	// Setter ID
 	 public function setStatut($status){
 		$this->_status = $status;
 	 }
@@ -256,7 +256,7 @@ class Lot
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 
 	  $this->setStatut($status);
-	  $db->close();	 
+	  $db->close();
 
 	 }
 

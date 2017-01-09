@@ -207,7 +207,7 @@ class Acheteur
 	*/
 
 	public static function getIdAcheteurByMail($mail) {
-	  $query = "SELECT idAcheteur FROM 	Acheteur WHERE mail='$mail'";
+	  $query = "SELECT idAcheteur FROM 	acheteur WHERE mail='$mail'";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();

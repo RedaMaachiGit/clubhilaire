@@ -1,14 +1,14 @@
 <?php
 
-include_once('../model/Vendeur.php');
-include_once('../model/Lot.php');
-include_once('../model/Article.php');
+include_once('../model/vendeur.php');
+include_once('../model/lot.php');
+include_once('../model/article.php');
 include_once('../model/modele.php');
 include_once('../model/marque.php');
 
 
 class ControllerModificationLot {
-	
+
 	public static function modifierVendeur(){
 		$nom = $_POST['inputNom'];
 		$prenom = $_POST['inputPrenom'];
@@ -17,15 +17,15 @@ class ControllerModificationLot {
 		$idVendeur = $_POST['inputIdVendeur'];
 		$addresse ="3rue des ponay";
 		$type = "pro";
-		$cheque = 1;	
+		$cheque = 1;
 		$vendeur = Vendeur::getVendeurById((int)$idVendeur);
 		if(!Vendeur::vendeurExistByMail($email)){  //L'adresse mail du vendeur de correspond à aucun vendeur en bd
 			$vendeur->updateMail($email);
 		}
-		$vendeur->updateVendeur($nom,$prenom,$addresse,$tel,$type,$cheque);	
+		$vendeur->updateVendeur($nom,$prenom,$addresse,$tel,$type,$cheque);
 		return $vendeur;
 	}
-	
+
 	public static function modificationLot(){
 		$numeroCoupon = "";
 		$numeroLotVendeur = "";
@@ -44,7 +44,7 @@ class ControllerModificationLot {
 			ControllerAjoutLot::AjoutArticle($i,$lot,$marque,$modele);
 		}*/
 	}
-	
+
 
 }
 

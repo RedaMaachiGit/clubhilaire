@@ -1,7 +1,11 @@
 <?php
-include_once('../model/Vendeur.php');
-include_once('../model/Lot.php');
-include_once('../model/Article.php');
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
+
+include_once('../model/vendeur.php');
+include_once('../model/lot.php');
+include_once('../model/article.php');
 include_once('../model/modele.php');
 include_once('../model/marque.php');
 class ControllerAjoutLot {
@@ -16,7 +20,7 @@ class ControllerAjoutLot {
 			$certificat ="";
 			$surface ="";
 			$typeProtectionSelette=""; //A rajouter ?
-			$annee=""; //Arajouter
+			$annee="2000-11-11"; //Arajouter
 			$typeAccessoire="";
 			$type = $_POST['article'][$i]['typedematos'];
 			if($type == 0){

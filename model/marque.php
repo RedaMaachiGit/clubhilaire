@@ -142,7 +142,7 @@ class Marque
 
 	public function getModeleByMarque(){
 	  $idMarque = $this->getId();
-	  $query = "SELECT * FROM Modele WHERE idMarque=".$idMarque;
+	  $query = "SELECT * FROM modele WHERE idMarque=".$idMarque;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();

@@ -419,7 +419,7 @@ class Vendeur
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	 }
-	 
+
 
 }
 ?>
