@@ -1,7 +1,15 @@
 <!DOCTYPE html>
 <?php
+
+include_once('../model/Vendeur.php');
+include_once('../model/Lot.php');
+include_once('../model/Article.php');
+include_once('../model/modele.php');
+include_once('../model/marque.php');
   //echo("Numero lot: " . $_POST['numeroLot'] . "<br />\n"); //TRACE
-  $id = $_POST['numeroLot'];
+    $lot= unserialize(urldecode(($_GET['lot'])));
+	$vendeur = $lot->getVendeur();
+	$articles = unserialize(urldecode($_GET['listArticle']));
 //  $connect = ConnexionDB(); // Je me connecte à la base de donnée
 
 //  $updateLot = "SELECT * FROM Lot WHERE numeroLot = '$id'" or die("Erreur lors de la consultation de données (updateLot)" . mysqli_error($connect));
@@ -113,7 +121,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Vente du lot numéro <?php echo $_POST['numeroLot'] ?>
+        Vente du lot numéro <?php echo $lot->getId(); ?>
         <small>Vous êtes sur le point de vendre un lot</small>
       </h1>
       <ol class="breadcrumb">
@@ -193,9 +201,10 @@
       </div>
 
       <div class="box box-info">
-        <form id="paiementForm" class="form-horizontal" method="POST" action="restitutionController.php" class="form-horizontal">
+        <form id="paiementForm" class="form-horizontal" method="POST" action="../controller/Controllerrestitution.php" class="form-horizontal">
           <div class="box-footer">
             <!-- <button type="submit" class="btn btn-default">Annuler</button> -->
+			<input class="form-control input-lg" name="numeroLot" id="numeroLot" type="hidden" value=<?php echo $lot->getId(); ?> >
             <button type="submit" value="Submit" class="btn btn-info center-block">Valider restitution</button>
           </div>
         </form>

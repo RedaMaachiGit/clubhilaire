@@ -47,7 +47,7 @@ class ControllerAjoutLot {
 		$prenom = $_POST['inputPrenom'];
 		$tel = $_POST['inputTelephone'];
 		$email = $_POST['inputEmail'];
-		$addresse ="3rue des ponay";
+		$addresse = $_POST['inputAdresse'];
 		$type = "pro";
 		$numPreInscription = "";
 		$cheque = 1;
@@ -92,7 +92,7 @@ class ControllerAjoutLot {
 	public static function ajouterLot(){
 		$numeroCoupon = 1;
 		$numeroLotVendeur = "numeroLotVendeur";
-		$prixVente = 100;
+		$prixVente = $_POST['inputPrix'];;
 		$vendeur = ControllerAjoutLot::ajoutVendeur();
 		$lot = new Lot($numeroCoupon,$numeroLotVendeur,$prixVente,$vendeur); //On créer le lot et on l'associe au vendeur
 		$lot->save();
