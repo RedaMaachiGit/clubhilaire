@@ -1,12 +1,9 @@
 <?php
-
 include_once('../model/Vendeur.php');
 include_once('../model/Lot.php');
 include_once('../model/Article.php');
 include_once('../model/modele.php');
 include_once('../model/marque.php');
-
-
 class ControllerAjoutLot {
 
 		public static function ajoutArticle($i,$lot,$marque,$modele){
@@ -32,7 +29,6 @@ class ControllerAjoutLot {
 				if (isset($_POST['article'][$i]['inputcertificat'])) {
 					$certificat = $_POST['article'][$i]['inputcertificat'];
 				}
-
 			} else if ($type == 1){
 				$Taille = $_POST['article'][$i]['inputtaille'];
 			} else if ($type == 2){
@@ -46,85 +42,12 @@ class ControllerAjoutLot {
 		$certificat,$typeProtectionSelette,$typeAccessoire,$annee,"","");
 		$article->save();
 	}
-
 	public static function ajoutVendeur(){
 		$nom = $_POST['inputNom'];
 		$prenom = $_POST['inputPrenom'];
 		$tel = $_POST['inputTelephone'];
 		$email = $_POST['inputEmail'];
-		$adressePostale = $_POST['inputAdresse'];
-		$prixLot = $_POST['inputPrix'];
-
-		// echo("Index of products: " . $_POST['index'] . "<br />\n"); //TRACE
-		if(isset($_POST['index']) && !empty($_POST['index'])) {
-			$numberOfProducts = $_POST['index'];
-		} else {
-			$numberOfProducts = 1;
-		}
-		for ($index = 0; $index <= $numberOfProducts-1; $index++) {
-			$Type = $_POST['article'][$index][typedematos];
-			$Marque = $_POST['article'][$index][inputmarque];
-			$Modele = $_POST['article'][$index][inputmodele];
-			$Ptvmax = $_POST['article'][$index][inputptvmax];
-			$Ptvmin = $_POST['article'][$index][inputptvmin];
-			$Taille = $_POST['article'][$index][inputtaille];
-			$Surface = $_POST['article'][$index][inputsurface];
-			$Couleur = $_POST['article'][$index][inputcouleur];
-			$Heuresdevol = $_POST['article'][$index][inputheuresdevol];
-			$ProtectionSelette = $_POST['article'][$index][inputprotectionSelette];
-			$Certificat = $_POST['article'][$index][inputcertificat];
-			$Suppression = $_POST['article'][$index][inputsuppression];
-			$Typeaccessoire = $_POST['article'][$index][inputtypeaccessoire];
-
-			if($Type == 0){
-				echo("Il s'agit d'une voile<br />\n"); //TRACE
-				echo("Marque: " . $Marque . "<br />\n"); //TRACE
-				echo("Modele: " . $Modele . "<br />\n"); //TRACE
-				echo("Ptvmax: " . $Ptvmax . "<br />\n"); //TRACE
-				echo("Ptvmin: " . $Ptvmin . "<br />\n"); //TRACE
-				echo("Taille: " . $Taille . "<br />\n"); //TRACE
-				echo("Surface: " . $Surface . "<br />\n"); //TRACE
-				echo("Couleur: " . $Couleur . "<br />\n"); //TRACE
-				echo("Heures de vol: " . $Heuresdevol . "<br />\n"); //TRACE
-				if($Certificat == 'Yes'){
-				    echo "Possede un certificat.<br />\n"; //TRACE
-				} else	{
-				    echo "Ne possede pas un certificat.<br />\n"; //TRACE
-				}
-				if($Suppression == 'Yes'){
-						echo "Va être supprimé.<br />\n"; //TRACE
-				} else	{
-						echo "Ne va être supprimé.<br />\n"; //TRACE
-				}
-			} else if ($Type == 1){
-				echo("Il s'agit d'une selette<br />\n"); //TRACE
-				echo("Marque: " . $Marque . "<br />\n"); //TRACE
-				echo("Modele: " . $Modele . "<br />\n"); //TRACE
-				echo("Taille: " . $Taille . "<br />\n"); //TRACE
-				echo("Protection selette: " . $ProtectionSelette . "<br />\n"); //TRACE
-			} else if ($Type == 2){
-				echo("Il s'agit d'un parachute de secours<br />\n"); //TRACE
-				echo("Marque: " . $Marque . "<br />\n"); //TRACE
-				echo("Modele: " . $Modele . "<br />\n"); //TRACE
-				echo("Ptvmax: " . $Ptvmax . "<br />\n"); //TRACE
-				echo("Ptvmin: " . $Ptvmin . "<br />\n"); //TRACE
-			} else if ($Type == 3){
-				echo("Il s'agit d'un accessoire<br />\n"); //TRACE
-				echo("Marque: " . $Marque . "<br />\n"); //TRACE
-				echo("Modele: " . $Modele . "<br />\n"); //TRACE
-				echo("Type accessoire: " . $Typeaccessoire . "<br />\n"); //TRACE
-			}
-		}
-		/*$nom =  "pierre";
-		$prenom = "Beule";
-		$tel = "0781638080";
-		$email = "pierre.beule@gmail.com";
-		$nbArticle = $_POST['index'];*/
-		$nom = $_POST['inputNom'];
-		$prenom = $_POST['inputPrenom'];
-		$tel = $_POST['inputTelephone'];
-		$email = $_POST['inputEmail'];
-		$addresse ="3 rue des ponay";
+		$addresse ="3rue des ponay";
 		$type = "pro";
 		$numPreInscription = "";
 		$cheque = 1;
@@ -167,7 +90,7 @@ class ControllerAjoutLot {
 
 
 	public static function ajouterLot(){
-		$numeroCoupon = "";
+		$numeroCoupon = 1;
 		$numeroLotVendeur = "numeroLotVendeur";
 		$prixVente = 100;
 		$vendeur = ControllerAjoutLot::ajoutVendeur();
@@ -184,10 +107,6 @@ class ControllerAjoutLot {
 			ControllerAjoutLot::AjoutArticle($i,$lot,$marque,$modele);
 		}
 	}
-
-
 }
-
 ControllerAjoutLot::AjouterLot()
-
 ?>

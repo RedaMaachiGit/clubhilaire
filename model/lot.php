@@ -196,27 +196,29 @@ class Lot
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	  $row = $res->fetch_row();
-	  $vendeur = Vendeur::getVendeurById((int)$row[5]);
-	  $acheteur = Acheteur::getAcheteurById((int)$row[6]);
-	  $lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],(String)$row[4],$vendeur);
+	  $vendeur = Vendeur::getVendeurById((int)$row[6]);
+	  $acheteur = Acheteur::getAcheteurById((int)$row[5]);
+	  $lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],$vendeur);
 	  $lot->setId((int)$row[0]);
-	  $lot->setAcheteur(acheteur);
+	  $lot->setStatus((String)$row[4]);
+	  $lot->setAcheteur($acheteur);
 	  return $lot;
 	 }
 	 
 	public Static function getLotByCoupon($coupon){ 
-	  $query = "SELECT * FROM Lot WHERE numCoupon=".$coupon;
+	  $query = "SELECT * FROM Lot WHERE numeroCoupon=".$coupon;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	  $row = $res->fetch_row();
-	  $vendeur = Vendeur::getVendeurById((int)$row[5]);
-	  $acheteur = Acheteur::getAcheteurById((int)$row[6]);
-	  $lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],(String)$row[4],$vendeur);
+	  $vendeur = Vendeur::getVendeurById((int)$row[6]);
+	  $acheteur = Acheteur::getAcheteurById((int)$row[5]);
+	  $lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],$vendeur);
 	  $lot->setId((int)$row[0]);
-	  $lot->setAcheteur(acheteur);
+	  $lot->setStatus((String)$row[4]);
+	  $lot->setAcheteur($acheteur);
 	  return $lot;
 	 }
 	 
@@ -227,11 +229,13 @@ class Lot
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
-	  $vendeur = Vendeur::getVendeurById((int)$row[5]);
-	  $acheteur = Acheteur::getAcheteurById((int)$row[6]);
-	  $lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],(String)$row[4],$vendeur);
+	  $row = $res->fetch_row();
+	  $vendeur = Vendeur::getVendeurById((int)$row[6]);
+	  $acheteur = Acheteur::getAcheteurById((int)$row[5]);
+	  $lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],$vendeur);
 	  $lot->setId((int)$row[0]);
-	  $lot->setAcheteur(acheteur);
+	  $lot->setStatus((String)$row[4]);
+	  $lot->setAcheteur($acheteur);
 	  return $lot;
 	 }
 	 
