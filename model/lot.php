@@ -2,8 +2,8 @@
 
 //Cette classe représente les lot des articles vendus par l'ecole saint Hilare
 require_once('db.php');
-require_once('Vendeur.php');
-require_once('Acheteur.php');
+require_once('vendeur.php');
+require_once('acheteur.php');
 
 
 class Lot
@@ -17,35 +17,37 @@ class Lot
   private $_vendeur;
   private $_dateDepot;
   private $_dateVente;
-   
-   
-   
+
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////CONSTRUCTEUR////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- 
-	 public function __construct($numeroCoupon, $numeroLotVendeur, $prix, $vendeur){	 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	 public function __construct($numeroCoupon, $numeroLotVendeur, $prix, $vendeur){
 		$this->setCoupon($numeroCoupon);
 		$this->setNumeroLotVendeur($numeroLotVendeur);
+
 		$this->setPrix($prix); 
 		$this->setStatut("En préparation");
+
 		$this->setVendeur($vendeur);
-		$today = date("d-m-Y H:i:s");  
+		$today = date("d-m-Y H:i:s");
 		$this->setDateDepot($today);
 	}
-  
-  
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////GETTER/SETTER///////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
- 
 
-	// Getter ID 
+
+	// Getter ID
 	 public function getId(){
 		return $this->_idLot;
 	  }
-	  
-	// Setter ID 
+
+	// Setter ID
 	 public function setId($id){
 		$this->_idLot = $id;
 	 }
@@ -59,80 +61,80 @@ class Lot
 	 public function setStatut($status){
 		$this->_status = $status;
 	 }
-	 
-	//Getter numeroCoupon 
+
+	//Getter numeroCoupon
 	 public function getCoupon(){
 		return $this->_numeroCoupon;
 	  }
-	 
-	//Setter coupon 
+
+	//Setter coupon
 	 public function setCoupon($coupon){
 		$this->_numeroCoupon = $coupon;
 	  }
-	  
-	 //Getter numeroLotVendeur 
+
+	 //Getter numeroLotVendeur
 	 public function getNumeroLotVendeur(){
 		return $this->_numeroLotVendeur;
 	  }
-	 
-	//Setter numeroLotVendeur 
+
+	//Setter numeroLotVendeur
 	 public function setNumeroLotVendeur($numeroLotVendeur){
 		$this->_numeroLotVendeur = $numeroLotVendeur;
 	  }
-	 
-	 
-	//Getter prix 
+
+
+	//Getter prix
 	 public function getPrix(){
-		return $this->_prix; 
+		return $this->_prix;
 	 }
- 
+
 	 //Setter prix
 	 public function setPrix($prix){
 		$this->_prix = $prix;
 	  }
-	  
+
 	 //Getter acheteur
 	 public function getAcheteur(){
 		 return $this->_acheteur;
 	 }
-	 
+
 	 //Setter acheter
 	 public function setAcheteur($acheteur){
 		$this->_acheteur = $acheteur;
 	  }
-	  
+
 	 //Getter acheteur
 	 public function getVendeur(){
 		 return $this->_vendeur;
 	 }
-	 
+
 	 //Setter acheter
 	 public function setVendeur($vendeur){
 		$this->_vendeur = $vendeur;
 	  }
-	  
+
 	//Setter dateDepot
 	public function setDateDepot($date){
 		$this->_dateDepot = $date;
 	}
-	
+
 	//getter dateDepot
 	public function getDateDepot(){
 		return $this->_dateDepot;
 	}
-	
-	  
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////FunctionToDataBase//////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  
-	/* 
+
+	/*
 		public function save() -> Sauvegarder en base de données l'instance
-		Input : Void 
+		Input : Void
 	    Output : Void
 	*/
-	
+
 	public function save(){
 	  $coupon = $this->getCoupon();
 	  $numeroLotVendeur = $this->getNumeroLotVendeur();
@@ -149,8 +151,8 @@ class Lot
 	  if($vendeur!=null){
 		  $idV=$vendeur->getId();
 	  }
-	  $query = "INSERT INTO Lot (idLot, numeroCoupon, numeroLotVendeur, prixVente, statut, idAcheteur, idVendeur,dateDepot)
-	  VALUES ('','".$coupon."','".$numeroLotVendeur."','".$prix."','".$status."','".$idA."','".$idV."','".$dateDepot."')";	  
+	  $query = "INSERT INTO lot (idLot, numeroCoupon, numeroLotVendeur, prixVente, statut, idAcheteur, idVendeur,dateDepot)
+	  VALUES ('','".$coupon."','".$numeroLotVendeur."','".$prix."','".$status."','".$idA."','".$idV."','".$dateDepot."')";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -159,32 +161,32 @@ class Lot
 	  $this->setId($idLot);
 	  $db->close();
 	 }
-	 
-	 
-		/* 
+
+
+		/*
 		public function delete() -> delete en base de données l'instance
 		Input : Void
 	    Output : Void
-	*/ 
-	
+	*/
+
 	public function delete() {
 		$id = $this->getId();
-		$query = "DELETE FROM Lot WHERE idLot=".$id;
+		$query = "DELETE FROM lot WHERE idLot=".$id;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
 		$res = $conn->query($query) or die(mysqli_error($conn));
 		$db->close();
 	}
-	
-		/* 
+
+		/*
 		public Static function getLotById($id) -> get en base de données l'instance ayant l'id $id
-		Input : $id 
+		Input : $id
 	    Output : le vendeur lot l'id $id
-	*/ 
-	
-	public Static function getLotById($id){ 
-	  $query = "SELECT * FROM Lot WHERE idLot=".$id;
+	*/
+
+	public Static function getLotById($id){
+	  $query = "SELECT * FROM lot WHERE idLot=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -199,9 +201,9 @@ class Lot
 	  $lot->setAcheteur($acheteur);
 	  return $lot;
 	 }
-	 
-	public Static function getLotByCoupon($coupon){ 
-	  $query = "SELECT * FROM Lot WHERE numeroCoupon=".$coupon;
+
+	public Static function getLotByCoupon($coupon){
+	  $query = "SELECT * FROM lot WHERE numeroCoupon=".$coupon;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -216,9 +218,9 @@ class Lot
 	  $lot->setAcheteur($acheteur);
 	  return $lot;
 	 }
-	 
-	public Static function getLotByStatus($status){ 
-	  $query = "SELECT * FROM Lot WHERE status=".$status;
+
+	public Static function getLotByStatus($status){
+	  $query = "SELECT * FROM lot WHERE status=".$status;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -233,38 +235,40 @@ class Lot
 	  $lot->setAcheteur($acheteur);
 	  return $lot;
 	 }
-	 
+
 	 public function updatePrix($prix){
 	  $id = $this->getId();
-	  $query = "UPDATE Lot SET prix ='$prix' WHERE idLot=".$id;
+	  $query = "UPDATE lot SET prix ='$prix' WHERE idLot=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $this->setPrix($prix);
-	  $db->close();	 
+	  $db->close();
 	 }
-	
+
 	public function updateStatus($status){
 	  $id = $this->getId();
-	  $query = "UPDATE Lot SET status ='$status' WHERE idLot=".$id;
+	  $query = "UPDATE lot SET status ='$status' WHERE idLot=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
+
 	  $this->setStatut($status);
 	  $db->close();	 
+
 	 }
-	 
+
 	 public function updateNumeroLotVendeur($numeroLotVendeur){
 	  $id = $this->getId();
-	  $query = "UPDATE Lot SET numeroLotVendeur ='$numeroLotVendeur' WHERE idLot=".$id;
+	  $query = "UPDATE lot SET numeroLotVendeur ='$numeroLotVendeur' WHERE idLot=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $this->setNumeroLotVendeur($numeroLotVendeur);
-	  $db->close();	 
+	  $db->close();
 	 }
 }
 ?>
