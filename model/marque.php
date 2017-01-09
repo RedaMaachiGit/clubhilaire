@@ -61,7 +61,7 @@ class Marque
 	public function save(){
 	  $libelle = $this->getLibelle();
 	  
-	  $query = "INSERT INTO Marque (libelle)
+	  $query = "INSERT INTO marque (libelle)
 	  VALUES ('".$libelle."')";
 	  
 	  $db = new DB();
@@ -81,7 +81,7 @@ class Marque
 	
 	public function delete() {
 	  $id = $this->getId();
-	  $query = "DELETE FROM Marque WHERE idMarque=".$id;
+	  $query = "DELETE FROM marque WHERE idMarque=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -97,7 +97,7 @@ class Marque
 	
 	 public Static function getMarqueById($id){
 		 
-	  $query = "SELECT * FROM Marque WHERE idMarque=".$id;
+	  $query = "SELECT * FROM marque WHERE idMarque=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -117,7 +117,7 @@ class Marque
 	*/	
 	
 	 public Static function getMarqueByLibelle($libelle){
-	  $query = "SELECT * FROM Marque WHERE libelle = '$libelle'";
+	  $query = "SELECT * FROM marque WHERE libelle = '$libelle'";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -130,7 +130,7 @@ class Marque
 	 }
 	 	 	 
 	 public static function getIdMarqueByName($nameMarque) {
-	  $query = "SELECT idMarque FROM Marque WHERE libelle='$nameMarque'";
+	  $query = "SELECT idMarque FROM marque WHERE libelle='$nameMarque'";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -142,7 +142,7 @@ class Marque
 	
 	public function getModeleByMarque(){
 	  $idMarque = $this->getId();
-	  $query = "SELECT * FROM Modele WHERE idMarque=".$idMarque;
+	  $query = "SELECT * FROM modele WHERE idMarque=".$idMarque;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -155,7 +155,7 @@ class Marque
 	}
 	
 	public static function marqueExistByLibelle($libelle){
-	  $query = "SELECT * FROM Marque WHERE libelle='$libelle'";
+	  $query = "SELECT * FROM marque WHERE libelle='$libelle'";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -171,7 +171,7 @@ class Marque
 	
 	public function updateLibelleById($libelle) {
 	  $id = $this->getId();	
-	  $query = "UPDATE Marque SET libelle ='$libelle' WHERE idMarque=".$id;
+	  $query = "UPDATE marque SET libelle ='$libelle' WHERE idMarque=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();

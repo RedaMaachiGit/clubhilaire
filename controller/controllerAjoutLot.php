@@ -1,7 +1,7 @@
 <?php
-include_once('../model/Vendeur.php');
-include_once('../model/Lot.php');
-include_once('../model/Article.php');
+include_once('../model/vendeur.php');
+include_once('../model/lot.php');
+include_once('../model/article.php');
 include_once('../model/modele.php');
 include_once('../model/marque.php');
 class ControllerAjoutLot {

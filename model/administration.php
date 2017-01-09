@@ -2,8 +2,8 @@
 
 //Cette classe représente les variable d'administration
 require_once('db.php');
-require_once('Vendeur.php');
-require_once('Acheteur.php');
+require_once('vendeur.php');
+require_once('acheteur.php');
 
 
 class Administration
@@ -19,7 +19,7 @@ class Administration
 
 	public function delete() {
 		$id = $this->getId();
-		$query = "DELETE FROM Lot WHERE idLot=".$id;
+		$query = "DELETE FROM fraisdepotadmin WHERE idDepotAdmin=".$id;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
