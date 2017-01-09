@@ -6,38 +6,38 @@ class Marque
 {
   private $_idMarque;
   private $_libelle;
-
+   
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////CONSTRUCTEUR////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	 public function __construct($libelle){
+///////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ 
+	 public function __construct($libelle){	 
 		$this->setLibelle($libelle); // Initialisation du libelle
 	}
-
-
+  
+  
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////GETTER/SETTER///////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ 
 
-
-	// Getter ID
+	// Getter ID 
 	 public function getId(){
 		return $this->_idMarque;
 	  }
-
-	 // Setter ID
+	  
+	 // Setter ID 
 	 public function setId($id){
 		return $this->_idMarque = $id;
 	 }
-
-	//Getter libelle
+	 
+	//Getter libelle 
 	 public function getLibelle(){
 		return $this->_libelle;
 	  }
+	 
 
-
-	//Setter libelle
+	//Setter libelle 
 	 public function setLibelle($libelle){
 		if (!is_String($libelle)) // S'il ne s'agit pas d'unne chaine de charatère
 		{
@@ -46,24 +46,24 @@ class Marque
 		}
 		$this->_libelle = $libelle;
 	  }
-
+ 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////FunctionToDataBase//////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-	/*
+  
+	/* 
 		public function save() -> Sauvegarder en base de données l'instance
-		Input : Void
+		Input : Void 
 	    Output : Void
 	*/
-
+	
 	public function save(){
 	  $libelle = $this->getLibelle();
-
-	  $query = "INSERT INTO marque (idMarque, libelle)
-	  VALUES ('','".$libelle."')";
-
+	  
+	  $query = "INSERT INTO Marque (libelle)
+	  VALUES ('".$libelle."')";
+	  
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -72,32 +72,32 @@ class Marque
 	  $this->setId($idMarque);
 	  $db->close();
 	 }
-
-	/*
+	 
+	/* 
 		public function delete() -> delete en base de données l'instance
 		Input : void
 	    Output : Void
-	*/
-
+	*/ 
+	
 	public function delete() {
 	  $id = $this->getId();
-	  $query = "DELETE FROM marque WHERE idMarque=".$id;
+	  $query = "DELETE FROM Marque WHERE idMarque=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	}
-
-	/*
+	 
+	/* 
 		public static function getMarqueById($id) -> Recherche en bd la marque ayant l'id $id
 		Input : l'id de la marque voulu
 	    Output : la marque en base de donnée ayant l'id passé en input
 	*/
-
+	
 	 public Static function getMarqueById($id){
-
-	  $query = "SELECT * FROM marque WHERE idMarque=".$id;
+		 
+	  $query = "SELECT * FROM Marque WHERE idMarque=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -108,16 +108,16 @@ class Marque
 	  $marque->setId((int)$row[0]);
 	  return $marque;
 	 }
-
-
-	/*
+	 
+	 
+	/* 
 		public Static function getMarqueByLibelle($libelle) -> Recherche en bd les marques ayant le libelle $libelle
 		Input : le libelle voulu
 	    Output : les marques en base de donnée ayant le libelle passé en input
-	*/
-
+	*/	
+	
 	 public Static function getMarqueByLibelle($libelle){
-	  $query = "SELECT * FROM marque WHERE libelle = '$libelle'";
+	  $query = "SELECT * FROM Marque WHERE libelle = '$libelle'";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -128,9 +128,9 @@ class Marque
 	  $marque->setId((int)$row[0]);
 	  return $marque;
 	 }
-
+	 	 	 
 	 public static function getIdMarqueByName($nameMarque) {
-	  $query = "SELECT idMarque FROM marque WHERE libelle='$nameMarque'";
+	  $query = "SELECT idMarque FROM Marque WHERE libelle='$nameMarque'";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -139,7 +139,7 @@ class Marque
 	  $row = $res->fetch_row();
 	  return $row;
 	}
-
+	
 	public function getModeleByMarque(){
 	  $idMarque = $this->getId();
 	  $query = "SELECT * FROM modele WHERE idMarque=".$idMarque;
@@ -153,25 +153,25 @@ class Marque
 	  $modele->setId((String)$row[0]);
 	  return $modele;
 	}
-
+	
 	public static function marqueExistByLibelle($libelle){
-	  $query = "SELECT * FROM marque WHERE libelle='$libelle'";
+	  $query = "SELECT * FROM Marque WHERE libelle='$libelle'";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
-	  //echo($res->num_rows);
+	  echo($res->num_rows);
 	  if($res->num_rows == 0 ){
 		  return false;
 	  }else{
 		  return true;
 	  }
 	}
-
+	
 	public function updateLibelleById($libelle) {
-	  $id = $this->getId();
-	  $query = "UPDATE marque SET libelle ='$libelle' WHERE idMarque=".$id;
+	  $id = $this->getId();	
+	  $query = "UPDATE Marque SET libelle ='$libelle' WHERE idMarque=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -179,7 +179,7 @@ class Marque
 	  $this->setLibelle($libelle);
 	  $db->close();
 	 }
-
+	 
 }
 
 

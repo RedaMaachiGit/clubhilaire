@@ -2,8 +2,8 @@
 
 //Cette classe représente les lot des articles vendus par l'ecole saint Hilare
 require_once('db.php');
-require_once('vendeur.php');
-require_once('acheteur.php');
+require_once('Vendeur.php');
+require_once('Acheteur.php');
 
 
 class Lot
@@ -27,10 +27,9 @@ class Lot
 	 public function __construct($numeroCoupon, $numeroLotVendeur, $prix, $vendeur){
 		$this->setCoupon($numeroCoupon);
 		$this->setNumeroLotVendeur($numeroLotVendeur);
-
 		$this->setPrix($prix);
-		$this->setStatut("En préparation");
 
+		$this->setStatut("En préparation");
 		$this->setVendeur($vendeur);
 		$today = date("d-m-Y H:i:s");
 		$this->setDateDepot($today);
@@ -142,17 +141,21 @@ class Lot
 	  $status = $this->getStatut();
 	  $acheteur = $this->getAcheteur();
 	  $vendeur = $this->getVendeur();
-	  $dateDepot = $this->getDateDepot();
+	  //$dateDepot = $this->getDateDepot();
 	  $idA=null;
 	  $idV=null;
-	  if($acheteur!=null){
-		  $idA=$acheteur->getId();
-	  }
 	  if($vendeur!=null){
 		  $idV=$vendeur->getId();
+
 	  }
-	  $query = "INSERT INTO lot (idLot, numeroCoupon, numeroLotVendeur, prixVente, statut, idAcheteur, idVendeur,dateDepot)
-	  VALUES ('','".$coupon."','".$numeroLotVendeur."','".$prix."','".$status."','".$idA."','".$idV."','".$dateDepot."')";
+	  if($acheteur!=null){
+	    $idA=$acheteur->getId();
+		$query = "INSERT INTO Lot (numeroCoupon, numeroLotVendeur, prixVente, statut, idAcheteur, idVendeur)
+		VALUES ('".$coupon."','".$numeroLotVendeur."','".$prix."','".$status."','".$idA."','".$idV."')";
+	  }else{
+	  $query = "INSERT INTO Lot (numeroCoupon, numeroLotVendeur, prixVente, statut, idVendeur)
+	  VALUES ('".$coupon."','".$numeroLotVendeur."','".$prix."','".$status."','".$idV."')";
+	  }
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -171,7 +174,7 @@ class Lot
 
 	public function delete() {
 		$id = $this->getId();
-		$query = "DELETE FROM lot WHERE idLot=".$id;
+		$query = "DELETE FROM Lot WHERE idLot=".$id;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
@@ -186,7 +189,7 @@ class Lot
 	*/
 
 	public Static function getLotById($id){
-	  $query = "SELECT * FROM lot WHERE idLot=".$id;
+	  $query = "SELECT * FROM Lot WHERE idLot=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -203,7 +206,7 @@ class Lot
 	 }
 
 	public Static function getLotByCoupon($coupon){
-	  $query = "SELECT * FROM lot WHERE numeroCoupon=".$coupon;
+	  $query = "SELECT * FROM Lot WHERE numeroCoupon=".$coupon;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -220,7 +223,7 @@ class Lot
 	 }
 
 	public Static function getLotByStatus($status){
-	  $query = "SELECT * FROM lot WHERE status=".$status;
+	  $query = "SELECT * FROM Lot WHERE status=".$status;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -238,7 +241,7 @@ class Lot
 
 	 public function updatePrix($prix){
 	  $id = $this->getId();
-	  $query = "UPDATE lot SET prix ='$prix' WHERE idLot=".$id;
+	  $query = "UPDATE Lot SET prix ='$prix' WHERE idLot=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -247,14 +250,13 @@ class Lot
 	  $db->close();
 	 }
 
-	public function updateStatus($status){
+	public function updateStatut($statut){
 	  $id = $this->getId();
-	  $query = "UPDATE lot SET status ='$status' WHERE idLot=".$id;
+	  $query = "UPDATE Lot SET statut ='$statut' WHERE idLot=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
-
 	  $this->setStatut($status);
 	  $db->close();
 
@@ -262,7 +264,7 @@ class Lot
 
 	 public function updateNumeroLotVendeur($numeroLotVendeur){
 	  $id = $this->getId();
-	  $query = "UPDATE lot SET numeroLotVendeur ='$numeroLotVendeur' WHERE idLot=".$id;
+	  $query = "UPDATE Lot SET numeroLotVendeur ='$numeroLotVendeur' WHERE idLot=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
