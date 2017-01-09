@@ -14,7 +14,6 @@ include_once('../model/marque.php');
 	$lot= unserialize(urldecode(($_GET['lot'])));
 	$vendeur = $lot->getVendeur();
 	$articles = unserialize(urldecode($_GET['listArticle']));
-	echo($articles[0]->getId());
 	
 ?>
 
@@ -169,7 +168,7 @@ include_once('../model/marque.php');
                   <label for="inputTelephone" class="col-sm-2 control-label">Téléphone</label>
 
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" value="<?php echo($lot->getVendeur()->getTel()) ?>" id="inputTelephone" name="inputTelephone" placeholder=<?php echo($lot->getVendeur()->getTel()) ?>>
+                    <input type="text" class="form-control" value="<?php echo($lot->getVendeur()->getTel()) ?>" id="inputTelephone" name="inputTelephone" placeholder=<?php echo($lot->getVendeur()->getTel()) ?>
                   </div>
                 </div>
 
@@ -182,8 +181,6 @@ include_once('../model/marque.php');
                 </div>
 				
 				<div class="form-group">
-                  <label for="inputNom" class="col-sm-2 control-label">Nom</label>
-
                   <div class="col-sm-10">
                     <input type="hidden" class="form-control" value="<?php echo($lot->getVendeur()->getId()) ?>" id="inputIdVendeur" name="inputIdVendeur" placeholder=<?php echo($lot->getVendeur()->getId()) ?>>
                   </div>

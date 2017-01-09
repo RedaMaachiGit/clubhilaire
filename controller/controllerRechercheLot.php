@@ -13,6 +13,7 @@ class ControllerRechercheLot {
 		$numeroLot = $_POST['numeroLot'];
 		$lot = Lot::getLotByCoupon($numeroLot);
 		$listArticle = urlencode(serialize(Article::getArticlesByLot($lot->getId())));
+		$a = Article::getArticlesByLot($lot->getId());
 		header('location:../views/modificationLot.php?lot='.urlencode(serialize($lot)).'&listArticle='.$listArticle);
 	}
 	
