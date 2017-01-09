@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <?php
-include_once('../model/Vendeur.php');
-include_once('../model/Lot.php');
-include_once('../model/Article.php');
+include_once('../model/vendeur.php');
+include_once('../model/lot.php');
+include_once('../model/article.php');
 include_once('../model/modele.php');
 include_once('../model/marque.php');
   //echo("Numero lot: " . $_POST['numeroLot'] . "<br />\n"); //TRACE
@@ -14,7 +14,8 @@ include_once('../model/marque.php');
 	$lot= unserialize(urldecode(($_GET['lot'])));
 	$vendeur = $lot->getVendeur();
 	$articles = unserialize(urldecode($_GET['listArticle']));
-	
+	//echo sizeof($articles);
+	//echo $articles[0]->getId();
 ?>
 
 <html>
@@ -179,15 +180,17 @@ include_once('../model/marque.php');
                     <input type="email" class="form-control" value="<?php echo($lot->getVendeur()->getEMail()) ?>" id="inputEmail" name="inputEmail" placeholder=<?php echo($lot->getVendeur()->getEMail()) ?>>
                   </div>
                 </div>
-				
+
 				<div class="form-group">
                   <div class="col-sm-10">
                     <input type="hidden" class="form-control" value="<?php echo($lot->getVendeur()->getId()) ?>" id="inputIdVendeur" name="inputIdVendeur" placeholder=<?php echo($lot->getVendeur()->getId()) ?>>
                   </div>
                 </div>
 
-                <!-- The template for adding new field -->
+								<input type="hidden" class="form-control" id="index" name="index" value="0" />
 
+                <!-- The template for adding new field -->
+								<?php for ($i=0; $i<sizeof($articles); $i++) { ?>
                 <div class="col-sm-12 form-group">
                     <label>Type d'article</label>
                     <select class="col-sm-5 form-control" id="article[0].inputtypedematos" name="article[0][typedematos]" data-index='0' onchange="handleTypeChange(this)">
@@ -197,8 +200,6 @@ include_once('../model/marque.php');
                       <option value="3">Accessoire</option>
                     </select>
                 </div>
-
-                <input type="hidden" class="form-control" id="index" name="index" value="0" />
 
                 <div class="form-group" name="article[0].marque">
                   <label for="inputmarque" class="col-sm-2 control-label">Marque</label>
@@ -275,7 +276,7 @@ include_once('../model/marque.php');
                     <input type="checkbox" id="article[0].inputsuppression"  name="article[0][inputsuppression]" value="YES"> Supprimer article ? <output></output>
                   </label>
                 </div>
-
+								<?php } ?>
                 <div class="col-xs-1">
                   <button type="button" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>
                 </div>
