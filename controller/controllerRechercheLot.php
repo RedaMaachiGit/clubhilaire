@@ -14,7 +14,13 @@ class ControllerRechercheLot {
 		$lot = Lot::getLotByCoupon($numeroLot);
 		$listArticle = urlencode(serialize(Article::getArticlesByLot($lot->getId())));
 		$a = Article::getArticlesByLot($lot->getId());
-		header('location:../views/modificationLot.php?lot='.urlencode(serialize($lot)).'&listArticle='.$listArticle);
+		$idForm = (String)$_POST['formEnvoie'];
+		if(strcmp($idForm,"restitution")==0){
+			header('location:../views/restitutionLot.php?lot='.urlencode(serialize($lot)).'&listArticle='.$listArticle);
+		}
+		else if(strcmp($idForm,"modification")==0){
+			header('location:../views/modificationLot.php?lot='.urlencode(serialize($lot)).'&listArticle='.$listArticle);
+		}
 	}
 	
 
