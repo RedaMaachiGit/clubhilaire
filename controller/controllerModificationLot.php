@@ -6,10 +6,9 @@ include_once('../model/article.php');
 include_once('../model/modele.php');
 include_once('../model/marque.php');
 
-
 class ControllerModificationLot {
-	
-	
+
+
 	public static function modificationArticle($i,$lot,$marque,$modele){
 		$ptvMax ="";
 		$ptvMin ="";
@@ -19,8 +18,8 @@ class ControllerModificationLot {
 		$heuresDeVol ="";
 		$certificat ="";
 		$surface ="";
-		$typeProtectionSelette=""; //A rajouter ?
-		$annee=2000; //Arajouter
+		$typeProtectionSelette=""; // A rajouter ?
+		$annee=2000; // A rajouter ?
 		$typeAccessoire="";
 		$type = $_POST['article'][$i]['inputtypedematos'];
 		if($type == 0){
@@ -46,7 +45,7 @@ class ControllerModificationLot {
 		$certificat,$typeProtectionSelette,$typeAccessoire,$annee,"","");
 		$article->save();*/
 	}
-	
+
 	public static function modifierVendeur($idVendeur){
 		$nom = $_POST['inputNom'];
 		$prenom = $_POST['inputPrenom'];
@@ -55,12 +54,12 @@ class ControllerModificationLot {
 		$idVendeur = $_POST['inputLot'];
 		$addresse ="3rue des ponay";
 		$type = "pro";
-		$cheque = 1;	
+		$cheque = 1;
 		$vendeur = Vendeur::getVendeurById((int)$idVendeur);
 		if(!Vendeur::vendeurExistByMail($email)){  //L'adresse mail du vendeur de correspond à aucun vendeur en bd
 			$vendeur->updateMail($email);
 		}
-		$vendeur->updateVendeur($nom,$prenom,$addresse,$tel,$type,$cheque);	
+		$vendeur->updateVendeur($nom,$prenom,$addresse,$tel,$type,$cheque);
 		return $vendeur;
 	}
 		public static function ajoutMarque($i){
@@ -88,7 +87,7 @@ class ControllerModificationLot {
 			return $newModele;
 		}
 	}
-	
+
 	public static function modificationLot(){
 		$prixVente = 675;
 		$lot= unserialize(urldecode(($_POST['inputLot'])));
@@ -106,7 +105,7 @@ class ControllerModificationLot {
 			ControllerModificationLot::modificationArticle($i,$lot,$marque,$modele);
 		}
 	}
-	
+
 
 }
 
