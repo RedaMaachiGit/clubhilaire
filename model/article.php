@@ -38,7 +38,7 @@ class Article
 		$this->setLot($lot);
 		$this->setMarque($marque);
 		$this->setModele($modele);
-		$this->setPtvMin($ptvMin); 
+		$this->setPtvMin($ptvMin);
 		$this->setPtvMax($ptvMax);
 		$this->setTaille($taille);
 		$this->setSurfaceVoile($surfaceVoile);
@@ -110,15 +110,6 @@ class Article
 		return $this->_type;
 	  }
 	 
-	//Setter typeArticle 
-	 public function setCoupon($type){
-		if (!is_String($type)) // S'il ne s'agit pas d'unne chaine de charatère
-		{
-		  trigger_error('Le type d\'un article doit être une chaine de charactère', E_USER_WARNING);
-		  return;
-		}
-		$this->_type = $type;
-	  }	 
 	 
 	//Getter ptvMin 
 	 public function getPtvMin(){
@@ -271,19 +262,36 @@ class Article
 	  $idL=null;
 	  $idM=null;
 	  $idMod=null;
-	  if($marque!=null){
-		  $idM=$marque->getId();
-	  }
-	  if($modele!=null){
-		  $idMod=$modele->getId();
-	  }
 	  if($lot!=null){
 		  $idL=$lot->getId();
+	}
+	  if($modele!=null){
+		$idMod=$modele->getId();
+		if($marque!=null){
+			$idM=$marque->getId();
+			$query = "INSERT INTO article (idLot, idMarque, idModele, type, ptvMinimum, ptvMaximum, taille, annee, surfaceVoile, couleurVoile,heureVolesVoile, certificatRevisionVoile, typeProtectionSelette,
+			typeAccessoire, commentaire, homologation) VALUES ('".$idL."','".$idM."','".$idMod."','".$type."','".$ptvMin."','".$ptvMax."','".$taille."','".$annee."','".$surfaceVoile."'
+			,'".$couleurVoile."','".$heureVoile."','".$certificat."','".$typeSelette."','".$typeAccessoire."','".$commentaire."','".$homologation."')";
+		}
+		else{
+			$query = "INSERT INTO article (idLot, idModele, type, ptvMinimum, ptvMaximum, taille, annee, surfaceVoile, couleurVoile,heureVolesVoile, certificatRevisionVoile, typeProtectionSelette,
+			typeAccessoire, commentaire, homologation) VALUES ('".$idL."','".$idMod."','".$type."','".$ptvMin."','".$ptvMax."','".$taille."','".$annee."','".$surfaceVoile."'
+			,'".$couleurVoile."','".$heureVoile."','".$certificat."','".$typeSelette."','".$typeAccessoire."','".$commentaire."','".$homologation."')";
+		}
 	  }
-	  
-	  $query = "INSERT INTO article (idLot, idMarque, idModele, type, ptvMinimum, ptvMaximum, taille, annee, surfaceVoile, couleurVoile,heureVolesVoile, certificatRevisionVoile, typeProtectionSelette,
-	  typeAccessoire, commentaire, homologation) VALUES ('".$idL."','".$idM."','".$idMod."','".$type."','".$ptvMin."','".$ptvMax."','".$taille."','".$annee."','".$surfaceVoile."'
-	  ,'".$couleurVoile."','".$heureVoile."','".$certificat."','".$typeSelette."','".$typeAccessoire."','".$commentaire."','".$homologation."')";
+	  else{
+		if($marque!=null){
+			$idM=$marque->getId();
+			$query = "INSERT INTO article (idLot, idMarque, type, ptvMinimum, ptvMaximum, taille, annee, surfaceVoile, couleurVoile,heureVolesVoile, certificatRevisionVoile, typeProtectionSelette,
+			typeAccessoire, commentaire, homologation) VALUES ('".$idL."','".$idM."','".$type."','".$ptvMin."','".$ptvMax."','".$taille."','".$annee."','".$surfaceVoile."'
+			,'".$couleurVoile."','".$heureVoile."','".$certificat."','".$typeSelette."','".$typeAccessoire."','".$commentaire."','".$homologation."')";
+		}
+		else{
+			$query = "INSERT INTO article (idLot, type, ptvMinimum, ptvMaximum, taille, annee, surfaceVoile, couleurVoile,heureVolesVoile, certificatRevisionVoile, typeProtectionSelette,
+			typeAccessoire, commentaire, homologation) VALUES ('".$idL."','".$type."','".$ptvMin."','".$ptvMax."','".$taille."','".$annee."','".$surfaceVoile."'
+			,'".$couleurVoile."','".$heureVoile."','".$certificat."','".$typeSelette."','".$typeAccessoire."','".$commentaire."','".$homologation."')";
+		} 
+	  }
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();

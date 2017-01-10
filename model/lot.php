@@ -149,11 +149,23 @@ class Lot
 	  }
 	  if($acheteur!=null){
 	    $idA=$acheteur->getId();
+		if($prix != NULL){
 		$query = "INSERT INTO lot (numeroCoupon, numeroLotVendeur, prixVente, statut, idAcheteur, idVendeur)
-		VALUES ('".$coupon."','".$numeroLotVendeur."','".$prix."','".$status."','".$idA."','".$idV."')";	 
-	  }else{
-	  $query = "INSERT INTO lot (numeroCoupon, numeroLotVendeur, prixVente, statut, idVendeur)
-	  VALUES ('".$coupon."','".$numeroLotVendeur."','".$prix."','".$status."','".$idV."')";	 
+		VALUES ('".$coupon."','".$numeroLotVendeur."','".$prix."','".$status."','".$idA."','".$idV."')";
+		}else{
+		$query = "INSERT INTO lot (numeroCoupon, numeroLotVendeur, statut, idAcheteur, idVendeur)
+		VALUES ('".$coupon."','".$numeroLotVendeur."','".$status."','".$idA."','".$idV."')";
+		}
+	  }
+	  else{ 
+		if($prix != NULL){
+		$query = "INSERT INTO lot (numeroCoupon, numeroLotVendeur, prixVente, statut, idVendeur)
+		VALUES ('".$coupon."','".$numeroLotVendeur."','".$prix."','".$status."','".$idV."')";	 
+		}else{
+		$query = "INSERT INTO lot (numeroCoupon, numeroLotVendeur, statut, idVendeur)
+		VALUES ('".$coupon."','".$numeroLotVendeur."','".$status."','".$idV."')";	
+		}
+	
 	  }
 	  $db = new DB();
 	  $db->connect();
