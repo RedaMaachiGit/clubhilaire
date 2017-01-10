@@ -3,6 +3,7 @@ include_once('../model/vendeur.php');
 include_once('../model/lot.php');
 include_once('../model/article.php');
 include_once('../model/modele.php');
+
 class ControllerAjoutLot {
 
 		public static function ajoutArticle($i,$lot,$marque,$modele){
@@ -21,6 +22,8 @@ class ControllerAjoutLot {
 			if($type == 0){
 				$ptvMax = $_POST['article'][$i]['inputptvmax'];
 				$ptvMin = $_POST['article'][$i]['inputptvmin'];
+				$annee = $_POST['article'][$i]['inputannee'];
+				$homologation = $_POST['article'][$i]['typehomologation'];
 				$taille = $_POST['article'][$i]['inputtaille'];
 				$surface = $_POST['article'][$i]['inputsurface'];
 				$couleur = $_POST['article'][$i]['inputcouleur'];
@@ -95,7 +98,7 @@ class ControllerAjoutLot {
 			$prixVente = $_POST['inputPrix'];
 		}else{
 			$prixVente = NULL;
-		}		
+		}
 		$vendeur = ControllerAjoutLot::ajoutVendeur();
 		$lot = new Lot($numeroCoupon,$numeroLotVendeur,$prixVente,$vendeur); //On créer le lot et on l'associe au vendeur
 		$lot->save();
