@@ -211,7 +211,7 @@
 											<div class="form-group" name="article[<?php echo $i; ?>].marque">
 												<label for="inputmarque" class="col-sm-2 control-label">Marque</label>
 												<div class="col-sm-10">
-													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputmarque" value="<?php echo($articles[$i]->getMarque()->getLibelle()) ?>" name="article[0][inputmarque]" placeholder="Marque" />
+													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputmarque" value="<?php echo($articles[$i]->getMarque()->getLibelle()) ?>" name="article[<?php echo $i; ?>][inputmarque]" placeholder="Marque" />
 												</div>
 											</div>
 
@@ -219,69 +219,69 @@
 											<div class="form-group" name="article[<?php echo $i; ?>].modele">
 												<label for="inputmodele" class="col-sm-2 control-label">Modele</label>
 												<div class="col-sm-10">
-													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputmodele" value="<?php echo($articles[$i]->getModele()->getLibelle()) ?>" name="article[0][inputmodele]"  placeholder="Modele" />
+													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputmodele" value="<?php echo($articles[$i]->getModele()->getLibelle()) ?>" name="article[<?php echo $i; ?>][inputmodele]"  placeholder="Modele" />
 												</div>
 											</div>
 
 											<div class="form-group" id="article[<?php echo $i; ?>].ptvmaxgroup" name="article[<?php echo $i; ?>].ptvmax">
 												<label for="inputptvmax" class="col-sm-2 control-label">PTV Max</label>
 												<div class="col-sm-10">
-													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputptvmax" value="<?php echo($articles[$i]->getPtvMax()) ?>" name="article[0][inputptvmax]"  placeholder="PTV Maximum" />
+													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputptvmax" value="<?php echo($articles[$i]->getPtvMax()) ?>" name="article[<?php echo $i; ?>][inputptvmax]"  placeholder="PTV Maximum" />
 												</div>
 											</div>
 
 											<div class="form-group" id="article[<?php echo $i; ?>].ptvmingroup" name="article[<?php echo $i; ?>].ptvmin">
 												<label for="inputptvmin" class="col-sm-2 control-label">PTV Min</label>
 												<div class="col-sm-10">
-													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputptvmin"  value="<?php echo($articles[$i]->getPtvMin()) ?>" name="article[0][inputptvmin]"  placeholder="PTV Minimum" />
+													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputptvmin"  value="<?php echo($articles[$i]->getPtvMin()) ?>" name="article[<?php echo $i; ?>][inputptvmin]"  placeholder="PTV Minimum" />
 												</div>
 											</div>
 
 											<div class="form-group" id="article[<?php echo $i; ?>].taillegroup" name="article[<?php echo $i; ?>].taille">
 												<label for="inputtaille" class="col-sm-2 control-label">Taille</label>
 												<div class="col-sm-10">
-													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputtaille" value="<?php echo($articles[$i]->getTaille()) ?>" name="article[0][inputtaille]"  placeholder="Taille" />
+													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputtaille" value="<?php echo($articles[$i]->getTaille()) ?>" name="article[<?php echo $i; ?>][inputtaille]"  placeholder="Taille" />
 												</div>
 											</div>
 
 											<div class="form-group" id="article[<?php echo $i; ?>].surfacegroup" name="article[<?php echo $i; ?>].surface">
 												<label for="inputsurface" class="col-sm-2 control-label">Surface</label>
 												<div class="col-sm-10">
-													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputsurface" name="article[0][inputsurface]"  placeholder="Surface" value="<?php echo($articles[$i]->getSurfaceVoile()) ?>"/>
+													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputsurface" name="article[<?php echo $i; ?>][inputsurface]"  placeholder="Surface" value="<?php echo($articles[$i]->getSurfaceVoile()) ?>"/>
 												</div>
 											</div>
 
 											<div class="form-group" id="article[<?php echo $i; ?>].couleurgroup" name="article[<?php echo $i; ?>].couleur">
 												<label for="inputcouleur" class="col-sm-2 control-label">Couleur</label>
 												<div class="col-sm-10">
-													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputcouleur" name="article[0][inputcouleur]"  placeholder="Couleur" value="<?php echo($articles[$i]->getCouleurVoile()) ?>"/>
+													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputcouleur" name="article[<?php echo $i; ?>][inputcouleur]"  placeholder="Couleur" value="<?php echo($articles[$i]->getCouleurVoile()) ?>"/>
 												</div>
 											</div>
 
 											<div class="form-group" id="article[<?php echo $i; ?>].heuregroup" name="article[<?php echo $i; ?>].heure">
 												<label for="inputheuresdevol" class="col-sm-2 control-label">Heures de vol</label>
 												<div class="col-sm-10">
-													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputheuresdevol"  name="article[0][inputheuresdevol]"  placeholder="Heures de vol" value="<?php echo($articles[$i]->getHeureVoile()) ?>"/>
+													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputheuresdevol"  name="article[<?php echo $i; ?>][inputheuresdevol]"  placeholder="Heures de vol" value="<?php echo($articles[$i]->getHeureVoile()) ?>"/>
 												</div>
 											</div>
 
 											<div style="display: none;" class="form-group" id="article[<?php echo $i; ?>].typeaccessoiregroup" style="display:none" name="article[<?php echo $i; ?>].typeaccessoire">
 												<label for="inputtypeaccessoire" class="col-sm-2 control-label">Type d'accessoire</label>
 												<div class="col-sm-10">
-													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputtypeaccessoire"  name="article[0][inputtypeaccessoire]"  placeholder="Type d'accessoire" />
+													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputtypeaccessoire"  name="article[<?php echo $i; ?>][inputtypeaccessoire]"  placeholder="Type d'accessoire" />
 												</div>
 											</div>
 
 											<div class="checkbox" name="article[<?php echo $i; ?>].certificat" id="article[<?php echo $i; ?>].certificatgroup">
 												<label>
-													<input type="checkbox" id="article[<?php echo $i; ?>].inputcertificat"  name="article[0][inputcertificat]" value="<?php echo($articles[$i]->getCertificat()) ?>" <?php if ($articles[$i]->getCertificat() == '0') echo "checked='checked'"; ?>
+													<input type="checkbox" id="article[<?php echo $i; ?>].inputcertificat"  name="article[<?php echo $i; ?>][inputcertificat]" value="<?php echo($articles[$i]->getCertificat()) ?>" <?php if ($articles[$i]->getCertificat() == '0') echo "checked='checked'"; ?>
 > Certificat de révision <output></output>
 												</label>
 											</div>
 
 											<div class="checkbox" name="article[<?php echo $i; ?>].suppression" id="article[<?php echo $i; ?>].suppressiongroup">
 												<label>
-													<input type="checkbox" id="article[<?php echo $i; ?>].inputsuppression"  name="article[0][inputsuppression]" value="YES"> Supprimer article ? <output></output>
+													<input type="checkbox" id="article[<?php echo $i; ?>].inputsuppression"  name="article[<?php echo $i; ?>][inputsuppression]" value="YES"> Supprimer article ? <output></output>
 												</label>
 											</div>
 												<?php }
@@ -346,27 +346,27 @@
 											<div class="form-group" name="article[<?php echo $i; ?>].modele">
 												<label for="inputmodele" class="col-sm-2 control-label">Modele</label>
 												<div class="col-sm-10">
-													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputmodele" value="<?php echo($articles[$i]->getModele()->getLibelle()) ?>" name="article[0][inputmodele]"  placeholder="Modele" />
+													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputmodele" value="<?php echo($articles[$i]->getModele()->getLibelle()) ?>" name="article[<?php echo $i; ?>][inputmodele]"  placeholder="Modele" />
 												</div>
 											</div>
 
 											<div class="form-group" id="article[<?php echo $i; ?>].ptvmaxgroup" name="article[<?php echo $i; ?>].ptvmax">
 												<label for="inputptvmax" class="col-sm-2 control-label">PTV Max</label>
 												<div class="col-sm-10">
-													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputptvmax" value="<?php echo($articles[$i]->getPtvMax()) ?>" name="article[0][inputptvmax]"  placeholder="PTV Maximum" />
+													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputptvmax" value="<?php echo($articles[$i]->getPtvMax()) ?>" name="article[<?php echo $i; ?>][inputptvmax]"  placeholder="PTV Maximum" />
 												</div>
 											</div>
 
 											<div class="form-group" id="article[<?php echo $i; ?>].ptvmingroup" name="article[<?php echo $i; ?>].ptvmin">
 												<label for="inputptvmin" class="col-sm-2 control-label">PTV Min</label>
 												<div class="col-sm-10">
-													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputptvmin" value="<?php echo($articles[$i]->getPtvMin()) ?>" name="article[0][inputptvmin]"  placeholder="PTV Minimum" />
+													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputptvmin" value="<?php echo($articles[$i]->getPtvMin()) ?>" name="article[<?php echo $i; ?>][inputptvmin]"  placeholder="PTV Minimum" />
 												</div>
 											</div>
 
 											<div class="checkbox" name="article[<?php echo $i; ?>].suppression" id="article[<?php echo $i; ?>].suppressiongroup">
 												<label>
-													<input type="checkbox" id="article[<?php echo $i; ?>].inputsuppression"  name="article[0][inputsuppression]" value="YES"> Supprimer article ? <output></output>
+													<input type="checkbox" id="article[<?php echo $i; ?>].inputsuppression"  name="article[<?php echo $i; ?>][inputsuppression]" value="YES"> Supprimer article ? <output></output>
 												</label>
 											</div>
 												<?php }
@@ -383,7 +383,7 @@
 											<div class="form-group" name="article[<?php echo $i; ?>].marque">
 												<label for="inputmarque" class="col-sm-2 control-label">Marque</label>
 												<div class="col-sm-10">
-													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputmarque" value="<?php echo($articles[$i]->getMarque()->getLibelle()) ?>" name="article[0][inputmarque]" placeholder="Marque" />
+													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputmarque" value="<?php echo($articles[$i]->getMarque()->getLibelle()) ?>" name="article[<?php echo $i; ?>][inputmarque]" placeholder="Marque" />
 												</div>
 											</div>
 
@@ -391,20 +391,20 @@
 											<div class="form-group" name="article[<?php echo $i; ?>].modele">
 												<label for="inputmodele" class="col-sm-2 control-label">Modele</label>
 												<div class="col-sm-10">
-													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputmodele" value="<?php echo($articles[$i]->getModele()->getLibelle()) ?>" name="article[0][inputmodele]"  placeholder="Modele" />
+													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputmodele" value="<?php echo($articles[$i]->getModele()->getLibelle()) ?>" name="article[<?php echo $i; ?>][inputmodele]"  placeholder="Modele" />
 												</div>
 											</div>
 
 											<div class="form-group" id="article[<?php echo $i; ?>].typeaccessoiregroup" name="article[<?php echo $i; ?>].typeaccessoire">
 												<label for="inputtypeaccessoire" class="col-sm-2 control-label">Type d'accessoire</label>
 												<div class="col-sm-10">
-													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputtypeaccessoire" value="<?php echo($articles[$i]->getTypeAccessoire()) ?>" name="article[0][inputtypeaccessoire]"  placeholder="Type d'accessoire" />
+													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputtypeaccessoire" value="<?php echo($articles[$i]->getTypeAccessoire()) ?>" name="article[<?php echo $i; ?>][inputtypeaccessoire]"  placeholder="Type d'accessoire" />
 												</div>
 											</div>
 
 											<div class="checkbox" name="article[<?php echo $i; ?>].suppression" id="article[<?php echo $i; ?>].suppressiongroup">
 												<label>
-													<input type="checkbox" id="article[<?php echo $i; ?>].inputsuppression"  name="article[0][inputsuppression]" value="YES"> Supprimer article ? <output></output>
+													<input type="checkbox" id="article[<?php echo $i; ?>].inputsuppression"  name="article[<?php echo $i; ?>][inputsuppression]" value="YES"> Supprimer article ? <output></output>
 												</label>
 											</div>
 												<?php }	?>
