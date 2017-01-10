@@ -1,4 +1,4 @@
-	<!DOCTYPE html>
+<!DOCTYPE html>
 	<?php
 	include_once('../model/vendeur.php');
 	include_once('../model/lot.php');
@@ -8,7 +8,6 @@
 	  //echo("Numero lot: " . $_POST['numeroLot'] . "<br />\n"); //TRACE
 		//$id = $_POST['numeroLot'];
 	//  $connect = ConnexionDB(); // Je me connecte à la base de donnée
-
 	//  $updateLot = "SELECT * FROM Lot WHERE numeroLot = '$id'" or die("Erreur lors de la consultation de données (updateLot)" . mysqli_error($connect));
 	//  $req = $connect->query($updateLot);
 		$lot= unserialize(urldecode(($_GET['lot'])));
@@ -184,7 +183,7 @@
 
 					<div class="form-group">
 	                  <div class="col-sm-10">
-	                    <input type="hidden" class="form-control" value="<?php echo($lot->getVendeur()->getId()) ?>" id="inputIdVendeur" name="inputIdVendeur" placeholder=<?php echo($lot->getVendeur()->getId()) ?>>
+	                    <input type="hidden" class="form-control" value="<?php echo(urlencode(serialize($lot))) ?>" id="inputLot" name="inputLot" >
 	                  </div>
 	                </div>
 
@@ -631,11 +630,9 @@
 	<script>
 	var value = document.getElementById("index").value;
 	var articleIndex = value;
-
 	var handleTypeChange = function(e) {
 	  //console.log(e.value);
 	  //console.log(e.dataset);
-
 	  var articleIndex = (parseInt(e.dataset.index)).toString();
 	  if ( e.value == '0') // Voile
 	  {
@@ -727,7 +724,6 @@
 	  }
 	}
 	$(document).ready(function() {
-
 	    var marqueValidators = {
 	            row: '.col-xs-4',   // The title is placed inside a <div class="col-xs-4"> element
 	            validators: {
@@ -744,7 +740,6 @@
 	                }
 	            }
 	        }
-
 	    $('#articleForm')
 	        // .formValidation({
 	        //     framework: 'bootstrap',
@@ -766,11 +761,9 @@
 	        //         'article[0].certificat': certificatValidators
 	        //     }
 	        // })
-
 	        // Add button click handler
 	        .on('click', '.addButton', function() {
 	            console.log('TRACE');
-
 	            articleIndex++;
 	            console.log(articleIndex);
 	            document.getElementById("index").value = articleIndex + 1;
@@ -783,7 +776,6 @@
 	                                .removeAttr('id')
 	                                .attr('data-article-index', articleIndex);
 	            $form.append($clone);
-
 	            // Update the name attributes
 	            $clone
 	                .find('[name="typedematos"]').attr('name', 'article[' + articleIndex + '][typedematos]').end()
@@ -812,7 +804,6 @@
 	                .find('[id="typeaccessoiregroup"]').attr('id', 'article[' + articleIndex + '].typeaccessoiregroup').end()
 	                .find('[id="certificatgroup"]').attr('id', 'article[' + articleIndex + '].certificatgroup').end()
 	                .find('[id="suppressiongroup"]').attr('id', 'article[' + articleIndex + '].suppressiongroup').end()
-
 	                .find('[name="inputmarque"]').attr('name', 'article[' + articleIndex + '][inputmarque]').end()
 	                .find('[name="inputmodele"]').attr('name', 'article[' + articleIndex + '][inputmodele]').end()
 	                .find('[name="inputptvmax"]').attr('name', 'article[' + articleIndex + '][inputptvmax]').end()
@@ -824,7 +815,6 @@
 	                .find('[name="inputtypeaccessoire"]').attr('name', 'article[' + articleIndex + '][inputtypeaccessoire]').end()
 	                .find('[name="inputcertificat"]').attr('name', 'article[' + articleIndex + '][inputcertificat]').end()
 	                .find('[name="inputsuppression"]').attr('name', 'article[' + articleIndex + '][inputsuppression]').end()
-
 	                .find('[id="inputtypedematos"]').attr('id', 'article[' + articleIndex + '][inputtypedematos]').end()
 	                .find('[id="inputmarque"]').attr('id', 'article[' + articleIndex + '][inputmarque]').end()
 	                .find('[id="inputmodele"]').attr('id', 'article[' + articleIndex + '][inputmodele]').end()
@@ -837,7 +827,6 @@
 	                .find('[id="inputtypeaccessoire"]').attr('id', 'article[' + articleIndex + '][inputtypeaccessoire]').end()
 	                .find('[id="inputcertificat"]').attr('id', 'article[' + articleIndex + '][inputcertificat]').end()
 	                .find('[id="inputsuppression"]').attr('id', 'article[' + articleIndex + '][inputsuppression]').end();
-
 	            // Add new fields
 	            // Note that we also pass the validator rules for new field as the third parameter
 	            // $('#articleForm')
@@ -852,13 +841,11 @@
 	            //     .formValidation('addField', 'article[' + articleIndex + '].heure', heureValidators)
 	            //     .formValidation('addField', 'article[' + articleIndex + '].typeaccessoire', typeaccessoireValidators)
 	            //     .formValidation('addField', 'article[' + articleIndex + '].certificat', certificatValidators);
-
 	        })
 	        // Remove button click handler
 	        .on('click', '.removeButton', function() {
 	            var $row  = $(this).parents('.form-group'),
 	                index = $row.attr('data-article-index');
-
 	            // Remove fields
 	            // $('#articleForm')
 	            //     .formValidation('removeField', $row.find('[name="article[' + index + '].typedematos"]'))
@@ -872,24 +859,13 @@
 	            //     .formValidation('removeField', $row.find('[name="article[' + index + '].heure"]'))
 	            //     .formValidation('removeField', $row.find('[name="article[' + index + '].typeaccessoire"]'))
 	            //     .formValidation('removeField', $row.find('[name="article[' + index + '].certificat"]'));
-
 	            // Remove element containing the fields
 	            $row.remove();
 	        });
-
 	        // $(document).on('change', $('#article['+ articleIndex +'].inputtypedematos'), function() {
 	        //     var e = document.getElementById("article["+ articleIndex +"].inputtypedematos");
 	        //     console.log(articleIndex);
 	        //
 	        //   });
-
 	});
 	</script>
-
-
-	<!-- Optionally, you can add Slimscroll and FastClick plugins.
-	     Both of these plugins are recommended to enhance the
-	     user experience. Slimscroll is required when using the
-	     fixed layout. -->
-	</body>
-	</html>

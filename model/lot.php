@@ -221,6 +221,16 @@ class Lot
 	  return $lot;
 	 }
 	 
+	 
+	 public Static function deleteArticlesByIdLot($idLot){ 
+	  $query = "DELETE FROM lot WHERE idLot=".$idLot;
+	  $db = new DB();
+	  $db->connect();
+	  $conn = $db->getConnectDb();
+	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $db->close();
+	 }
+	 
 	public Static function getLotByStatus($status){ 
 	  $query = "SELECT * FROM lot WHERE status=".$status;
 	  $db = new DB();
@@ -240,7 +250,7 @@ class Lot
 	 
 	 public function updatePrix($prix){
 	  $id = $this->getId();
-	  $query = "UPDATE lot SET prix ='$prix' WHERE idLot=".$id;
+	  $query = "UPDATE lot SET prixVente ='$prix' WHERE idLot=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
