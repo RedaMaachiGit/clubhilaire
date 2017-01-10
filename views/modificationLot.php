@@ -306,20 +306,20 @@
 											<div class="form-group" name="article[<?php echo $i; ?>].modele">
 												<label for="inputmodele" class="col-sm-2 control-label">Modele</label>
 												<div class="col-sm-10">
-													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputmodele" value="<?php echo($articles[$i]->getModele()->getLibelle()) ?>" name="article[0][inputmodele]"  placeholder="Modele" />
+													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputmodele" value="<?php echo($articles[$i]->getModele()->getLibelle()) ?>" name="article[<?php echo $i; ?>][inputmodele]"  placeholder="Modele" />
 												</div>
 											</div>
 
 											<div class="form-group" id="article[<?php echo $i; ?>].taillegroup" name="article[<?php echo $i; ?>].taille">
 												<label for="inputtaille" class="col-sm-2 control-label">Taille</label>
 												<div class="col-sm-10">
-													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputtaille" value="<?php echo($articles[$i]->getTaille()) ?>" name="article[0][inputtaille]"  placeholder="Taille" />
+													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputtaille" value="<?php echo($articles[$i]->getTaille()) ?>" name="article[<?php echo $i; ?>][inputtaille]"  placeholder="Taille" />
 												</div>
 											</div>
 
 											<div class="checkbox" name="article[<?php echo $i; ?>].suppression" id="article[<?php echo $i; ?>].suppressiongroup">
 												<label>
-													<input type="checkbox" id="article[<?php echo $i; ?>].inputsuppression"  name="article[0][inputsuppression]" value="YES"> Supprimer article ? <output></output>
+													<input type="checkbox" id="article[<?php echo $i; ?>].inputsuppression"  name="article[<?php echo $i; ?>][inputsuppression]" value="YES"> Supprimer article ? <output></output>
 												</label>
 											</div>
 
