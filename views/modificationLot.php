@@ -13,7 +13,7 @@
 		$lot= unserialize(urldecode(($_GET['lot'])));
 		$vendeur = $lot->getVendeur();
 		$articles = unserialize(urldecode($_GET['listArticle']));
-		echo sizeof($articles);
+		// echo sizeof($articles);
 		//echo $articles[0]->getMarque()->getLibelle();
 		//echo $articles[0]->getTypeArticle();
 	?>
