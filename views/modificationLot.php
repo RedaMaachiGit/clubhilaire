@@ -13,7 +13,7 @@
 		$lot= unserialize(urldecode(($_GET['lot'])));
 		$vendeur = $lot->getVendeur();
 		$articles = unserialize(urldecode($_GET['listArticle']));
-		//echo sizeof($articles);
+		echo sizeof($articles);
 		//echo $articles[0]->getMarque()->getLibelle();
 		//echo $articles[0]->getTypeArticle();
 	?>
@@ -195,7 +195,7 @@
 
 									<div class="col-sm-12 form-group">
 	                    <label>Type d'article</label>
-	                    <select class="col-sm-5 form-control" id="article[<?php echo $i; ?>].inputtypedematos" name="article[<?php echo $i; ?>][typedematos]" data-index='0' onchange="handleTypeChange(this)" disabled>
+	                    <select class="col-sm-5 form-control" id="article[<?php echo $i; ?>].inputtypedematos" name="article[<?php echo $i; ?>][typedematos]" data-index='0' onchange="handleTypeChange(this)">
 
 												<?php if($articles[$i]->getTypeArticle() == 0) { ?>
 

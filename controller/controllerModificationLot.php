@@ -6,6 +6,7 @@ include_once('../model/article.php');
 include_once('../model/modele.php');
 include_once('../model/marque.php');
 
+
 class ControllerModificationLot {
 
 
@@ -21,7 +22,8 @@ class ControllerModificationLot {
 		$typeProtectionSelette=""; // A rajouter ?
 		$annee=2000; // A rajouter ?
 		$typeAccessoire="";
-		$type = $_POST['article'][$i]['inputtypedematos'];
+
+		$type = $_POST['article'][$i]['typedematos'];
 		if($type == 0){
 			$ptvMax = $_POST['article'][$i]['inputptvmax'];
 			$ptvMin = $_POST['article'][$i]['inputptvmin'];
@@ -94,12 +96,20 @@ class ControllerModificationLot {
 		$vendeur = ControllerModificationLot::modifierVendeur($lot->getVendeur()->getId());
 		$lot->updatePrix($prixVente);
 		if(isset($_POST['index']) && !empty($_POST['index'])) {
+			// echo "================<br>";
+			// echo $_POST['index'];
+			// echo "<br>================";
 			$numberOfProducts = $_POST['index'];
 		} else {
 			$numberOfProducts = 1;
 		}
 		//Article::deleteArticlesByIdLot($lot->getId());
 		for ($i =0; $i <= $numberOfProducts-1; $i++){		//Pour chaque article
+			// echo $numberOfProducts;
+		 	// echo "================";
+			// echo "================<br>";
+			// echo $i;
+			// echo "<br>================";
 			$marque = ControllerModificationLot::ajoutMarque($i);
 			$modele = ControllerModificationLot::ajoutModele($i,$marque);
 			ControllerModificationLot::modificationArticle($i,$lot,$marque,$modele);
