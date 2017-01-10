@@ -170,6 +170,17 @@
                   </div>
                 </div>
 
+                <div class="checkbox" name="inputChequeGroup" id="inputChequeGroup">
+                  <label>
+                    <input type="checkbox" id="inputCheque"  name="inputCheque" value="Yes"> Accepte les chèques? <output></output>
+                  </label>
+                </div>
+
+                <div class="checkbox" name="inputProGroup" id="inputProGroup">
+                  <label>
+                    <input type="checkbox" id="inputPro"  name="inputPro" value="Yes"> Un professionnel? <output></output>
+                  </label>
+                </div>
 
                 <div class="form-group">
                   <label for="inputPrix" class="col-sm-2 control-label">Prix du lot</label>
@@ -199,6 +210,26 @@
                   </div>
                 </div>
 
+                <div class="form-group" name="article[0].annee">
+                  <label for="inputannee" class="col-sm-2 control-label">Année</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="article[0].inputannee" value="" name="article[0][inputannee]" placeholder="Année" />
+                  </div>
+                </div>
+
+                <div class="col-sm-12 form-group">
+                    <label for="inputtypehomologation" class="col-sm-2 control-label">Type d'homologation</label>
+                    <div class="col-sm-10">
+                      <select class="form-control" id="article[0].inputtypehomologation" name="article[0][typehomologation]" >
+                        <option value="0">EN A / DHV LTF-1 </option>
+                        <option value="1">EN B / DHV LTF 1-2 </option>
+                        <option value="2">EN C / DHV LTF 2 </option>
+                        <option value="3">EN D / DHV LTF 2-3 </option>
+                        <option value="4">NON HOMOLOGUE </option>
+                        <option value="5">INCONNUE</option>
+                      </select>
+                    </div>
+                </div>
 
                 <div class="form-group" name="article[0].modele">
                   <label for="inputmodele" class="col-sm-2 control-label">Modele</label>
@@ -306,6 +337,27 @@
                     <div class="col-sm-10">
                       <input type="text" class="form-control" id="inputmarque" name="inputmarque" value="" placeholder="Marque" />
                     </div>
+                  </div>
+
+                  <div class="form-group" name="annee">
+                    <label for="inputannee" class="col-sm-2 control-label">Année</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputannee" value="" name="inputannee" placeholder="Année" />
+                    </div>
+                  </div>
+
+                  <div class="col-sm-12 form-group">
+                      <label for="inputtypehomologation" class="col-sm-2 control-label">Type d'homologation</label>
+                      <div class="col-sm-10">
+                        <select class="form-control" id="inputtypehomologation" name="typehomologation" >
+                          <option value="0">EN A / DHV LTF-1 </option>
+                          <option value="1">EN B / DHV LTF 1-2 </option>
+                          <option value="2">EN C / DHV LTF 2 </option>
+                          <option value="3">EN D / DHV LTF 2-3 </option>
+                          <option value="4">NON HOMOLOGUE </option>
+                          <option value="5">INCONNUE</option>
+                        </select>
+                      </div>
                   </div>
 
                   <div class="form-group" name="modele">
@@ -501,6 +553,8 @@ var handleTypeChange = function(e) {
     ptvmaxgroup.style.display = "block"
     var ptvmingroup = document.getElementById("article[" + articleIndex + "].ptvmingroup");
     ptvmingroup.style.display = "block"
+    var ptvmingroup = document.getElementById("article[" + articleIndex + "].typehomologation");
+    ptvmingroup.style.display = "block"
     var taillegroup = document.getElementById("article[" + articleIndex + "].taillegroup");
     taillegroup.style.display = "block"
     var surfacegroup = document.getElementById("article[" + articleIndex + "].surfacegroup");
@@ -523,6 +577,8 @@ var handleTypeChange = function(e) {
     ptvmaxgroup.style.display = "none";
     var ptvmingroup = document.getElementById("article[" + articleIndex + "].ptvmingroup");
     ptvmingroup.style.display = "none";
+    var ptvmingroup = document.getElementById("article[" + articleIndex + "].typehomologation");
+    ptvmingroup.style.display = "none"
     var taillegroup = document.getElementById("article[" + articleIndex + "].taillegroup");
     taillegroup.style.display = "block";
     var surfacegroup = document.getElementById("article[" + articleIndex + "].surfacegroup");
@@ -543,6 +599,8 @@ var handleTypeChange = function(e) {
     console.log('TRACE para');
     var ptvmaxgroup = document.getElementById("article[" + articleIndex + "].ptvmaxgroup");
     ptvmaxgroup.style.display = "block";
+    var ptvmingroup = document.getElementById("article[" + articleIndex + "].typehomologation");
+    ptvmingroup.style.display = "none"
     var ptvmingroup = document.getElementById("article[" + articleIndex + "].ptvmingroup");
     ptvmingroup.style.display = "block";
     var taillegroup = document.getElementById("article[" + articleIndex + "].taillegroup");
@@ -567,6 +625,8 @@ var handleTypeChange = function(e) {
     ptvmaxgroup.style.display = "none";
     var ptvmingroup = document.getElementById("article[" + articleIndex + "].ptvmingroup");
     ptvmingroup.style.display = "none";
+    var ptvmingroup = document.getElementById("article[" + articleIndex + "].typehomologation");
+    ptvmingroup.style.display = "none"
     var surfacegroup = document.getElementById("article[" + articleIndex + "].protectionSelettegroup");
     surfacegroup.style.display = "none"
     var taillegroup = document.getElementById("article[" + articleIndex + "].taillegroup");
@@ -644,6 +704,8 @@ $(document).ready(function() {
             $clone
                 .find('[name="typedematos"]').attr('name', 'article[' + articleIndex + '][typedematos]').end()
                 .find('[name="marque"]').attr('name', 'article[' + articleIndex + '].marque').end()
+                .find('[name="marque"]').attr('name', 'article[' + articleIndex + '].annee').end()
+                .find('[name="marque"]').attr('name', 'article[' + articleIndex + '].homologation').end()
                 .find('[name="protectionSelette"]').attr('name', 'article[' + articleIndex + '].protectionSelette').end()
                 .find('[name="modele"]').attr('name', 'article[' + articleIndex + '].modele').end()
                 .find('[name="ptvmax"]').attr('name', 'article[' + articleIndex + '].ptvmax').end()
@@ -670,6 +732,8 @@ $(document).ready(function() {
                 .find('[id="certificatgroup"]').attr('id', 'article[' + articleIndex + '].certificatgroup').end()
 
                 .find('[name="inputmarque"]').attr('name', 'article[' + articleIndex + '][inputmarque]').end()
+                .find('[name="inputmarque"]').attr('name', 'article[' + articleIndex + '][inputannee]').end()
+                .find('[name="inputmarque"]').attr('name', 'article[' + articleIndex + '][inputtypehomologation]').end()
                 .find('[name="inputprotectionSelette"]').attr('name', 'article[' + articleIndex + '][inputprotectionSelette]').end()
                 .find('[name="inputmodele"]').attr('name', 'article[' + articleIndex + '][inputmodele]').end()
                 .find('[name="inputptvmax"]').attr('name', 'article[' + articleIndex + '][inputptvmax]').end()
@@ -683,6 +747,8 @@ $(document).ready(function() {
 
                 .find('[id="inputtypedematos"]').attr('id', 'article[' + articleIndex + '][inputtypedematos]').end()
                 .find('[id="inputmarque"]').attr('id', 'article[' + articleIndex + '][inputmarque]').end()
+                .find('[id="inputmarque"]').attr('id', 'article[' + articleIndex + '][inputannee]').end()
+                .find('[id="inputmarque"]').attr('id', 'article[' + articleIndex + '][inputtypehomologation]').end()
                 .find('[id="inputprotectionSelette"]').attr('id', 'article[' + articleIndex + '][inputprotectionSelette]').end()
                 .find('[id="inputmodele"]').attr('id', 'article[' + articleIndex + '][inputmodele]').end()
                 .find('[id="inputptvmax"]').attr('id', 'article[' + articleIndex + '][inputptvmax]').end()
