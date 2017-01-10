@@ -309,6 +309,15 @@ class Article
 		$db->close();
 	}
 	
+	public Static function deleteArticlesByIdLot($idLot){ 
+	  $query = "DELETE FROM lot WHERE idLot=".$idLot;
+	  $db = new DB();
+	  $db->connect();
+	  $conn = $db->getConnectDb();
+	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $db->close();
+	 }
+	
 		/* 
 		public Static function getArticleById($id) -> get en base de données l'instance ayant l'id $id
 		Input : $id 
