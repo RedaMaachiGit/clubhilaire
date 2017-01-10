@@ -3,7 +3,6 @@ include_once('../model/vendeur.php');
 include_once('../model/lot.php');
 include_once('../model/article.php');
 include_once('../model/modele.php');
-include_once('../model/marque.php');
 class ControllerAjoutLot {
 
 		public static function ajoutArticle($i,$lot,$marque,$modele){
@@ -15,8 +14,8 @@ class ControllerAjoutLot {
 			$heuresDeVol ="";
 			$certificat ="";
 			$surface ="";
-			$typeProtectionSelette=""; //A rajouter ?
-			$annee=2000; //Arajouter
+			$typeProtectionSelette="";
+			$annee=2000;
 			$typeAccessoire="";
 			$type = $_POST['article'][$i]['typedematos'];
 			if($type == 0){
@@ -30,12 +29,12 @@ class ControllerAjoutLot {
 					$certificat = $_POST['article'][$i]['inputcertificat'];
 				}
 			} else if ($type == 1){
-				$Taille = $_POST['article'][$i]['inputtaille'];
+				$taille = $_POST['article'][$i]['inputtaille'];
+				$typeProtectionSelette = $_POST['article'][$i]['inputprotectionSelette'];
 			} else if ($type == 2){
-				$Ptvmax = $_POST['article'][$i]['inputptvmax'];
-				$Ptvmin = $_POST['article'][$i]['inputptvmin'];
+				$ptvmax = $_POST['article'][$i]['inputptvmax'];
+				$ptvmin = $_POST['article'][$i]['inputptvmin'];
 			} else if ($type == 3){
-				$Marque = $_POST['article'][$i]['inputmarque'];
 				$typeAccessoire = $_POST['article'][$i]['inputtypeaccessoire'];
 			}
 		$article = new Article($type,$lot,$marque,$modele,$ptvMin,$ptvMax,$taille,$surface,$couleur,$heuresDeVol,
@@ -92,7 +91,11 @@ class ControllerAjoutLot {
 	public static function ajouterLot(){
 		$numeroCoupon = 1;
 		$numeroLotVendeur = "numeroLotVendeur";
-		$prixVente = $_POST['inputPrix'];;
+		if(!empty($$_POST['inputPrix'])){
+			$prixVente = $_POST['inputPrix'];
+		}else{
+			$prixVente = NULL;
+		}		
 		$vendeur = ControllerAjoutLot::ajoutVendeur();
 		$lot = new Lot($numeroCoupon,$numeroLotVendeur,$prixVente,$vendeur); //On créer le lot et on l'associe au vendeur
 		$lot->save();
@@ -102,9 +105,11 @@ class ControllerAjoutLot {
 			$numberOfProducts = 1;
 		}
 		for ($i =0; $i <= $numberOfProducts-1; $i++){		//Pour chaque article
-			$marque = ControllerAjoutLot::ajoutMarque($i);
-			$modele = ControllerAjoutLot::ajoutModele($i,$marque);
-			ControllerAjoutLot::AjoutArticle($i,$lot,$marque,$modele);
+			if(isset($_POST['article'][$i]['typedematos']) && !empty($_POST['article'][$i]['typedematos'])){
+				$marque = ControllerAjoutLot::ajoutMarque($i);
+				$modele = ControllerAjoutLot::ajoutModele($i,$marque);
+				ControllerAjoutLot::AjoutArticle($i,$lot,$marque,$modele);
+			}
 		}
 	}
 }
