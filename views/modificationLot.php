@@ -188,7 +188,7 @@
 	                </div>
 
 
-									<input type="hidden" class="form-control" id="index" name="index" value="<?php echo sizeof($articles); ?>" />
+									<input type="hidden" class="form-control" id="index" name="index" value="<?php echo sizeof($articles) - 1 ; ?>" />
 
 									<!-- The template for adding new field -->
 									<?php for ($i=0; $i<sizeof($articles); $i++) { ?>
@@ -766,7 +766,7 @@
 	            console.log('TRACE');
 	            articleIndex++;
 	            console.log(articleIndex);
-	            document.getElementById("index").value = articleIndex + 1;
+	            document.getElementById("index").value = articleIndex;
 	            console.log(document.getElementById("index").value);
 	            var $form = $('#articleForm .box-body');
 	            var $template = $('#articleTemplate'),
@@ -844,6 +844,8 @@
 	        })
 	        // Remove button click handler
 	        .on('click', '.removeButton', function() {
+						articleIndex--;
+						document.getElementById("index").value = articleIndex - 1;
 	            var $row  = $(this).parents('.form-group'),
 	                index = $row.attr('data-article-index');
 	            // Remove fields
