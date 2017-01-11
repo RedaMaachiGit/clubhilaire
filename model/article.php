@@ -345,7 +345,7 @@ class Article
 	}
 	
 	public Static function deleteArticlesByIdLot($idLot){ 
-	  $query = "DELETE FROM lot WHERE idLot=".$idLot;
+	  $query = "DELETE FROM article WHERE idLot=".$idLot;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
