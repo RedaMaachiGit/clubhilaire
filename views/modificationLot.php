@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 	<?php
+	
+
 	include_once('../model/vendeur.php');
 	include_once('../model/lot.php');
 	include_once('../model/article.php');
@@ -123,7 +125,7 @@
 	    <!-- Content Header (Page header) -->
 	    <section class="content-header">
 	      <h1>
-	        Modification du lot numéro <?php echo $lot->getCoupon() ?>
+	        Modification du lot numéro <?php echo $lot->getCouponNoIncr() ?>
 	        <small>Modifiez avec précaution</small>
 	      </h1>
 	      <ol class="breadcrumb">
