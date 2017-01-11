@@ -120,9 +120,9 @@
         <div class="box-header with-border">
           <h3 class="box-title">S'il s'agit d'un paiement pour un seul lot : veuillez saisir le numéro du lot</h3>
         </div>
-        <form id="numeroLotForm" method="POST" action="paiementLotUnique.php" class="form-horizontal">
+        <form id="numeroLotForm" method="POST" action="../controller/controllerCalculFraisDepot.php" class="form-horizontal">
           <div class="box-body">
-            <input class="form-control input-lg" name="numeroLot"  type="text" placeholder="Numéro lot">
+            <input class="form-control input-lg" name="numeroLotUnique"  type="text" id="numeroLotUnique" placeholder="Numéro lot">
             <div class="box-footer">
               <button type="submit" value="Submit" class="btn btn-info center-block">Payer</button>
             </div>
@@ -137,7 +137,7 @@
         </div>
         <form id="numeroLotForm" method="POST" action="paiementLotMultiple.php" class="form-horizontal">
           <div class="box-body">
-            <input class="form-control input-lg" name="numeroLot"  type="text" placeholder="Email vendeur">
+            <input class="form-control input-lg" name="numeroLotMultiple"  id="numeroLotMultiple" type="text" placeholder="Email vendeur">
             <div class="box-footer">
               <button type="submit" value="Submit" class="btn btn-info center-block">Payer</button>
             </div>

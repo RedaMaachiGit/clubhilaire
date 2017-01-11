@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <?php
+include_once('../model/vendeur.php');
+include_once('../model/lot.php');
+include_once('../model/article.php');
+include_once('../model/modele.php');
   //echo("Numero lot: " . $_POST['numeroLot'] . "<br />\n"); //TRACE
-  $id = $_POST['numeroLot'];
+  $lot= unserialize(urldecode(($_GET['lot'])));
+  $fraisDepot = $_GET['fraisDepot'];
 //  $connect = ConnexionDB(); // Je me connecte à la base de donnée
 
 //  $updateLot = "SELECT * FROM Lot WHERE numeroLot = '$id'" or die("Erreur lors de la consultation de données (updateLot)" . mysqli_error($connect));
@@ -113,7 +118,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Vente du lot numéro <?php echo $_POST['numeroLot'] ?>
+        Vente du lot numéro <?php echo $lot->getCoupon(); ?>
         <small>Vous êtes sur le point de vendre un lot</small>
       </h1>
       <ol class="breadcrumb">
@@ -127,7 +132,7 @@
 
       <div class="box">
         <div class="box-header">
-          <h3 class="box-title">Ce lot numéro <?php echo $j; ?> contient</h3>
+          <h3 class="box-title">Ce lot numéro <?php echo $lot->getCoupon(); ?> contient</h3>
         </div>
 
 
@@ -179,8 +184,8 @@
           <span class="info-box-icon bg-aqua"><i class="fa fa-eur"></i></span>
 
           <div class="info-box-content">
-            <span class="info-box-text">Prix de dépôt conseillé</span>
-            <span class="info-box-number" style="font-size:30px"><?php echo rand(2,50); ?></span>
+            <span class="info-box-text">Prix de dépôt</span>
+            <span class="info-box-number" style="font-size:30px"><?php echo $fraisDepot ?></span>
           </div>
           <!-- /.info-box-content -->
         </div>
@@ -188,7 +193,8 @@
       </div>
 
       <div class="box box-info">
-        <form id="paiementForm" class="form-horizontal" method="POST" action="paiementController.php" class="form-horizontal">
+        <form id="paiementForm" class="form-horizontal" method="POST" action="../controller/controllerPaiementFraisDepot.php" class="form-horizontal">
+		
           <div class="box-body">
             <div class="col-sm-12 form-group">
                 <label>Type d'paiement</label>
@@ -200,7 +206,8 @@
             </div>
 
             <input type="hidden" class="form-control" id="index" name="index" value="0" />
-
+			<input type="hidden" class="form-control" id="idLot" name="idLot" value= <?php echo $lot->getid(); ?> />
+			<input type="hidden" class="form-control" id="montant" name="montant" value= <?php echo $fraisDepot; ?> />
             <div class="form-group" name="marque">
               <label for="inputNom" class="col-sm-2 control-label">Nom</label>
               <div class="col-sm-10">
