@@ -1,0 +1,84 @@
+<?php
+require_once('db.php');
+
+
+
+class FraisDepotLot
+{
+  private $_idFraisDepotLot;
+  private $_lot;
+  private $_fraisDepot;
+   
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////CONSTRUCTEUR////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ 
+	 public function __construct($lot,$fraisDepot){	 
+		$this->setLot($lot); 
+		$this->setFraisDepot($fraisDepot); 
+	}
+  
+  
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////GETTER/SETTER///////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ 
+
+	// Getter ID 
+	 public function getId(){
+		return $this->_idFraisDepotLot;
+	  }
+	  
+	// Setter ID 
+	 public function setId($id){
+		return $this->_idFraisDepotLot = $id;
+	 }
+	 
+	//Getter lot 
+	 public function getLot(){
+		return $this->_lot;
+	  }
+	 
+	//Setter lot 
+	 public function setLot($lot){
+		$this->_lot = $lot;
+	  }
+	 
+	//Getter fraisDepot
+	 public function getFraisDepot(){
+		 return $this->_fraisDepot;
+	 }
+	 
+	//Setter montant
+	 public function setFraisDepot($fraisDepot){
+		$this->_fraisDepot = $fraisDepot;
+	}
+	  
+ 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////FunctionToDataBase//////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  
+	/* 
+		public function save() -> Sauvegarder en base de données l'instance
+		Input : Void 
+	    Output : Void
+	*/
+	
+	public function save(){
+	  $idLot = $this->getLot()->getId();
+	  $idFraisDepot = $this->getFraisDepot()->getId();
+	  $query = "INSERT INTO fraisDepotLot (idLot, idFraisDepot)
+	  VALUES ('".$idLot."','".$idFraisDepot."')";	  
+	  $db = new DB();
+	  $db->connect();
+	  $conn = $db->getConnectDb();
+	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $idModele = $conn->insert_id;
+	  $this->setId($idModele);
+	  $db->close();
+	 }
+}
+
+?>

@@ -51,7 +51,7 @@ class Administration
 	  $db->close();
 	 }
 
-	public static function getFraisDepotByNiveeau($niveau){
+	public static function getFraisDepotByNiveau($niveau){
 	  $query = "SELECT * FROM fraisdepotadmin WHERE niveauDepotAdmin <=".$niveau." ORDER BY fraisDepotAdmin desc";
 	  $db = new DB();
 	  $db->connect();
@@ -59,7 +59,7 @@ class Administration
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $row = $res->fetch_row();
 	  $db->close();
-	  return (int)$row[2];
+	  return (int)$row[1];
 	}
 
 	public Static function updateNiveauFraisDepotById($id,$niveau){
