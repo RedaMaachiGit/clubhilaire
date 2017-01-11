@@ -1,5 +1,20 @@
 <?php
-	echo("Debut: " . $_POST['inputDebut'] . "<br />\n");
-	echo("Fin: " . $_POST['inputFin'] . "<br />\n");
-	echo("Nombres de coupons: " . bcsub($_POST['inputFin'], $_POST['inputDebut']) . "<br />\n");
+include_once('../model/coupon.php');
+
+class ControllerModificationCoupon {
+
+
+	public static function modifierCoupon(){
+		$debut = $_POST['inputDebut'];
+		$fin = $_POST['inputFin'];
+		$current = $_POST['inputCourant'];
+		$obselete = 0;
+		$coupon = new Coupon($debut,$fin,$current,$obselete);
+		$coupon::updateCoupon($debut,$fin,$current,$obselete);
+	}
+}
+
+ControllerModificationCoupon::modifierCoupon();
+header('location:../index.html');
+
 ?>
