@@ -217,7 +217,7 @@
                   </div>
                 </div>
 
-                <div class="col-sm-12 form-group">
+                <div class="col-sm-12 form-group" name="article[0].homologationGroup" id="article[0].homologationGroup">
                     <label for="inputtypehomologation" class="col-sm-2 control-label">Type d'homologation</label>
                     <div class="col-sm-10">
                       <select class="form-control" id="article[0].inputtypehomologation" name="article[0][typehomologation]" >
@@ -346,7 +346,7 @@
                     </div>
                   </div>
 
-                  <div class="col-sm-12 form-group">
+                  <div class="col-sm-12 form-group" name="homologationGroup" id="homologationGroup">
                       <label for="inputtypehomologation" class="col-sm-2 control-label">Type d'homologation</label>
                       <div class="col-sm-10">
                         <select class="form-control" id="inputtypehomologation" name="typehomologation" >
@@ -550,23 +550,23 @@ var handleTypeChange = function(e) {
   {
     console.log('TRACE voile');
     var ptvmaxgroup = document.getElementById("article[" + articleIndex + "].ptvmaxgroup");
-    ptvmaxgroup.style.display = "block"
+    ptvmaxgroup.style.display = "block";
     var ptvmingroup = document.getElementById("article[" + articleIndex + "].ptvmingroup");
-    ptvmingroup.style.display = "block"
-    var ptvmingroup = document.getElementById("article[" + articleIndex + "].typehomologation");
-    ptvmingroup.style.display = "block"
+    ptvmingroup.style.display = "block";
+    var homologation = document.getElementById("article[" + articleIndex + "].homologationGroup");
+    homologation.style.display = "block";
     var taillegroup = document.getElementById("article[" + articleIndex + "].taillegroup");
-    taillegroup.style.display = "block"
+    taillegroup.style.display = "block";
     var surfacegroup = document.getElementById("article[" + articleIndex + "].surfacegroup");
-    surfacegroup.style.display = "block"
+    surfacegroup.style.display = "block";
     var protectionSelettegroup = document.getElementById("article[" + articleIndex + "].protectionSelettegroup");
-    protectionSelettegroup.style.display = "none"
+    protectionSelettegroup.style.display = "none";
     var couleurgroup = document.getElementById("article[" + articleIndex + "].couleurgroup");
-    couleurgroup.style.display = "block"
+    couleurgroup.style.display = "block";
     var heuregroup = document.getElementById("article[" + articleIndex + "].heuregroup");
-    heuregroup.style.display = "block"
+    heuregroup.style.display = "block";
     var certificatgroup = document.getElementById("article[" + articleIndex + "].certificatgroup");
-    certificatgroup.style.display = "block"
+    certificatgroup.style.display = "block";
     var typeaccessoiregroup = document.getElementById("article[" + articleIndex + "].typeaccessoiregroup");
     typeaccessoiregroup.style.display = "none";
   }
@@ -577,14 +577,14 @@ var handleTypeChange = function(e) {
     ptvmaxgroup.style.display = "none";
     var ptvmingroup = document.getElementById("article[" + articleIndex + "].ptvmingroup");
     ptvmingroup.style.display = "none";
-    var ptvmingroup = document.getElementById("article[" + articleIndex + "].typehomologation");
-    ptvmingroup.style.display = "none"
+    var homologation = document.getElementById("article[" + articleIndex + "].homologationGroup");
+    homologation.style.display = "none";
     var taillegroup = document.getElementById("article[" + articleIndex + "].taillegroup");
     taillegroup.style.display = "block";
     var surfacegroup = document.getElementById("article[" + articleIndex + "].surfacegroup");
     surfacegroup.style.display = "none";
     var surfacegroup = document.getElementById("article[" + articleIndex + "].protectionSelettegroup");
-    surfacegroup.style.display = "block"
+    surfacegroup.style.display = "block";
     var couleurgroup = document.getElementById("article[" + articleIndex + "].couleurgroup");
     couleurgroup.style.display = "none";
     var heuregroup = document.getElementById("article[" + articleIndex + "].heuregroup");
@@ -599,14 +599,14 @@ var handleTypeChange = function(e) {
     console.log('TRACE para');
     var ptvmaxgroup = document.getElementById("article[" + articleIndex + "].ptvmaxgroup");
     ptvmaxgroup.style.display = "block";
-    var ptvmingroup = document.getElementById("article[" + articleIndex + "].typehomologation");
-    ptvmingroup.style.display = "none"
+    var homologation = document.getElementById("article[" + articleIndex + "].homologationGroup");
+    homologation.style.display = "none";
     var ptvmingroup = document.getElementById("article[" + articleIndex + "].ptvmingroup");
     ptvmingroup.style.display = "block";
     var taillegroup = document.getElementById("article[" + articleIndex + "].taillegroup");
     taillegroup.style.display = "none";
     var surfacegroup = document.getElementById("article[" + articleIndex + "].protectionSelettegroup");
-    surfacegroup.style.display = "none"
+    surfacegroup.style.display = "none";
     var surfacegroup = document.getElementById("article[" + articleIndex + "].surfacegroup");
     surfacegroup.style.display = "none";
     var couleurgroup = document.getElementById("article[" + articleIndex + "].couleurgroup");
@@ -621,14 +621,15 @@ var handleTypeChange = function(e) {
   else if ( e.value == '3') // Accessoire
   {
     console.log('TRACE accessoire');
+    console.log("article[" + articleIndex + "].homologationGroup");
     var ptvmaxgroup = document.getElementById("article[" + articleIndex + "].ptvmaxgroup");
     ptvmaxgroup.style.display = "none";
     var ptvmingroup = document.getElementById("article[" + articleIndex + "].ptvmingroup");
     ptvmingroup.style.display = "none";
-    var ptvmingroup = document.getElementById("article[" + articleIndex + "].typehomologation");
-    ptvmingroup.style.display = "none"
+    var homologation = document.getElementById("article[" + articleIndex + "].homologationGroup");
+    homologation.style.display = "none";
     var surfacegroup = document.getElementById("article[" + articleIndex + "].protectionSelettegroup");
-    surfacegroup.style.display = "none"
+    surfacegroup.style.display = "none";
     var taillegroup = document.getElementById("article[" + articleIndex + "].taillegroup");
     taillegroup.style.display = "none";
     var surfacegroup = document.getElementById("article[" + articleIndex + "].surfacegroup");
@@ -721,7 +722,8 @@ $(document).ready(function() {
                 .find('[id="inputtypedematos"]').attr('id', 'article[' + articleIndex + '].inputtypedematos').end()
                 .find('[id="marquegroup"]').attr('id', 'article[' + articleIndex + '].marquegroup').end()
                 .find('[id="protectionSelettegroup"]').attr('id', 'article[' + articleIndex + '].protectionSelettegroup').end()
-                .find('[id="modelegroup"]').attr('id', 'article[' + articleIndex + '].modelegroup').end()
+                .find('[id="modelegroup"]').attr('id', 'article[' + articleIndex + '].modelegroup').end()//homologationGroup
+                .find('[id="homologationGroup"]').attr('id', 'article[' + articleIndex + '].homologationGroup').end()
                 .find('[id="ptvmaxgroup"]').attr('id', 'article[' + articleIndex + '].ptvmaxgroup').end()
                 .find('[id="ptvmingroup"]').attr('id', 'article[' + articleIndex + '].ptvmingroup').end()
                 .find('[id="taillegroup"]').attr('id', 'article[' + articleIndex + '].taillegroup').end()
