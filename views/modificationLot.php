@@ -183,7 +183,7 @@
 
 					<div class="form-group">
 	                  <div class="col-sm-10">
-	                    <input type="hidden" class="form-control" value="<?php echo(urlencode(serialize($lot))) ?>" id="inputLot" name="inputLot" >
+	                    <input type="hidden" class="form-control" value="<?php echo $lot->getId(); ?>" id="inputLot" name="inputLot" >
 	                  </div>
 	                </div>
 

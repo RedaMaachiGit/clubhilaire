@@ -11,41 +11,42 @@ class ControllerModificationLot {
 
 
 	public static function modificationArticle($i,$lot,$marque,$modele){
-		$ptvMax ="";
-		$ptvMin ="";
-		$taille ="";
-		$surface ="";
-		$couleur ="";
-		$heuresDeVol ="";
-		$certificat ="";
-		$surface ="";
-		$typeProtectionSelette=""; // A rajouter ?
-		$annee=2000; // A rajouter ?
-		$typeAccessoire="";
-
-		$type = $_POST['article'][$i]['typedematos'];
-		if($type == 0){
-			$ptvMax = $_POST['article'][$i]['inputptvmax'];
-			$ptvMin = $_POST['article'][$i]['inputptvmin'];
-			$taille = $_POST['article'][$i]['inputtaille'];
-			$surface = $_POST['article'][$i]['inputsurface'];
-			$couleur = $_POST['article'][$i]['inputcouleur'];
-			$heuresDeVol = $_POST['article'][$i]['inputheuresdevol'];
-			if (isset($_POST['article'][$i]['inputcertificat'])) {
-				$certificat = $_POST['article'][$i]['inputcertificat'];
+		if(!isset($_POST['article'][$i]['inputsuppression'])){
+			$ptvMax ="";
+			$ptvMin ="";
+			$taille ="";
+			$surface ="";
+			$couleur ="";
+			$heuresDeVol ="";
+			$certificat ="";
+			$surface ="";
+			$typeProtectionSelette=""; // A rajouter ?
+			$annee=2000; // A rajouter ?
+			$typeAccessoire="";
+			$type = $_POST['article'][$i]['typedematos'];
+			if($type == 0){
+				$ptvMax = $_POST['article'][$i]['inputptvmax'];
+				$ptvMin = $_POST['article'][$i]['inputptvmin'];
+				$taille = $_POST['article'][$i]['inputtaille'];
+				$surface = $_POST['article'][$i]['inputsurface'];
+				$couleur = $_POST['article'][$i]['inputcouleur'];
+				$heuresDeVol = $_POST['article'][$i]['inputheuresdevol'];
+				if (isset($_POST['article'][$i]['inputcertificat'])) {
+					$certificat = $_POST['article'][$i]['inputcertificat'];
+				}
+			} else if ($type == 1){
+				$Taille = $_POST['article'][$i]['inputtaille'];
+			} else if ($type == 2){
+				$Ptvmax = $_POST['article'][$i]['inputptvmax'];
+				$Ptvmin = $_POST['article'][$i]['inputptvmin'];
+			} else if ($type == 3){
+				$Marque = $_POST['article'][$i]['inputmarque'];
+				$typeAccessoire = $_POST['article'][$i]['inputtypeaccessoire'];
 			}
-		} else if ($type == 1){
-			$Taille = $_POST['article'][$i]['inputtaille'];
-		} else if ($type == 2){
-			$Ptvmax = $_POST['article'][$i]['inputptvmax'];
-			$Ptvmin = $_POST['article'][$i]['inputptvmin'];
-		} else if ($type == 3){
-			$Marque = $_POST['article'][$i]['inputmarque'];
-			$typeAccessoire = $_POST['article'][$i]['inputtypeaccessoire'];
+			$article = new Article($type,$lot,$marque,$modele,$ptvMin,$ptvMax,$taille,$surface,$couleur,$heuresDeVol,
+			$certificat,$typeProtectionSelette,$typeAccessoire,$annee,"","");
+			$article->save();
 		}
-		/*$article = new Article($type,$lot,$marque,$modele,$ptvMin,$ptvMax,$taille,$surface,$couleur,$heuresDeVol,
-		$certificat,$typeProtectionSelette,$typeAccessoire,$annee,"","");
-		$article->save();*/
 	}
 
 	public static function modifierVendeur($idVendeur){
@@ -92,24 +93,16 @@ class ControllerModificationLot {
 
 	public static function modificationLot(){
 		$prixVente = 675;
-		$lot= unserialize(urldecode(($_POST['inputLot'])));
+		$lot= Lot::getLotById((int)$_POST['inputLot']);
 		$vendeur = ControllerModificationLot::modifierVendeur($lot->getVendeur()->getId());
 		$lot->updatePrix($prixVente);
 		if(isset($_POST['index']) && !empty($_POST['index'])) {
-			// echo "================<br>";
-			// echo $_POST['index'];
-			// echo "<br>================";
 			$numberOfProducts = $_POST['index'];
 		} else {
 			$numberOfProducts = 1;
 		}
-		//Article::deleteArticlesByIdLot($lot->getId());
+		Article::deleteArticlesByIdLot($lot->getId());
 		for ($i =0; $i <= $numberOfProducts-1; $i++){		//Pour chaque article
-			// echo $numberOfProducts;
-		 	// echo "================";
-			// echo "================<br>";
-			// echo $i;
-			// echo "<br>================";
 			$marque = ControllerModificationLot::ajoutMarque($i);
 			$modele = ControllerModificationLot::ajoutModele($i,$marque);
 			ControllerModificationLot::modificationArticle($i,$lot,$marque,$modele);
