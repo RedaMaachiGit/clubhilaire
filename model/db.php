@@ -2,11 +2,11 @@
 
  class DB {
 
-  private $_servername = "mysql-yourtask.alwaysdata.net";
-  private $_username = "yourtask";
-  private $_password = "redareda";
-  private $_dbname = "yourtask_clubhilaire";
-  private $_port = "3306";
+  private $_servername = "localhost";
+  private $_username = "root";
+  private $_password = "root";
+  private $_dbname = "clubhilaire";
+  private $_port = "8889";
   private $_connectDB;
 
 
