@@ -690,7 +690,7 @@ $(document).ready(function() {
             console.log('TRACE');
             articleIndex++;
             console.log(articleIndex);
-            document.getElementById("index").value = articleIndex + 1;
+            document.getElementById("index").value = articleIndex;
             console.log(document.getElementById("index").value);
             var $form = $('#articleForm .box-body');
             var $template = $('#articleTemplate'),
@@ -780,7 +780,8 @@ $(document).ready(function() {
         })
         // Remove button click handler
         .on('click', '.removeButton', function() {
-            document.getElementById("index").value --;
+            articleIndex--;
+            document.getElementById("index").value = articleIndex - 1;
             var $row  = $(this).parents('.form-group'),
                 index = $row.attr('data-article-index');
 

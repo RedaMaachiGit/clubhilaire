@@ -1,5 +1,7 @@
 <?php
-
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+print_r($_POST);
 include_once('../model/vendeur.php');
 include_once('../model/lot.php');
 include_once('../model/article.php');
@@ -54,11 +56,17 @@ class ControllerModificationLot {
 		$prenom = $_POST['inputPrenom'];
 		$tel = $_POST['inputTelephone'];
 		$email = $_POST['inputEmail'];
-		$idVendeur = $_POST['inputLot'];
+		$idLot = $_POST['inputLot'];
 		$addresse ="3rue des ponay";
 		$type = "pro";
+		// echo "<br>Nom vendeur: " . $_POST['inputNom'] . "<br>";
+		// echo "Prenom vendeur: " . $_POST['inputPrenom'] . "<br>";
+		// echo "Tel vendeur: " . $_POST['inputTelephone'] . "<br>";
+		// echo "Mail vendeur: " . $_POST['inputEmail'] . "<br>";
+		// echo "Lot vendeur: " . $_POST['inputLot'] . "<br>";
 		$cheque = 1;
-		$vendeur = Vendeur::getVendeurById((int)$idVendeur);
+		$vendeur = Vendeur::getVendeurById((int) $idVendeur);
+		// echo "Vendeur: " . $vendeur->getNom() . "<br>";
 		if(!Vendeur::vendeurExistByMail($email)){  //L'adresse mail du vendeur de correspond à aucun vendeur en bd
 			$vendeur->updateMail($email);
 		}
@@ -95,6 +103,7 @@ class ControllerModificationLot {
 		$prixVente = 675;
 		$lot= Lot::getLotById((int)$_POST['inputLot']);
 		$vendeur = ControllerModificationLot::modifierVendeur($lot->getVendeur()->getId());
+		//echo "ID vendeur: " .$lot->getVendeur()->getId() . "<br>";
 		$lot->updatePrix($prixVente);
 		if(isset($_POST['index']) && !empty($_POST['index'])) {
 			$numberOfProducts = $_POST['index'];
@@ -103,9 +112,11 @@ class ControllerModificationLot {
 		}
 		Article::deleteArticlesByIdLot($lot->getId());
 		for ($i =0; $i <= $numberOfProducts-1; $i++){		//Pour chaque article
-			$marque = ControllerModificationLot::ajoutMarque($i);
-			$modele = ControllerModificationLot::ajoutModele($i,$marque);
-			ControllerModificationLot::modificationArticle($i,$lot,$marque,$modele);
+			if(isset($_POST['article'][$i]['typedematos']) && $_POST['article'][$i]['typedematos'] >= 0 &&  $_POST['article'][$i]['typedematos'] <=3 ){
+				$marque = ControllerModificationLot::ajoutMarque($i);
+				$modele = ControllerModificationLot::ajoutModele($i,$marque);
+				ControllerModificationLot::modificationArticle($i,$lot,$marque,$modele);
+			}
 		}
 	}
 
