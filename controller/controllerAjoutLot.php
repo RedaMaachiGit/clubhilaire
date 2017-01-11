@@ -1,4 +1,8 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+print_r($_POST);
+
 include_once('../model/vendeur.php');
 include_once('../model/lot.php');
 include_once('../model/article.php');
