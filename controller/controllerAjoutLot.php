@@ -16,14 +16,30 @@ class ControllerAjoutLot {
 			$certificat ="";
 			$surface ="";
 			$typeProtectionSelette="";
-			$annee=2000;
+			$annee=null;
 			$typeAccessoire="";
+			$homologation = "";
 			$type = $_POST['article'][$i]['typedematos'];
+			if(isset($_POST['article'][$i]['inputannee']) && !empty($_POST['article'][$i]['inputannee'])){
+				$annne = $_POST['article'][$i]['inputannee'];
+			}
 			if($type == 0){
 				$ptvMax = $_POST['article'][$i]['inputptvmax'];
 				$ptvMin = $_POST['article'][$i]['inputptvmin'];
 				$annee = $_POST['article'][$i]['inputannee'];
-				$homologation = $_POST['article'][$i]['typehomologation'];
+				if($_POST['article'][$i]['typehomologation'] == 0){
+					$homologation = "EN A / DHV LTF-1";
+				}else if($_POST['article'][$i]['typehomologation'] == 1){
+					$homologation = "EN B / DHV LTF 1-2";
+				}else if($_POST['article'][$i]['typehomologation'] == 2){
+					$homologation = "EN C / DHV LTF 2";
+				}else if($_POST['article'][$i]['typehomologation'] == 3){
+					$homologation = "EN D / DHV LTF 2-3";
+				}else if($_POST['article'][$i]['typehomologation'] == 4){
+					$homologation = "NON HOMOLOGUE";
+				}else if($_POST['article'][$i]['typehomologation'] == 5){
+					$homologation = "INCONNUE";
+				}
 				$taille = $_POST['article'][$i]['inputtaille'];
 				$surface = $_POST['article'][$i]['inputsurface'];
 				$couleur = $_POST['article'][$i]['inputcouleur'];
@@ -41,7 +57,7 @@ class ControllerAjoutLot {
 				$typeAccessoire = $_POST['article'][$i]['inputtypeaccessoire'];
 			}
 		$article = new Article($type,$lot,$marque,$modele,$ptvMin,$ptvMax,$taille,$surface,$couleur,$heuresDeVol,
-		$certificat,$typeProtectionSelette,$typeAccessoire,$annee,"","");
+		$certificat,$typeProtectionSelette,$typeAccessoire,$annee,"",$homologation);
 		$article->save();
 	}
 	public static function ajoutVendeur(){
@@ -50,9 +66,15 @@ class ControllerAjoutLot {
 		$tel = $_POST['inputTelephone'];
 		$email = $_POST['inputEmail'];
 		$addresse = $_POST['inputAdresse'];
-		$type = "pro";
+		$type = "particulier";
 		$numPreInscription = "";
-		$cheque = 1;
+		$cheque = null;
+		if (isset($_POST['inputCheque'])) {
+			$cheque = $_POST['inputCheque'];
+		}
+		if (isset($_POST['inputPro'])) {
+			$type = "professionnel";
+		}
 		if(!Vendeur::vendeurExistByMail($email)){  //L'adresse mail du vendeur de correspond à aucun vendeur en bd
 			$vendeur = new Vendeur($nom,$prenom,$tel,$email,$addresse,$type,$numPreInscription,$cheque);  //On crée le vendeur
 			$vendeur->save();
@@ -94,7 +116,7 @@ class ControllerAjoutLot {
 	public static function ajouterLot(){
 		$numeroCoupon = 1;
 		$numeroLotVendeur = "numeroLotVendeur";
-		if(!empty($$_POST['inputPrix'])){
+		if(!empty($_POST['inputPrix'])){
 			$prixVente = $_POST['inputPrix'];
 		}else{
 			$prixVente = NULL;
@@ -108,7 +130,7 @@ class ControllerAjoutLot {
 			$numberOfProducts = 1;
 		}
 		for ($i =0; $i <= $numberOfProducts-1; $i++){		//Pour chaque article
-			if(isset($_POST['article'][$i]['typedematos']) && !empty($_POST['article'][$i]['typedematos'])){
+			if(isset($_POST['article'][$i]['typedematos']) && $_POST['article'][$i]['typedematos'] >= 0 &&  $_POST['article'][$i]['typedematos'] <=3 ){
 				$marque = ControllerAjoutLot::ajoutMarque($i);
 				$modele = ControllerAjoutLot::ajoutModele($i,$marque);
 				ControllerAjoutLot::AjoutArticle($i,$lot,$marque,$modele);
