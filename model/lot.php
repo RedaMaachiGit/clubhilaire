@@ -295,7 +295,7 @@ class Lot
 	  $lots = Array();
 	  while($row = $res->fetch_row())
 	  {
-		  echo "je rajoute des lot";
+		  // echo "je rajoute des lot";
 		$vendeur = Vendeur::getVendeurById((int)$row[6]);
 		$acheteur = Acheteur::getAcheteurById((int)$row[5]);
 		$lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],$vendeur);
