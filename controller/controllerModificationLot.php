@@ -111,19 +111,20 @@ class ControllerModificationLot {
 			$numberOfProducts = 1;
 		}
 		Article::deleteArticlesByIdLot($lot->getId());
-		for ($i =0; $i <= $numberOfProducts-1; $i++){		//Pour chaque article
+		for ($i =0; $i <= $numberOfProducts; $i++){		//Pour chaque article
 			if(isset($_POST['article'][$i]['typedematos']) && $_POST['article'][$i]['typedematos'] >= 0 &&  $_POST['article'][$i]['typedematos'] <=3 ){
+				// echo "Le fameux i: " .$i;
 				$marque = ControllerModificationLot::ajoutMarque($i);
 				$modele = ControllerModificationLot::ajoutModele($i,$marque);
 				ControllerModificationLot::modificationArticle($i,$lot,$marque,$modele);
 			}
 		}
+		// header('location:../index.html');
 	}
 
 
 }
 
-controllerModificationLot::modificationLot();
-
+ControllerModificationLot::modificationLot();
 
 ?>
