@@ -5,7 +5,7 @@ include_once('../model/article.php');
 include_once('../model/modele.php');
 include_once('../model/administration.php');
 
-class ControllerPaiementFraisDepot {
+class ControllerCalculFraisDepot {
 	
 	public static function calculFraisDepotByLot(){
 		$numeroLot = $_POST['numeroLotUnique'];
@@ -16,7 +16,24 @@ class ControllerPaiementFraisDepot {
 		
 	}
 	
+	public static function calculFraisDepotByVendeur(){
+		$email = (String) $_POST['numeroLotMultiple'];
+		$vendeur = Vendeur::getVendeurByMail($email);
+		$lots = Lot::getLotByVendeur($vendeur->getId());
+		$totalFraisDepot=0;
+		for ($i =0 ; $i <= count($lots)-1; $i++) {
+			$prixLot = $lots[$i]->getPrix();
+			$fraisDepotLot = Administration::getFraisDepotByNiveau($prixLot);
+			$totalFraisDepot = $totalFraisDepot + $fraisDepotLot;
+		}
+	header('location:../views/paiementLotMultiple.php?lots='.urlencode(serialize($lots)).'&fraisDepot='.$totalFraisDepot);
+	}
 }
+	if($_POST['formEnvoie']=="unique"){
+		ControllerCalculFraisDepot::calculFraisDepotByLot();
+	}else{
+		ControllerCalculFraisDepot::calculFraisDepotByVendeur();
+	}
 
-ControllerPaiementFraisDepot::calculFraisDepotByLot();
+
 ?>

@@ -8,7 +8,6 @@ class Modele
 {
   private $_idModele;
   private $_libelle;
-  private $_homologation;
   private $_categorie;
   private $_marque;
    
@@ -18,9 +17,8 @@ class Modele
 /////CONSTRUCTEUR////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  
-	 public function __construct($libelle, $homologation,$marque,$categorie){	 
+	 public function __construct($libelle,$marque,$categorie){	 
 		$this->setLibelle($libelle); // Initialisation du libelle
-		$this->setHomologation($homologation); // Initialisation de l'homologation
 		$this->setMarque($marque);
 		$this->setCategorie($categorie);
 	}
@@ -54,17 +52,6 @@ class Modele
 		  return;
 		}
 		$this->_libelle = $libelle;
-	  }
-	 
-	  
-	 //Getter homologation
-	 public function getHomologation(){
-		 return $this->_homologation;
-	 }
-	 
-	 //Setter homologation
-	 public function setHomologation($homologation){
-		$this->_homologation = $homologation;
 	  }
 	  
 	 //Getter marque
@@ -101,11 +88,10 @@ class Modele
 	public function save(){
 	  $libelle = $this->getLibelle();
 	  $categorie = $this->getCategorie();
-	  $homologation = $this->getHomologation();
 	  $idMarque = $this->getMarque()->getId();
 	  
-	  $query = "INSERT INTO modele (libelle, homologation,idMarque)
-	  VALUES ('".$libelle."','".$homologation."','".$idMarque."')";
+	  $query = "INSERT INTO modele (libelle,idMarque,categorie)
+	  VALUES ('".$libelle."','".$idMarque."','".$categorie."')";
 	  
 	  $db = new DB();
 	  $db->connect();
@@ -130,8 +116,8 @@ class Modele
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	  $row = $res->fetch_row();
-	  $marque = Marque::getMarqueById((int)$row[4]);
-	  $modele = new Modele((String)$row[1],(String)$row[2],$marque,(String)$row[3]);
+	  $marque = Marque::getMarqueById((int)$row[2]);
+	  $modele = new Modele((String)$row[1],$marque,(String)$row[3]);
 	  $modele->setId((int)$row[0]);
 	  return $modele;
 	 }
@@ -151,8 +137,8 @@ class Modele
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	  $row = $res->fetch_row();
-	  $marque = Marque::getMarqueById((int)$row[4]);
-	  $modele = new Modele((String)$row[1],(String)$row[2],$marque,(String)$row[3]);
+	  $marque = Marque::getMarqueById((int)$row[2]);
+	  $modele = new Modele((String)$row[1],$marque,(String)$row[3]);
 	  $modele->setId((int)$row[0]);
 	  return $modele;
 	 }
@@ -173,21 +159,6 @@ class Modele
 	  return $res;
 	 }
 	 
-	 /* 
-		public Static function getModeleByHomologation($homologation) -> Recherche en bd les modèles ayant l'homologation $homologation
-		Input : l'homologation voulu
-	    Output : les modele en base de donnée ayant l'homologation passé en input
-	*/	
-	
-	 public Static function getModeleByHomologation($homologation){
-	  $query = "SELECT * FROM modele WHERE homologation = '$homologation'";
-	  $db = new DB();
-	  $db->connect();
-	  $conn = $db->getConnectDb();
-	  $res = $conn->query($query) or die(mysqli_error($conn));
-	  $db->close();
-	  return $res;
-	 }
 	 
 	public static function modeleExistByLibelle($libelle){
 	  $query = "SELECT * FROM modele WHERE libelle='$libelle'";
@@ -196,7 +167,6 @@ class Modele
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
-	  echo($res->num_rows);
 	  if($res->num_rows == 0 ){
 		  return false;
 	  }else{
@@ -222,18 +192,6 @@ class Modele
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $this->setLibelle($libelle);
-	  $db->close();
-	 }
-
-	 
-	 public function updateHomologation($homologation) {
-	  $id = $this>getId();
-	  $query = "UPDATE modele SET homologation ='$homologation' WHERE idModele=".$id;
-	  $db = new DB();
-	  $db->connect();
-	  $conn = $db->getConnectDb();
-	  $res = $conn->query($query) or die(mysqli_error($conn));
-	  $this->setHomologation($homologation);
 	  $db->close();
 	 }
 	 

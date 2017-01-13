@@ -250,8 +250,17 @@ class Lot
 	 }
 
 
-	 public Static function deleteArticlesByIdLot($idLot){
+	 public Static function deleteLotById($idLot){
 	  $query = "DELETE FROM lot WHERE idLot=".$idLot;
+	  $db = new DB();
+	  $db->connect();
+	  $conn = $db->getConnectDb();
+	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $db->close();
+	 }
+	 
+	 public static function deleteLotByIdVendeur($idVendeur){
+	  $query = "DELETE FROM lot WHERE idVendeur=".$idVendeur;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -274,6 +283,28 @@ class Lot
 	  $lot->setStatut((String)$row[4]);
 	  $lot->setAcheteur($acheteur);
 	  return $lot;
+	 }
+	 
+	 public Static function getLotByVendeur($idVendeur){
+	  $query = "SELECT * FROM lot WHERE idVendeur=".$idVendeur;
+	  $db = new DB();
+	  $db->connect();
+	  $conn = $db->getConnectDb();
+	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $db->close();
+	  $lots = Array();
+	  while($row = $res->fetch_row())
+	  {
+		  echo "je rajoute des lot";
+		$vendeur = Vendeur::getVendeurById((int)$row[6]);
+		$acheteur = Acheteur::getAcheteurById((int)$row[5]);
+		$lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],$vendeur);
+		$lot->setId((int)$row[0]);
+		$lot->setStatut((String)$row[4]);
+		$lot->setAcheteur($acheteur); 
+		array_push($lots,$lot);
+	  }
+	  return $lots;
 	 }
 
 	 public function updatePrix($prix){

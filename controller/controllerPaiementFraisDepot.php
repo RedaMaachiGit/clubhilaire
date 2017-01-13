@@ -20,7 +20,6 @@ class ControllerPaiementFraisDepot {
 		$numero="";
 		$commentaire="";		
 		if($type==0){
-			echo "cb";
 			$type="CB";
 		}else if($type==1){
 			$type="Cheque";
@@ -41,7 +40,53 @@ class ControllerPaiementFraisDepot {
 		$lot->setStatut("En vente");
 
 	}
+	
+	public static function ajoutPaiement($i){
+		$lots = unserialize(urldecode(($_POST['lots'])));
+		$type = $_POST['paiement'][$i]['typedepaiement'];
+		$nom="";
+		$prenom="";
+		$telephone="";
+		$numero="";
+		$commentaire="";		
+		if($type==0){
+			$type="CB";
+		}else if($type==1){
+			$type="Cheque";
+		}else if($type==2){
+			$type="espece";
+		}
+		$nom = (String) $_POST['paiement'][$i]['inputNom'];
+		$prenom = (String) $_POST['paiement'][$i]['inputPrenom'];
+		$telephone = (String)$_POST['paiement'][$i]['inputTelephone'];
+		$numero = (String) $_POST['paiement'][$i]['inputNumero'];
+		$commentaire = (String) $_POST['paiement'][$i]['inputCommentaire'];
+		$montant = (int) $_POST['paiement'][$i]['inputMontant'];
+		$fraisDepot = new FraisDepot($type,$montant,$nom,$prenom,$telephone,$numero,$commentaire);
+		$fraisDepot->save();
+		for($i=0 ; $i<=count($lots)-1; $i++){
+			$fraisDepotLot = new FraisDepotLot($lots[$i],$fraisDepot);
+			$fraisDepotLot->save();
+			$lots[$i]->setStatut("En vente");
+		}
+	}
+	
+	public static function paiementMultiple(){
+		if(isset($_POST['index']) && !empty($_POST['index'])) {
+			$numberOfPaiement = $_POST['index'];
+		} else {
+			$numberOfPaiement = 1;
+		}
+		for ($i =0; $i <= $numberOfPaiement-1; $i++){		//Pour chaque article
+			if(isset($_POST['paiement'][$i]['typedepaiement']) && $_POST['paiement'][$i]['typedepaiement'] >= 0 &&  $_POST['paiement'][$i]['typedepaiement'] <=2 ){
+				ControllerPaiementFraisDepot::ajoutPaiement($i);
+			}
+		}
+	}
 }
-
-ControllerPaiementFraisDepot::paiementUnique();
+	if($_POST['formEnvoie']=="unique"){
+		ControllerPaiementFraisDepot::paiementUnique();
+	}else{
+		ControllerPaiementFraisDepot::paiementMultiple();
+	}
 ?>

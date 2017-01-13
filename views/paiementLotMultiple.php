@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <?php
+include_once('../model/vendeur.php');
+include_once('../model/lot.php');
+include_once('../model/article.php');
+include_once('../model/modele.php');
   //echo("Numero lot: " . $_POST['numeroLot'] . "<br />\n"); //TRACE
-  $id = $_POST['numeroLot'];
+  $lots= unserialize(urldecode(($_GET['lots'])));
+  $fraisDepot = $_GET['fraisDepot'];
 //  $connect = ConnexionDB(); // Je me connecte à la base de donnée
 
 //  $updateLot = "SELECT * FROM Lot WHERE numeroLot = '$id'" or die("Erreur lors de la consultation de données (updateLot)" . mysqli_error($connect));
@@ -113,7 +118,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Paiement du dépôt pour les lots suivants <?php echo $_POST['numeroLot'] ?>
+        Paiement du dépôt pour les lots suivants <?php //for($i=0; $i<count($lots)-1 ; $i++){ echo ("   ".$lots[$i]->getCoupon());}?>
         <small>Vous êtes sur le point de recevoir le paiement pour plusieurs lots</small>
       </h1>
       <ol class="breadcrumb">
@@ -180,7 +185,7 @@
 
           <div class="info-box-content">
             <span class="info-box-text">Prix de dépôt conseillé</span>
-            <span class="info-box-number" style="font-size:30px"><?php echo rand(2,50); ?></span>
+            <span class="info-box-number" style="font-size:30px"><?php echo $fraisDepot; ?></span>
           </div>
           <!-- /.info-box-content -->
         </div>
@@ -188,11 +193,11 @@
       </div>
 
       <div class="box box-info">
-        <form id="paiementForm" class="form-horizontal" method="POST" action="paiementController.php" class="form-horizontal">
+        <form id="paiementForm" class="form-horizontal" method="POST" action="../controller/controllerPaiementFraisDepot.php" class="form-horizontal">
           <div class="box-body">
             <div class="col-sm-12 form-group">
                 <label>Type d'paiement</label>
-                <select class="col-sm-5 form-control" id="paiement[0].inputtypedepaiement" name="paiement[0][typedepaiement]" data-index='0' onchange="handleTypeChange(this)">
+                <select class="col-sm-5 form-control" id="paiement[0].typedepaiement" name="paiement[0][typedepaiement]" data-index='0' onchange="handleTypeChange(this)">
                   <option value="0">Carte Bancaire</option>
                   <option value="1">Chèque</option>
                   <option value="2">Liquide</option>
@@ -200,6 +205,9 @@
             </div>
 
             <input type="hidden" class="form-control" id="index" name="index" value="0" />
+			<input type="hidden" class="form-control" id="lots" name="lots" value= <?php echo urlencode(serialize($lots)); ?> />
+			<input type="hidden" class="form-control" id="formEnvoie" name="formEnvoie" value= <?php echo "multiple" ?> />
+			<input type="hidden" class="form-control" id="montant" name="montant" value= <?php echo $fraisDepot; ?> />
 
             <div class="form-group" name="marque">
               <label for="inputNom" class="col-sm-2 control-label">Nom</label>
