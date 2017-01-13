@@ -58,6 +58,11 @@ class Administration
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $row = $res->fetch_row();
+	  if (empty($row)) {
+		$query = "SELECT * FROM fraisdepotadmin ORDER BY fraisDepotAdmin asc";
+		$res = $conn->query($query) or die(mysqli_error($conn));
+		$row = $res->fetch_row();
+	  } 
 	  $db->close();
 	  return (int)$row[1];
 	}

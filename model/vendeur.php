@@ -209,9 +209,14 @@ class Vendeur
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	  $row = $res->fetch_row();
-	  $vendeur = new Vendeur((String)$row[1],(String)$row[2],(String)$row[3],(String)$row[4],(String)$row[5],(String)$row[6],(String)$row[7], (Int)$row[8]);
-	  $vendeur->setId((int)$row[0]);
-	  return $vendeur;
+	  if(!empty($row)){
+		$vendeur = new Vendeur((String)$row[1],(String)$row[2],(String)$row[3],(String)$row[4],(String)$row[5],(String)$row[6],(String)$row[7], (Int)$row[8]);
+		$vendeur->setId((int)$row[0]);
+		return $vendeur;
+	  }
+	  else{
+		  return null;
+	  }
 	}
 	
  /* 
@@ -280,7 +285,6 @@ class Vendeur
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
-	  echo($res->num_rows);
 	  if($res->num_rows == 0 ){
 		  return false;
 	  }else{

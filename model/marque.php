@@ -161,7 +161,6 @@ class Marque
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
-	  echo($res->num_rows);
 	  if($res->num_rows == 0 ){
 		  return false;
 	  }else{

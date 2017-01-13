@@ -207,6 +207,7 @@ include_once('../model/modele.php');
 
             <input type="hidden" class="form-control" id="index" name="index" value="0" />
 			<input type="hidden" class="form-control" id="idLot" name="idLot" value= <?php echo $lot->getid(); ?> />
+			<input type="hidden" class="form-control" id="formEnvoie" name="formEnvoie" value= <?php echo "unique" ?> />
 			<input type="hidden" class="form-control" id="montant" name="montant" value= <?php echo $fraisDepot; ?> />
             <div class="form-group" name="marque">
               <label for="inputNom" class="col-sm-2 control-label">Nom</label>
