@@ -234,7 +234,7 @@ include_once('../model/marque.php');
       </div>
 
       <div class="box box-info">
-        <form id="paiementForm" class="form-horizontal" method="POST" action="paiementController.php" class="form-horizontal">
+        <form id="paiementForm" class="form-horizontal" method="POST" action="../controller/paiementController.php" class="form-horizontal">
           <div class="box-body">
             <div class="col-sm-12 form-group">
                 <label>Type d'paiement</label>
@@ -288,6 +288,8 @@ include_once('../model/marque.php');
                 <input type="text" class="form-control" id="inputMontant" name="paiement[0][inputMontant]" value="" placeholder="Montant" />
               </div>
             </div>
+
+            <input type="text" class="form-control" id="idLot" name="idLot" value="<?php echo $numeroLot ?>" />
 
             <div class="col-xs-1">
               <button type="button" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>

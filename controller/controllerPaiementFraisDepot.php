@@ -10,7 +10,7 @@ include_once('../model/fraisDepotLot.php');
 
 
 class ControllerPaiementFraisDepot {
-	
+
 	public static function paiementUnique(){
 		$idLot = (int)$_POST['idLot'];
 		$type = $_POST['paiement'][0]['typedepaiement'];
@@ -18,7 +18,7 @@ class ControllerPaiementFraisDepot {
 		$prenom="";
 		$telephone="";
 		$numero="";
-		$commentaire="";		
+		$commentaire="";
 		if($type==0){
 			$type="CB";
 		}else if($type==1){
@@ -37,10 +37,11 @@ class ControllerPaiementFraisDepot {
 		$lot = Lot::getLotById($idLot);
 		$fraisDepotLot = new FraisDepotLot($lot,$fraisDepot);
 		$fraisDepotLot->save();
+
 		$lot->setStatut("En vente");
 
 	}
-	
+
 	public static function ajoutPaiement($i){
 		$lots = unserialize(urldecode(($_POST['lots'])));
 		$type = $_POST['paiement'][$i]['typedepaiement'];
@@ -48,7 +49,7 @@ class ControllerPaiementFraisDepot {
 		$prenom="";
 		$telephone="";
 		$numero="";
-		$commentaire="";		
+		$commentaire="";
 		if($type==0){
 			$type="CB";
 		}else if($type==1){
@@ -70,7 +71,7 @@ class ControllerPaiementFraisDepot {
 			$lots[$i]->setStatut("En vente");
 		}
 	}
-	
+
 	public static function paiementMultiple(){
 		if(isset($_POST['index']) && !empty($_POST['index'])) {
 			$numberOfPaiement = $_POST['index'];

@@ -14,7 +14,12 @@
 		$Numero = $_POST['paiement'][$i][inputNumero];
 		$Commentaire = $_POST['paiement'][$i][inputCommentaire];
 		$Montant = $_POST['paiement'][$i][inputMontant];
+		if(empty($Nom) || empty($Prenom) || empty($Montant)){
+			continue;
+		}
 		if($Type == 0){
+			$ecriture = new Caisse("CB",$Montant,"Club Hilaire",$Nom,$Prenom,$Telephone,"Vente de lot",$numCoupon,$idLot,$numero,$commentaire);
+			$ecriture->save();
  			echo("Il s'agit d'une CB<br />\n");
 			echo("Nom: " . $Nom . "<br />\n");
 			echo("Prenom: " . $Prenom . "<br />\n");
