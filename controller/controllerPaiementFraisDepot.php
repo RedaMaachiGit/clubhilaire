@@ -86,7 +86,9 @@ class ControllerPaiementFraisDepot {
 }
 	if($_POST['formEnvoie']=="unique"){
 		ControllerPaiementFraisDepot::paiementUnique();
+		header('location:../views/paiementFraisDepotEffectue.php');
 	}else{
 		ControllerPaiementFraisDepot::paiementMultiple();
+		header('location:../views/paiementFraisDepotEffectue.php');
 	}
 ?>

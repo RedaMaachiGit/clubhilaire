@@ -54,6 +54,7 @@ class ControllerImportParticulier {
 				$prix =  htmlspecialchars($objPHPExcel->getActiveSheet()->getCell("BE".$ligne));
 				$lot = new Lot(1,"pas de numero",$prix,$vendeur);
 				$lot->savePreInscription();
+				$lot->updateStatut("En preInscription");
 				$lot->updateNumPreInscription($numPre);
 				echo "<br>";
 				echo "Ajout 1er article : ";

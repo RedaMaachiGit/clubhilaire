@@ -119,7 +119,7 @@ include_once('../model/modele.php');
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Vente du lot numéro <?php echo $lot->getCoupon(); ?>
+        Vente du lot numéro <?php echo $lot->getCouponNoIncr(); ?>
         <small>Vous êtes sur le point de vendre un lot</small>
       </h1>
       <ol class="breadcrumb">
@@ -133,7 +133,7 @@ include_once('../model/modele.php');
 
       <div class="box">
         <div class="box-header">
-          <h3 class="box-title">Ce lot numéro <?php echo $lot->getCoupon(); ?> contient</h3>
+          <h3 class="box-title">Ce lot numéro <?php echo $lot->getCouponNoIncr(); ?> contient</h3>
         </div>
 
 

@@ -204,11 +204,11 @@ class Lot
 	 }
 	 
 	 
-	 public savePreInscription(){
-		   $db = new DB();
+	 public function savePreInscription(){
+	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
-	  $coupon = -1;
+	  $coupon = 0;
 	  $numeroLotVendeur = $conn->real_escape_string($this->getNumeroLotVendeur());
 	  $prix = $conn->real_escape_string($this->getPrix());
 	  $status = $conn->real_escape_string($this->getStatut());
@@ -246,7 +246,6 @@ class Lot
 	  $idLot = $conn->insert_id;
 	  $this->setId($idLot);
 	  $db->close();
-	 }
 	 }
 
 
@@ -303,6 +302,25 @@ class Lot
 	  $lot->setId((int)$row[0]);
 	  $lot->setStatut((String)$row[4]);
 	  $lot->setAcheteur($acheteur);
+	  return $lot;
+	 }
+	 
+	 public Static function getLotByNumPre($numPre){
+	  $db = new DB();
+	  $db->connect();
+	  $conn = $db->getConnectDb();
+	  $numPre = $conn->real_escape_string($numPre);
+	  $query = "SELECT * FROM lot WHERE numeroPreInscription='$numPre'";
+	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $db->close();
+	  $row = $res->fetch_row();
+	  $vendeur = Vendeur::getVendeurById((int)$row[6]);
+	  $acheteur = Acheteur::getAcheteurById((int)$row[5]);
+	  $lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],$vendeur);
+	  $lot->setId((int)$row[0]);
+	  $lot->setStatut((String)$row[4]);
+	  $lot->setAcheteur($acheteur);
+	  $lot->setNumPre($numPre);
 	  return $lot;
 	 }
 
@@ -382,7 +400,7 @@ class Lot
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
-	  $this->setStatut($status);
+	  $this->setStatut($statut);
 	  $db->close();
 	 }
 

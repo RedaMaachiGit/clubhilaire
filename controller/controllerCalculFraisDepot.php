@@ -29,7 +29,9 @@ class ControllerCalculFraisDepot {
 			$fraisDepotLot = Administration::getFraisDepotByNiveau($prixLot);
 			$totalFraisDepot = $totalFraisDepot + $fraisDepotLot;
 		}
-	header('location:../views/paiementLotMultiple.php?lots='.urlencode(serialize($lots)).'&fraisDepot='.$totalFraisDepot);
+		$_SESSION['lots']=urlencode(serialize($lots));
+		$_SESSION['fraisDepot']=$totalFraisDepot;
+	header('location:../views/paiementLotMultiple.php');
 	}
 }
 	if($_POST['formEnvoie']=="unique"){

@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <?php
+session_start();
 include_once('../model/vendeur.php');
 include_once('../model/lot.php');
 include_once('../model/article.php');
 include_once('../model/modele.php');
   //echo("Numero lot: " . $_POST['numeroLot'] . "<br />\n"); //TRACE
-  $lots= unserialize(urldecode(($_GET['lots'])));
-  $fraisDepot = $_GET['fraisDepot'];
+  $lots= unserialize(urldecode(($_SESSION['lots'])));
+  $fraisDepot = $_SESSION['fraisDepot'];
 //  $connect = ConnexionDB(); // Je me connecte à la base de donnée
 
 //  $updateLot = "SELECT * FROM Lot WHERE numeroLot = '$id'" or die("Erreur lors de la consultation de données (updateLot)" . mysqli_error($connect));

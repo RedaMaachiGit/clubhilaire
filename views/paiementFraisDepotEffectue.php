@@ -1,27 +1,10 @@
 <!DOCTYPE html>
-<?php
-session_start();
-
-include_once('../model/Vendeur.php');
-include_once('../model/Lot.php');
-include_once('../model/Article.php');
-include_once('../model/modele.php');
-include_once('../model/marque.php');
-  //echo("Numero lot: " . $_POST['numeroLot'] . "<br />\n"); //TRACE
-    $lot= unserialize(urldecode(($_SESSION['lot'])));
-	$vendeur = $lot->getVendeur();
-	$articles = unserialize(urldecode($_SESSION['articles']));
-//  $connect = ConnexionDB(); // Je me connecte à la base de donnée
-
-//  $updateLot = "SELECT * FROM Lot WHERE numeroLot = '$id'" or die("Erreur lors de la consultation de données (updateLot)" . mysqli_error($connect));
-//  $req = $connect->query($updateLot);
-?>
 
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Vendre un lot</title>
+  <title>Paiement Frais Depot Effectué</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -121,10 +104,6 @@ include_once('../model/marque.php');
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>
-        Vente du lot numéro <?php echo $lot->getId(); ?>
-        <small>Vous êtes sur le point de vendre un lot</small>
-      </h1>
       <ol class="breadcrumb">
         <li><a href="index.html"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Vente lot</li>
@@ -134,90 +113,39 @@ include_once('../model/marque.php');
     <!-- Main content -->
     <section class="content">
 
-      <div class="box">
-        <div class="box-header">
-          <h3 class="box-title">Ce lot contient</h3>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body">
-          <table id="example1" class="table table-bordered table-striped">
-            <thead>
-            <tr>
-              <th>Numéro lot</th>
-              <th>Coupon</th>
-              <th>Nom</th>
-              <th>Email</th>
-              <th>Prix</th>
-              <th>État</th>
-              <th>Édition</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td>123</td>
-              <td>1</td>
-              <td>Durand</td>
-              <td>durand@gmail.com</td>
-              <td>100</td>
-              <td>en préparation</td>
-              <td>False</td>
-            </tr>
-            <tr>
-              <td>123</td>
-              <td>1</td>
-              <td>Durand</td>
-              <td>durand@gmail.com</td>
-              <td>100</td>
-              <td>en préparation</td>
-              <td>False</td>
-            </tr>
-            </tbody>
-            <tfoot>
-            <tr>
-              <th>Numéro lot</th>
-              <th>Coupon</th>
-              <th>Nom</th>
-              <th>Email</th>
-              <th>Prix</th>
-              <th>État</th>
-              <th>Édition</th>
-            </tr>
-            </tfoot>
-          </table>
-        </div>
-        <!-- /.box-body -->
-      </div>
-
-      <div class="box box-info">
-        <div class="info-box">
-          <span class="info-box-icon bg-aqua"><i class="fa fa-eur"></i></span>
-
-          <div class="info-box-content">
-            <span class="info-box-text">Prix du lot</span>
-            <span class="info-box-number" style="font-size:30px">1,410</span>
+      <!-- <div class="modal"> -->
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span></button>
+              <h4 class="modal-title"> Paiement des frais de dépots effectué</h4>
+            </div>
+            <div class="modal-body">
+              <p style="font-size:30px"> Paiement des frais de dépots effectué:</p>
+            </div>
+            <div class="modal-footer">
+              <!-- <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button> -->
+              <a href:"../index.html"><button type="button" class="btn btn-primary">Retourner à l'acceuil</button></a>
+            </div>
           </div>
-          <!-- /.info-box-content -->
+          <!-- /.modal-content -->
         </div>
-        <!-- /.info-box -->
-      </div>
-
-      <div class="box box-info">
-        <form id="paiementForm" class="form-horizontal" method="POST" action="../controller/Controllerrestitution.php" class="form-horizontal">
-          <div class="box-footer">
-            <!-- <button type="submit" class="btn btn-default">Annuler</button> -->
-			<input class="form-control input-lg" name="numeroLot" id="numeroLot" type="hidden" value=<?php echo $lot->getId(); ?> >
-            <button type="submit" value="Submit" class="btn btn-info center-block">Valider restitution</button>
-          </div>
-        </form>
-      </div>
+        <!-- /.modal-dialog -->
+      <!-- </div> -->
     </section>
     <!-- /.content -->
+
 
   </div>
   <!-- /.content-wrapper -->
 
   <!-- Main Footer -->
   <footer class="main-footer">
+    <!-- To the right -->
+    <div class="pull-right hidden-xs">
+      Anything you want
+    </div>
     <!-- Default to the left -->
     <strong>Copyright &copy; 2016 <a href="https://clubsthilair.wordpress.com/">Club Hilaire</a>.</strong> All rights reserved.
   </footer>
@@ -310,9 +238,8 @@ include_once('../model/marque.php');
 <!-- AdminLTE App -->
 <script src="../dist/js/app.min.js"></script>
 
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
-     Both of these plugins are recommended to enhance the
-     user experience. Slimscroll is required when using the
-     fixed layout. -->
+
+
+
 </body>
 </html>

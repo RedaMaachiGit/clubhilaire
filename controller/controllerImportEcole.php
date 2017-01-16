@@ -44,6 +44,7 @@ class ControllerImportEcole {
 			$prix = $objPHPExcel->getActiveSheet()->getCell($colonne.$ligne);
 			$lot = new Lot(1,$numeroLotVendeur,$prix,$vendeur);
 			$lot->savePreInscription();
+			$lot->updateStatut("En preInscription");
 			$numeroLotVendeur++;
 			$colonne++;
 			$colonne++;
