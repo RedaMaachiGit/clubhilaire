@@ -17,6 +17,7 @@ class Lot
   private $_vendeur;
   private $_dateDepot;
   private $_dateVente;
+  private $_numPreInscription;
 
 
 
@@ -59,6 +60,16 @@ class Lot
 	 public function setStatut($status){
 		$this->_status = $status;
 	 }
+	 
+	// Setter numPre
+	public function setNumPre($numPre){
+		$this->_numPreInscription = $numPre;
+	}
+	
+	//Getter numPre
+	public function getNumPre($numPre){
+		return $this->_numPreInscription;
+	}
 
 	//Getter numeroCoupon
 	 public function getCouponIncr(){
@@ -149,11 +160,14 @@ class Lot
 	*/
 
 	public function save(){
-	  $coupon = $this->getCouponIncr();
-	  $numeroLotVendeur = $this->getNumeroLotVendeur();
-	  $prix = $this->getPrix();
-	  $status = $this->getStatut();
-	  $acheteur = $this->getAcheteur();
+	  $db = new DB();
+	  $db->connect();
+	  $conn = $db->getConnectDb();
+	  $coupon = $conn->real_escape_string($this->getCouponIncr());
+	  $numeroLotVendeur = $conn->real_escape_string($this->getNumeroLotVendeur());
+	  $prix = $conn->real_escape_string($this->getPrix());
+	  $status = $conn->real_escape_string($this->getStatut());
+	  $acheteur = $conn->real_escape_string($this->getAcheteur());
 	  $vendeur = $this->getVendeur();
 	  //$dateDepot = $this->getDateDepot();
     //$numeroCoupon = $this->getNumeroDeCoupon();
@@ -183,13 +197,56 @@ class Lot
 		}
 
 	  }
-	  $db = new DB();
-	  $db->connect();
-	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $idLot = $conn->insert_id;
 	  $this->setId($idLot);
 	  $db->close();
+	 }
+	 
+	 
+	 public savePreInscription(){
+		   $db = new DB();
+	  $db->connect();
+	  $conn = $db->getConnectDb();
+	  $coupon = -1;
+	  $numeroLotVendeur = $conn->real_escape_string($this->getNumeroLotVendeur());
+	  $prix = $conn->real_escape_string($this->getPrix());
+	  $status = $conn->real_escape_string($this->getStatut());
+	  $acheteur = $conn->real_escape_string($this->getAcheteur());
+	  $vendeur = $this->getVendeur();
+	  //$dateDepot = $this->getDateDepot();
+    //$numeroCoupon = $this->getNumeroDeCoupon();
+	  $idA=null;
+	  $idV=null;
+	  if($vendeur!=null){
+		  $idV=$vendeur->getId();
+
+	  }
+	  if($acheteur!=null){
+	    $idA=$acheteur->getId();
+		if($prix != NULL){
+		$query = "INSERT INTO lot (numeroCoupon, numeroLotVendeur, prixVente, statut, idAcheteur, idVendeur)
+		VALUES ('".$coupon."','".$numeroLotVendeur."','".$prix."','".$status."','".$idA."','".$idV."')";
+		}else{
+		$query = "INSERT INTO lot (numeroCoupon, numeroLotVendeur, statut, idAcheteur, idVendeur)
+		VALUES ('".$coupon."','".$numeroLotVendeur."','".$status."','".$idA."','".$idV."')";
+		}
+	  }
+	  else{
+		if($prix != NULL){
+		$query = "INSERT INTO lot (numeroCoupon, numeroLotVendeur, prixVente, statut, idVendeur)
+		VALUES ('".$coupon."','".$numeroLotVendeur."','".$prix."','".$status."','".$idV."')";
+		}else{
+		$query = "INSERT INTO lot (numeroCoupon, numeroLotVendeur, statut, idVendeur)
+		VALUES ('".$coupon."','".$numeroLotVendeur."','".$status."','".$idV."')";
+		}
+
+	  }
+	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $idLot = $conn->insert_id;
+	  $this->setId($idLot);
+	  $db->close();
+	 }
 	 }
 
 
@@ -338,6 +395,32 @@ class Lot
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $this->setNumeroLotVendeur($numeroLotVendeur);
 	  $db->close();
+	 }
+	 
+	 public function updateNumPreInscription($numPre){
+	  $id = $this->getId();
+	  $query = "UPDATE lot SET numeroPreInscription ='$numPre' WHERE idLot=".$id;
+	  $db = new DB();
+	  $db->connect();
+	  $conn = $db->getConnectDb();
+	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $this->setNumPre($numPre);
+	  $db->close(); 
+	 }
+	 
+	 public static function lotExistByNumPre($numPre){
+	  $db = new DB();
+	  $db->connect();
+	  $conn = $db->getConnectDb();
+	  $numPreInscription	 = $conn->real_escape_string($numPre);
+	  $query = "SELECT * FROM lot WHERE numeroPreInscription='$numPreInscription'";
+	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $db->close();  
+	  if($res->num_rows == 0 ){
+		  return false;
+	  }else{
+		  return true;
+	  }
 	 }
 }
 ?>

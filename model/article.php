@@ -243,22 +243,25 @@ class Article
 	*/
 	
 	public function save(){
-	  $type = $this->getTypeArticle();
+	  $db = new DB();
+	  $db->connect();
+	  $conn = $db->getConnectDb();
+	  $type = $conn->real_escape_string($this->getTypeArticle());
 	  $lot = $this->getLot();
 	  $marque = $this->getMarque();
 	  $modele = $this->getModele();
-	  $ptvMin = $this->getPtvMin();
-	  $ptvMax = $this->getPtvMax();
-	  $taille = $this->getTaille();
-	  $surfaceVoile = $this->getSurfaceVoile();
-	  $couleurVoile = $this->getCouleurVoile();
-	  $heureVoile = $this->getHeureVoile();
-	  $certificat = $this->getCertificat();
-	  $typeSelette = $this->getTypeProtectionSelette();
-	  $typeAccessoire = $this->getTypeAccessoire();
-	  $annee = $this->getAnnee();
-	  $homologation = $this->getHomologation();
-	  $commentaire = $this->getCommentaire();
+	  $ptvMin = $conn->real_escape_string($this->getPtvMin());
+	  $ptvMax = $conn->real_escape_string($this->getPtvMax());
+	  $taille = $conn->real_escape_string($this->getTaille());
+	  $surfaceVoile = $conn->real_escape_string($this->getSurfaceVoile());
+	  $couleurVoile = $conn->real_escape_string($this->getCouleurVoile());
+	  $heureVoile = $conn->real_escape_string($this->getHeureVoile());
+	  $certificat = $conn->real_escape_string($this->getCertificat());
+	  $typeSelette = $conn->real_escape_string($this->getTypeProtectionSelette());
+	  $typeAccessoire = $conn->real_escape_string($this->getTypeAccessoire());
+	  $annee = $conn->real_escape_string($this->getAnnee());
+	  $homologation = $conn->real_escape_string($this->getHomologation());
+	  $commentaire = $conn->real_escape_string($this->getCommentaire());
 	  $idL=null;
 	  $idM=null;
 	  $idMod=null;
@@ -319,9 +322,6 @@ class Article
 			}		
 		} 
 	  }
-	  $db = new DB();
-	  $db->connect();
-	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $idArticle = $conn->insert_id;
 	  $this->setId($idArticle);

@@ -46,11 +46,6 @@ class Modele
 	 
 	//Setter libelle 
 	 public function setLibelle($libelle){
-		if (!is_String($libelle)) // S'il ne s'agit pas d'unne chaine de charatère
-		{
-		  trigger_error('Le libelle d\'un modele doit être une chaine de charactère', E_USER_WARNING);
-		  return;
-		}
 		$this->_libelle = $libelle;
 	  }
 	  
@@ -86,16 +81,15 @@ class Modele
 	*/
 	
 	public function save(){
-	  $libelle = $this->getLibelle();
-	  $categorie = $this->getCategorie();
+	  $db = new DB();
+	  $db->connect();
+	  $conn = $db->getConnectDb();
+	  $libelle = $conn->real_escape_string($this->getLibelle());
+	  $categorie = $conn->real_escape_string($this->getCategorie());
 	  $idMarque = $this->getMarque()->getId();
 	  
 	  $query = "INSERT INTO modele (libelle,idMarque,categorie)
 	  VALUES ('".$libelle."','".$idMarque."','".$categorie."')";
-	  
-	  $db = new DB();
-	  $db->connect();
-	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $idModele = $conn->insert_id;
 	  $this->setId($idModele);
