@@ -13,16 +13,9 @@ include_once('../model/marque.php');
 //  $updateLot = "SELECT * FROM Lot WHERE numeroLot = '$id'" or die("Erreur lors de la consultation de données (updateLot)" . mysqli_error($connect));
 //  $req = $connect->query($updateLot);
 
-  $lot= unserialize(urldecode(($_GET['lot'])));
-  $articles = unserialize(urldecode($_GET['listArticle']));
-  $nombreArticles = sizeof($articles);
-  $vendeur = $lot->getVendeur();
-  $prixLot = $lot->getPrix();
-  $numeroLot = $lot->getId();
-  $numeroCoupon = $lot->getCouponNoIncr();
-
-  //echo $articles[0]->getMarque()->getLibelle(); o $articles[0]->getMarque()->getLibelle();
-  //echo $articles[0]->getTypeArticle();
+  $objLot = new Lot();
+  $lots = $objLot->getLotEnVente();
+  $nombreLots = sizeof($lots);
 ?>
 
 <html>
@@ -63,10 +56,21 @@ include_once('../model/marque.php');
 
     <!-- Main content -->
     <section class="content">
-      <?php for ($i = 1; $i < 6; $i++) { ?>
+      <?php for ($i = 0; $i < $nombreLots; $i++) {
+        $numeroLot = $lots[$i]->getId();
+        $vendeur = $lots[$i]->getVendeur();
+        $prixLot = $lots[$i]->getPrix();
+        $numeroLot = $lots[$i]->getId();
+        $numeroCoupon = $lots[$i]->getCouponNoIncr();
+        $articleObj = new Article();
+        $articles = $articleObj->getArticlesByLot($numeroLot);
+        $nombreArticles = sizeof($articles);
+        if(empty($articles[0])){
+          continue;
+        }?>
       <div class="box">
         <div class="box-header">
-          <h3 class="box-title">Ce lot contient: <?php echo $articles[0]->getLibelleTypeArticle(); if(!empty($articles[1])){ echo "ET".$articles[1]->getLibelleTypeArticle();} else {echo "";}; ?> </h3>
+          <h3 class="box-title">Ce lot contient: <?php echo $articles[0]->getLibelleTypeArticle(); if(!empty($articles[1])){ echo " ET ".$articles[1]->getLibelleTypeArticle();} else {echo "";}; ?> </h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">

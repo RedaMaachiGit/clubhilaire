@@ -258,7 +258,7 @@ class Lot
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	 }
-	 
+
 	 public static function deleteLotByIdVendeur($idVendeur){
 	  $query = "DELETE FROM lot WHERE idVendeur=".$idVendeur;
 	  $db = new DB();
@@ -268,23 +268,52 @@ class Lot
 	  $db->close();
 	 }
 
-	public Static function getLotByStatus($status){
-	  $query = "SELECT * FROM lot WHERE status=".$status;
+	public function getLotByStatus($status){
+	  $query = "SELECT * FROM lot WHERE statut=" . $status;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
-	  $res = $conn->query($query) or die(mysqli_error($conn));
-	  $db->close();
-	  $row = $res->fetch_row();
-	  $vendeur = Vendeur::getVendeurById((int)$row[6]);
-	  $acheteur = Acheteur::getAcheteurById((int)$row[5]);
-	  $lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],$vendeur);
-	  $lot->setId((int)$row[0]);
-	  $lot->setStatut((String)$row[4]);
+	  ///$res = $conn->query($query) or die(mysqli_error($conn));
+    $res=mysqli_query($conn,$query);
+	  // $row = $res->fetch_row();
+    while($row = mysqli_fetch_array($res)){
+    $i++;
+	  $vendeur = Vendeur::getVendeurById((int)$row[$i][6]);
+	  $acheteur = Acheteur::getAcheteurById((int)$row[$i][5]);
+	  $lot = new Lot((String)$row[$i][1],(String)$row[$i][2],(int)$row[$i][3],$vendeur);
+	  $lot->setId((int)$row[$i][0]);
+	  $lot->setStatut((String)$row[$i][4]);
 	  $lot->setAcheteur($acheteur);
-	  return $lot;
+    $lots = array();
+    array_push($lots, $lot);
+    }
+    $db->close();
+	  return $lots;
 	 }
-	 
+   public function getLotEnVente(){
+     $query = "SELECT * FROM lot WHERE statut='En vente'";
+     $db = new DB();
+     $db->connect();
+     $conn = $db->getConnectDb();
+    //  $resT = $conn->query($query) or die(mysqli_error($conn));
+    //  $rowT = $res->fetch_row();
+     $res=mysqli_query($conn,$query);
+     $i=0;
+     $lots = array();
+     while($row = mysqli_fetch_array($res)){
+     $i++;
+     $vendeur = Vendeur::getVendeurById((int)$row['idVendeur']);
+     $acheteur = Acheteur::getAcheteurById((int)$row['idAcheteur']);
+     $lot = new Lot((String)$row['numeroCoupon'],(String)$row['numeroLotVendeur'],(int)$row['prixVente'],$vendeur);
+     $lot->setId((int)$row['idLot']);
+     $lot->setStatut((String)$row['statut']);
+     $lot->setAcheteur($acheteur);
+     array_push($lots, $lot);
+     }
+     $db->close();
+     return $lots;
+    }
+
 	 public Static function getLotByVendeur($idVendeur){
 	  $query = "SELECT * FROM lot WHERE idVendeur=".$idVendeur;
 	  $db = new DB();
@@ -301,7 +330,7 @@ class Lot
 		$lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],$vendeur);
 		$lot->setId((int)$row[0]);
 		$lot->setStatut((String)$row[4]);
-		$lot->setAcheteur($acheteur); 
+		$lot->setAcheteur($acheteur);
 		array_push($lots,$lot);
 	  }
 	  return $lots;

@@ -446,6 +446,7 @@ class Article
 		$db->close();
 		$articles = Array();
 		while ($row = $res->fetch_row()) {
+      // print_r($row);
 			$lot = Lot::getLotById((int)$row[14]);
 			$marque = Marque::getMarqueById((int)$row[12]);
 			$modele = Modele::getModeleById((int)$row[13]);
