@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <?php
+session_start();
 include_once('../model/vendeur.php');
 include_once('../model/lot.php');
 include_once('../model/article.php');
 include_once('../model/modele.php');
   //echo("Numero lot: " . $_POST['numeroLot'] . "<br />\n"); //TRACE
-  $lot= unserialize(urldecode(($_GET['lot'])));
-  $fraisDepot = $_GET['fraisDepot'];
+  $lot= unserialize(urldecode((String)$_SESSION['lot']));
+  $fraisDepot =$_SESSION['fraisDepot'];
 //  $connect = ConnexionDB(); // Je me connecte à la base de donnée
 
 //  $updateLot = "SELECT * FROM Lot WHERE numeroLot = '$id'" or die("Erreur lors de la consultation de données (updateLot)" . mysqli_error($connect));
@@ -118,7 +119,7 @@ include_once('../model/modele.php');
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Vente du lot numéro <?php echo $lot->getCoupon(); ?>
+        Vente du lot numéro <?php echo $lot->getCouponNoIncr(); ?>
         <small>Vous êtes sur le point de vendre un lot</small>
       </h1>
       <ol class="breadcrumb">
@@ -132,7 +133,7 @@ include_once('../model/modele.php');
 
       <div class="box">
         <div class="box-header">
-          <h3 class="box-title">Ce lot numéro <?php echo $lot->getCoupon(); ?> contient</h3>
+          <h3 class="box-title">Ce lot numéro <?php echo $lot->getCouponNoIncr(); ?> contient</h3>
         </div>
 
 

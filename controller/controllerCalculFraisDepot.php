@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once('../model/vendeur.php');
 include_once('../model/lot.php');
 include_once('../model/article.php');
@@ -12,7 +13,9 @@ class ControllerCalculFraisDepot {
 		$lot = Lot::getLotByCoupon((int)$numeroLot);
 		$prixLot = $lot->getPrix();
 		$fraisDepot = Administration::getFraisDepotByNiveau($prixLot);
-		header('location:../views/paiementLotUnique.php?lot='.urlencode(serialize($lot)).'&fraisDepot='.$fraisDepot);
+		$_SESSION['lot']=urlencode(serialize($lot));
+		$_SESSION['fraisDepot']=$fraisDepot;
+		header('location:../views/paiementLotUnique.php');
 		
 	}
 	
@@ -26,7 +29,9 @@ class ControllerCalculFraisDepot {
 			$fraisDepotLot = Administration::getFraisDepotByNiveau($prixLot);
 			$totalFraisDepot = $totalFraisDepot + $fraisDepotLot;
 		}
-	header('location:../views/paiementLotMultiple.php?lots='.urlencode(serialize($lots)).'&fraisDepot='.$totalFraisDepot);
+		$_SESSION['lots']=urlencode(serialize($lots));
+		$_SESSION['fraisDepot']=$totalFraisDepot;
+	header('location:../views/paiementLotMultiple.php');
 	}
 }
 	if($_POST['formEnvoie']=="unique"){
