@@ -7,15 +7,15 @@ include_once('../model/lot.php');
 include_once('../model/article.php');
 include_once('../model/modele.php');
 include_once('../model/marque.php');
-  //echo("Numero lot: " . $_POST['numeroLot'] . "<br />\n"); //TRACE
-  //$id = $_POST['numeroLot'];
-//  $connect = ConnexionDB(); // Je me connecte à la base de donnée
-//  $updateLot = "SELECT * FROM Lot WHERE numeroLot = '$id'" or die("Erreur lors de la consultation de données (updateLot)" . mysqli_error($connect));
-//  $req = $connect->query($updateLot);
 
-  $objLot = new Lot();
-  $lots = $objLot->getLotEnVente();
+
+  $mail = $_POST['mail'];
+  $objVendeur = new Vendeur();
+  $vendeur = $objVendeur->getVendeurByMail($mail);
+  $idVendeur = $vendeur->getId();
+  $lots = Lot::getLotByVendeur($idVendeur);
   $nombreLots = sizeof($lots);
+  
 ?>
 
 <html>
@@ -35,6 +35,7 @@ include_once('../model/marque.php');
   <style>
   table {
       font-family: arial, sans-serif;
+      font-size: medium;
       border-collapse: collapse;
       width: 100%;
   }

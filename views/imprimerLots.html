@@ -120,10 +120,9 @@
         <div class="box-header with-border">
           <h3 class="box-title">S'il s'agit d'une impression pour un seul lot : veuillez saisir le numéro du lot</h3>
         </div>
-        <form id="numeroLotForm" method="POST" action="../controller/controllerCalculFraisDepot.php" class="form-horizontal">
+        <form id="numeroLotForm" method="POST" action="../controller/ImpressionLotUnique.php" class="form-horizontal">
           <div class="box-body">
-            <input class="form-control input-lg" name="numeroLotUnique"  type="text" id="numeroLotUnique" placeholder="Numéro lot">
-			<input class="form-control input-lg" name="formEnvoie" type="hidden" id="formEnvoie" value="unique">
+            <input class="form-control input-lg" name="numeroLot"  type="text" id="numeroLot" placeholder="Numéro lot">
             <div class="box-footer">
               <button type="submit" value="Submit" class="btn btn-info center-block">Imprimer</button>
             </div>
@@ -136,10 +135,9 @@
         <div class="box-header with-border">
           <h3 class="box-title">S'il s'agit d'une impresion pour plusieurs lots : veuillez saisir l'email du vendeur</h3>
         </div>
-        <form id="numeroLotForm" method="POST" action="../controller/controllerCalculFraisDepot.php" class="form-horizontal">
+        <form id="numeroLotForm" method="POST" action="../controller/ImpressionMail.php" class="form-horizontal">
           <div class="box-body">
-			<input class="form-control input-lg" name="formEnvoie" type="hidden" id="formEnvoie" value="multiple">
-            <input class="form-control input-lg" name="numeroLotMultiple"  id="numeroLotMultiple" type="text" placeholder="Email vendeur">
+            <input class="form-control input-lg" name="mail"  id="mail" type="text" placeholder="Email vendeur">
             <div class="box-footer">
               <button type="submit" value="Submit" class="btn btn-info center-block">Imprimer</button>
             </div>
@@ -156,7 +154,7 @@
         <div class="box-header with-border">
           <h3 class="box-title">Pour imprimer tous les lots</h3>
         </div>
-        <form id="numeroLotForm" method="POST" action="../controller/controllerCalculFraisDepot.php" class="form-horizontal">
+        <form id="numeroLotForm" method="POST" action="../controller/Impression.php" class="form-horizontal">
           <div class="box-body">
 			      <input class="form-control input-lg" name="formEnvoie" type="hidden" id="formEnvoie" value="multiple">
               <button type="submit" value="Submit" class="btn btn-info center-block">Imprimer</button>
