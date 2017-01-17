@@ -154,7 +154,7 @@
 	                  <label for="inputNom" class="col-sm-2 control-label">Nom</label>
 
 	                  <div class="col-sm-10">
-	                    <input type="text" class="form-control" value="<?php echo($lot->getVendeur()->getNom()) ?>" id="inputNom" name="inputNom" placeholder=<?php echo($lot->getVendeur()->getNom()) ?>>
+	                    <input type="text" class="form-control" value="<?php echo($lot->getVendeur()->getNom()) ?>" id="inputNom" name="inputNom" placeholder=<?php echo($lot->getVendeur()->getNom()) ?> \>
 	                  </div>
 	                </div>
 
@@ -162,7 +162,7 @@
 	                  <label for="inputPrenom" class="col-sm-2 control-label">Prénom</label>
 
 	                  <div class="col-sm-10">
-	                    <input type="text" class="form-control" value="<?php echo($lot->getVendeur()->getPrenom()) ?>" id="inputPrenom" name="inputPrenom" placeholder=<?php echo($lot->getVendeur()->getPrenom()) ?>>
+	                    <input type="text" class="form-control" value="<?php echo($lot->getVendeur()->getPrenom()) ?>" id="inputPrenom" name="inputPrenom" placeholder=<?php echo($lot->getVendeur()->getPrenom()) ?> \>
 	                  </div>
 	                </div>
 
@@ -170,7 +170,7 @@
 	                  <label for="inputTelephone" class="col-sm-2 control-label">Téléphone</label>
 
 	                  <div class="col-sm-10">
-	                    <input type="text" class="form-control" value="<?php echo($lot->getVendeur()->getTel()) ?>" id="inputTelephone" name="inputTelephone" placeholder=<?php echo($lot->getVendeur()->getTel()) ?>
+	                    <input type="text" class="form-control" value="<?php echo($lot->getVendeur()->getTel()) ?>" id="inputTelephone" name="inputTelephone" placeholder=<?php echo($lot->getVendeur()->getTel()) ?> \>
 	                  </div>
 	                </div>
 
@@ -178,7 +178,7 @@
 	                  <label for="inputEmail" class="col-sm-2 control-label">Email</label>
 
 	                  <div class="col-sm-10">
-	                    <input type="email" class="form-control" value="<?php echo($lot->getVendeur()->getEMail()) ?>" id="inputEmail" name="inputEmail" placeholder=<?php echo($lot->getVendeur()->getEMail()) ?>>
+	                    <input type="email" class="form-control" value="<?php echo($lot->getVendeur()->getEMail()) ?>" id="inputEmail" name="inputEmail" placeholder=<?php echo($lot->getVendeur()->getEMail()) ?> \>
 	                  </div>
 	                </div>
 

@@ -10,8 +10,8 @@ class ControllerCalculFraisDepot {
 	
 	public static function calculFraisDepotByLot(){
 		$numeroLot = $_POST['numeroLotUnique'];
-		$lot = Lot::getLotByCoupon((int)$numeroLot);
-		if(!Lot::veriferPayerFraisDepot($lot->getId())){
+		$lot = Lot::getLotByCoupon($numeroLot);
+		if($lot == null || !Lot::veriferPayerFraisDepot($lot->getId()) ){
 			header('location:../views/paiementFraisDepotError.html');
 		}else{
 			$prixLot = $lot->getPrix();
@@ -26,7 +26,7 @@ class ControllerCalculFraisDepot {
 	public static function calculFraisDepotByNumPre(){
 		$numeroPre = $_POST['numeroPre'];
 		$lot = Lot::getLotByNumPre($numeroPre);
-		if(!Lot::veriferPayerFraisDepot($lot->getId())){
+		if($lot ==null || !Lot::veriferPayerFraisDepot($lot->getId())){
 			header('location:../views/paiementFraisDepotError.html');
 		}else{
 			$prixLot = $lot->getPrix();
@@ -40,16 +40,20 @@ class ControllerCalculFraisDepot {
 	public static function calculFraisDepotByVendeur(){
 		$email = (String) $_POST['numeroLotMultiple'];
 		$vendeur = Vendeur::getVendeurByMail($email);
-		$lots = Lot::getLotEnPreparationByVendeur($vendeur->getId());
-		$totalFraisDepot=0;
-		for ($i =0 ; $i <= count($lots)-1; $i++) {
-			$prixLot = $lots[$i]->getPrix();
-			$fraisDepotLot = Administration::getFraisDepotByNiveau($prixLot);
-			$totalFraisDepot = $totalFraisDepot + $fraisDepotLot;
+		if($vendeur==null){
+			header('location:../views/paiementFraisDepotError.html');
+		}else{
+			$lots = Lot::getLotEnPreparationByVendeur($vendeur->getId());
+			$totalFraisDepot=0;
+			for ($i =0 ; $i <= count($lots)-1; $i++) {
+				$prixLot = $lots[$i]->getPrix();
+				$fraisDepotLot = Administration::getFraisDepotByNiveau($prixLot);
+				$totalFraisDepot = $totalFraisDepot + $fraisDepotLot;
+			}
+			$_SESSION['lots']=urlencode(serialize($lots));
+			$_SESSION['fraisDepot']=$totalFraisDepot;
+			header('location:../views/paiementLotUnique.php');
 		}
-		$_SESSION['lots']=urlencode(serialize($lots));
-		$_SESSION['fraisDepot']=$totalFraisDepot;
-		header('location:../views/paiementLotUnique.php');
 	}
 }
 	if($_POST['formEnvoie']=="unique"){

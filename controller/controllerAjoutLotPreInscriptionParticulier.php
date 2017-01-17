@@ -119,8 +119,7 @@ class ControllerAjoutLotPreInscriptionParticulier {
 				ControllerAjoutLotPreInscriptionParticulier::modificationArticle($i,$lot,$marque,$modele);
 			}
 		}
-		$lot->updateStatut("En préparation");
-		// header('location:../index.html');
+		header('location:../index.html');
 	}
 
 
