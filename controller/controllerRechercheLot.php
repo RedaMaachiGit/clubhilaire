@@ -23,6 +23,9 @@ class ControllerRechercheLot {
 		else if(strcmp($idForm,"modification")==0){
 			header('location:../views/modificationLot.php?lot='.urlencode(serialize($lot)).'&listArticle='.$listArticle);
 		}
+		else if(strcmp($idForm,"vente")==0){
+			header('location:../views/venteLot.php?lot='.urlencode(serialize($lot)).'&listArticle='.$listArticle);
+		}
 	}
 
 

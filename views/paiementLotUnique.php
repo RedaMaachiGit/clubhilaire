@@ -118,7 +118,7 @@ include_once('../model/modele.php');
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Vente du lot numéro <?php echo $lot->getCoupon(); ?>
+        Vente du lot numéro <?php echo $lot->getCouponNoIncr(); ?>
         <small>Vous êtes sur le point de vendre un lot</small>
       </h1>
       <ol class="breadcrumb">
@@ -132,7 +132,7 @@ include_once('../model/modele.php');
 
       <div class="box">
         <div class="box-header">
-          <h3 class="box-title">Ce lot numéro <?php echo $lot->getCoupon(); ?> contient</h3>
+          <h3 class="box-title">Ce lot numéro <?php echo $lot->getCouponNoIncr(); ?> contient</h3>
         </div>
 
 
@@ -194,7 +194,7 @@ include_once('../model/modele.php');
 
       <div class="box box-info">
         <form id="paiementForm" class="form-horizontal" method="POST" action="../controller/controllerPaiementFraisDepot.php" class="form-horizontal">
-		
+
           <div class="box-body">
             <div class="col-sm-12 form-group">
                 <label>Type d'paiement</label>

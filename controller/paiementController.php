@@ -1,6 +1,10 @@
 <?php
+	//TODO PAS TERMINE
 	//print_r($_POST);
 	echo("Index of products: " . $_POST['index'] . "<br />\n");
+	echo("ID lot: " . $_POST['idLot'] . "<br />\n");
+	$idLot = $_POST['idLot'];
+	$numCoupon = new Coupon(); // Recup du num coupon
 	if(isset($_POST['index']) && !empty($_POST['index'])) {
 		$numberOfProducts = $_POST['index'];
 	} else {
@@ -14,7 +18,12 @@
 		$Numero = $_POST['paiement'][$i][inputNumero];
 		$Commentaire = $_POST['paiement'][$i][inputCommentaire];
 		$Montant = $_POST['paiement'][$i][inputMontant];
+		if(empty($Nom) || empty($Prenom) || empty($Montant)){
+			continue;
+		}
 		if($Type == 0){
+			$ecriture = new Caisse("CB",$Montant,"Club Hilaire",$Nom,$Prenom,$Telephone,"Vente de lot",$numCoupon,$idLot,$numero,$commentaire);
+			$ecriture->save();
  			echo("Il s'agit d'une CB<br />\n");
 			echo("Nom: " . $Nom . "<br />\n");
 			echo("Prenom: " . $Prenom . "<br />\n");

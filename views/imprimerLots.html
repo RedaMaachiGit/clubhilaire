@@ -104,8 +104,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Vente de lots
-        <small>Modifiez avec précaution</small>
+        Imprimer un ou des lots
+        <small>Vous pouvez imprimez des lots</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="index.html"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -118,19 +118,51 @@
       <!-- Form Element sizes -->
       <div class="box box-success">
         <div class="box-header with-border">
-          <h3 class="box-title">Veuillez saisir le numéro du lot</h3>
+          <h3 class="box-title">S'il s'agit d'une impression pour un seul lot : veuillez saisir le numéro du lot</h3>
         </div>
-        <form id="numeroLotForm" method="POST" action="../controller/controllerRechercheLot.php" class="form-horizontal">
+        <form id="numeroLotForm" method="POST" action="../controller/ImpressionLotUnique.php" class="form-horizontal">
           <div class="box-body">
-            <input class="form-control input-lg" name="numeroLot" id="numeroLot" type="text" placeholder="Numéro lot">
-            <input class="form-control input-lg" name="formEnvoie" id="numeroLot" type="hidden" id="formEnvoie" value="vente">
+            <input class="form-control input-lg" name="numeroLot"  type="text" id="numeroLot" placeholder="Numéro lot">
             <div class="box-footer">
-              <button type="submit" value="Submit" class="btn btn-info center-block">Vendre</button>
+              <button type="submit" value="Submit" class="btn btn-info center-block">Imprimer</button>
             </div>
           </div>
         </form>
         <!-- /.box-body -->
       </div>
+      <!-- /.box -->
+      <div class="box box-success">
+        <div class="box-header with-border">
+          <h3 class="box-title">S'il s'agit d'une impresion pour plusieurs lots : veuillez saisir l'email du vendeur</h3>
+        </div>
+        <form id="numeroLotForm" method="POST" action="../controller/ImpressionMail.php" class="form-horizontal">
+          <div class="box-body">
+            <input class="form-control input-lg" name="mail"  id="mail" type="text" placeholder="Email vendeur">
+            <div class="box-footer">
+              <button type="submit" value="Submit" class="btn btn-info center-block">Imprimer</button>
+            </div>
+          </div>
+        </form>
+        <!-- /.box-body -->
+      </div>
+      <div class="callout callout-danger">
+                <h4>Warning!</h4>
+
+                <p>L'impression de tous les lots est assez longue, soyez sûr de ce que vous faites.</p>
+      </div>
+      <div class="box box-success">
+        <div class="box-header with-border">
+          <h3 class="box-title">Pour imprimer tous les lots</h3>
+        </div>
+        <form id="numeroLotForm" method="POST" action="../controller/Impression.php" class="form-horizontal">
+          <div class="box-body">
+			      <input class="form-control input-lg" name="formEnvoie" type="hidden" id="formEnvoie" value="multiple">
+              <button type="submit" value="Submit" class="btn btn-info center-block">Imprimer</button>
+          </div>
+        </form>
+        <!-- /.box-body -->
+      </div>
+
       <!-- /.box -->
     </section>
     <!-- /.content -->
