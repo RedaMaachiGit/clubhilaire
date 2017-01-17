@@ -13,9 +13,8 @@ class ControllerImportEcole {
 
 		/** PHPExcel_IOFactory */
 		include '../excel/Classes/PHPExcel/IOFactory.php';
-
-
-		$inputFileName = '../excel/pre_inscription_ecole/pre_inscription.xls';
+		$nomFichier = $_POST['exampleInputFileEcole'];		
+		$inputFileName = '../excel/pre_inscription_ecole/'.$nomFichier;
 		$objPHPExcel = PHPExcel_IOFactory::load($inputFileName);
 
 		$nomEcole= $objPHPExcel->getActiveSheet()->getCell('B2');
