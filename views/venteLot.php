@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <?php
 
-
+session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 include_once('../model/vendeur.php');
 include_once('../model/lot.php');
 include_once('../model/article.php');
@@ -12,13 +15,14 @@ include_once('../model/marque.php');
 //  $connect = ConnexionDB(); // Je me connecte à la base de donnée
 //  $updateLot = "SELECT * FROM Lot WHERE numeroLot = '$id'" or die("Erreur lors de la consultation de données (updateLot)" . mysqli_error($connect));
 //  $req = $connect->query($updateLot);
-  $lot= unserialize(urldecode(($_GET['lot'])));
-  $articles = unserialize(urldecode($_GET['listArticle']));
+  $lot= unserialize(urldecode(($_SESSION['lot'])));
+  $articles = unserialize(urldecode($_SESSION['articles']));
   $nombreArticles = sizeof($articles);
   $vendeur = $lot->getVendeur();
   $prixLot = $lot->getPrix();
   $numeroLot = $lot->getId();
   $numeroCoupon = $lot->getCouponNoIncr();
+  
   //echo $articles[0]->getMarque()->getLibelle(); o $articles[0]->getMarque()->getLibelle();
   //echo $articles[0]->getTypeArticle();
 ?>

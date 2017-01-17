@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 	<?php
-	
+
 	session_start();
 	include_once('../model/vendeur.php');
 	include_once('../model/lot.php');
@@ -85,17 +85,6 @@
 	        </div>
 	      </div>
 
-	      <!-- search form (Optional) -->
-	      <form action="#" method="get" class="sidebar-form">
-	        <div class="input-group">
-	          <input type="text" name="q" class="form-control" placeholder="Search...">
-	              <span class="input-group-btn">
-	                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-	                </button>
-	              </span>
-	        </div>
-	      </form>
-	      <!-- /.search form -->
 
 	      <!-- Sidebar Menu -->
 	      <ul class="sidebar-menu">
@@ -141,21 +130,19 @@
 	      <div class="row">
 	        <!-- right column -->
 	        <div class="col-md-12">
-	          <!-- Horizontal Form -->
 	          <div class="box box-info">
 	            <div class="box-header with-border">
 	              <h3 class="box-title">Modifier un lot à la main</h3>
 	            </div>
 	            <!-- /.box-header -->
-	            <!-- form start -->
-	            <form id="articleForm" method="POST" action="../controller/controllerModificationLot.php" class="form-horizontal">
+	            <form id="articleForm" method="POST" action="../controller/controllerModificationLot.php" class="form-horizontal" onsubmit="return validateForm()">
 	              <div class="box-body">
 
 	                <div class="form-group">
 	                  <label for="inputNom" class="col-sm-2 control-label">Nom</label>
 
 	                  <div class="col-sm-10">
-	                    <input type="text" class="form-control" value="<?php echo($lot->getVendeur()->getNom()) ?>" id="inputNom" name="inputNom" placeholder=<?php echo($lot->getVendeur()->getNom()) ?>>
+	                    <input type="text" class="form-control" value="<?php echo($lot->getVendeur()->getNom()) ?>" id="inputNom" name="inputNom" placeholder="<?php echo($lot->getVendeur()->getNom()) ?>" />
 	                  </div>
 	                </div>
 
@@ -163,7 +150,7 @@
 	                  <label for="inputPrenom" class="col-sm-2 control-label">Prénom</label>
 
 	                  <div class="col-sm-10">
-	                    <input type="text" class="form-control" value="<?php echo($lot->getVendeur()->getPrenom()) ?>" id="inputPrenom" name="inputPrenom" placeholder=<?php echo($lot->getVendeur()->getPrenom()) ?>>
+	                    <input type="text" class="form-control" value="<?php echo($lot->getVendeur()->getPrenom()) ?>" id="inputPrenom" name="inputPrenom" placeholder="<?php echo($lot->getVendeur()->getPrenom()) ?>" />
 	                  </div>
 	                </div>
 
@@ -171,7 +158,7 @@
 	                  <label for="inputTelephone" class="col-sm-2 control-label">Téléphone</label>
 
 	                  <div class="col-sm-10">
-	                    <input type="text" class="form-control" value="<?php echo($lot->getVendeur()->getTel()) ?>" id="inputTelephone" name="inputTelephone" placeholder=<?php echo($lot->getVendeur()->getTel()) ?>
+	                    <input type="text" class="form-control" value="<?php echo($lot->getVendeur()->getTel()) ?>" id="inputTelephone" name="inputTelephone" placeholder="<?php echo($lot->getVendeur()->getTel()) ?>" />
 	                  </div>
 	                </div>
 
@@ -179,11 +166,39 @@
 	                  <label for="inputEmail" class="col-sm-2 control-label">Email</label>
 
 	                  <div class="col-sm-10">
-	                    <input type="email" class="form-control" value="<?php echo($lot->getVendeur()->getEMail()) ?>" id="inputEmail" name="inputEmail" placeholder=<?php echo($lot->getVendeur()->getEMail()) ?>>
+	                    <input type="email" class="form-control" value="<?php echo($lot->getVendeur()->getEMail()) ?>" id="inputEmail" name="inputEmail" placeholder="<?php echo($lot->getVendeur()->getEMail()) ?>" />
 	                  </div>
 	                </div>
 
-					<div class="form-group">
+	                <div class="form-group">
+	                  <label for="inputAdresse" class="col-sm-2 control-label">Adresse postale</label>
+
+	                  <div class="col-sm-10">
+	                    <input type="text" class="form-control" value="<?php echo($lot->getVendeur()->getAdresse()) ?>" id="inputAdresse" name="inputAdresse" placeholder="Adresse postale">
+	                  </div>
+	                </div>
+
+	                <div class="checkbox" name="inputChequeGroup" id="inputChequeGroup">
+	                  <label>
+	                    <input type="checkbox" id="inputCheque"  name="inputCheque" value="Yes" <?php if($lot->getVendeur()->getCheque() == 1){ echo "checked";} ?>> Accepte les chèques? <output></output>
+	                  </label>
+	                </div>
+
+	                <div class="checkbox" name="inputProGroup" id="inputProGroup">
+	                  <label>
+	                    <input type="checkbox" id="inputPro"  name="inputPro" value="Yes" <?php if($lot->getVendeur()->getTypeVendeur() == "professionnel"){ echo "checked";} ?>> Un professionnel?<output></output>
+	                  </label>
+	                </div>
+
+	                <div class="form-group">
+	                  <label for="inputPrix" class="col-sm-2 control-label">Prix du lot</label>
+
+	                  <div class="col-sm-10">
+	                    <input type="number" class="form-control" value="<?php echo $lot->getPrix(); ?>" id="inputPrix" name="inputPrix" placeholder="Prix du lot">
+	                  </div>
+	                </div>
+
+									<div class="form-group">
 	                  <div class="col-sm-10">
 	                    <input type="hidden" class="form-control" value="<?php echo $lot->getId(); ?>" id="inputLot" name="inputLot" >
 	                  </div>
@@ -224,6 +239,27 @@
 													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputmodele" value="<?php echo($articles[$i]->getModele()->getLibelle()) ?>" name="article[<?php echo $i; ?>][inputmodele]"  placeholder="Modele" />
 												</div>
 											</div>
+
+				              <div class="form-group" name="article[<?php echo $i; ?>].annee">
+				                <label for="inputannee" class="col-sm-2 control-label">Année</label>
+				                <div class="col-sm-10">
+				                  <input type="text" class="form-control" id="article[<?php echo $i; ?>].inputannee" value="<?php echo $articles[$i]->getAnnee() ?>" name="article[<?php echo $i; ?>][inputannee]" placeholder="Année" />
+				                </div>
+				              </div>
+
+				              <div class="col-sm-12 form-group" name="article[<?php echo $i; ?>].homologationGroup" id="article[<?php echo $i; ?>].homologationGroup">
+				                  <label for="inputtypehomologation" class="col-sm-2 control-label">Type d'homologation</label>
+				                  <div class="col-sm-10">
+				                    <select class="form-control" id="article[<?php echo $i; ?>].inputtypehomologation" name="article[<?php echo $i; ?>][typehomologation]" >
+				                      <option value="EN A / DHV LTF-1">EN A / DHV LTF-1 </option>
+				                      <option value="EN B / DHV LTF 1-2">EN B / DHV LTF 1-2 </option>
+				                      <option value="EN C / DHV LTF 2">EN C / DHV LTF 2 </option>
+				                      <option value="EN D / DHV LTF 2-3">EN D / DHV LTF 2-3 </option>
+				                      <option value="NON HOMOLOGUE">NON HOMOLOGUE </option>
+				                      <option value="INCONNUE">INCONNUE</option>
+				                    </select>
+				                  </div>
+				              </div>
 
 											<div class="form-group" id="article[<?php echo $i; ?>].ptvmaxgroup" name="article[<?php echo $i; ?>].ptvmax">
 												<label for="inputptvmax" class="col-sm-2 control-label">PTV Max</label>
@@ -312,12 +348,26 @@
 												</div>
 											</div>
 
+				              <div class="form-group" name="article[<?php echo $i; ?>].annee">
+				                <label for="inputannee" class="col-sm-2 control-label">Année</label>
+				                <div class="col-sm-10">
+				                  <input type="text" class="form-control" id="article[<?php echo $i; ?>].inputannee" value="<?php echo $articles[$i]->getAnnee() ?>" name="article[<?php echo $i; ?>][inputannee]" placeholder="Année" />
+				                </div>
+				              </div>
+
 											<div class="form-group" id="article[<?php echo $i; ?>].taillegroup" name="article[<?php echo $i; ?>].taille">
 												<label for="inputtaille" class="col-sm-2 control-label">Taille</label>
 												<div class="col-sm-10">
 													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputtaille" value="<?php echo($articles[$i]->getTaille()) ?>" name="article[<?php echo $i; ?>][inputtaille]"  placeholder="Taille" />
 												</div>
 											</div>
+
+			                <div class="form-group" id="article[<?php echo $i; ?>].protectionSelettegroup" name="article[<?php echo $i; ?>].protectionSelette" style="display:none">
+			                  <label for="inputprotectionSelette" class="col-sm-2 control-label">Protection selette</label>
+			                  <div class="col-sm-10">
+			                    <input type="text" class="form-control" id="article[<?php echo $i; ?>].inputprotectionSelette" name="article[<?php echo $i; ?>][inputprotectionSelette]"  placeholder="Surface" />
+			                  </div>
+			                </div>
 
 											<div class="checkbox" name="article[<?php echo $i; ?>].suppression" id="article[<?php echo $i; ?>].suppressiongroup">
 												<label>
@@ -351,6 +401,13 @@
 													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputmodele" value="<?php echo($articles[$i]->getModele()->getLibelle()) ?>" name="article[<?php echo $i; ?>][inputmodele]"  placeholder="Modele" />
 												</div>
 											</div>
+
+				              <div class="form-group" name="article[<?php echo $i; ?>].annee">
+				                <label for="inputannee" class="col-sm-2 control-label">Année</label>
+				                <div class="col-sm-10">
+				                  <input type="text" class="form-control" id="article[<?php echo $i; ?>].inputannee" value="<?php echo $articles[$i]->getAnnee() ?>" name="article[<?php echo $i; ?>][inputannee]" placeholder="Année" />
+				                </div>
+				              </div>
 
 											<div class="form-group" id="article[<?php echo $i; ?>].ptvmaxgroup" name="article[<?php echo $i; ?>].ptvmax">
 												<label for="inputptvmax" class="col-sm-2 control-label">PTV Max</label>
@@ -396,6 +453,13 @@
 													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputmodele" value="<?php echo($articles[$i]->getModele()->getLibelle()) ?>" name="article[<?php echo $i; ?>][inputmodele]"  placeholder="Modele" />
 												</div>
 											</div>
+
+				              <div class="form-group" name="article[<?php echo $i; ?>].annee">
+				                <label for="inputannee" class="col-sm-2 control-label">Année</label>
+				                <div class="col-sm-10">
+				                  <input type="text" class="form-control" id="article[<?php echo $i; ?>].inputannee" value="<?php echo $articles[$i]->getAnnee() ?>" name="article[<?php echo $i; ?>][inputannee]" placeholder="Année" />
+				                </div>
+				              </div>
 
 											<div class="form-group" id="article[<?php echo $i; ?>].typeaccessoiregroup" name="article[<?php echo $i; ?>].typeaccessoire">
 												<label for="inputtypeaccessoire" class="col-sm-2 control-label">Type d'accessoire</label>
@@ -458,6 +522,34 @@
 	                      <input type="text" class="form-control" id="inputmodele" name="inputmodele" value="" placeholder="Modele" />
 	                    </div>
 	                  </div>
+
+	                  <div class="form-group" name="annee">
+	                    <label for="inputannee" class="col-sm-2 control-label">Année</label>
+	                    <div class="col-sm-10">
+	                      <input type="text" class="form-control" id="inputannee" value="" name="inputannee" placeholder="Année" />
+	                    </div>
+	                  </div>
+
+	                  <div class="col-sm-12 form-group" name="homologationGroup" id="homologationGroup">
+	                      <label for="inputtypehomologation" class="col-sm-2 control-label">Type d'homologation</label>
+	                      <div class="col-sm-10">
+	                        <select class="form-control" id="inputtypehomologation" name="typehomologation" >
+														<option value="EN A / DHV LTF-1">EN A / DHV LTF-1 </option>
+														<option value="EN B / DHV LTF 1-2">EN B / DHV LTF 1-2 </option>
+														<option value="EN C / DHV LTF 2">EN C / DHV LTF 2 </option>
+														<option value="EN D / DHV LTF 2-3">EN D / DHV LTF 2-3 </option>
+														<option value="NON HOMOLOGUE">NON HOMOLOGUE </option>
+														<option value="INCONNUE">INCONNUE</option>
+	                        </select>
+	                      </div>
+	                  </div>
+
+										<div class="form-group" id="protectionSelettegroup" name="protectionSelette" style="display:none">
+											<label for="inputprotectionSelette" class="col-sm-2 control-label">Protection selette</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" id="inputprotectionSelette" name="inputprotectionSelette"  placeholder="Type de protection" />
+											</div>
+										</div>
 
 	                  <div class="form-group" name="ptvmax" id="ptvmaxgroup">
 	                    <label for="inputptvmax" class="col-sm-2 control-label">PTV Max</label>
@@ -640,21 +732,25 @@
 	  {
 	    console.log('TRACE voile');
 	    var ptvmaxgroup = document.getElementById("article[" + articleIndex + "].ptvmaxgroup");
-	    ptvmaxgroup.style.display = "block"
+	    ptvmaxgroup.style.display = "block";
+			var protectionSelettegroup = document.getElementById("article[" + articleIndex + "].protectionSelettegroup");
+			protectionSelettegroup.style.display = "none";
 	    var ptvmingroup = document.getElementById("article[" + articleIndex + "].ptvmingroup");
-	    ptvmingroup.style.display = "block"
+	    ptvmingroup.style.display = "block";
+			var homologation = document.getElementById("article[" + articleIndex + "].homologationGroup");
+			homologation.style.display = "block";
 	    var taillegroup = document.getElementById("article[" + articleIndex + "].taillegroup");
-	    taillegroup.style.display = "block"
+	    taillegroup.style.display = "block";
 	    var surfacegroup = document.getElementById("article[" + articleIndex + "].surfacegroup");
-	    surfacegroup.style.display = "block"
+	    surfacegroup.style.display = "block";
 	    var couleurgroup = document.getElementById("article[" + articleIndex + "].couleurgroup");
-	    couleurgroup.style.display = "block"
+	    couleurgroup.style.display = "block";
 	    var heuregroup = document.getElementById("article[" + articleIndex + "].heuregroup");
-	    heuregroup.style.display = "block"
+	    heuregroup.style.display = "block";
 	    var certificatgroup = document.getElementById("article[" + articleIndex + "].certificatgroup");
-	    certificatgroup.style.display = "blocks"
+	    certificatgroup.style.display = "blocks";
 	    var suppressiongroup = document.getElementById("article[" + articleIndex + "].suppressiongroup");
-	    suppressiongroup.style.display = "blocks"
+	    suppressiongroup.style.display = "blocks";
 	    var typeaccessoiregroup = document.getElementById("article[" + articleIndex + "].typeaccessoiregroup");
 	    typeaccessoiregroup.style.display = "none";
 	  }
@@ -663,8 +759,12 @@
 	    console.log('TRACE selette');
 	    var ptvmaxgroup = document.getElementById("article[" + articleIndex + "].ptvmaxgroup");
 	    ptvmaxgroup.style.display = "none";
+			var surfacegroup = document.getElementById("article[" + articleIndex + "].protectionSelettegroup");
+			surfacegroup.style.display = "block";
 	    var ptvmingroup = document.getElementById("article[" + articleIndex + "].ptvmingroup");
 	    ptvmingroup.style.display = "none";
+			var homologation = document.getElementById("article[" + articleIndex + "].homologationGroup");
+			homologation.style.display = "none";
 	    var taillegroup = document.getElementById("article[" + articleIndex + "].taillegroup");
 	    taillegroup.style.display = "block";
 	    var surfacegroup = document.getElementById("article[" + articleIndex + "].surfacegroup");
@@ -685,8 +785,12 @@
 	    console.log('TRACE para');
 	    var ptvmaxgroup = document.getElementById("article[" + articleIndex + "].ptvmaxgroup");
 	    ptvmaxgroup.style.display = "block";
+			var surfacegroup = document.getElementById("article[" + articleIndex + "].protectionSelettegroup");
+			surfacegroup.style.display = "none";
 	    var ptvmingroup = document.getElementById("article[" + articleIndex + "].ptvmingroup");
 	    ptvmingroup.style.display = "block";
+			var homologation = document.getElementById("article[" + articleIndex + "].homologationGroup");
+			homologation.style.display = "none";
 	    var taillegroup = document.getElementById("article[" + articleIndex + "].taillegroup");
 	    taillegroup.style.display = "none";
 	    var surfacegroup = document.getElementById("article[" + articleIndex + "].surfacegroup");
@@ -707,8 +811,12 @@
 	    console.log('TRACE accessoire');
 	    var ptvmaxgroup = document.getElementById("article[" + articleIndex + "].ptvmaxgroup");
 	    ptvmaxgroup.style.display = "none";
+			var surfacegroup = document.getElementById("article[" + articleIndex + "].protectionSelettegroup");
+			surfacegroup.style.display = "none";
 	    var ptvmingroup = document.getElementById("article[" + articleIndex + "].ptvmingroup");
 	    ptvmingroup.style.display = "none";
+			var homologation = document.getElementById("article[" + articleIndex + "].homologationGroup");
+			homologation.style.display = "none";
 	    var taillegroup = document.getElementById("article[" + articleIndex + "].taillegroup");
 	    taillegroup.style.display = "none";
 	    var surfacegroup = document.getElementById("article[" + articleIndex + "].surfacegroup");
@@ -783,6 +891,9 @@
 	                .find('[name="typedematos"]').attr('name', 'article[' + articleIndex + '][typedematos]').end()
 	                .find('[name="marque"]').attr('name', 'article[' + articleIndex + '].marque').end()
 	                .find('[name="modele"]').attr('name', 'article[' + articleIndex + '].modele').end()
+									.find('[name="annee"]').attr('name', 'article[' + articleIndex + '].annee').end()
+									.find('[name="homologation"]').attr('name', 'article[' + articleIndex + '].homologation').end()
+									.find('[name="protectionSelette"]').attr('name', 'article[' + articleIndex + '].protectionSelette').end()
 	                .find('[name="ptvmax"]').attr('name', 'article[' + articleIndex + '].ptvmax').end()
 	                .find('[name="ptvmin"]').attr('name', 'article[' + articleIndex + '].ptvmin').end()
 	                .find('[name="taille"]').attr('name', 'article[' + articleIndex + '].taille').end()
@@ -797,6 +908,8 @@
 	                .find('[id="inputtypedematos"]').attr('id', 'article[' + articleIndex + '].inputtypedematos').end()
 	                .find('[id="marquegroup"]').attr('id', 'article[' + articleIndex + '].marquegroup').end()
 	                .find('[id="modelegroup"]').attr('id', 'article[' + articleIndex + '].modelegroup').end()
+									.find('[id="protectionSelettegroup"]').attr('id', 'article[' + articleIndex + '].protectionSelettegroup').end()
+									.find('[id="homologationGroup"]').attr('id', 'article[' + articleIndex + '].homologationGroup').end()
 	                .find('[id="ptvmaxgroup"]').attr('id', 'article[' + articleIndex + '].ptvmaxgroup').end()
 	                .find('[id="ptvmingroup"]').attr('id', 'article[' + articleIndex + '].ptvmingroup').end()
 	                .find('[id="taillegroup"]').attr('id', 'article[' + articleIndex + '].taillegroup').end()
@@ -806,7 +919,11 @@
 	                .find('[id="typeaccessoiregroup"]').attr('id', 'article[' + articleIndex + '].typeaccessoiregroup').end()
 	                .find('[id="certificatgroup"]').attr('id', 'article[' + articleIndex + '].certificatgroup').end()
 	                .find('[id="suppressiongroup"]').attr('id', 'article[' + articleIndex + '].suppressiongroup').end()
+
 	                .find('[name="inputmarque"]').attr('name', 'article[' + articleIndex + '][inputmarque]').end()
+									.find('[name="inputprotectionSelette"]').attr('name', 'article[' + articleIndex + '][inputprotectionSelette]').end()
+									.find('[name="inputannee"]').attr('name', 'article[' + articleIndex + '][inputannee]').end()
+									.find('[name="typehomologation"]').attr('name', 'article[' + articleIndex + '][typehomologation]').end()
 	                .find('[name="inputmodele"]').attr('name', 'article[' + articleIndex + '][inputmodele]').end()
 	                .find('[name="inputptvmax"]').attr('name', 'article[' + articleIndex + '][inputptvmax]').end()
 	                .find('[name="inputptvmin"]').attr('name', 'article[' + articleIndex + '][inputptvmin]').end()
@@ -817,8 +934,11 @@
 	                .find('[name="inputtypeaccessoire"]').attr('name', 'article[' + articleIndex + '][inputtypeaccessoire]').end()
 	                .find('[name="inputcertificat"]').attr('name', 'article[' + articleIndex + '][inputcertificat]').end()
 	                .find('[name="inputsuppression"]').attr('name', 'article[' + articleIndex + '][inputsuppression]').end()
+
 	                .find('[id="inputtypedematos"]').attr('id', 'article[' + articleIndex + '][inputtypedematos]').end()
 	                .find('[id="inputmarque"]').attr('id', 'article[' + articleIndex + '][inputmarque]').end()
+									.find('[id="inputtypehomologation"]').attr('id', 'article[' + articleIndex + '][inputtypehomologation]').end()
+									.find('[id="inputprotectionSelette"]').attr('id', 'article[' + articleIndex + '][inputprotectionSelette]').end()
 	                .find('[id="inputmodele"]').attr('id', 'article[' + articleIndex + '][inputmodele]').end()
 	                .find('[id="inputptvmax"]').attr('id', 'article[' + articleIndex + '][inputptvmax]').end()
 	                .find('[id="inputptvmin"]').attr('id', 'article[' + articleIndex + '][inputptvmin]').end()
@@ -872,4 +992,39 @@
 	        //
 	        //   });
 	});
+	function validateForm() {
+	  var inputNom = document.forms["articleForm"]["inputNom"].value;
+	  var inputPrenom = document.forms["articleForm"]["inputPrenom"].value;
+	  var inputTelephone = document.forms["articleForm"]["inputTelephone"].value;
+	  var inputEmail = document.forms["articleForm"]["inputEmail"].value;
+	  var inputAdresse = document.forms["articleForm"]["inputAdresse"].value;
+	  var inputPrix = document.forms["articleForm"]["inputPrix"].value;
+	  if (inputPrix == "") {
+	      alert("Le prix du lot doit être renseigné");
+	      return false;
+	  } else if(inputPrix%10!=0) {
+	    alert("Le prix du lot doit être un multiple de 10");
+	    return false;
+	  }
+	  if (inputNom == "") {
+	      alert("Le nom doit être renseigné");
+	      return false;
+	  }
+	  if (inputPrenom == "") {
+	      alert("Le prenom doit être renseigné");
+	      return false;
+	  }
+	  if (inputTelephone == "") {
+	      alert("Le telephone doit être renseigné");
+	      return false;
+	  }
+	  if (inputEmail == "") {
+	      alert("Le email doit être renseigné");
+	      return false;
+	  }
+	  if (inputAdresse == "") {
+	      alert("Le adresse doit être renseigné");
+	      return false;
+	  }
+	}
 	</script>
