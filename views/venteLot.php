@@ -1,11 +1,26 @@
 <!DOCTYPE html>
 <?php
-  //echo("Numero lot: " . $_POST['numeroLot'] . "<br />\n"); //TRACE
-  $id = $_POST['numeroLot'];
-//  $connect = ConnexionDB(); // Je me connecte à la base de donnée
 
+
+include_once('../model/vendeur.php');
+include_once('../model/lot.php');
+include_once('../model/article.php');
+include_once('../model/modele.php');
+include_once('../model/marque.php');
+  //echo("Numero lot: " . $_POST['numeroLot'] . "<br />\n"); //TRACE
+  //$id = $_POST['numeroLot'];
+//  $connect = ConnexionDB(); // Je me connecte à la base de donnée
 //  $updateLot = "SELECT * FROM Lot WHERE numeroLot = '$id'" or die("Erreur lors de la consultation de données (updateLot)" . mysqli_error($connect));
 //  $req = $connect->query($updateLot);
+  $lot= unserialize(urldecode(($_GET['lot'])));
+  $articles = unserialize(urldecode($_GET['listArticle']));
+  $nombreArticles = sizeof($articles);
+  $vendeur = $lot->getVendeur();
+  $prixLot = $lot->getPrix();
+  $numeroLot = $lot->getId();
+  $numeroCoupon = $lot->getCouponNoIncr();
+  //echo $articles[0]->getMarque()->getLibelle(); o $articles[0]->getMarque()->getLibelle();
+  //echo $articles[0]->getTypeArticle();
 ?>
 
 <html>
@@ -24,6 +39,10 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="../dist/css/skins/skin-blue.min.css">
+
+  <link rel="stylesheet" href="../plugins/datatables/dataTables.bootstrap.css">
+  <link rel="stylesheet" href="../dist/css/skins/_all-skins.min.css">
+
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -113,7 +132,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Vente du lot numéro <?php echo $_POST['numeroLot'] ?>
+        Vente du lot numéro <?php echo $numeroLot ?>
         <small>Vous êtes sur le point de vendre un lot</small>
       </h1>
       <ol class="breadcrumb">
@@ -131,61 +150,83 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-          <table id="example1" class="table table-bordered table-striped">
-            <thead>
-            <tr>
-              <th>Numéro lot</th>
-              <th>Coupon</th>
-              <th>Nom</th>
-              <th>Email</th>
-              <th>Prix</th>
-              <th>État</th>
-              <th>Édition</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td>123</td>
-              <td>1</td>
-              <td>Durand</td>
-              <td>durand@gmail.com</td>
-              <td>100</td>
-              <td>en préparation</td>
-              <td>False</td>
-            </tr>
-            <tr>
-              <td>123</td>
-              <td>1</td>
-              <td>Durand</td>
-              <td>durand@gmail.com</td>
-              <td>100</td>
-              <td>en préparation</td>
-              <td>False</td>
-            </tr>
-            </tbody>
-            <tfoot>
-            <tr>
-              <th>Numéro lot</th>
-              <th>Coupon</th>
-              <th>Nom</th>
-              <th>Email</th>
-              <th>Prix</th>
-              <th>État</th>
-              <th>Édition</th>
-            </tr>
-            </tfoot>
-          </table>
+          <div id="example1_wrapper" class="box-body table-responsive no-padding">
+            <div class="row">
+              <div class="col-sm-12">
+                <table id="example1" class="table table-hover">
+                  <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>PTV Minimum</th>
+                    <th>PTV Maximum</th>
+                    <th>Taille</th>
+                    <th>Annee</th>
+                    <th>Surface voile</th>
+                    <th>Couleur voile</th>
+                    <th>Heure voles voile</th>
+                    <th>Certificat revision voile</th>
+                    <th>Type protection selette</th>
+                    <th>Type accessoire</th>
+                    <th>MarqueIndex</th>
+                    <th>Modele</th>
+                    <th>Homologation</th>
+                    <th>Commentaire</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <?php for ($j = 0; $j < $nombreArticles; $j++) { // foreach ($shop as $row) : ?>
+                      <tr>
+                    <td><?php if(!empty($articles[$j]->getTypeArticle())) { echo $articles[$j]->getLibelleTypeArticle(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getPtvMin())) { echo $articles[$j]->getPtvMin(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getPtvMax())) { echo $articles[$j]->getPtvMax(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getTaille())) { echo $articles[$j]->getTaille(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getAnnee())) { echo $articles[$j]->getAnnee(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getSurfaceVoile())) { echo $articles[$j]->getSurfaceVoile(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getCouleurVoile())) { echo $articles[$j]->getCouleurVoile(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getHeureVoile())) { echo $articles[$j]->getHeureVoile(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getCertificat())) { echo $articles[$j]->getCertificat(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getTypeProtectionSelette())) { echo $articles[$j]->getTypeProtectionSelette(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getTypeAccessoire())) { echo $articles[$j]->getTypeAccessoire(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getMarque()->getLibelle())) { echo $articles[$j]->getMarque()->getLibelle(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getModele()->getLibelle())) { echo $articles[$j]->getModele()->getLibelle(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getHomologation())) { echo $articles[$j]->getHomologation(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getCommentaire())) { echo $articles[$j]->getCommentaire(); } else { echo "X";}?></td>
+                      </tr>
+                    <?php } ?>
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                    <th>Type</th>
+                    <th>PTV Minimum</th>
+                    <th>PTV Maximum</th>
+                    <th>Taille</th>
+                    <th>Annee</th>
+                    <th>Surface voile</th>
+                    <th>Couleur voile</th>
+                    <th>Heure voles voile</th>
+                    <th>Certificat revision voile</th>
+                    <th>Type protection selette</th>
+                    <th>Type accessoire</th>
+                    <th>MarqueIndex</th>
+                    <th>Modele</th>
+                    <th>Homologation</th>
+                    <th>Commentaire</th>
+                  </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
         <!-- /.box-body -->
       </div>
-
       <div class="box box-info">
         <div class="info-box">
           <span class="info-box-icon bg-aqua"><i class="fa fa-eur"></i></span>
 
           <div class="info-box-content">
             <span class="info-box-text">Prix du lot</span>
-            <span class="info-box-number" style="font-size:30px">1,410</span>
+            <span class="info-box-number" style="font-size:30px"><?php echo $prixLot ?></span>
           </div>
           <!-- /.info-box-content -->
         </div>
@@ -193,7 +234,7 @@
       </div>
 
       <div class="box box-info">
-        <form id="paiementForm" class="form-horizontal" method="POST" action="paiementController.php" class="form-horizontal">
+        <form id="paiementForm" class="form-horizontal" method="POST" action="../controller/paiementController.php" class="form-horizontal">
           <div class="box-body">
             <div class="col-sm-12 form-group">
                 <label>Type d'paiement</label>
@@ -247,6 +288,8 @@
                 <input type="text" class="form-control" id="inputMontant" name="paiement[0][inputMontant]" value="" placeholder="Montant" />
               </div>
             </div>
+
+            <input type="text" class="hidden" id="idLot" name="idLot" value="<?php echo $numeroLot ?>" />
 
             <div class="col-xs-1">
               <button type="button" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>
@@ -586,9 +629,20 @@ $(document).ready(function() {
 </script>
 
 
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
-     Both of these plugins are recommended to enhance the
-     user experience. Slimscroll is required when using the
-     fixed layout. -->
+<!-- jQuery 2.2.3 -->
+<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="../bootstrap/js/bootstrap.min.js"></script>
+<!-- DataTables -->
+<script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../plugins/datatables/dataTables.bootstrap.min.js"></script>
+<!-- SlimScroll -->
+<script src="../plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="../plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="../dist/js/app.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../dist/js/demo.js"></script>
 </body>
 </html>

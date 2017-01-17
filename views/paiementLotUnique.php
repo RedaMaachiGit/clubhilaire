@@ -195,7 +195,7 @@ include_once('../model/modele.php');
 
       <div class="box box-info">
         <form id="paiementForm" class="form-horizontal" method="POST" action="../controller/controllerPaiementFraisDepot.php" class="form-horizontal">
-		
+
           <div class="box-body">
             <div class="col-sm-12 form-group">
                 <label>Type d'paiement</label>
