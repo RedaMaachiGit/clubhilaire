@@ -1,9 +1,11 @@
+<?php session_start() ?>
 <!DOCTYPE html>
+
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Ajout lot</title>
+  <title>Paiement Frais Depot Effectué</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -103,69 +105,38 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>
-        Paiement de lots par un vendeur
-        <small>Paiement de lots par un vendeur</small>
-      </h1>
       <ol class="breadcrumb">
         <li><a href="index.html"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Saisie numéro lot</li>
+        <li class="active">Vente lot</li>
       </ol>
     </section>
 
     <!-- Main content -->
     <section class="content">
-      <!-- Form Element sizes -->
-      <div class="box box-success">
-        <div class="box-header with-border">
-          <h3 class="box-title">S'il s'agit d'un paiement pour un seul lot : veuillez saisir le numéro du lot</h3>
-        </div>
-        <form id="numeroLotForm" method="POST" action="../controller/controllerCalculFraisDepot.php" class="form-horizontal">
-          <div class="box-body">
-            <input class="form-control input-lg" name="numeroLotUnique"  type="text" id="numeroLotUnique" placeholder="Numéro lot">
-			<input class="form-control input-lg" name="formEnvoie" type="hidden" id="formEnvoie" value="unique">
-            <div class="box-footer">
-              <button type="submit" value="Submit" class="btn btn-info center-block">Payer</button>
+
+      <!-- <div class="modal"> -->
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span></button>
+              <h4 class="modal-title"> Paiement des frais de dépots effectué</h4>
+            </div>
+            <div class="modal-body">
+              <p style="font-size:30px"> Numero Coupon : <?php echo $_SESSION['coupon'] ?></p>
+            </div>
+            <div class="modal-footer">
+              <!-- <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button> -->
+              <a href:"../index.html"><button type="button" class="btn btn-primary">Retourner à l'acceuil</button></a>
             </div>
           </div>
-        </form>
-        <!-- /.box-body -->
-      </div>
-	  <!-- /.box -->
-      <div class="box box-success">
-        <div class="box-header with-border">
-          <h3 class="box-title">S'il s'agit d'un paiement pour un seul lot : veuillez saisir le numéro de préInscription</h3>
+          <!-- /.modal-content -->
         </div>
-        <form id="numeroLotForm" method="POST" action="../controller/controllerCalculFraisDepot.php" class="form-horizontal">
-          <div class="box-body">
-			<input class="form-control input-lg" name="formEnvoie" type="hidden" id="formEnvoie" value="uniquePre">
-            <input class="form-control input-lg" name="numeroPre"  id="numeroPre" type="text" placeholder="numero PreInscription">
-            <div class="box-footer">
-              <button type="submit" value="Submit" class="btn btn-info center-block">Payer</button>
-            </div>
-          </div>
-        </form>
-        <!-- /.box-body -->
-		</div>
-      <!-- /.box -->
-      <div class="box box-success">
-        <div class="box-header with-border">
-          <h3 class="box-title">S'il s'agit d'un paiement pour plusieurs lots : veuillez saisir l'email du vendeur</h3>
-        </div>
-        <form id="numeroLotForm" method="POST" action="../controller/controllerCalculFraisDepot.php" class="form-horizontal">
-          <div class="box-body">
-			<input class="form-control input-lg" name="formEnvoie" type="hidden" id="formEnvoie" value="multiple">
-            <input class="form-control input-lg" name="numeroLotMultiple"  id="numeroLotMultiple" type="text" placeholder="Email vendeur">
-            <div class="box-footer">
-              <button type="submit" value="Submit" class="btn btn-info center-block">Payer</button>
-            </div>
-          </div>
-        </form>
-        <!-- /.box-body -->
-      </div>
-      <!-- /.box -->
+        <!-- /.modal-dialog -->
+      <!-- </div> -->
     </section>
     <!-- /.content -->
+
 
   </div>
   <!-- /.content-wrapper -->
@@ -268,5 +239,9 @@
 <!-- AdminLTE App -->
 <script src="../dist/js/app.min.js"></script>
 
+
+
+
 </body>
 </html>
+++
