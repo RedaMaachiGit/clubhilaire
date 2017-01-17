@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-// print_r($_POST);
+ // print_r($_POST);
 include_once('../model/vendeur.php');
 include_once('../model/lot.php');
 include_once('../model/article.php');
@@ -14,18 +14,18 @@ class ControllerModificationLot {
 
 	public static function modificationArticle($i,$lot,$marque,$modele){
 		if(!isset($_POST['article'][$i]['inputsuppression'])){
-			$ptvMax ="INCONNU";
-			$ptvMin ="INCONNU";
-			$taille ="INCONNUE";
-			$surface ="INCONNUE";
-			$couleur ="INCONNUE";
-			$heuresDeVol ="INCONNU";
-			$certificat ="INCONNU";
-			$surface ="INCONNUE";
-			$typeProtectionSelette="PAS DE PROTECTION"; // A rajouter ?
+			$ptvMax ="";
+			$ptvMin ="";
+			$taille ="";
+			$surface ="";
+			$couleur ="";
+			$heuresDeVol ="";
+			$certificat ="";
+			$surface ="";
+			$typeProtectionSelette=""; // A rajouter ?
 			$annee=2000; // A rajouter ?
-			$typeAccessoire="INCONNU";
-			$typehomologation="NON HOMOLOGUÉ";
+			$typeAccessoire="";
+			$typehomologation="";
 			$type = $_POST['article'][$i]['typedematos'];
 			if($type == 0){
 				$ptvMax = $_POST['article'][$i]['inputptvmax'];
@@ -118,7 +118,7 @@ class ControllerModificationLot {
 	}
 
 	public static function modificationLot(){
-		$prixVente = 675;
+		$prixVente = $_POST['inputPrix'];
 		$lot= Lot::getLotById((int)$_POST['inputLot']);
 		$vendeur = ControllerModificationLot::modifierVendeur($lot->getVendeur()->getId());
 		//echo "ID vendeur: " .$lot->getVendeur()->getId() . "<br>";
