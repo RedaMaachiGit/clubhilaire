@@ -289,7 +289,7 @@ include_once('../model/marque.php');
               </div>
             </div>
 
-            <input type="text" class="form-control" id="idLot" name="idLot" value="<?php echo $numeroLot ?>" />
+            <input type="text" class="hidden" id="idLot" name="idLot" value="<?php echo $numeroLot ?>" />
 
             <div class="col-xs-1">
               <button type="button" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>

@@ -1,6 +1,10 @@
 <?php
+	//TODO PAS TERMINE
 	//print_r($_POST);
 	echo("Index of products: " . $_POST['index'] . "<br />\n");
+	echo("ID lot: " . $_POST['idLot'] . "<br />\n");
+	$idLot = $_POST['idLot'];
+	$numCoupon = new Coupon(); // Recup du num coupon
 	if(isset($_POST['index']) && !empty($_POST['index'])) {
 		$numberOfProducts = $_POST['index'];
 	} else {
