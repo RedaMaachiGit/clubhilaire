@@ -13,9 +13,8 @@ class ControllerImportParticulier {
 
 		/** PHPExcel_IOFactory */
 		include '../excel/Classes/PHPExcel/IOFactory.php';
-
-
-		$inputFileName = '../excel/pre_inscription_particulier/pre_inscription.xls';
+		$nomFichier = $_POST['exampleInputFileParticulier'];
+		$inputFileName = '../excel/pre_inscription_particulier/'.$nomFichier;
 		$objPHPExcel = PHPExcel_IOFactory::load($inputFileName);
 
 		$ligne = 2;

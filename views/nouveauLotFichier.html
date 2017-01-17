@@ -123,22 +123,16 @@
           <!-- general form elements -->
           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Ajouter des lots à partir d'un fichier</h3>
+              <h3 class="box-title">Ajouter des lots à partir d'un fichier Ecole </h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form role="form">
+            <form role="form" id="fichierFormEcole" method="POST" action="../controller/controllerImportEcole.php" class="form-horizontal">
               <div class="box-body">
                 <div class="form-group">
-                  <label for="exampleInputFile">File input</label>
-                  <input type="file" id="exampleInputFile">
-
+                  <label for="exampleInputFileEcole">File input Ecole</label>
+                  <input type="file" id="exampleInputFileEcole" name="exampleInputFileEcole">
                   <p class="help-block">Le fichier à importer ici doit être propre.</p>
-                </div>
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"> <output></output>
-                  </label>
                 </div>
               </div>
               <!-- /.box-body -->
@@ -153,12 +147,23 @@
           <!-- general button import all files -->
           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Ajouter des lots à partir de tous les fichiers CSV</h3>
+              <h3 class="box-title">Ajouter des lots à partir d'un fichier Particulier </h3>
             </div>
-            <div class="box-footer">
-              <button type="button" class="btn btn-block btn-danger btn-lg">IMPORTER TOUS LES FICHIERS</button>
-              <p class="help-block">Les fichiers qui seront importés se trouvent dans le dossier NomDeDossier.</p>
-            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form role="form" id="fichierFormParticulier" method="POST" action="../controller/controllerImportParticulier.php" class="form-horizontal">
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="exampleInputFileParticulier">File input Particulier</label>
+                  <input type="file" id="exampleInputFileParticulier" name="exampleInputFileParticulier">
+                  <p class="help-block">Le fichier à importer ici doit être propre.</p>
+                </div>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Valider</button>
+              </div>
+            </form>
           </div>
 
 
