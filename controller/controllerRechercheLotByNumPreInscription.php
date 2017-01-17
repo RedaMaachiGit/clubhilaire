@@ -10,30 +10,21 @@ include_once('../model/modele.php');
 include_once('../model/marque.php');
 
 
-class ControllerRechercheLot {
+class ControllerRechercheLotByNumPreInscritpion {
 
 	public static function rechercheLotByNum(){
-		$numeroLot = $_POST['numeroLot'];
-		$lot = Lot::getLotByCoupon($numeroLot);
+		$numPre = $_POST['numPre'];
+		$lot = Lot::getLotByNumPre($numPre);
 		$listArticle = urlencode(serialize(Article::getArticlesByLot($lot->getId())));
 		//$a = Article::getArticlesByLot($lot->getId());
-		$idForm = (String)$_POST['formEnvoie'];
 		$_SESSION['lot']=urlencode(serialize($lot));
 		$_SESSION['articles']=$listArticle;
-		if(strcmp($idForm,"restitution")==0){
-			header('location:../views/restitutionLot.php');
-		}
-		else if(strcmp($idForm,"modification")==0){
-			header('location:../views/modificationLot.php');
-		}
-		else if(strcmp($idForm,"vente")==0){
-			header('location:../views/venteLot.php?lot='.urlencode(serialize($lot)).'&listArticle='.$listArticle);
-		}
+	    header('location:../views/ajoutLotPreInscriptionParticulier.php');
 	}
 
 
 }
 
-ControllerRechercheLot::rechercheLotByNum();
+ControllerRechercheLotByNumPreInscritpion::rechercheLotByNum();
 
 ?>

@@ -87,7 +87,6 @@ class Modele
 	  $libelle = $conn->real_escape_string($this->getLibelle());
 	  $categorie = $conn->real_escape_string($this->getCategorie());
 	  $idMarque = $this->getMarque()->getId();
-
 	  $query = "INSERT INTO modele (libelle,idMarque,categorie)
 	  VALUES ('".$libelle."','".$idMarque."','".$categorie."')";
 	  $res = $conn->query($query) or die(mysqli_error($conn));

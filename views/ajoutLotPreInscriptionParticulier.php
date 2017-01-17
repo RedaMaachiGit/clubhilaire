@@ -24,7 +24,7 @@
 	<head>
 	  <meta charset="utf-8">
 	  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-	  <title>Modifier un lot</title>
+	  <title>Ajout Lot preInscriptionParticulier un lot</title>
 	  <!-- Tell the browser to be responsive to screen width -->
 	  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	  <!-- Bootstrap 3.3.6 -->
@@ -125,9 +125,8 @@
 	    <!-- Content Header (Page header) -->
 	    <section class="content-header">
 	      <h1>
-	        Modification du lot numéro <?php echo $lot->getCouponNoIncr() ?>
-	        <small>Modifiez avec précaution</small>
-	      </h1>
+	        Ajout Lot PreInscription Particulier
+		</h1>
 	      <ol class="breadcrumb">
 	        <li><a href="index.html"><i class="fa fa-dashboard"></i> Home</a></li>
 	        <li class="active">Nouveau lot</li>
@@ -148,7 +147,7 @@
 	            </div>
 	            <!-- /.box-header -->
 	            <!-- form start -->
-	            <form id="articleForm" method="POST" action="../controller/controllerModificationLot.php" class="form-horizontal">
+	            <form id="articleForm" method="POST" action="../controller/controllerAjoutLotPreInscriptionParticulier.php" class="form-horizontal">
 	              <div class="box-body">
 
 	                <div class="form-group">

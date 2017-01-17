@@ -59,7 +59,10 @@ class Marque
 	*/
 	
 	public function save(){
-	  $libelle = $this->getLibelle();
+	   $db = new DB();
+	  $db->connect();
+	  $conn = $db->getConnectDb();
+	  $libelle = $conn->real_escape_string($this->getLibelle());
 	  
 	  $query = "INSERT INTO marque (libelle)
 	  VALUES ('".$libelle."')";
@@ -117,10 +120,11 @@ class Marque
 	*/	
 	
 	 public Static function getMarqueByLibelle($libelle){
-	  $query = "SELECT * FROM marque WHERE libelle = '$libelle'";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
+	  $libelle = $conn->real_escape_string($libelle);
+	  $query = "SELECT * FROM marque WHERE libelle = '$libelle'";
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	  $row = $res->fetch_row();
@@ -155,6 +159,10 @@ class Marque
 	}
 	
 	public static function marqueExistByLibelle($libelle){
+	  $db = new DB();
+	  $db->connect();
+	  $conn = $db->getConnectDb();
+	  $libelle =   $conn->real_escape_string($libelle);
 	  $query = "SELECT * FROM marque WHERE libelle='$libelle'";
 	  $db = new DB();
 	  $db->connect();
