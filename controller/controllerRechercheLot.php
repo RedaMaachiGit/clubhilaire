@@ -29,7 +29,7 @@ class ControllerRechercheLot {
 				header('location:../views/modificationLot.php');
 			}
 			else if(strcmp($idForm,"vente")==0){
-				header('location:../views/venteLot.php?lot='.urlencode(serialize($lot)).'&listArticle='.$listArticle);
+				header('location:../views/venteLot.php');
 			}	
 		}
 

@@ -5,7 +5,7 @@ include_once('../model/article.php');
 include_once('../model/modele.php');
 $GLOBALS['numeroCoupon'] = 'Erreur veuillez réessayer';
 $GLOBALS['numeroLot'] = '';
-
+// print_r($_POST);
 class ControllerAjoutLot {
 
 		public static function ajoutArticle($i,$lot,$marque,$modele){
@@ -52,11 +52,14 @@ class ControllerAjoutLot {
 			} else if ($type == 1){
 				$taille = $_POST['article'][$i]['inputtaille'];
 				$typeProtectionSelette = $_POST['article'][$i]['inputprotectionSelette'];
+				$annee = $_POST['article'][$i]['inputannee'];
 			} else if ($type == 2){
 				$ptvmax = $_POST['article'][$i]['inputptvmax'];
 				$ptvmin = $_POST['article'][$i]['inputptvmin'];
+				$annee = $_POST['article'][$i]['inputannee'];
 			} else if ($type == 3){
 				$typeAccessoire = $_POST['article'][$i]['inputtypeaccessoire'];
+				$annee = $_POST['article'][$i]['inputannee'];
 			}
 		$article = new Article($type,$lot,$marque,$modele,$ptvMin,$ptvMax,$taille,$surface,$couleur,$heuresDeVol,
 		$certificat,$typeProtectionSelette,$typeAccessoire,$annee,"",$homologation);
@@ -132,7 +135,7 @@ class ControllerAjoutLot {
 		} else {
 			$numberOfProducts = 1;
 		}
-		for ($i =0; $i <= $numberOfProducts-1; $i++){		//Pour chaque article
+		for ($i = 0; $i <= $numberOfProducts; $i++){		//Pour chaque article
 			if(isset($_POST['article'][$i]['typedematos']) && $_POST['article'][$i]['typedematos'] >= 0 &&  $_POST['article'][$i]['typedematos'] <=3 ){
 				$marque = ControllerAjoutLot::ajoutMarque($i);
 				$modele = ControllerAjoutLot::ajoutModele($i,$marque);
