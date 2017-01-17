@@ -11,18 +11,36 @@ class ControllerCalculFraisDepot {
 	public static function calculFraisDepotByLot(){
 		$numeroLot = $_POST['numeroLotUnique'];
 		$lot = Lot::getLotByCoupon((int)$numeroLot);
-		$prixLot = $lot->getPrix();
-		$fraisDepot = Administration::getFraisDepotByNiveau($prixLot);
-		$_SESSION['lot']=urlencode(serialize($lot));
-		$_SESSION['fraisDepot']=$fraisDepot;
-		header('location:../views/paiementLotUnique.php');
+		if(!Lot::veriferPayerFraisDepot($lot->getId())){
+			header('location:../views/paiementFraisDepotError.html');
+		}else{
+			$prixLot = $lot->getPrix();
+			$fraisDepot = Administration::getFraisDepotByNiveau($prixLot);
+			$_SESSION['lot']=urlencode(serialize($lot));
+			$_SESSION['fraisDepot']=$fraisDepot;
+			header('location:../views/paiementLotUnique.php');	
+		}
 		
+	}
+	
+	public static function calculFraisDepotByNumPre(){
+		$numeroPre = $_POST['numeroPre'];
+		$lot = Lot::getLotByNumPre($numeroPre);
+		if(!Lot::veriferPayerFraisDepot($lot->getId())){
+			header('location:../views/paiementFraisDepotError.html');
+		}else{
+			$prixLot = $lot->getPrix();
+			$fraisDepot = Administration::getFraisDepotByNiveau($prixLot);
+			$_SESSION['lot']=urlencode(serialize($lot));
+			$_SESSION['fraisDepot']=$fraisDepot;
+			header('location:../views/paiementLotUnique.php');
+		}
 	}
 	
 	public static function calculFraisDepotByVendeur(){
 		$email = (String) $_POST['numeroLotMultiple'];
 		$vendeur = Vendeur::getVendeurByMail($email);
-		$lots = Lot::getLotByVendeur($vendeur->getId());
+		$lots = Lot::getLotEnPreparationByVendeur($vendeur->getId());
 		$totalFraisDepot=0;
 		for ($i =0 ; $i <= count($lots)-1; $i++) {
 			$prixLot = $lots[$i]->getPrix();
@@ -31,11 +49,13 @@ class ControllerCalculFraisDepot {
 		}
 		$_SESSION['lots']=urlencode(serialize($lots));
 		$_SESSION['fraisDepot']=$totalFraisDepot;
-	header('location:../views/paiementLotMultiple.php');
+		header('location:../views/paiementLotUnique.php');
 	}
 }
 	if($_POST['formEnvoie']=="unique"){
 		ControllerCalculFraisDepot::calculFraisDepotByLot();
+	}else if($_POST['formEnvoie']=="uniquePre"){
+		ControllerCalculFraisDepot::calculFraisDepotByNumPre();
 	}else{
 		ControllerCalculFraisDepot::calculFraisDepotByVendeur();
 	}

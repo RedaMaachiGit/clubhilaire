@@ -104,6 +104,7 @@ class ControllerAjoutLotPreInscriptionParticulier {
 		$vendeur = ControllerAjoutLotPreInscriptionParticulier::modifierVendeur($lot->getVendeur()->getId());
 		//echo "ID vendeur: " .$lot->getVendeur()->getId() . "<br>";
 		$lot->updatePrix($prixVente);
+		$lot->updateStatut("En preparation");
 		if(isset($_POST['index']) && !empty($_POST['index'])) {
 			$numberOfProducts = $_POST['index'];
 		} else {

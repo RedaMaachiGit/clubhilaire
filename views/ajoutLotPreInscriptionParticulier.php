@@ -419,7 +419,7 @@
 	              <!-- /.box-body -->
 	              <div class="box-footer">
 	                <!-- <button type="submit" class="btn btn-default">Annuler</button> -->
-	                <button type="submit" value="Submit" class="btn btn-info pull-right">Modifier</button>
+	                <button type="submit" value="Submit" class="btn btn-info pull-right">Valider</button>
 	              </div>
 	              <!-- /.box-footer -->
 	            </form>
@@ -453,7 +453,7 @@
 
 	                  <div class="form-group" name="modele">
 	                    <label for="inputmodele" class="col-sm-2 control-label">Modele</label>
-	                    <div class="col-sm-10">
+	                    <div class="col-sm-10">++++
 	                      <input type="text" class="form-control" id="inputmodele" name="inputmodele" value="" placeholder="Modele" />
 	                    </div>
 	                  </div>

@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 include_once('../model/vendeur.php');
 include_once('../model/lot.php');
 include_once('../model/article.php');
@@ -37,7 +37,15 @@ class ControllerPaiementFraisDepot {
 		$lot = Lot::getLotById($idLot);
 		$fraisDepotLot = new FraisDepotLot($lot,$fraisDepot);
 		$fraisDepotLot->save();
-		$lot->setStatut("En vente");
+		$lot->updateStatut("En vente");
+		if($lot->getCouponNoIncr()==0){
+			$couponIncr = $lot->getCouponIncr();
+			$lot->updateCoupon($couponIncr);
+			$_SESSION["coupon"]=$couponIncr;
+			header('location:../views/paiementFraisDepotEffectueNumCoupon.php');
+		}else{
+			header('location:../views/paiementFraisDepotEffectue.php');
+		}
 
 	}
 	
@@ -86,7 +94,6 @@ class ControllerPaiementFraisDepot {
 }
 	if($_POST['formEnvoie']=="unique"){
 		ControllerPaiementFraisDepot::paiementUnique();
-		header('location:../views/paiementFraisDepotEffectue.php');
 	}else{
 		ControllerPaiementFraisDepot::paiementMultiple();
 		header('location:../views/paiementFraisDepotEffectue.php');

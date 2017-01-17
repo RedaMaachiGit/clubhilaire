@@ -16,7 +16,6 @@ class ControllerRechercheLotByNumPreInscritpion {
 		$numPre = $_POST['numPre'];
 		$lot = Lot::getLotByNumPre($numPre);
 		$listArticle = urlencode(serialize(Article::getArticlesByLot($lot->getId())));
-		//$a = Article::getArticlesByLot($lot->getId());
 		$_SESSION['lot']=urlencode(serialize($lot));
 		$_SESSION['articles']=$listArticle;
 	    header('location:../views/ajoutLotPreInscriptionParticulier.php');
