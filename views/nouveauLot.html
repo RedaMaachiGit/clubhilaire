@@ -64,17 +64,7 @@
         </div>
       </div>
 
-      <!-- search form (Optional) -->
-      <form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
-              <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-        </div>
-      </form>
-      <!-- /.search form -->
+
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu">
@@ -120,14 +110,13 @@
       <div class="row">
         <!-- right column -->
         <div class="col-md-12">
-          <!-- Horizontal Form -->
           <div class="box box-info">
             <div class="box-header with-border">
               <h3 class="box-title">Ajouter un lot à la main</h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form id="articleForm" method="POST" action="../controller/controllerAjoutLot.php" class="form-horizontal">
+            <form id="articleForm" method="POST" action="../controller/controllerAjoutLot.php" class="form-horizontal" onsubmit="return validateForm()">
               <div class="box-body">
 
                 <div class="form-group">
@@ -810,6 +799,42 @@ $(document).ready(function() {
         //   });
 
 });
+
+function validateForm() {
+  var inputNom = document.forms["articleForm"]["inputNom"].value;
+  var inputPrenom = document.forms["articleForm"]["inputPrenom"].value;
+  var inputTelephone = document.forms["articleForm"]["inputTelephone"].value;
+  var inputEmail = document.forms["articleForm"]["inputEmail"].value;
+  var inputAdresse = document.forms["articleForm"]["inputAdresse"].value;
+  var inputPrix = document.forms["articleForm"]["inputPrix"].value;
+  if (inputPrix == "") {
+      alert("Le prix du lot doit être renseigné");
+      return false;
+  } else if(inputPrix%10!=0) {
+    alert("Le prix du lot doit être un multiple de 10");
+    return false;
+  }
+  if (inputNom == "") {
+      alert("Le nom doit être renseigné");
+      return false;
+  }
+  if (inputPrenom == "") {
+      alert("Le prenom doit être renseigné");
+      return false;
+  }
+  if (inputTelephone == "") {
+      alert("Le telephone doit être renseigné");
+      return false;
+  }
+  if (inputEmail == "") {
+      alert("Le email doit être renseigné");
+      return false;
+  }
+  if (inputAdresse == "") {
+      alert("Le adresse doit être renseigné");
+      return false;
+  }
+}
 </script>
 
 
