@@ -15,20 +15,24 @@ class ControllerRechercheLot {
 	public static function rechercheLotByNum(){
 		$numeroLot = $_POST['numeroLot'];
 		$lot = Lot::getLotByCoupon($numeroLot);
-		$listArticle = urlencode(serialize(Article::getArticlesByLot($lot->getId())));
-		//$a = Article::getArticlesByLot($lot->getId());
-		$idForm = (String)$_POST['formEnvoie'];
-		$_SESSION['lot']=urlencode(serialize($lot));
-		$_SESSION['articles']=$listArticle;
-		if(strcmp($idForm,"restitution")==0){
-			header('location:../views/restitutionLot.php');
+		if($lot==null){
+			header('location:../views/recherheLotError.html');
+		}else{
+			$listArticle = urlencode(serialize(Article::getArticlesByLot($lot->getId())));
+			$idForm = (String)$_POST['formEnvoie'];
+			$_SESSION['lot']=urlencode(serialize($lot));
+			$_SESSION['articles']=$listArticle;
+			if(strcmp($idForm,"restitution")==0){
+				header('location:../views/restitutionLot.php');
+			}
+			else if(strcmp($idForm,"modification")==0){
+				header('location:../views/modificationLot.php');
+			}
+			else if(strcmp($idForm,"vente")==0){
+				header('location:../views/venteLot.php?lot='.urlencode(serialize($lot)).'&listArticle='.$listArticle);
+			}	
 		}
-		else if(strcmp($idForm,"modification")==0){
-			header('location:../views/modificationLot.php');
-		}
-		else if(strcmp($idForm,"vente")==0){
-			header('location:../views/venteLot.php?lot='.urlencode(serialize($lot)).'&listArticle='.$listArticle);
-		}
+
 	}
 
 

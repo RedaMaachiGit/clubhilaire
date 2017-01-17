@@ -15,10 +15,14 @@ class ControllerRechercheLotByNumPreInscritpion {
 	public static function rechercheLotByNum(){
 		$numPre = $_POST['numPre'];
 		$lot = Lot::getLotByNumPre($numPre);
-		$listArticle = urlencode(serialize(Article::getArticlesByLot($lot->getId())));
-		$_SESSION['lot']=urlencode(serialize($lot));
-		$_SESSION['articles']=$listArticle;
-	    header('location:../views/ajoutLotPreInscriptionParticulier.php');
+		if($lot==null){
+			header('location:../views/rechercheLotPreInscriptionError.html');
+		}else{
+			$listArticle = urlencode(serialize(Article::getArticlesByLot($lot->getId())));
+			$_SESSION['lot']=urlencode(serialize($lot));
+			$_SESSION['articles']=$listArticle;
+			header('location:../views/ajoutLotPreInscriptionParticulier.php');
+		}
 	}
 
 

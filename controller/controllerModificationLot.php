@@ -90,7 +90,7 @@ class ControllerModificationLot {
 		if (!empty($_POST['article'][$i]['inputmodele'])) {
 			$modele = $_POST['article'][$i]['inputmodele'];
 			if(!Modele::modeleExistByLibelle($modele)){ //si le modèle n'existe pas
-					$newModele = new Modele($modele,"homologation",$marque,"categorie"); //on crée le modèle
+					$newModele = new Modele($modele,$marque,"categorie"); //on crée le modèle
 					$newModele->save();
 				}else{
 					$newModele = Modele::getModeleByLibelle($modele); //sinon on récupère le modele

@@ -285,23 +285,27 @@ class Lot
 	  $lot->setStatut((String)$row[4]);
 	  $lot->setAcheteur($acheteur);
 	  return $lot;
-	 }
+	}
 
 	public Static function getLotByCoupon($coupon){
-	  $query = "SELECT * FROM lot WHERE numeroCoupon=".$coupon;
+	  $query = "SELECT * FROM lot WHERE numeroCoupon='$coupon'";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	  $row = $res->fetch_row();
-	  $vendeur = Vendeur::getVendeurById((int)$row[6]);
-	  $acheteur = Acheteur::getAcheteurById((int)$row[5]);
-	  $lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],$vendeur);
-	  $lot->setId((int)$row[0]);
-	  $lot->setStatut((String)$row[4]);
-	  $lot->setAcheteur($acheteur);
-	  return $lot;
+	  if(!empty($row)){
+		  $vendeur = Vendeur::getVendeurById((int)$row[6]);
+		  $acheteur = Acheteur::getAcheteurById((int)$row[5]);
+		  $lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],$vendeur);
+		  $lot->setId((int)$row[0]);
+		  $lot->setStatut((String)$row[4]);
+		  $lot->setAcheteur($acheteur);
+		  return $lot;
+	   }else{
+		   return null;
+	   }
 	 }
 	 
 	 public Static function getLotByNumPre($numPre){
@@ -313,14 +317,18 @@ class Lot
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	  $row = $res->fetch_row();
-	  $vendeur = Vendeur::getVendeurById((int)$row[6]);
-	  $acheteur = Acheteur::getAcheteurById((int)$row[5]);
-	  $lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],$vendeur);
-	  $lot->setId((int)$row[0]);
-	  $lot->setStatut((String)$row[4]);
-	  $lot->setAcheteur($acheteur);
-	  $lot->setNumPre($numPre);
-	  return $lot;
+	  if(!empty($row)){
+		  $vendeur = Vendeur::getVendeurById((int)$row[6]);
+		  $acheteur = Acheteur::getAcheteurById((int)$row[5]);
+		  $lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],$vendeur);
+		  $lot->setId((int)$row[0]);
+		  $lot->setStatut((String)$row[4]);
+		  $lot->setAcheteur($acheteur);
+		  $lot->setNumPre($numPre);
+		  return $lot;
+	  }else{
+		  return null;
+	  }
 	 }
 
 
