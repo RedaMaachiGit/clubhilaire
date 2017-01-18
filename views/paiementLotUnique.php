@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 session_start();
 include_once('../model/vendeur.php');
@@ -13,7 +12,7 @@ include_once('../model/modele.php');
 //  $updateLot = "SELECT * FROM Lot WHERE numeroLot = '$id'" or die("Erreur lors de la consultation de données (updateLot)" . mysqli_error($connect));
 //  $req = $connect->query($updateLot);
 ?>
-
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -207,9 +206,9 @@ include_once('../model/modele.php');
             </div>
 
             <input type="hidden" class="form-control" id="index" name="index" value="0" />
-			<input type="hidden" class="form-control" id="idLot" name="idLot" value= <?php echo $lot->getid(); ?> />
-			<input type="hidden" class="form-control" id="formEnvoie" name="formEnvoie" value= <?php echo "unique" ?> />
-			<input type="hidden" class="form-control" id="montant" name="montant" value= <?php echo $fraisDepot; ?> />
+      			<input type="hidden" class="form-control" id="idLot" name="idLot" value= <?php echo $lot->getid(); ?> />
+      			<input type="hidden" class="form-control" id="formEnvoie" name="formEnvoie" value= <?php echo "unique" ?> />
+      			<input type="hidden" class="form-control" id="montant" name="montant" value= <?php echo $fraisDepot; ?> />
             <div class="form-group" name="marque">
               <label for="inputNom" class="col-sm-2 control-label">Nom</label>
               <div class="col-sm-10">

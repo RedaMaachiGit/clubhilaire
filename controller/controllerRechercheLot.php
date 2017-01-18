@@ -30,7 +30,7 @@ class ControllerRechercheLot {
 			}
 			else if(strcmp($idForm,"vente")==0){
 				header('location:../views/venteLot.php');
-			}	
+			}
 		}
 
 	}

@@ -1,52 +1,54 @@
 <?php
-	//TODO PAS TERMINE
-	//print_r($_POST);
-	echo("Index of products: " . $_POST['index'] . "<br />\n");
-	echo("ID lot: " . $_POST['idLot'] . "<br />\n");
+
+	include_once('../model/lot.php');
+	include_once('../model/caisse.php');
+	// echo("Index of products: " . $_POST['index'] . "<br />\n");
+	// echo("ID lot: " . $_POST['idLot'] . "<br />\n");
 	$idLot = $_POST['idLot'];
-	$numCoupon = new Coupon(); // Recup du num coupon
+	$MontantTotal = 0;
+	$lot = Lot::getLotById($idLot);
+	$numCoupon = $lot->getCouponNoIncr(); // Recup du num coupon
 	if(isset($_POST['index']) && !empty($_POST['index'])) {
-		$numberOfProducts = $_POST['index'];
+		$numberOfPaiement = $_POST['index'];
 	} else {
-		$numberOfProducts = 1;
+		$numberOfPaiement = 0;
 	}
-	for ($i = 0; $i <= $numberOfProducts-1; $i++) {
-		$Type = $_POST['paiement'][$i][typedepaiement];
-		$Nom = $_POST['paiement'][$i][inputNom];
-		$Prenom = $_POST['paiement'][$i][inputPrenom];
-		$Telephone = $_POST['paiement'][$i][inputTelephone];
-		$Numero = $_POST['paiement'][$i][inputNumero];
-		$Commentaire = $_POST['paiement'][$i][inputCommentaire];
-		$Montant = $_POST['paiement'][$i][inputMontant];
-		if(empty($Nom) || empty($Prenom) || empty($Montant)){
-			continue;
-		}
-		if($Type == 0){
-			$ecriture = new Caisse("CB",$Montant,"Club Hilaire",$Nom,$Prenom,$Telephone,"Vente de lot",$numCoupon,$idLot,$numero,$commentaire);
-			$ecriture->save();
- 			echo("Il s'agit d'une CB<br />\n");
-			echo("Nom: " . $Nom . "<br />\n");
-			echo("Prenom: " . $Prenom . "<br />\n");
-			echo("Telephone: " . $Telephone . "<br />\n");
-			echo("Numero: " . $Numero . "<br />\n");
-			echo("Commentaire: " . $Commentaire . "<br />\n");
-			echo("Montant: " . $Montant . "<br />\n");
-		} else if ($Type == 1){
-			echo("Il s'agit d'un chèque<br />\n");
-			echo("Nom: " . $Nom . "<br />\n");
-			echo("Prenom: " . $Prenom . "<br />\n");
-			echo("Telephone: " . $Telephone . "<br />\n");
-			echo("Numero: " . $Numero . "<br />\n");
-			echo("Commentaire: " . $Commentaire . "<br />\n");
-			echo("Montant: " . $Montant . "<br />\n");
-		} else if ($Type == 2){
-			echo("Il s'agit d'un paiement en liquide<br />\n");
-			echo("Nom: " . $Nom . "<br />\n");
-			echo("Prenom: " . $Prenom . "<br />\n");
-			echo("Telephone: " . $Telephone . "<br />\n");
-			echo("Numero: " . $Numero . "<br />\n");
-			echo("Commentaire: " . $Commentaire . "<br />\n");
-			echo("Montant: " . $Montant . "<br />\n");
+	for ($i = 0; $i <= $numberOfPaiement; $i++) {
+		if(!isset($_POST['paiement'][$i]['typedepaiement']) || !isset($_POST['paiement'][$i]['inputMontant'])){
+					header("Location:../views/error.php");
+		} else {
+			$Type = $_POST['paiement'][$i]['typedepaiement'];
+			$Nom = $_POST['paiement'][$i]['inputNom'];
+			$Prenom = $_POST['paiement'][$i]['inputPrenom'];
+			$Telephone = $_POST['paiement'][$i]['inputTelephone'];
+			$Montant = $_POST['paiement'][$i]['inputMontant'];
+			$MontantTotal = $MontantTotal + $Montant;
+			if($Type == 0){
+				$journee = date('d/m/Y');
+				$ancienFond = Caisse::getLastFond();
+				$nouveauFond = $ancienFond + $Montant;
+				$ecriture = new Caisse($journee,$nouveauFond,"CB",$Montant,
+																"Caisse Club Hilaire",$Nom,$Prenom,$Telephone,
+																"Vente de lot",$numCoupon,$idLot,"Pas de numéro","Pas de commentaire");
+				$ecriture->save();
+			} else if ($Type == 1){
+				$journee = date('d/m/Y');
+				$ancienFond = Caisse::getLastFond();
+				$nouveauFond = $ancienFond + $Montant;
+				$ecriture = new Caisse($journee,$nouveauFond,"Cheque",$Montant,
+																"Caisse Club Hilaire",$Nom,$Prenom,$Telephone,
+																"Vente de lot",$numCoupon,$idLot,$Numero,$Commentaire);
+				$ecriture->save();
+			} else if ($Type == 2){
+				$journee = date('d/m/Y');
+				$ancienFond = Caisse::getLastFond();
+				$nouveauFond = $ancienFond + $Montant;
+				$ecriture = new Caisse($journee,$nouveauFond,"Liquide",$Montant,
+																"Caisse Club Hilaire",$Nom,$Prenom,$Telephone,
+																"Vente de lot",$numCoupon,$idLot,"Pas de numéro","Pas de commentaire");
+				$ecriture->save();
+			}
+			header("Location:../views/paiementOk.php?montant=".$MontantTotal);
 		}
 	}
 ?>
