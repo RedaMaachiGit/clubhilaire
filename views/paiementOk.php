@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Ajout lot</title>
+  <title>Vendre un lot</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -15,6 +16,10 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="../dist/css/skins/skin-blue.min.css">
+
+  <link rel="stylesheet" href="../plugins/datatables/dataTables.bootstrap.css">
+  <link rel="stylesheet" href="../dist/css/skins/_all-skins.min.css">
+
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -104,65 +109,24 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Redéfinition des numéro de coupons
-        <small>Ajoutez avec précaution</small>
+        Vente de lot pour <?php echo $_GET['montant'] ?> €
+        <small>Vous êtes sur le point de vendre un lot</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="index.html"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Init coupon</li>
+        <li class="active">Vente lot</li>
       </ol>
     </section>
 
     <!-- Main content -->
     <section class="content">
-
-      <div class="box box-info">
-        <div class="box-header with-border">
-          <h3 class="box-title">Rentrez le numéro du premier et du dernier coupon.</h3>
-        </div>
-        <!-- /.box-header -->
-        <!-- form start -->
-        <form id="couponForm" method="POST" action="../controller/ControlleurCoupon.php" class="form-horizontal">
-          <div class="box-body">
-            <div class="form-group">
-              <label for="inputDebut" class="col-sm-2 control-label">Début de carnet</label>
-
-              <div class="col-sm-10">
-                <input type="text" class="form-control" name="inputDebut" placeholder="Début des coupons">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="inputFin" class="col-sm-2 control-label">Fin de carnet</label>
-
-              <div class="col-sm-10">
-                <input type="text" class="form-control" name="inputFin" placeholder="Fin de coupons">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="inputCourant" class="col-sm-2 control-label">Courant</label>
-
-              <div class="col-sm-10">
-                <input type="text" class="form-control" name="inputCourant" placeholder="Numéro de coupon courant qui n'a pas encore été utilisé">
-              </div>
-            </div>
-
-          </div>
-          <!-- /.box-body -->
-          <div class="box-footer">
-            <!-- <button type="submit" class="btn btn-default">Cancel</button> -->
-            <button onclick="window.location.href='../index.html'" type="submit" class="btn btn-info pull-right">Valider (redirection)</button>
-          </div>
-          <!-- /.box-footer -->
-        </form>
+      <div class="callout callout-warning">
+        <h4>Le paiement a bien été enregistré et vous avez récupéré <?php echo $_GET['montant'] ?> € tous moyens de paiement confondus !</h4>
+        <p>Pensez bien mettre ce montant de la caisse.</p>
       </div>
-
     </section>
     <!-- /.content -->
-
   </div>
-  <!-- /.content-wrapper -->
-
-  <!-- Main Footer -->
   <footer class="main-footer">
     <!-- To the right -->
     <div class="pull-right hidden-xs">
@@ -171,13 +135,6 @@
     <!-- Default to the left -->
     <strong>Copyright &copy; 2016 <a href="https://clubsthilair.wordpress.com/">Club Hilaire</a>.</strong> All rights reserved.
   </footer>
-
-  <!-- /.control-sidebar -->
-  <!-- Add the sidebar's background. This div must be placed
-       immediately after the control sidebar -->
-  <div class="control-sidebar-bg"></div>
-</div>
-<!-- ./wrapper -->
 
 <!-- REQUIRED JS SCRIPTS -->
 
@@ -188,11 +145,20 @@
 <!-- AdminLTE App -->
 <script src="../dist/js/app.min.js"></script>
 
-
-
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
-     Both of these plugins are recommended to enhance the
-     user experience. Slimscroll is required when using the
-     fixed layout. -->
+<!-- jQuery 2.2.3 -->
+<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="../bootstrap/js/bootstrap.min.js"></script>
+<!-- DataTables -->
+<script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../plugins/datatables/dataTables.bootstrap.min.js"></script>
+<!-- SlimScroll -->
+<script src="../plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="../plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="../dist/js/app.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../dist/js/demo.js"></script>
 </body>
 </html>

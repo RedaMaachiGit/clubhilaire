@@ -60,12 +60,12 @@ class Lot
 	 public function setStatut($status){
 		$this->_status = $status;
 	 }
-	 
+
 	// Setter numPre
 	public function setNumPre($numPre){
 		$this->_numPreInscription = $numPre;
 	}
-	
+
 	//Getter numPre
 	public function getNumPre($numPre){
 		return $this->_numPreInscription;
@@ -202,8 +202,8 @@ class Lot
 	  $this->setId($idLot);
 	  $db->close();
 	 }
-	 
-	 
+
+
 	 public function savePreInscription(){
 	  $db = new DB();
 	  $db->connect();
@@ -307,7 +307,7 @@ class Lot
 		   return null;
 	   }
 	 }
-	 
+
 	 public Static function getLotByNumPre($numPre){
 	  $db = new DB();
 	  $db->connect();
@@ -416,8 +416,8 @@ class Lot
 	  }
 	  return $lots;
 	}
-	 
-	 
+
+
 	 public static function veriferPayerFraisDepot($idLot){
 		$statut = "En vente";
 		$query = "SELECT * FROM lot WHERE idLot=".$idLot." AND statut !='$statut'";
@@ -433,7 +433,7 @@ class Lot
 			return true;
 		}
 	}
-	 
+
 	 public static function getLotEnPreparationByVendeur($idVendeur){
 	  $statut = "En preparation";
 	  $query = "SELECT * FROM lot WHERE idVendeur=".$idVendeur." AND statut ='$statut'";
@@ -450,10 +450,10 @@ class Lot
 		$lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],$vendeur);
 		$lot->setId((int)$row[0]);
 		$lot->setStatut((String)$row[4]);
-		$lot->setAcheteur($acheteur); 
+		$lot->setAcheteur($acheteur);
 		array_push($lots,$lot);
 	  }
-	  return $lots; 
+	  return $lots;
 	 }
 
 	 public function updatePrix($prix){
@@ -477,7 +477,7 @@ class Lot
 	  $this->setStatut($statut);
 	  $db->close();
 	 }
-	 
+
 	public function updateCoupon($numeroCoupon){
 	  $id = $this->getId();
 	  $query = "UPDATE lot SET numeroCoupon ='$numeroCoupon' WHERE idLot=".$id;
@@ -499,7 +499,7 @@ class Lot
 	  $this->setNumeroLotVendeur($numeroLotVendeur);
 	  $db->close();
 	 }
-	 
+
 	 public function updateNumPreInscription($numPre){
 	  $id = $this->getId();
 	  $query = "UPDATE lot SET numeroPreInscription ='$numPre' WHERE idLot=".$id;
@@ -508,9 +508,9 @@ class Lot
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $this->setNumPre($numPre);
-	  $db->close(); 
+	  $db->close();
 	 }
-	 
+
 	 public static function lotExistByNumPre($numPre){
 	  $db = new DB();
 	  $db->connect();
@@ -518,7 +518,7 @@ class Lot
 	  $numPreInscription	 = $conn->real_escape_string($numPre);
 	  $query = "SELECT * FROM lot WHERE numeroPreInscription='$numPreInscription'";
 	  $res = $conn->query($query) or die(mysqli_error($conn));
-	  $db->close();  
+	  $db->close();
 	  if($res->num_rows == 0 ){
 		  return false;
 	  }else{

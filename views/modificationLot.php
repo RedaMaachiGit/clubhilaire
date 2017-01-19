@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-	<?php
+<?php
 
 	session_start();
 	include_once('../model/vendeur.php');
@@ -19,6 +18,7 @@
 		//echo $articles[0]->getMarque()->getLibelle();
 		//echo $articles[0]->getTypeArticle();
 	?>
+	<!DOCTYPE html>
 
 	<html>
 	<head>

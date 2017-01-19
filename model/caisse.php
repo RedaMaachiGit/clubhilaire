@@ -1,5 +1,4 @@
 <?php
-//Cette classe représente lesfrais de dépot des lots vendus par l'ecole saInt Hilare
 require_once('db.php');
 
 
@@ -7,6 +6,8 @@ require_once('db.php');
 class Caisse
 {
   private $_idPaiement;
+  private $_journee;
+  private $_fondecaisse;
   private $_typePaiement;
   private $_montant;
   private $_beneficiaire;
@@ -24,8 +25,10 @@ class Caisse
 /////CONSTRUCTEUR////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	 public function __construct($typePaiement,$montant,$beneficiare,$nomEmetteur,$prenomEmetteur,$telephoneEmetteur,$typeTransaction,$coupon,$lot,$numero,$commentaire){
-		$this->setTypePaiement($typePaiement);
+	 public function __construct($journee,$fondecaisse,$typePaiement,$montant,$beneficiare,$nomEmetteur,$prenomEmetteur,$telephoneEmetteur,$typeTransaction,$coupon,$lot,$numero,$commentaire){
+    $this->setJournee($journee);
+    $this->setFonDeCaisse($fondecaisse);
+    $this->setTypePaiement($typePaiement);
 		$this->setMontant($montant);
 		$this->setNom($nomEmetteur);
 		$this->setPrenom($prenomEmetteur);
@@ -34,8 +37,7 @@ class Caisse
     $this->setcoupon($coupon);
     $this->setBeneficiaire($beneficiare);
     $this->setlot($lot);
-    $this->setdate($date);
-		$this->setNumero($numero);
+    $this->setNumero($numero);
 		$this->setCommentaire($commentaire);
 	}
 
@@ -46,41 +48,67 @@ class Caisse
 
 
 	// Getter ID
+
+
+  public function getJournee(){
+    return $this->_journee;
+  }
+
+  public function setJournee($journee){
+    return $this->_journee = $journee;
+  }
+  public function getIdPaiement(){
+    return $this->_idPaiement;
+  }
+
+  public function setIdPaiement($idPaiement){
+    return $this->_idPaiement = $idPaiement;
+  }
+
+  public function getFonDeCaisse(){
+    return $this->_fondecaisse;
+  }
+
+  public function setFonDeCaisse($fondecaisse){
+    return $this->_fondecaisse = $fondecaisse;
+  }
+
   public function gettypeTransaction(){
     return $this->_typeTransaction;
-  };
+  }
 
   public function settypeTransaction($typeTransaction){
     return $this->_typeTransaction = $typeTransaction;
-  };
+  }
+
   public function getcoupon(){
     return $this->_coupon;
-  };
+  }
 
   public function setcoupon($coupon){
     return $this->_coupon = $coupon;
-  };
+  }
   public function getlot(){
     return $this->_lot;
-  };
+  }
 
   public function setlot($lot){
     return $this->_lot = $lot;
-  };
+  }
   public function getBeneficiaire(){
     return $this->_beneficiare;
-  };
+  }
 
   public function setBeneficiaire($beneficiare){
     return $this->_beneficiare = $beneficiare;
-  };
+  }
   public function getdate(){
     return $this->_date;
-  };
+  }
 
   public function setdate($date){
     return $this->_date = $date;
-  };
+  }
 
 
   public function getId(){
@@ -161,19 +189,21 @@ class Caisse
   //
   // }
 	public function save(){
+    $journee = $this->getJournee();
+    $fondCaisse = $this->getFonDeCaisse();
 	  $typePaiement = $this->getTypePaiement();
 	  $montant = $this->getMontant();
     $beneficiare = $this->getBeneficiaire();
-	  $nom = $this->getNom();
-	  $prenom = $this->getPrenom();
+	  $nomEmetteur = $this->getNom();
+	  $prenomEmetteur = $this->getPrenom();
 	  $telephoneEmetteur = $this->gettelephoneEmetteur();
 	  $numero = $this->getNumero();
 	  $commentaire = $this->getCommentaire();
     $typeTransaction = $this->gettypeTransaction();
     $lot = $this->getLot();
     $coupon = $this->getCoupon();
-	  $query = "INSERT INTO caisse (typePaiement, montant,beneficiaire,nomEmetteur,prenomEmetteur,telephoneEmetteur,typeTransaction,coupon, lot, numero,commentaire)
-	  VALUES ('".$typePaiement."','".$montant."','".$beneficiare."','".$nomEmetteur."','".$prenomEmetteur."','".$telephoneEmetteur."','".$typeTransaction."','".$coupon."','".$lot."','".$numero."','".$commentaire."')";
+	  $query = "INSERT INTO caisse (journee,fondCaisse,typePaiement,montant,beneficiaire,nomEmetteur,prenomEmetteur,telephoneEmetteur,typeTransaction,coupon, lot, numero,commentaire)
+	  VALUES ('".$journee."','".$fondCaisse."','".$typePaiement."','".$montant."','".$beneficiare."','".$nomEmetteur."','".$prenomEmetteur."','".$telephoneEmetteur."','".$typeTransaction."','".$coupon."','".$lot."','".$numero."','".$commentaire."')";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -183,7 +213,53 @@ class Caisse
 	  $db->close();
 	 }
 
-   public function getCompta(){
+    public static function getLastOpeartion(){
+      $query = "SELECT * FROM caisse ORDER BY idPaiement DESC LIMIT 1";
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      $res=mysqli_query($conn,$query);
+      if(!empty($row)){
+       $paiement = new Caisse((String)$row['journee'],(int)$row['fondCaisse'],
+                             (String)$row['typePaiement'], (int)$row['montant'],
+                             (String)$row['beneficiaire'], (String)$row['nomEmetteur'],
+                             (String)$row['prenomEmetteur'], (String)$row['telephoneEmetteur'],
+                             (String)$row['typeTransaction'], (int)$row['coupon'], (int)$row['lot'],
+                             (String)$row['date'], (String)$row['numero'], (String)$row['commentaire']);
+       $paiement->setIdPaiement((int)$row['idPaiement']);
+  		  return $paiement;
+  	  }else{
+  		  return null;
+  	  }
+    }
+
+
+   public static function getLastFond(){
+     $query = "SELECT * FROM caisse ORDER BY idPaiement DESC LIMIT 1";
+     $db = new DB();
+     $db->connect();
+     $conn = $db->getConnectDb();
+     $res=mysqli_query($conn,$query);
+     $row = $res->fetch_row();
+     if(!empty($row)){
+      return (int)$row[2];
+ 	  }else{
+ 		  return null;
+ 	  }
+   }
+
+   public static function getNumberOfOperations(){
+     $query = "SELECT * FROM caisse";
+     $db = new DB();
+     $db->connect();
+     $conn = $db->getConnectDb();
+     $res=mysqli_query($conn,$query);
+     $rowCount = $res->num_rows;
+     $db->close();
+     return $rowCount;
+    }
+
+   public static function getCompta(){
      $query = "SELECT * FROM caisse";
      $db = new DB();
      $db->connect();
@@ -193,7 +269,14 @@ class Caisse
      $paiements = array();
      while($row = mysqli_fetch_array($res)){
      $i++;
-     $paiement = new Caisse((Int)$row['idPaiementPrimaire'], (String)$row['typePaiement'], (Int)$row['montant'], (String)$row['beneficiaire'], (String)$row['nomEmetteur'], (String)$row['prenomEmetteur'], (String)$row['telephoneEmetteur'], (String)$row['typeTransaction'], (Int)$row['coupon'], (Int)$row['lot'], (timestamp)$row['date'], (String)$row['numero'], (text)$row['commentaire']);
+    //  print_r($row);
+     $paiement = new Caisse((String)$row['journee'],(int)$row['fondCaisse'],
+                           (String)$row['typePaiement'], (int)$row['montant'],
+                           (String)$row['beneficiaire'], (String)$row['nomEmetteur'],
+                           (String)$row['prenomEmetteur'], (String)$row['telephoneEmetteur'],
+                           (String)$row['typeTransaction'], (int)$row['coupon'], (int)$row['lot'],
+                           (String)$row['date'], (String)$row['numero'], (String)$row['commentaire']);
+     $paiement->setIdPaiement((int)$row['idPaiement']);
      array_push($paiements, $paiement);
      }
      $db->close();

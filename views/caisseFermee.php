@@ -100,27 +100,11 @@
 
     <!-- Main content -->
     <section class="content">
-<div class="box">
-  <div class="box-body">
-    <div class="col-xs-12">
-      <div class="row">
-        <div class="col-xs-6">
-          <button onclick="window.location.href='ouvrirCaisse.html'" type="button" class="btn btn-block btn-success btn-lg">Ouvrir la caisse</button>
-        </div>
-        <div class="col-xs-6">
-          <button onclick="window.location.href='fermerCaisse.html'" type="button" class="btn btn-block btn-danger btn-lg">Fermer la caisse</button>
-        </div>
+      <div class="callout callout-warning">
+        <h4>Attention la caisse à bien été fermée et vous avez récupéré <?php echo $_GET['montant'] ?> € !</h4>
+        <p>Pensez bien à enlever ce montant de la caisse.</p>
       </div>
-    </div>
-  </div>
-  <div class="box-footer">
-    <div class="alert alert-danger alert-dismissible">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-      <h4><i class="icon fa fa-ban"></i> Alert!</h4>
-      Attention cette opération (ouverture de caisse ou fermeture de caisse) ne peut pas être faites par n'importe qui soyez sûr d'avoir les autorisations nécaissaire avant d'effectuer une ouverture de caisse ou une fermeture de caisse
-    </div>
-  </div>
-</div>
+
     </section>
     <!-- /.content -->
   </div>
