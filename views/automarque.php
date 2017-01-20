@@ -1,21 +1,22 @@
 <?php
-//Cette classe représente les vendeurs
-require_once('db.php');
-  $db = new DB();
-	  $db->connect();
-	  $conn = $db->getConnectDb();
-    if (isset($_REQUEST['query'])) {
-    $query = $_REQUEST['query'];
-    $sql = mysql_query ("SELECT libelle FROM marque WHERE libelle LIKE '%{$query}%'");
-	  $array = array();
-    while ($row = mysql_fetch_array($sql)) {
-        $array[] = array (
-            'label' => $row['marque'],
-            'value' => $row['marque'],
-        );
+    //database configuration
+    $dbHost = "localhost";
+    $dbUsername = "root";
+    $dbPassword = "root";
+    $dbName = "clubhilaire";
+
+    //connect with the database
+    $db = new mysqli($dbHost,$dbUsername,$dbPassword,$dbName);
+
+    //get search term
+    $searchTerm = $_GET['term'];
+
+    //get matched data from skills table
+    $query = $db->query("SELECT * FROM marque WHERE libelle LIKE '%".$searchTerm."%'");
+    while ($row = $query->fetch_assoc()) {
+        $data[] = $row['libelle'];
     }
-    //RETURN JSON ARRAY
-    echo json_encode ($array);
-}
-	  $db->close();
+
+    //return json data
+    echo json_encode($data);
 ?>
