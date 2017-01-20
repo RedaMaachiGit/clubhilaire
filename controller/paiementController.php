@@ -32,7 +32,6 @@ include_once('../model/caisse.php');
 											$nouveauFond,"CB",$Montant,"Caisse Club Hilaire",
 											$Nom,$Prenom,$Telephone,
 											"Vente de lots",$lots,"Pas de numéro","Pas de commentaire");
-
 				} else if ($Type == 1){
 					$journee = date('d/m/Y');
 					$ancienFond = Caisse::getLastFond();
@@ -57,6 +56,7 @@ include_once('../model/caisse.php');
 		}
 	} else {
 		$MontantTotal = 0;
+		$idLot = $_POST['idLot'];
 		$lot = Lot::getLotById($idLot);
 		$numCoupon = $lot->getCouponNoIncr(); // Recup du num coupon
 		if(isset($_POST['index']) && !empty($_POST['index'])) {
@@ -80,7 +80,9 @@ include_once('../model/caisse.php');
 					$nouveauFond = $ancienFond + $Montant;
 					$ecriture = new Caisse($journee,$nouveauFond,"CB",$Montant,
 					"Caisse Club Hilaire",$Nom,$Prenom,$Telephone,
-					"Vente de lot",$numCoupon,$idLot,"Pas de numéro","Pas de commentaire");
+					"Vente de lot","Pas de numéro","Pas de commentaire");
+					$ecriture->setLot($lot);
+					$ecriture->setcoupon($numCoupon);
 					$ecriture->save();
 				} else if ($Type == 1){
 					$journee = date('d/m/Y');
@@ -88,7 +90,9 @@ include_once('../model/caisse.php');
 					$nouveauFond = $ancienFond + $Montant;
 					$ecriture = new Caisse($journee,$nouveauFond,"Cheque",$Montant,
 					"Caisse Club Hilaire",$Nom,$Prenom,$Telephone,
-					"Vente de lot",$numCoupon,$idLot,$Numero,$Commentaire);
+					"Vente de lot",$Numero,$Commentaire);
+					$ecriture->setLot($lot);
+					$ecriture->setcoupon($numCoupon);
 					$ecriture->save();
 				} else if ($Type == 2){
 					$journee = date('d/m/Y');
@@ -96,7 +100,9 @@ include_once('../model/caisse.php');
 					$nouveauFond = $ancienFond + $Montant;
 					$ecriture = new Caisse($journee,$nouveauFond,"Liquide",$Montant,
 					"Caisse Club Hilaire",$Nom,$Prenom,$Telephone,
-					"Vente de lot",$numCoupon,$idLot,"Pas de numéro","Pas de commentaire");
+					"Vente de lot","Pas de numéro","Pas de commentaire");
+					$ecriture->setLot($lot);
+					$ecriture->setcoupon($numCoupon);
 					$ecriture->save();
 				}
 				header("Location:../views/paiementOk.php?montant=".$MontantTotal);

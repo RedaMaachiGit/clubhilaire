@@ -210,12 +210,40 @@ class Caisse
 	  $idCaisse = $conn->insert_id;
 	  $this->setId($idCaisse);
 
-    $queryForeign = "INSERT INTO paiementLot (idCaisse,idLot,numCoupon) VALUES ('".$idCaisse."','".$lot."','".$coupon."')";
+    $numeroDeLot = $lot->getId();
+    $numeroDeCoupon = $lot->getCouponNoIncr();
+    $queryForeign = "INSERT INTO paiementLot (idCaisse,idLot,numCoupon) VALUES ('".$idCaisse."','".$numeroDeLot."','".$numeroDeCoupon."')";
     $resForeign = $conn->query($queryForeign) or die(mysqli_error($conn));
-
+    $lot->updateStatut("En vente");
 
 	  $db->close();
 	 }
+
+    public function ouvrirFermerCaisse(){
+      $journee = $this->getJournee();
+      $fondCaisse = $this->getFonDeCaisse();
+      $typePaiement = $this->getTypePaiement();
+      $montant = $this->getMontant();
+      $beneficiare = $this->getBeneficiaire();
+      $nomEmetteur = $this->getNom();
+      $prenomEmetteur = $this->getPrenom();
+      $telephoneEmetteur = $this->gettelephoneEmetteur();
+      $numero = $this->getNumero();
+      $commentaire = $this->getCommentaire();
+      $typeTransaction = $this->gettypeTransaction();
+      $lot = $this->getLot();
+      $coupon = $this->getCoupon();
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      $query = "INSERT INTO caisse (journee,fondCaisse,typePaiement,montant,beneficiaire,nomEmetteur,prenomEmetteur,telephoneEmetteur,typeTransaction, numero,commentaire)
+      VALUES ('".$journee."','".$fondCaisse."','".$typePaiement."','".$montant."','".$beneficiare."','".$nomEmetteur."','".$prenomEmetteur."','".$telephoneEmetteur."','".$typeTransaction."','".$numero."','".$commentaire."')";
+
+      $res = $conn->query($query) or die(mysqli_error($conn));
+      $idCaisse = $conn->insert_id;
+      $this->setId($idCaisse);
+      $db->close();
+     }
 
     public static function payerLotMultiple($nombreDeLots, $journee,$fondecaisse,$typePaiement,$montant,$beneficiare,$nomEmetteur,$prenomEmetteur,$telephoneEmetteur,$typeTransaction,$lots,$numero,$commentaire){
       $db = new DB();
@@ -232,6 +260,7 @@ class Caisse
         $numeroDeCoupon = $lots[$i]->getCouponNoIncr();
         $queryForeign = "INSERT INTO paiementLot (idCaisse,idLot,numCoupon) VALUES ('".$idCaisse."','".$numeroDeLot."','".$numeroDeCoupon."')";
         $resForeign = $conn->query($queryForeign) or die(mysqli_error($conn));
+        $lots[$i]->updateStatut("En vente");
       }
       $db->close();
     }
