@@ -72,20 +72,33 @@ class Lot
 	}
 
 	//Getter numeroCoupon
-	 public function getCouponIncr(){
-     $query1 = "SELECT current FROM coupons WHERE 1";
-     $query2 = "UPDATE `coupons` SET `current`=`current`+1 WHERE 1";
+	 public static function getCouponNoIncrById($id){
+     $queryCoupon = "SELECT numeroCoupon FROM lot WHERE idLot=".$id;
      $db = new DB();
      $db->connect();
      $conn = $db->getConnectDb();
-     $res = $conn->query($query1) or die(mysqli_error($conn));
+     $res = $conn->query($queryCoupon) or die(mysqli_error($conn));
      $row = $res->fetch_row();
-     $this->setCoupon($row[0]);
-     $res1 = $conn->query($query2) or die(mysqli_error($conn));
-     $db->close();
-     //$row = $res->fetch_row();
-     return $row[0];
+     $row_cnt = $res->num_rows;
+     if($row_cnt != 0){
+       return $row[0];
+     }
 	  }
+
+    public function getCouponIncr(){
+      $query1 = "SELECT current FROM coupons WHERE 1";
+      $query2 = "UPDATE `coupons` SET `current`=`current`+1 WHERE 1";
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      $res = $conn->query($query1) or die(mysqli_error($conn));
+      $row = $res->fetch_row();
+      $this->setCoupon($row[0]);
+      $res1 = $conn->query($query2) or die(mysqli_error($conn));
+      $db->close();
+      //$row = $res->fetch_row();
+      return $row[0];
+ 	  }
     //Getter numeroCoupon
    public function getCouponNoIncr(){
      return $this->_numeroCoupon;

@@ -137,6 +137,7 @@
                         <thead>
                         <tr>
                           <th>Identifiant de l'opération</th>
+                          <th>Lot(s)</th>
                           <th>Journée</th>
                           <th>Fond caisse après opération</th>
                           <th>Type de paiement</th>
@@ -146,17 +147,15 @@
                           <th>Prenom emetteur</th>
                           <th>Telephone emetteur</th>
                           <th>Type transaction</th>
-                          <th>Coupon</th>
-                          <th>Lot</th>
                           <th>Date</th>
-                          <th>Numero</th>
                           <th>Commentaire</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <?php for ($i = 0; $i < $numberOfOperations; $i++) { // foreach ($shop as $row) : ?>
+                        <?php for ($i = 0; $i < $numberOfOperations; $i++) { $idCaisse = $operations[$i]->getIdPaiement(); ?>
                         <tr>
-                          <td><?php echo $operations[$i]->getIdPaiement(); ?></td>
+                          <td><?php echo $idCaisse; ?></td>
+                          <td><?php echo Caisse::getLotPayeString($idCaisse); ?></td>
                           <td><?php echo $operations[$i]->getJournee(); ?></td>
                           <td><?php echo $operations[$i]->getFonDeCaisse(); ?></td>
                           <td><?php echo $operations[$i]->getTypePaiement(); ?></td>
@@ -166,9 +165,6 @@
                           <td><?php echo $operations[$i]->getPrenom(); ?></td>
                           <td><?php echo $operations[$i]->gettelephoneEmetteur(); ?></td>
                           <td><?php echo $operations[$i]->gettypeTransaction(); ?></td>
-                          <td><?php echo $operations[$i]->getCoupon(); ?></td>
-                          <td><?php echo $operations[$i]->getlot(); ?></td>
-                          <td><?php echo $operations[$i]->getdate(); ?></td>
                           <td><?php echo $operations[$i]->getNumero(); ?></td>
                           <td><?php echo $operations[$i]->getCommentaire(); ?></td>
                         </tr>
@@ -186,10 +182,7 @@
                           <th>Prenom emetteur</th>
                           <th>Telephone emetteur</th>
                           <th>Type transaction</th>
-                          <th>Coupon</th>
-                          <th>Lot</th>
                           <th>Date</th>
-                          <th>Numero</th>
                           <th>Commentaire</th>
                         </tr>
                         </tfoot>

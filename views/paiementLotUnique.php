@@ -6,11 +6,13 @@ include_once('../model/article.php');
 include_once('../model/modele.php');
   //echo("Numero lot: " . $_POST['numeroLot'] . "<br />\n"); //TRACE
   $lot= unserialize(urldecode((String)$_SESSION['lot']));
+  $articles = unserialize(urldecode($_SESSION['articles']));
   $fraisDepot =$_SESSION['fraisDepot'];
-//  $connect = ConnexionDB(); // Je me connecte à la base de donnée
-
-//  $updateLot = "SELECT * FROM Lot WHERE numeroLot = '$id'" or die("Erreur lors de la consultation de données (updateLot)" . mysqli_error($connect));
-//  $req = $connect->query($updateLot);
+  $nombreArticles = sizeof($articles);
+  $vendeur = $lot->getVendeur();
+  $prixLot = $lot->getPrix();
+  $numeroLot = $lot->getId();
+  $numeroCoupon = $lot->getCouponNoIncr();
 ?>
 <!DOCTYPE html>
 <html>
@@ -138,43 +140,73 @@ include_once('../model/modele.php');
 
         <!-- /.box-header -->
         <div class="box-body">
-          <table id="example1" class="table table-bordered table-striped">
-            <thead>
-            <tr>
-              <th>Numéro lot</th>
-              <th>Coupon</th>
-              <th>Nom</th>
-              <th>Email</th>
-              <th>Prix</th>
-              <th>État</th>
-              <th>Édition</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php for ($i = 1; $i <= rand(2,15); $i++) { // foreach ($shop as $row) : ?>
-            <tr>
-              <td><? echo rand(2,100); //$row[0]; ?></td>
-              <td><? echo rand(2,300); //$row[1]; ?></td>
-              <td><? echo "Durand"; //$row[2]; ?></td>
-              <td><? echo "durand@gmail.com"; //$row[3]; ?></td>
-              <td><? echo rand(2,1000); //$row[4]; ?></td>
-              <td><? echo "en préparation"; //$row[5]; ?></td>
-              <td><? echo "False"; //$row[6]; ?></td>
-            </tr>
-            <?php } ?>
-            </tbody>
-            <tfoot>
-            <tr>
-              <th>Numéro lot</th>
-              <th>Coupon</th>
-              <th>Nom</th>
-              <th>Email</th>
-              <th>Prix</th>
-              <th>État</th>
-              <th>Édition</th>
-            </tr>
-            </tfoot>
-          </table>
+          <div id="example1_wrapper" class="box-body table-responsive no-padding">
+            <div class="row">
+              <div class="col-sm-12">
+                <table id="example1" class="table table-hover">
+                  <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>PTV Minimum</th>
+                    <th>PTV Maximum</th>
+                    <th>Taille</th>
+                    <th>Annee</th>
+                    <th>Surface voile</th>
+                    <th>Couleur voile</th>
+                    <th>Heure voles voile</th>
+                    <th>Certificat revision voile</th>
+                    <th>Type protection selette</th>
+                    <th>Type accessoire</th>
+                    <th>MarqueIndex</th>
+                    <th>Modele</th>
+                    <th>Homologation</th>
+                    <th>Commentaire</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <?php for ($j = 0; $j < $nombreArticles; $j++) { // foreach ($shop as $row) : ?>
+                      <tr>
+                    <td><?php if(!empty($articles[$j]->getTypeArticle())) { echo $articles[$j]->getLibelleTypeArticle(); } else if(!empty($articles[$j]->getSurfaceVoile())){echo "Voile";} else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getPtvMin())) { echo $articles[$j]->getPtvMin(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getPtvMax())) { echo $articles[$j]->getPtvMax(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getTaille())) { echo $articles[$j]->getTaille(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getAnnee())) { echo $articles[$j]->getAnnee(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getSurfaceVoile())) { echo $articles[$j]->getSurfaceVoile(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getCouleurVoile())) { echo $articles[$j]->getCouleurVoile(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getHeureVoile())) { echo $articles[$j]->getHeureVoile(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getCertificat())) { echo $articles[$j]->getCertificat(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getTypeProtectionSelette())) { echo $articles[$j]->getTypeProtectionSelette(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getTypeAccessoire())) { echo $articles[$j]->getTypeAccessoire(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getMarque()->getLibelle())) { echo $articles[$j]->getMarque()->getLibelle(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getModele()->getLibelle())) { echo $articles[$j]->getModele()->getLibelle(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getHomologation())) { echo $articles[$j]->getHomologation(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getCommentaire())) { echo $articles[$j]->getCommentaire(); } else { echo "X";}?></td>
+                      </tr>
+                    <?php } ?>
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                    <th>Type</th>
+                    <th>PTV Minimum</th>
+                    <th>PTV Maximum</th>
+                    <th>Taille</th>
+                    <th>Annee</th>
+                    <th>Surface voile</th>
+                    <th>Couleur voile</th>
+                    <th>Heure voles voile</th>
+                    <th>Certificat revision voile</th>
+                    <th>Type protection selette</th>
+                    <th>Type accessoire</th>
+                    <th>MarqueIndex</th>
+                    <th>Modele</th>
+                    <th>Homologation</th>
+                    <th>Commentaire</th>
+                  </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
         <!-- /.box-body -->
       </div>
@@ -193,8 +225,7 @@ include_once('../model/modele.php');
       </div>
 
       <div class="box box-info">
-        <form id="paiementForm" class="form-horizontal" method="POST" action="../controller/controllerPaiementFraisDepot.php" class="form-horizontal">
-
+        <form id="paiementForm" class="form-horizontal" method="POST" action="../controller/paiementController.php" class="form-horizontal" onsubmit="return validateForm()">
           <div class="box-body">
             <div class="col-sm-12 form-group">
                 <label>Type d'paiement</label>
@@ -206,54 +237,54 @@ include_once('../model/modele.php');
             </div>
 
             <input type="hidden" class="form-control" id="index" name="index" value="0" />
-      			<input type="hidden" class="form-control" id="idLot" name="idLot" value= <?php echo $lot->getid(); ?> />
-      			<input type="hidden" class="form-control" id="formEnvoie" name="formEnvoie" value= <?php echo "unique" ?> />
-      			<input type="hidden" class="form-control" id="montant" name="montant" value= <?php echo $fraisDepot; ?> />
-            <div class="form-group" name="marque">
+
+            <div class="form-group" name="paiement[0].nomGroup">
               <label for="inputNom" class="col-sm-2 control-label">Nom</label>
               <div class="col-sm-10">
                 <input type="text" class="form-control" id="inputNom" name="paiement[0][inputNom]" value="" placeholder="Nom" />
               </div>
             </div>
 
-            <div class="form-group" name="prenom">
+            <div class="form-group" name="paiement[0].prenomGroup">
               <label for="inputPrenom" class="col-sm-2 control-label">Prénom</label>
               <div class="col-sm-10">
                 <input type="text" class="form-control" id="inputPrenom" name="paiement[0][inputPrenom]" value="" placeholder="Prénom" />
               </div>
             </div>
 
-            <div class="form-group" name="telephone" id="telephoneGroup">
+            <div class="form-group" name="paiement[0].telephoneGroup" id="paiement[0].telephoneGroup">
               <label for="inputTelephone" class="col-sm-2 control-label">Téléphone</label>
               <div class="col-sm-10">
                 <input type="text" class="form-control" id="inputTelephone" name="paiement[0][inputTelephone]" value="" placeholder="Téléphone" />
               </div>
             </div>
 
-            <div class="form-group" name="numero" id="numeroGroup">
+            <div class="form-group" name="paiement[0].numeroGroup" id="paiement[0].numeroGroup" style="display:none">
               <label for="inputTelephone" class="col-sm-2 control-label">Numéro</label>
               <div class="col-sm-10">
                 <input type="text" class="form-control" id="inputNumero" name="paiement[0][inputNumero]" value="" placeholder="Numéro" />
               </div>
             </div>
 
-            <div class="form-group" name="commentaire" id="commentaireGroup">
+            <div class="form-group" name="paiement[0].commentaireGroup" id="paiement[0].commentaireGroup" style="display:none">
               <label for="inputCommentaire" class="col-sm-2 control-label">Commentaire</label>
               <div class="col-sm-10">
                 <input type="text" class="form-control" id="inputCommentaire" name="paiement[0][inputCommentaire]" value="" placeholder="Commentaire" />
               </div>
             </div>
 
-            <div class="form-group" name="montant" id="montantGroup">
+            <div class="form-group" name="paiement[0].montantGroup" id="paiement[0].montantGroup">
               <label for="inputMontant" class="col-sm-2 control-label">Montant</label>
               <div class="col-sm-10">
                 <input type="text" class="form-control" id="inputMontant" name="paiement[0][inputMontant]" value="" placeholder="Montant" />
               </div>
             </div>
 
+            <input type="text" class="hidden" id="idLot" name="idLot" value="<?php echo $numeroLot ?>" />
+<!--
             <div class="col-xs-1">
               <button type="button" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>
-            </div>
+            </div> -->
           </div>
           <!-- /.box-body -->
           <div class="box-footer">
@@ -276,14 +307,14 @@ include_once('../model/modele.php');
           </select>
       </div>
 
-      <div class="form-group" name="marque">
+      <div class="form-group" name="nomGroup"  id="nomGroup">
         <label for="inputNom" class="col-sm-2 control-label">Nom</label>
         <div class="col-sm-10">
           <input type="text" class="form-control" id="inputNom" name="inputNom" value="" placeholder="Nom" />
         </div>
       </div>
 
-      <div class="form-group" name="prenom">
+      <div class="form-group" name="prenomGroup" id="prenomGroup">
         <label for="inputPrenom" class="col-sm-2 control-label">Prénom</label>
         <div class="col-sm-10">
           <input type="text" class="form-control" id="inputPrenom" name="inputPrenom" value="" placeholder="Prénom" />
@@ -297,14 +328,14 @@ include_once('../model/modele.php');
         </div>
       </div>
 
-      <div class="form-group" name="numero" id="numeroGroup">
+      <div class="form-group" name="numero" id="numeroGroup" style="display:none">
         <label for="inputTelephone" class="col-sm-2 control-label">Numéro</label>
         <div class="col-sm-10">
           <input type="text" class="form-control" id="inputNumero" name="inputNumero" value="" placeholder="Numéro" />
         </div>
       </div>
 
-      <div class="form-group" name="commentaire" id="commentaireGroup">
+      <div class="form-group" name="commentaire" id="commentaireGroup" style="display:none">
         <label for="inputCommentaire" class="col-sm-2 control-label">Commentaire</label>
         <div class="col-sm-10">
           <input type="text" class="form-control" id="inputCommentaire" name="inputCommentaire" value="" placeholder="Commentaire" />
@@ -430,22 +461,38 @@ include_once('../model/modele.php');
 <script>
 var paiementIndex = 0;
 var handleTypeChange = function(e) {
-  console.log(e.value);
-  console.log(e.dataset);
-  console.log(e.dataset.index);
+  console.log("Value" + e.value);
+  console.log("Dataset" + e.dataset);
+  console.log("Dataset index" + e.dataset.index);
 
-  var paiementIndex = e.dataset.index;
+  var paiementIndex = (parseInt(e.dataset.index)).toString();
+
   if ( e.value == '0') // Voile
   {
     console.log('TRACE CB');
+    console.log(paiementIndex);
+    var numerogroup = document.getElementById("paiement[" + paiementIndex + "].numeroGroup");
+    numerogroup.style.display = "none";
+    var commentairegroup = document.getElementById("paiement[" + paiementIndex + "].commentaireGroup");
+    commentairegroup.style.display = "none";
   }
   else if ( e.value == '1') // Selette
   {
     console.log('TRACE cheque');
+    console.log(paiementIndex);
+    var numerogroup = document.getElementById("paiement[" + paiementIndex + "].numeroGroup");
+    numerogroup.style.display = "block";
+    var commentairegroup = document.getElementById("paiement[" + paiementIndex + "].commentaireGroup");
+    commentairegroup.style.display = "block";
   }
   else if ( e.value == '2') // Parachute de secours
   {
     console.log('TRACE liquide');
+    console.log(paiementIndex);
+    var numerogroup = document.getElementById("paiement[" + paiementIndex + "].numeroGroup");
+    numerogroup.style.display = "none";
+    var commentairegroup = document.getElementById("paiement[" + paiementIndex + "].commentaireGroup");
+    commentairegroup.style.display = "none";
   }
 }
 $(document).ready(function() {
@@ -494,7 +541,7 @@ $(document).ready(function() {
             console.log('TRACE');
             paiementIndex++;
             console.log(paiementIndex);
-            document.getElementById("index").value = paiementIndex + 1;
+            document.getElementById("index").value = paiementIndex;
             console.log(document.getElementById("index").value);
             var $form = $('#paiementForm .box-body');
             var $template = $('#paiementTemplate'),
@@ -517,12 +564,12 @@ $(document).ready(function() {
                 // Ici on clone les identifiants
                 .find('[id="inputtypedepaiement"]').attr('data-index', '' + paiementIndex).end()
                 .find('[id="inputtypedepaiement"]').attr('id', 'paiement[' + paiementIndex + '].inputtypedepaiement').end()
-                .find('[id="nomgroup"]').attr('id', 'paiement[' + paiementIndex + '].nomgroup').end()
-                .find('[id="prenomgroup"]').attr('id', 'paiement[' + paiementIndex + '].prenomgroup').end()
-                .find('[id="telephonegroup"]').attr('id', 'paiement[' + paiementIndex + '].telephonegroup').end()
-                .find('[id="numerogroup"]').attr('id', 'paiement[' + paiementIndex + '].numerogroup').end()
-                .find('[id="commentairegroup"]').attr('id', 'paiement[' + paiementIndex + '].commentairegroup').end()
-                .find('[id="montantgroup"]').attr('id', 'paiement[' + paiementIndex + '].montantgroup').end()
+                .find('[id="nomGroup"]').attr('id', 'paiement[' + paiementIndex + '].nomGroup').end()
+                .find('[id="prenomGroup"]').attr('id', 'paiement[' + paiementIndex + '].prenomGroup').end()
+                .find('[id="telephoneGroup"]').attr('id', 'paiement[' + paiementIndex + '].telephoneGroup').end()
+                .find('[id="numeroGroup"]').attr('id', 'paiement[' + paiementIndex + '].numeroGroup').end()
+                .find('[id="commentaireGroup"]').attr('id', 'paiement[' + paiementIndex + '].commentaireGroup').end()
+                .find('[id="montantGroup"]').attr('id', 'paiement[' + paiementIndex + '].montantGroup').end()
 
                 .find('[name="inputNom"]').attr('name', 'paiement[' + paiementIndex + '][inputNom]').end()
                 .find('[name="inputPrenom"]').attr('name', 'paiement[' + paiementIndex + '][inputPrenom]').end()
@@ -557,7 +604,8 @@ $(document).ready(function() {
         })
         // Remove button click handler
         .on('click', '.removeButton', function() {
-          document.getElementById("index").value --;
+          paiementIndex--;
+          document.getElementById("index").value = paiementIndex;
             var $row  = $(this).parents('.form-group'),
                 index = $row.attr('data-paiement-index');
 
@@ -586,8 +634,49 @@ $(document).ready(function() {
         //   });
 
 });
-</script>
 
+
+function validateForm() {
+  var index = document.getElementById("index").value
+  var prix = "<?php echo $fraisDepot ?>";
+  if(index == 0){
+    var nom = document.getElementsByName("paiement[0][inputNom]");
+    var prenom = document.getElementsByName("paiement[0][inputPrenom]");
+    var tel = document.getElementsByName("paiement[0][inputTelephone]");
+    if(nom[0].value == "" || prenom[0].value == "" || tel[0].value == ""){
+      alert("Veuillez rentrez le nom, prenom ainsi que le numéro de téléphone SVP.");
+      return false;
+    }
+    var elem = document.getElementsByName("paiement[0][inputMontant]");
+    var montant = elem[0].value;
+    if(montant != prix){
+      alert("ATTENTION le montant entré ne correspond pas au prix du lot");
+      return false;
+    }
+  } else {
+    var montant = 0;
+    for (i = 0; i <= index; i++) {
+      var nom = document.getElementsByName("paiement[" + i + "][inputNom]");
+      var prenom = document.getElementsByName("paiement[" + i + "][inputPrenom]");
+      var tel = document.getElementsByName("paiement[" + i + "][inputTelephone]");
+      if(nom[0].value == "" || prenom[0].value == "" || tel[0].value == ""){
+        alert("Veuillez rentrez le nom, prenom ainsi que le numéro de téléphone SVP.");
+        return false;
+      }
+      var elem = document.getElementsByName("paiement[" + i + "][inputMontant]");
+      montant = parseInt(montant) + parseInt(elem[0].value);
+      console.log('Montant');
+      console.log(montant);
+      console.log('Prix');
+      console.log(prix);
+    }
+    if(montant != prix){
+      alert("ATTENTION la somme des montants entrés ne correspond pas au prix du lot");
+      return false;
+    }
+  }
+}
+</script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the

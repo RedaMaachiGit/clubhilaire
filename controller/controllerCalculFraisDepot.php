@@ -7,7 +7,7 @@ include_once('../model/modele.php');
 include_once('../model/administration.php');
 
 class ControllerCalculFraisDepot {
-	
+
 	public static function calculFraisDepotByLot(){
 		$numeroLot = $_POST['numeroLotUnique'];
 		$lot = Lot::getLotByCoupon($numeroLot);
@@ -18,11 +18,11 @@ class ControllerCalculFraisDepot {
 			$fraisDepot = Administration::getFraisDepotByNiveau($prixLot);
 			$_SESSION['lot']=urlencode(serialize($lot));
 			$_SESSION['fraisDepot']=$fraisDepot;
-			header('location:../views/paiementLotUnique.php');	
+			header('location:../views/paiementLotUnique.php');
 		}
-		
+
 	}
-	
+
 	public static function calculFraisDepotByNumPre(){
 		$numeroPre = $_POST['numeroPre'];
 		$lot = Lot::getLotByNumPre($numeroPre);
@@ -36,7 +36,7 @@ class ControllerCalculFraisDepot {
 			header('location:../views/paiementLotUnique.php');
 		}
 	}
-	
+
 	public static function calculFraisDepotByVendeur(){
 		$email = (String) $_POST['numeroLotMultiple'];
 		$vendeur = Vendeur::getVendeurByMail($email);
@@ -52,7 +52,7 @@ class ControllerCalculFraisDepot {
 			}
 			$_SESSION['lots']=urlencode(serialize($lots));
 			$_SESSION['fraisDepot']=$totalFraisDepot;
-			header('location:../views/paiementLotUnique.php');
+			header('location:../views/paiementLotMultiple.php');
 		}
 	}
 }
