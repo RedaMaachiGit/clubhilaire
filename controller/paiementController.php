@@ -105,7 +105,7 @@ include_once('../model/caisse.php');
 					$ecriture->setcoupon($numCoupon);
 					$ecriture->save();
 				}
-				header("Location:../views/paiementOk.php?montant=".$MontantTotal);
+				header("Location:../views/paiementOk.php?montant=". $MontantTotal . "&coupon=" . $numCoupon);
 			}
 		}
 	}
