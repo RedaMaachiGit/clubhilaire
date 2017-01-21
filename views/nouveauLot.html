@@ -33,7 +33,11 @@
 
   <!-- Main Header -->
   <header class="main-header">
-
+    <script>
+      function preventBack(){window.history.forward();}
+      setTimeout("preventBack()", 0);
+      window.onunload=function(){null};
+    </script>
     <!-- Logo -->
     <a href="../index.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
