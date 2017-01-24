@@ -134,7 +134,7 @@
 
     <!-- Main content -->
     <section class="content">
-      <?php for ($j = 0; $j < $nombreLots; $j++) { $idLotActuel = $lots[$j]->getId() ?>
+      <?php for ($j = 0; $j < $nombreLots; $j++) { $coupon = $lots[$j]->getCouponNoIncr(); $idLotActuel = $lots[$j]->getId() ?>
         <div class="box">
           <div class="box-header">
             <h3 class="box-title">Ce lot numéro <?php echo $idLotActuel; ?> contient</h3>

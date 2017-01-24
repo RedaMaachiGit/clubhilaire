@@ -365,26 +365,48 @@ class Lot
 
 	public function getLotByStatus($status){
 	  $query = "SELECT * FROM lot WHERE statut=" . $status;
-	  $db = new DB();
-	  $db->connect();
-	  $conn = $db->getConnectDb();
-	  ///$res = $conn->query($query) or die(mysqli_error($conn));
+    $db = new DB();
+    $db->connect();
+    $conn = $db->getConnectDb();
     $res=mysqli_query($conn,$query);
-	  // $row = $res->fetch_row();
     $lots = array();
+    $i=0;
     while($row = mysqli_fetch_array($res)){
-    $i++;
-	  $vendeur = Vendeur::getVendeurById((int)$row[$i][6]);
-	  $acheteur = Acheteur::getAcheteurById((int)$row[$i][5]);
-	  $lot = new Lot((String)$row[$i][1],(String)$row[$i][2],(int)$row[$i][3],$vendeur);
-	  $lot->setId((int)$row[$i][0]);
-	  $lot->setStatut((String)$row[$i][4]);
-	  $lot->setAcheteur($acheteur);
-    array_push($lots, $lot);
+        $i++;
+        $vendeur = Vendeur::getVendeurById((int)$row['idVendeur']);
+        $acheteur = Acheteur::getAcheteurById((int)$row['idAcheteur']);
+        $lot = new Lot((String)$row['numeroCoupon'],(String)$row['numeroLotVendeur'],(int)$row['prixVente'],$vendeur);
+        $lot->setId((int)$row['idLot']);
+        $lot->setStatut((String)$row['statut']);
+        $lot->setAcheteur($acheteur);
+        array_push($lots, $lot);
     }
     $db->close();
-	  return $lots;
+    return $lots;
 	 }
+   
+   public static function getAllLot(){
+      $query = "SELECT * FROM lot";
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      $res=mysqli_query($conn,$query);
+      $lots = array();
+      $i=0;
+      while($row = mysqli_fetch_array($res)){
+          $i++;
+          $vendeur = Vendeur::getVendeurById((int)$row['idVendeur']);
+          $acheteur = Acheteur::getAcheteurById((int)$row['idAcheteur']);
+          $lot = new Lot((String)$row['numeroCoupon'],(String)$row['numeroLotVendeur'],(int)$row['prixVente'],$vendeur);
+          $lot->setId((int)$row['idLot']);
+          $lot->setStatut((String)$row['statut']);
+          $lot->setAcheteur($acheteur);
+          array_push($lots, $lot);
+      }
+      $db->close();
+      return $lots;
+   }
+
    public function getLotEnVente(){
      $query = "SELECT * FROM lot WHERE statut='En vente'";
      $db = new DB();
