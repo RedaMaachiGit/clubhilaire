@@ -362,7 +362,7 @@
 											<div class="form-group" id="article[<?php echo $i; ?>].taillegroup" name="article[<?php echo $i; ?>].taille">
 												<label for="inputtaille" class="col-sm-2 control-label">Taille</label>
 												<div class="col-sm-10">
-													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputtaille" value="<?php echo($articles[$i]->getTaille()) ?>" name="article[<?php echo $i; ?>][inputtaille]"  placeholder="Taille" />
+													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputtaille" value="<?php echo $articles[$i]->getTaille() ?>" name="article[<?php echo $i; ?>][inputtaille]"  placeholder="Taille" />
 												</div>
 											</div>
 
@@ -1039,7 +1039,7 @@
 	$('.autoc').on("focus", function(){
 	      $(this).autocomplete({
 	       minLength: 2,
-	       source: 'automarque.php'
+	       source: '../controller/automarque.php'
 	        });
 	});
 	</script>

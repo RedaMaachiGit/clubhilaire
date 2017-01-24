@@ -181,63 +181,78 @@
                           } else if(!empty($articles[$i]->getSurfaceVoile())){
                              $type = "Voile";
                           } else {
-                             $type = "X";}
+                             $type = "X";
+                          }
                           if(!empty($articles[$i]->getPtvMin())) {
                              $ptvmin = $articles[$i]->getPtvMin();
                           } else {
-                             $ptvmin = "X";}
+                             $ptvmin = "X";
+                          }
                           if(!empty($articles[$i]->getPtvMax())) {
                              $ptvmax = $articles[$i]->getPtvMax();
                           } else {
-                             $ptvmax = "X";}
+                             $ptvmax = "X";
+                          }
                           if(!empty($articles[$i]->getTaille())) {
                              $taille = $articles[$i]->getTaille();
                           } else {
-                             $taille = "X";}
+                             $taille = "X";
+                          }
                           if(!empty($articles[$i]->getAnnee())) {
                              $annee = $articles[$i]->getAnnee();
                           } else {
-                             $annee = "X";}
+                             $annee = "X";
+                          }
                           if(!empty($articles[$i]->getSurfaceVoile())) {
                              $surfaceVoile = $articles[$i]->getSurfaceVoile();
                           } else {
-                             $surfaceVoile = "X";}
+                             $surfaceVoile = "X";
+                          }
                           if(!empty($articles[$i]->getCouleurVoile())) {
                              $couleurVoile = $articles[$i]->getCouleurVoile();
                           } else {
-                             $couleurVoile = "X";}
+                             $couleurVoile = "X";
+                          }
                           if(!empty($articles[$i]->getHeureVoile())) {
                              $heureVoile = $articles[$i]->getHeureVoile();
                           } else {
-                             $heureVoile = "X";}
+                             $heureVoile = "X";
+                          }
                           if(!empty($articles[$i]->getCertificat())) {
                              $certificat = $articles[$i]->getCertificat();
                           } else {
-                             $certificat = "X";}
+                             $certificat = "X";
+                          }
                           if(!empty($articles[$i]->getTypeProtectionSelette())) {
                              $typeProtectionSelette = $articles[$i]->getTypeProtectionSelette();
                           } else {
-                             $typeProtectionSelette = "X";}
+                             $typeProtectionSelette = "X";
+                          }
                           if(!empty($articles[$i]->getTypeAccessoire())) {
                              $typeAccessoire = $articles[$i]->getTypeAccessoire();
                           } else {
-                             $typeAccessoire = "X";}
+                             $typeAccessoire = "X";
+                          }
                           if(!empty($articles[$i]->getMarque()->getLibelle())) {
                              $marque = $articles[$i]->getMarque()->getLibelle();
                           } else {
-                             $marque = "X";}
+                             $marque = "X";
+                          }
                           if(!empty($articles[$i]->getModele()->getLibelle())) {
                              $modele = $articles[$i]->getModele()->getLibelle();
                           } else {
-                             $modele = "X";}
+                             $modele = "X";
+                          }
                           if(!empty($articles[$i]->getHomologation())) {
                              $homologation = $articles[$i]->getHomologation();
                           } else {
-                             $homologation = "X";}
+                             $homologation = "X";
+                          }
                           if(!empty($articles[$i]->getCommentaire())) {
                              $commentaire = $articles[$i]->getCommentaire();
                           } else {
-                             $commentaire = "X";} ?>
+                             $commentaire = "X";
+                          } ?>
 
                          <td><a href="#" <?php echo "id=\"type$nombreTotalArticles\"";?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $type ?></a></td>
                          <td><a href="#" <?php echo "id=\"pTVMinimum$nombreTotalArticles\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $ptvmin ?></a></td>

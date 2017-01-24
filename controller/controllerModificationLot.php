@@ -40,7 +40,7 @@ class ControllerModificationLot {
 					$certificat = $_POST['article'][$i]['inputcertificat'];
 				}
 			} else if ($type == 1){
-				$Taille = $_POST['article'][$i]['inputtaille'];
+				$taille = $_POST['article'][$i]['inputtaille'];
 				$annee = $_POST['article'][$i]['inputannee'];
 				$typeProtectionSelette = $_POST['article'][$i]['inputprotectionSelette'];
 			} else if ($type == 2){
