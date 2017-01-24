@@ -444,7 +444,7 @@ class Article
 		$conn = $db->getConnectDb();
 		$res = $conn->query($query) or die(mysqli_error($conn));
 		$db->close();
-		$articles = Array();
+		$articles = array();
 		while ($row = $res->fetch_row()) {
       // print_r($row);
 			$lot = Lot::getLotById((int)$row[14]);
@@ -598,5 +598,14 @@ class Article
       return "Accessoire";
     }
  	 }
+
+   public static function changeColumnValue($columnName, $newValue, $primaryKey){
+    $query = "UPDATE article SET ".$columnName." ='$newValue' WHERE idArticle=".$primaryKey;
+    $db = new DB();
+ 		$db->connect();
+ 		$conn = $db->getConnectDb();
+ 		$res = $conn->query($query) or die(mysqli_error($conn));
+ 		$db->close();
+   }
 }
 ?>

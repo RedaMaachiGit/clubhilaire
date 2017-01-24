@@ -371,6 +371,7 @@ class Lot
 	  ///$res = $conn->query($query) or die(mysqli_error($conn));
     $res=mysqli_query($conn,$query);
 	  // $row = $res->fetch_row();
+    $lots = array();
     while($row = mysqli_fetch_array($res)){
     $i++;
 	  $vendeur = Vendeur::getVendeurById((int)$row[$i][6]);
@@ -379,7 +380,6 @@ class Lot
 	  $lot->setId((int)$row[$i][0]);
 	  $lot->setStatut((String)$row[$i][4]);
 	  $lot->setAcheteur($acheteur);
-    $lots = array();
     array_push($lots, $lot);
     }
     $db->close();
@@ -416,16 +416,15 @@ class Lot
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
-	  $lots = Array();
-	  while($row = $res->fetch_row())
-	  {
-		$vendeur = Vendeur::getVendeurById((int)$row[6]);
-		$acheteur = Acheteur::getAcheteurById((int)$row[5]);
-		$lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],$vendeur);
-		$lot->setId((int)$row[0]);
-		$lot->setStatut((String)$row[4]);
-		$lot->setAcheteur($acheteur);
-		array_push($lots,$lot);
+	  $lots = array();
+	  while($row = $res->fetch_row()){
+  		$vendeur = Vendeur::getVendeurById((int)$row[6]);
+  		$acheteur = Acheteur::getAcheteurById((int)$row[5]);
+  		$lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],$vendeur);
+  		$lot->setId((int)$row[0]);
+  		$lot->setStatut((String)$row[4]);
+  		$lot->setAcheteur($acheteur);
+  		array_push($lots,$lot);
 	  }
 	  return $lots;
 	}
