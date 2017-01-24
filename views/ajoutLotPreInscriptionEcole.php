@@ -239,21 +239,21 @@
                           } else {
                              $commentaire = "X";} ?>
 
-                         <td><a href="#" onclick="info(this);" class="editable-input" <?php echo "id=\"type[$nombreTotalArticles]\"";?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $type ?></a></td>
-                         <td><a href="#" <?php echo "id=\"pTVMinimum[$nombreTotalArticles]\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $ptvmin ?></a></td>
-                         <td><a href="#" <?php echo "id=\"PTVMaximum[$nombreTotalArticles]\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $ptvmax ?></a></td>
-                         <td><a href="#" <?php echo "id=\"taille[$nombreTotalArticles]\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $taille ?></a></td>
-                         <td><a href="#" <?php echo "id=\"annee[$nombreTotalArticles]\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $annee ?></a></td>
-                         <td><a href="#" <?php echo "id=\"surfaceVoile[$nombreTotalArticles]\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $surfaceVoile ?></a></td>
-                         <td><a href="#" <?php echo "id=\"couleurVoile[$nombreTotalArticles]\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $couleurVoile ?></a></td>
-                         <td><a href="#" <?php echo "id=\"heureVolesVoile[$nombreTotalArticles]\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $heureVoile ?></a></td>
-                         <td><a href="#" <?php echo "id=\"certificatRevisionVoile[$nombreTotalArticles]\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $certificat ?></a></td>
-                         <td><a href="#" <?php echo "id=\"typeProtectionSelette[$nombreTotalArticles]\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $typeProtectionSelette ?></a></td>
-                         <td><a href="#" <?php echo "id=\"typeAccessoire[$nombreTotalArticles]\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $typeAccessoire ?></a></td>
-                         <td><a href="#" <?php echo "id=\"idMarque[$nombreTotalArticles]\""; ?>  data-source="../controller/allMarques.php" data-type="select" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $marque ?></a></td>
-                         <td><a href="#" <?php echo "id=\"idModele[$nombreTotalArticles]\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $modele ?></a></td>
-                         <td><a href="#" <?php echo "id=\"homologation[$nombreTotalArticles]\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $homologation ?></a></td>
-                         <td><a href="#" <?php echo "id=\"commentaire[$nombreTotalArticles]\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $commentaire ?></a></td>
+                         <td><a href="#" <?php echo "id=\"type$nombreTotalArticles\"";?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $type ?></a></td>
+                         <td><a href="#" <?php echo "id=\"pTVMinimum$nombreTotalArticles\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $ptvmin ?></a></td>
+                         <td><a href="#" <?php echo "id=\"PTVMaximum$nombreTotalArticles\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $ptvmax ?></a></td>
+                         <td><a href="#" <?php echo "id=\"taille$nombreTotalArticles\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $taille ?></a></td>
+                         <td><a href="#" <?php echo "id=\"annee$nombreTotalArticles\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $annee ?></a></td>
+                         <td><a href="#" <?php echo "id=\"surfaceVoile$nombreTotalArticles\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $surfaceVoile ?></a></td>
+                         <td><a href="#" <?php echo "id=\"couleurVoile$nombreTotalArticles\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $couleurVoile ?></a></td>
+                         <td><a href="#" <?php echo "id=\"heureVolesVoile$nombreTotalArticles\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $heureVoile ?></a></td>
+                         <td><a href="#" <?php echo "id=\"certificatRevisionVoile$nombreTotalArticles\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $certificat ?></a></td>
+                         <td><a href="#" <?php echo "id=\"typeProtectionSelette$nombreTotalArticles\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $typeProtectionSelette ?></a></td>
+                         <td><a href="#" <?php echo "id=\"typeAccessoire$nombreTotalArticles\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $typeAccessoire ?></a></td>
+                         <td><a href="#" <?php echo "id=\"idMarque$nombreTotalArticles\""; ?>  data-source="../controller/allMarques.php" data-type="select" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $marque ?></a></td>
+                         <td><a href="#" <?php echo "id=\"idModele$nombreTotalArticles\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $modele ?></a></td>
+                         <td><a href="#" <?php echo "id=\"homologation$nombreTotalArticles\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $homologation ?></a></td>
+                         <td><a href="#" <?php echo "id=\"commentaire$nombreTotalArticles\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $commentaire ?></a></td>
 
                         </tr>
                       <?php
@@ -325,34 +325,37 @@
 </body>
 </html>
 <script>
-var info = function(dd) {
-  this.editable();
-  // alert(dd.id + ", " + dd.name);
-};
+// document.getElementById("type").editable();
+
 $.fn.editable.defaults.mode = 'inline';
+// var dds = document.getElementsByClassName("editable-input");
+// var info = function(dd) {
+//   return function() {
+//     alert(dd.id + ", " + dd.name);
+//   }
+// };
+// for (var i = 0, l = dds.length; l > i; i++)
+//   dds[i].onclick = info(dds[i]);
+
 $(document).ready(function() {
   console.log(2);
   for (i = 0; i < 2; i++) {
-    var ptvmaxgroup = document.getElementById("type[" + i + "]");
-    // ptvmaxgroup.contentEditable = "true";
-    // ptvmaxgroup.attr('contentEditable',true);
-    // find('id="type["'+ i + '"]"').end();
-    // ptvmaxgroup.editable();
-    $("#type[" + i + "]").editable();
-    $("#pTVMinimum[" + i + "]").editable();
-    $("#PTVMaximum[" + i + "]").editable();
-    $("#taille[" + i + "]").editable();
-    $("#annee[" + i + "]").editable();
-    $("#surfaceVoile[" + i + "]").editable();
-    $("#couleurVoile[" + i + "]").editable();
-    $("#heureVolesVoile[" + i + "]").editable();
-    $("#certificatRevisionVoile[" + i + "]").editable();
-    $("#typeProtectionSelette[" + i + "]").editable();
-    $("#typeAccessoire[" + i + "]").editable();
-    $("#idMarque[" + i + "]").editable();
-    $("#idModele[" + i + "]").editable();
-    $("#homologation[" + i + "]").editable();
-    $("#commentaire[" + i + "]").editable();
+    $("#type" + i).editable();
+    $("#pTVMinimum" + i).editable();
+    $("#pTVMinimum" + i).editable();
+    $("#PTVMaximum" + i).editable();
+    $("#taille" + i).editable();
+    $("#annee" + i).editable();
+    $("#surfaceVoile" + i).editable();
+    $("#couleurVoile" + i).editable();
+    $("#heureVolesVoile" + i).editable();
+    $("#certificatRevisionVoile" + i).editable();
+    $("#typeProtectionSelette" + i).editable();
+    $("#typeAccessoire" + i).editable();
+    $("#idMarque" + i).editable();
+    $("#idModele" + i).editable();
+    $("#homologation" + i).editable();
+    $("#commentaire" + i).editable();
   }
 });
 </script>
