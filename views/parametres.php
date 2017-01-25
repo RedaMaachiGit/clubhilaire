@@ -1,9 +1,13 @@
+<?php
+  session_start();
+  $params = $_SESSION['params'];
+?>
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Ajout lot particulier Pre Inscription</title>
+  <title>Ajout lot</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -104,50 +108,63 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Ajout Lot Particulier Pre Inscription
+        Modification de lots
+        <small>Modifiez avec précaution</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="index.html"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Saisie numéro PreInscription</li>
+        <li class="active">Saisie numéro lot</li>
       </ol>
     </section>
 
     <!-- Main content -->
     <section class="content">
-      <!-- Form Element sizes -->
+
       <div class="box box-success">
         <div class="box-header with-border">
-          <h3 class="box-title">Veuillez saisir le numéro de préInscription</h3>
+          <h3 class="box-title">Veuillez saisir le numéro du lot</h3>
         </div>
-        <form id="numeroLotForm" method="POST" action="../controller/controllerRechercheLotPreInscription.php" class="form-horizontal">
+        <form id="numeroLotForm" method="POST" action="../controller/controllerParametres.php" class="form-horizontal">
+          <?php for($i=0;$i<sizeof($params);$i++){ ?>
           <div class="box-body">
-            <input class="form-control input-lg" name="numPre" id="numPre" type="text" placeholder="Numéro preInscription">
-      			<input class="form-control input-lg" name="formEnvoie" type="hidden" id="formEnvoie" value="preInscriptionParticulier">
-            <div class="box-footer">
-              <button type="submit" value="Submit" class="btn btn-info center-block">Valider</button>
+            <div class="col-xs-6">
+              <label class="control-label" for="fraisDepotAdmin">Entrez les frais de dépôt</label>
+              <div class="input-group">
+                <input class="form-control input-lg" value="<?php echo $params[$i]["fraisDepotAdmin"] ?>" name="fraisDepotAdmin<?php echo $i?>" id="fraisDepotAdmin<?php echo $i?>" type="text" placeholder="Frais depot admin">
+              </div>
             </div>
+            <div class="col-xs-6">
+              <label class="control-label" for="niveauDepotAdmin">Entrez le niveau de dépôt correspodant</label>
+              <div class="input-group">
+                <input class="form-control input-lg" value="<?php echo $params[$i]["niveauDepotAdmin"] ?>" name="niveauDepotAdmin<?php echo $i?>" id="niveauDepotAdmin<?php echo $i?>" type="text" placeholder="Niveau depot admin">
+                <input class="form-control input-lg" name="nombreDeParams" type="hidden" id="nombreDeParams" value="<?php echo sizeof($params) ?>">
+              </div>
+            </div>
+          </div>
+          <?php } ?>
+          <div class="box-body">
+            <div class="col-xs-6">
+              <label class="control-label" for="fraisDepotAdmin">Entrez les frais de dépôt</label>
+              <div class="input-group">
+                <input class="form-control input-lg" name="newFraisDepotAdmin" id="newFraisDepotAdmin" type="text" placeholder="Frais depot admin">
+              </div>
+            </div>
+            <div class="col-xs-6">
+              <label class="control-label" for="niveauDepotAdmin">Entrez le niveau de dépôt correspodant</label>
+              <div class="input-group">
+                <input class="form-control input-lg" name="newNiveauDepotAdmin" id="newNiveauDepotAdmin" type="text" placeholder="Niveau depot admin">
+                <input class="form-control input-lg" name="formEnvoie" type="hidden" id="formEnvoie" value="changementParams">
+              </div>
+            </div>
+          </div>
+          <div class="box-footer">
+            <button type="submit" value="Submit" class="btn btn-info center-block">Valider</button>
           </div>
         </form>
         <!-- /.box-body -->
       </div>
-      <!-- /.box -->
-	  <!-- Form Element sizes -->
-      <div class="box box-success">
-        <div class="box-header with-border">
-          <h3 class="box-title">Veuillez saisir l'addresse de preInscription</h3>
-        </div>
-        <form id="numeroLotForm" method="POST" action="../controller/controllerRechercheLotPreInscription.php" class="form-horizontal">
-          <div class="box-body">
-            <input class="form-control input-lg" name="adressePre" id="adressePre" type="text" placeholder="Adresse preInscription">
-			<input class="form-control input-lg" name="formEnvoie" type="hidden" id="formEnvoie" value="preInscriptionEcole">
-            <div class="box-footer">
-              <button type="submit" value="Submit" class="btn btn-info center-block">Valider</button>
-            </div>
-          </div>
-        </form>
-        <!-- /.box-body -->
-      </div>
-      <!-- /.box -->
+
+
     </section>
     <!-- /.content -->
 

@@ -347,6 +347,23 @@ class Caisse
      $db->close();
      return $paiements;
     }
+
+    public static function getMontantPayeParTypePaiement($typeDePaiement){
+      $query = "SELECT * FROM caisse WHERE typePaiement=\"" .$typeDePaiement."\"";
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      $res=mysqli_query($conn,$query);
+      $i=0;
+      $montantTotal = 0;
+      $paiements = array();
+      while($row = mysqli_fetch_array($res)){
+      $i++;
+      $montantTotal = $montantTotal + (int)$row['montant'];
+      }
+      $db->close();
+      return $montantTotal;
+    }
 }
 
 ?>

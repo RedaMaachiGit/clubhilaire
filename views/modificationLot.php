@@ -254,13 +254,38 @@
 				              <div class="col-sm-12 form-group" name="article[<?php echo $i; ?>].homologationGroup" id="article[<?php echo $i; ?>].homologationGroup">
 				                  <label for="inputtypehomologation" class="col-sm-2 control-label">Type d'homologation</label>
 				                  <div class="col-sm-10">
+														<?php $typehomologation = $articles[$i]->getHomologation(); ?>
 				                    <select class="form-control" id="article[<?php echo $i; ?>].inputtypehomologation" name="article[<?php echo $i; ?>][typehomologation]" >
-				                      <option value="EN A / DHV LTF-1">EN A / DHV LTF-1 </option>
-				                      <option value="EN B / DHV LTF 1-2">EN B / DHV LTF 1-2 </option>
-				                      <option value="EN C / DHV LTF 2">EN C / DHV LTF 2 </option>
-				                      <option value="EN D / DHV LTF 2-3">EN D / DHV LTF 2-3 </option>
-				                      <option value="NON HOMOLOGUE">NON HOMOLOGUE </option>
-				                      <option value="INCONNUE">INCONNUE</option>
+															<?php if(strcmp($typehomologation, "EN A / DHV LTF-1") == 0) { ?>
+																<option value="EN A / DHV LTF-1" selected="selected">EN A / DHV LTF-1 </option>
+															<?php } else { ?>
+																<option value="EN A / DHV LTF-1">EN A / DHV LTF-1 </option>
+															<?php } ?>
+															<?php if(strcmp($typehomologation, "EN B / DHV LTF 1-2") == 0) { ?>
+																<option value="EN B / DHV LTF 1-2" selected="selected">EN B / DHV LTF 1-2</option>
+															<?php } else { ?>
+																<option value="EN B / DHV LTF 1-2">EN B / DHV LTF 1-2 </option>
+															<?php } ?>
+															<?php if(strcmp($typehomologation, "EN C / DHV LTF 2") == 0) { ?>
+																<option value="EN C / DHV LTF 2" selected="selected">EN C / DHV LTF 2</option>
+															<?php } else { ?>
+																<option value="EN C / DHV LTF 2">EN C / DHV LTF 2 </option>
+															<?php } ?>
+															<?php if(strcmp($typehomologation, "EN D / DHV LTF 2-3") == 0) { ?>
+																<option value="EN D / DHV LTF 2-3" selected="selected">EN D / DHV LTF 2-3</option>
+															<?php } else { ?>
+																<option value="EN D / DHV LTF 2-3">EN D / DHV LTF 2-3 </option>
+															<?php } ?>
+															<?php if(strcmp($typehomologation, "NON HOMOLOGUE") == 0) { ?>
+																<option value="NON HOMOLOGUE" selected="selected">NON HOMOLOGUE</option>
+															<?php } else { ?>
+																<option value="NON HOMOLOGUE">NON HOMOLOGUE </option>
+															<?php } ?>
+															<?php if(strcmp($typehomologation, "INCONNUE") == 0) { ?>
+																<option value="INCONNUE" selected="selected">INCONNUE</option>
+															<?php } else { ?>
+																<option value="INCONNUE">INCONNUE </option>
+															<?php } ?>
 				                    </select>
 				                  </div>
 				              </div>

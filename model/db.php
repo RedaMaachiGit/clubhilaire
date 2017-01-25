@@ -5,7 +5,7 @@
   private $_servername = "localhost";
   private $_username = "root";
   private $_password = "root";
-  private $_dbname = "clubhilaire";
+  private $_dbname = "clubhilaire1";
   private $_port = "8889";
   private $_connectDB;
 
