@@ -43,7 +43,6 @@ class PaiementController {
 						$nouveauFond = $ancienFond + $Montant;
 						$Numero = $_POST['paiement'][$i]['inputNumero'];
 						$Commentaire = $_POST['paiement'][$i]['inputCommentaire'];
-
 						$ecriture = Caisse::payerLotMultiple($nombreLots, $journee,
 												$nouveauFond,"Cheque",$Montant,"Caisse Club Hilaire",
 												$Nom,$Prenom,$Telephone,
@@ -100,6 +99,8 @@ class PaiementController {
 						$journee = date('d/m/Y');
 						$ancienFond = Caisse::getLastFond();
 						$nouveauFond = $ancienFond + $Montant;
+						$Numero = $_POST['paiement'][$i]['inputNumero'];
+						$Commentaire = $_POST['paiement'][$i]['inputCommentaire'];
 						$ecriture = Caisse::payerLotMultiple($nombreLots, $journee,
 												$nouveauFond,"Cheque",$Montant,"Caisse Club Hilaire",
 												$Nom,$Prenom,$Telephone,
@@ -147,7 +148,8 @@ class PaiementController {
 						$nouveauFond = $ancienFond + $Montant;
 						$ecriture = new Caisse($journee,$nouveauFond,"CB",$Montant,
 						"Caisse Club Hilaire",$Nom,$Prenom,$Telephone,
-						"Vente de lot","Pas de numéro","Pas de commentaire");
+						"Vente de lot","SQL","Pas de numéro","Pas de commentaire");
+						$lot->updateStatut("Vendu");
 						$ecriture->setLot($lot);
 						$ecriture->setcoupon($numCoupon);
 						$ecriture->save();
@@ -155,9 +157,12 @@ class PaiementController {
 						$journee = date('d/m/Y');
 						$ancienFond = Caisse::getLastFond();
 						$nouveauFond = $ancienFond + $Montant;
+						$Numero = $_POST['paiement'][$i]['inputNumero'];
+						$Commentaire = $_POST['paiement'][$i]['inputCommentaire'];
 						$ecriture = new Caisse($journee,$nouveauFond,"Cheque",$Montant,
 						"Caisse Club Hilaire",$Nom,$Prenom,$Telephone,
-						"Vente de lot",$Numero,$Commentaire);
+						"Vente de lot","SQL",$Numero,$Commentaire);
+						$lot->updateStatut("Vendu");
 						$ecriture->setLot($lot);
 						$ecriture->setcoupon($numCoupon);
 						$ecriture->save();
@@ -167,7 +172,8 @@ class PaiementController {
 						$nouveauFond = $ancienFond + $Montant;
 						$ecriture = new Caisse($journee,$nouveauFond,"Liquide",$Montant,
 						"Caisse Club Hilaire",$Nom,$Prenom,$Telephone,
-						"Vente de lot","Pas de numéro","Pas de commentaire");
+						"Vente de lot","SQL","Pas de numéro","Pas de commentaire");
+						$lot->updateStatut("Vendu");
 						$ecriture->setLot($lot);
 						$ecriture->setcoupon($numCoupon);
 						$ecriture->save();
@@ -179,9 +185,10 @@ class PaiementController {
 
 
 }
-
-	if ($_POST['multiple']=="multiple"){
-		PaiementController::payerFraisDeDepot();
+	if(isset($_POST['multiple'])) {
+		if ($_POST['multiple']=="multiple"){
+			PaiementController::payerFraisDeDepot();
+		}
 	}
 	else if (isset($_POST['paiementFraisDepotUnique'])){
 		PaiementController::payerFraisDeDepotUnique();

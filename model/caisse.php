@@ -365,6 +365,41 @@ class Caisse
       $db->close();
       return $montantTotal;
     }
+
+    public static function getResultat(){
+      $query = "SELECT * FROM caisse WHERE typeTransaction = \"Paiement de frais de dépôt\"";
+      $query1 = "SELECT * FROM caisse WHERE typeTransaction = \"Vente de lots\"";
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      $res=mysqli_query($conn,$query);
+      $res1=mysqli_query($conn,$query1);
+      $i=0;
+      $j=0;
+      $montantFraisDepot = 0;
+      $montantVentes = 0;
+      while($row = mysqli_fetch_array($res)){
+        $i++;
+        $montantFraisDepot = $montantFraisDepot + (int)$row['montant'];
+      }
+      while($row1 = mysqli_fetch_array($res1)){
+        $j++;
+        $montantVentes = $montantVentes + (int)$row1['montant'];
+      }
+      $db->close();
+      return $montantFraisDepot - $montantVentes;
+    }
+
+    public static function getNombreLotVendu(){
+      $query = "SELECT * FROM lot WHERE statut = \"Vendu\"";
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      $res=mysqli_query($conn,$query);
+      $rowCount = $res->num_rows;
+      $db->close();
+      return $rowCount;
+    }
 }
 
 ?>

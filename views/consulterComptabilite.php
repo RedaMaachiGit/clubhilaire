@@ -6,6 +6,8 @@
   $numberOfOperations = $_SESSION['numberOfOperations'];
   $operations = $_SESSION['operations'];
   $fondDeCaisse = $_SESSION['fond'];
+  $resultat = $_SESSION['resultat'];
+  $nombreLotVendu = $_SESSION['nombreLotVendu'];
   $CB = $_SESSION['CB'];
   $Liquide = $_SESSION['Liquide'];
   $Cheque = $_SESSION['Cheque'];
@@ -159,7 +161,7 @@
 
             <div class="info-box-content">
               <span class="info-box-text">Résultat</span>
-              <span class="info-box-number">760</span>
+              <span class="info-box-number"><?php echo $resultat; ?></span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -170,8 +172,8 @@
               <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">Sales</span>
-                <span class="info-box-number">760</span>
+                <span class="info-box-text">Nombre de lot vendus</span>
+                <span class="info-box-number"><?php echo $nombreLotVendu; ?></span>
               </div>
               <!-- /.info-box-content -->
             </div>

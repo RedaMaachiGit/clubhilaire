@@ -503,7 +503,16 @@ class Lot
 
 	public function updateStatut($statut){
 	  $id = $this->getId();
-	  $query = "UPDATE lot SET statut ='$statut' WHERE idLot=".$id;
+    if(strcmp($statur, "Vendu")){
+      $query = "UPDATE lot SET statut =\"Vendu\" WHERE idLot=".$id;
+    } else if(strcmp($statur, "En préparation")){
+      $query = "UPDATE lot SET statut =\"En préparation\" WHERE idLot=".$id;
+    } else if(strcmp($statur, "Restitué")){
+      $query = "UPDATE lot SET statut =\"Restitué\" WHERE idLot=".$id;
+    } else if(strcmp($statur, "En vente")){
+      $query = "UPDATE lot SET statut =\"En vente\" WHERE idLot=".$id;
+    }
+
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();

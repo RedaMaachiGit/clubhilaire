@@ -17,9 +17,13 @@
 			$numberOfOperations = Caisse::getNumberOfOperations();
 			$operations = Caisse::getCompta();
 			$fondDeCaisse = Caisse::getLastFond();
+			$resultat = Caisse::getResultat();
+			$nombreLotVendu = Caisse::getNombreLotVendu();
 			$_SESSION['numberOfOperations']= $numberOfOperations;
 			$_SESSION['operations']= $operations;
 			$_SESSION['fond']= $fondDeCaisse;
+			$_SESSION['resultat']= $resultat;
+			$_SESSION['nombreLotVendu']= $nombreLotVendu;
 			$_SESSION['CB']= Caisse::getMontantPayeParTypePaiement("CB");
 			$_SESSION['Liquide']= Caisse::getMontantPayeParTypePaiement("Liquide");
 			$_SESSION['Cheque']= Caisse::getMontantPayeParTypePaiement("Cheque");
