@@ -38,10 +38,11 @@ class ControllerImportEcole {
 
 		$ligne = 14;
 		$colonne = "B";
-		$numeroLotVendeur = 1;
 		while ($objPHPExcel->getActiveSheet()->getCell($colonne.$ligne)!="") {
-			$prix = $objPHPExcel->getActiveSheet()->getCell($colonne.$ligne);
-			$lot = new Lot(1,$numeroLotVendeur,$prix,$vendeur);
+			$prix = $objPHPExcel->getActiveSheet()->getCell("B".$ligne);
+			$numeroLotVendeur = $objPHPExcel->getActiveSheet()->getCell("A".$ligne);
+			$numeroLotVendeur = $pieces = explode(" ", $numeroLotVendeur);
+			$lot = new Lot(1,$numeroLotVendeur[1],$prix,$vendeur);
 			$lot->savePreInscription();
 			$lot->updateStatut("En preInscription");
 			$numeroLotVendeur++;
@@ -87,11 +88,6 @@ class ControllerImportEcole {
 				$commentaire = htmlspecialchars($objPHPExcel->getActiveSheet()->getCell($colonne.$ligne));
 				$colonne++;
 				$colonne++;
-				echo $commentaire;
-				echo "   nouvelle article";
-				echo "<br>";
-				echo " colonne :"; echo $colonne;
-				echo "<br>";
 				$surface=0;
 				
 				$marqueArticle = ControllerImportEcole::ajoutMarque($marque);
