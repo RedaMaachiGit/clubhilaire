@@ -36,7 +36,7 @@ class Administration
 	public Static function addFraisDepot($niveau, $frais){
 	  $query = "INSERT INTO fraisdepotadmin (idDepotAdmin,niveauDepotAdmin,fraisDepotAdmin) VALUES ('','".$niveau."','".$frais."')";
 	  $db = new DB();
-	  $db->connect();
+	  $db->connect();	
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();

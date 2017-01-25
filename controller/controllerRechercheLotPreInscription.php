@@ -31,7 +31,7 @@ class ControllerRechercheLotPreInscritpion {
 				header('location:../views/rechercheLotPreInscriptionError.html');
 			}else{
 				$lots = Lot::getLotByVendeur($vendeur->getId());
-				$_SESSION['lot']=urlencode(serialize($lots));
+				$_SESSION['lots']=urlencode(serialize($lots));
 				header('location:../views/ajoutLotPreInscriptionEcole.php');
 			}
 		}

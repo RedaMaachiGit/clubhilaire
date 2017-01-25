@@ -384,7 +384,7 @@ class Lot
     $db->close();
     return $lots;
 	 }
-   
+
    public static function getAllLot(){
       $query = "SELECT * FROM lot";
       $db = new DB();

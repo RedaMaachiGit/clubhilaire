@@ -25,7 +25,7 @@ class Caisse
 /////CONSTRUCTEUR////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	 public function __construct($journee,$fondecaisse,$typePaiement,$montant,$beneficiare,$nomEmetteur,$prenomEmetteur,$telephoneEmetteur,$typeTransaction,$numero,$commentaire){
+	 public function __construct($journee,$fondecaisse,$typePaiement,$montant,$beneficiare,$nomEmetteur,$prenomEmetteur,$telephoneEmetteur,$typeTransaction,$date,$numero,$commentaire){
     $this->setJournee($journee);
     $this->setFonDeCaisse($fondecaisse);
     $this->setTypePaiement($typePaiement);
@@ -35,6 +35,7 @@ class Caisse
 		$this->settelephoneEmetteur($telephoneEmetteur);
     $this->settypeTransaction($typeTransaction);
     $this->setBeneficiaire($beneficiare);
+    $this->setdate($date);
     $this->setNumero($numero);
 		$this->setCommentaire($commentaire);
 	}
@@ -122,7 +123,7 @@ class Caisse
   }
 
   public function setTypePaiement($typePaiement){
-  $this->_typePaiement = $typePaiement;
+  return $this->_typePaiement = $typePaiement;
   }
 
   public function getMontant(){
@@ -130,7 +131,7 @@ class Caisse
   }
 
   public function setMontant($montant){
-  $this->_montant = $montant;
+  return $this->_montant = $montant;
   }
 
   public function getNom(){
@@ -138,7 +139,7 @@ class Caisse
   }
 
   public function setNom($nomEmetteur){
-  $this->_nomEmetteur = $nomEmetteur;
+  return $this->_nomEmetteur = $nomEmetteur;
   }
 
   public function getPrenom(){
@@ -146,7 +147,7 @@ class Caisse
   }
 
   public function setPrenom($prenomEmetteur){
-  $this->_prenomEmetteur = $prenomEmetteur;
+  return $this->_prenomEmetteur = $prenomEmetteur;
   }
 
   public function gettelephoneEmetteur(){
@@ -154,7 +155,7 @@ class Caisse
   }
 
   public function settelephoneEmetteur($telephoneEmetteur){
-  $this->_telephoneEmetteur = $telephoneEmetteur;
+  return $this->_telephoneEmetteur = $telephoneEmetteur;
   }
 
   public function getNumero(){
@@ -162,7 +163,7 @@ class Caisse
   }
 
   public function setNumero($numero){
-  $this->_numero = $numero;
+  return $this->_numero = $numero;
   }
 
   public function getCommentaire(){
@@ -170,7 +171,7 @@ class Caisse
   }
 
   public function setCommentaire($commentaire){
-  $this->_commentaire = $commentaire;
+  return $this->_commentaire = $commentaire;
   }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////

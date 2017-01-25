@@ -5,7 +5,6 @@
   include_once('../model/article.php');
   include_once('../model/modele.php');
   $lots= unserialize(urldecode(($_SESSION['lots'])));
-
   $fraisDepot = $_SESSION['fraisDepot'];
   $_SESSION['lots']=urlencode(serialize($lots));
   $_SESSION['fraisDepot'] = $fraisDepot;
@@ -21,7 +20,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Vendre un lot</title>
+  <title>Valider un lot</title>
 
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -123,8 +122,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Paiement du dépôt pour les lots suivants <?php //for($i=0; $i<count($lots)-1 ; $i++){ echo ("   ".$lots[$i]->getCoupon());}?>
-        <small>Vous êtes sur le point de recevoir le paiement pour plusieurs lots</small>
+        Validation des lots suivants
+        <!-- <small>Vous êtes sur le point de recevoir le paiement pour plusieurs lots</small> -->
       </h1>
       <ol class="breadcrumb">
         <li><a href="index.html"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -140,6 +139,13 @@
         <div class="box">
           <div class="box-header">
             <h3 class="box-title">Ce lot numéro <?php echo $coupon; ?> contient</h3>
+          </div>
+          <div class="box-header">
+          <form id="validation" method="POST" action="../controller/controllerValidationLot.php" class="form-horizontal">
+            <input type="checkbox" name="validation<?php echo $j ?>" value="<?php echo $coupon."valide" ?>" checked="checked"> Valider ce lot?<br>
+            <input type="hidden" name="coupon<?php echo $j ?>" id="coupon" value="<?php echo $coupon ?>">
+            <input type="hidden" name="nombreLot" id="nombreLot" value="<?php echo $nombreLots ?>">
+            <small>Décochez cette case si vous souhaitez NE PAS valider ce lot</small>
           </div>
 
 
@@ -303,6 +309,10 @@
           <!-- /.box-body -->
         </div>
       <?php } ?>
+      <div class="box-footer">
+        <button type="submit" value="Submit" class="btn btn-info center-block">Valider</button>
+      </div>
+    </form>
 
     </section>
     <!-- /.content -->

@@ -206,6 +206,7 @@
                           <th>Telephone emetteur</th>
                           <th>Type transaction</th>
                           <th>Date</th>
+                          <th>Numero</th>
                           <th>Commentaire</th>
                         </tr>
                         </thead>
@@ -223,6 +224,7 @@
                           <td><?php echo $operations[$i]->getPrenom(); ?></td>
                           <td><?php echo $operations[$i]->gettelephoneEmetteur(); ?></td>
                           <td><?php echo $operations[$i]->gettypeTransaction(); ?></td>
+                          <td><?php echo $operations[$i]->getdate(); ?></td>
                           <td><?php echo $operations[$i]->getNumero(); ?></td>
                           <td><?php echo $operations[$i]->getCommentaire(); ?></td>
                         </tr>
@@ -241,6 +243,7 @@
                           <th>Telephone emetteur</th>
                           <th>Type transaction</th>
                           <th>Date</th>
+                          <th>Numero</th>
                           <th>Commentaire</th>
                         </tr>
                         </tfoot>

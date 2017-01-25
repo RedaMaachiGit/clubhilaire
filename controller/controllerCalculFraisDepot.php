@@ -16,6 +16,7 @@ class ControllerCalculFraisDepot {
 		}else{
 			$prixLot = $lot->getPrix();
 			$fraisDepot = Administration::getFraisDepotByNiveau($prixLot);
+			session_unset();
 			$_SESSION['lot']=urlencode(serialize($lot));
 			$_SESSION['fraisDepot']=$fraisDepot;
 			header('location:../views/paiementLotUnique.php');
@@ -31,6 +32,7 @@ class ControllerCalculFraisDepot {
 		}else{
 			$prixLot = $lot->getPrix();
 			$fraisDepot = Administration::getFraisDepotByNiveau($prixLot);
+			session_unset();
 			$_SESSION['lot']=urlencode(serialize($lot));
 			$_SESSION['fraisDepot']=$fraisDepot;
 			header('location:../views/paiementLotUnique.php');
@@ -43,24 +45,26 @@ class ControllerCalculFraisDepot {
 		if($vendeur==null){
 			header('location:../views/paiementFraisDepotError.html');
 		}else{
-			$lots = Lot::getLotEnPreparationByVendeur($vendeur->getId());
-			$totalFraisDepot=0;
+			$idVendeur = $vendeur->getId();
+			$lots = Lot::getLotEnPreparationByVendeur($idVendeur);
+			$totalFraisDepot = 0;
 			for ($i =0 ; $i <= count($lots)-1; $i++) {
 				$prixLot = $lots[$i]->getPrix();
 				$fraisDepotLot = Administration::getFraisDepotByNiveau($prixLot);
 				$totalFraisDepot = $totalFraisDepot + $fraisDepotLot;
 			}
-			$_SESSION['lots']=urlencode(serialize($lots));
-			$_SESSION['fraisDepot']=$totalFraisDepot;
+			session_unset();
+			$_SESSION['lots'] = urlencode(serialize($lots));
+			$_SESSION['fraisDepot'] = $totalFraisDepot;
 			header('location:../views/paiementLotMultiple.php');
 		}
 	}
 }
 	if($_POST['formEnvoie']=="unique"){
 		ControllerCalculFraisDepot::calculFraisDepotByLot();
-	}else if($_POST['formEnvoie']=="uniquePre"){
+	} else if($_POST['formEnvoie']=="uniquePre"){
 		ControllerCalculFraisDepot::calculFraisDepotByNumPre();
-	}else{
+	} else if($_POST['formEnvoie']=="multiple"){
 		ControllerCalculFraisDepot::calculFraisDepotByVendeur();
 	}
 

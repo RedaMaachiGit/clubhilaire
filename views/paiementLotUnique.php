@@ -1,12 +1,11 @@
 <?php
-session_start();
-include_once('../model/vendeur.php');
-include_once('../model/lot.php');
-include_once('../model/article.php');
-include_once('../model/modele.php');
-  //echo("Numero lot: " . $_POST['numeroLot'] . "<br />\n"); //TRACE
-  $lot= unserialize(urldecode((String)$_SESSION['lot']));
-  $articles = unserialize(urldecode($_SESSION['articles']));
+  session_start();
+  include_once('../model/vendeur.php');
+  include_once('../model/lot.php');
+  include_once('../model/article.php');
+  include_once('../model/modele.php');
+  $lot= (String)$_SESSION['lot'];
+  $articles = $_SESSION['articles'];
   $fraisDepot =$_SESSION['fraisDepot'];
   $nombreArticles = sizeof($articles);
   $vendeur = $lot->getVendeur();
@@ -231,6 +230,7 @@ include_once('../model/modele.php');
               <label for="inputNom" class="col-sm-2 control-label">Nom</label>
               <div class="col-sm-10">
                 <input type="text" class="form-control" id="inputNom" name="paiement[0][inputNom]" value="" placeholder="Nom" />
+                <input class="form-control input-lg" name="paiementFraisDepotUnique" type="hidden" id="paiementFraisDepotUnique" value="paiementFraisDepotUnique">
               </div>
             </div>
 
@@ -284,64 +284,6 @@ include_once('../model/modele.php');
       </div>
     </section>
     <!-- /.content -->
-
-    <div class="col-sm-12 form-group hide" id="paiementTemplate">
-
-      <div class="col-sm-12 form-group">
-          <label>Type d'paiement</label>
-          <select class="col-sm-5 form-control" id="inputtypedepaiement" name="typedepaiement" data-index='0' onchange="handleTypeChange(this)">
-            <option value="0">Carte Bancaire</option>
-            <option value="1">Chèque</option>
-            <option value="2">Liquide</option>
-          </select>
-      </div>
-
-      <div class="form-group" name="nomGroup"  id="nomGroup">
-        <label for="inputNom" class="col-sm-2 control-label">Nom</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="inputNom" name="inputNom" value="" placeholder="Nom" />
-        </div>
-      </div>
-
-      <div class="form-group" name="prenomGroup" id="prenomGroup">
-        <label for="inputPrenom" class="col-sm-2 control-label">Prénom</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="inputPrenom" name="inputPrenom" value="" placeholder="Prénom" />
-        </div>
-      </div>
-
-      <div class="form-group" name="telephone" id="telephoneGroup">
-        <label for="inputTelephone" class="col-sm-2 control-label">Téléphone</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="inputTelephone" name="inputTelephone" value="" placeholder="Téléphone" />
-        </div>
-      </div>
-
-      <div class="form-group" name="numero" id="numeroGroup" style="display:none">
-        <label for="inputTelephone" class="col-sm-2 control-label">Numéro</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="inputNumero" name="inputNumero" value="" placeholder="Numéro" />
-        </div>
-      </div>
-
-      <div class="form-group" name="commentaire" id="commentaireGroup" style="display:none">
-        <label for="inputCommentaire" class="col-sm-2 control-label">Commentaire</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="inputCommentaire" name="inputCommentaire" value="" placeholder="Commentaire" />
-        </div>
-      </div>
-
-      <div class="form-group" name="montant" id="montantGroup">
-        <label for="inputMontant" class="col-sm-2 control-label">Montant</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="inputMontant" name="inputMontant" value="" placeholder="Montant" />
-        </div>
-      </div>
-
-      <div class="col-xs-1">
-        <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
-      </div>
-    </div>
 
 
 
@@ -484,146 +426,6 @@ var handleTypeChange = function(e) {
     commentairegroup.style.display = "none";
   }
 }
-$(document).ready(function() {
-
-    var marqueValidators = {
-            row: '.col-xs-4',   // The title is placed inside a <div class="col-xs-4"> element
-            validators: {
-                notEmpty: {
-                    message: 'La marque est requise'
-                }
-            }
-        },
-        modeleValidators = {
-            row: '.col-xs-4',
-            validators: {
-                notEmpty: {
-                    message: 'Le modele est requis'
-                }
-            }
-        }
-
-    $('#paiementForm')
-        // .formValidation({
-        //     framework: 'bootstrap',
-        //     icon: {
-        //         valid: 'glyphicon glyphicon-ok',
-        //         invalid: 'glyphicon glyphicon-remove',
-        //         validating: 'glyphicon glyphicon-refresh'
-        //     },
-        //     fields: {
-        //         'paiement[0].marque': marqueValidators,
-        //         'paiement[0].modele': modeleValidators
-        //         'paiement[0].ptvmax': ptvmaxValidators
-        //         'paiement[0].ptvmin': ptvminValidators
-        //         'paiement[0].taille': tailleValidators
-        //         'paiement[0].surface': surfaceValidators
-        //         'paiement[0].couleur': couleurValidators
-        //         'paiement[0].heure': heureValidators
-        //         'paiement[0].typeaccessoire': typeaccessoireValidators
-        //         'paiement[0].certificat': certificatValidators
-        //     }
-        // })
-
-        // Add button click handler
-        .on('click', '.addButton', function() {
-            console.log('TRACE');
-            paiementIndex++;
-            console.log(paiementIndex);
-            document.getElementById("index").value = paiementIndex;
-            console.log(document.getElementById("index").value);
-            var $form = $('#paiementForm .box-body');
-            var $template = $('#paiementTemplate'),
-                $clone    = $template
-                                .clone()
-                                .removeClass('hide')
-                                .removeAttr('id')
-                                .attr('data-paiement-index', paiementIndex);
-            $form.append($clone);
-
-            // Update the name attributes
-            $clone
-                .find('[name="typedepaiement"]').attr('name', 'paiement[' + paiementIndex + '][typedepaiement]').end()
-                .find('[name="nom"]').attr('name', 'paiement[' + paiementIndex + '].nom').end()
-                .find('[name="prenom"]').attr('name', 'paiement[' + paiementIndex + '].prenom').end()
-                .find('[name="telephone"]').attr('name', 'paiement[' + paiementIndex + '].telephone').end()
-                .find('[name="numero"]').attr('name', 'paiement[' + paiementIndex + '].numero').end()
-                .find('[name="commentaire"]').attr('name', 'paiement[' + paiementIndex + '].commentaire').end()
-                .find('[name="montant"]').attr('name', 'paiement[' + paiementIndex + '].montant').end()
-                // Ici on clone les identifiants
-                .find('[id="inputtypedepaiement"]').attr('data-index', '' + paiementIndex).end()
-                .find('[id="inputtypedepaiement"]').attr('id', 'paiement[' + paiementIndex + '].inputtypedepaiement').end()
-                .find('[id="nomGroup"]').attr('id', 'paiement[' + paiementIndex + '].nomGroup').end()
-                .find('[id="prenomGroup"]').attr('id', 'paiement[' + paiementIndex + '].prenomGroup').end()
-                .find('[id="telephoneGroup"]').attr('id', 'paiement[' + paiementIndex + '].telephoneGroup').end()
-                .find('[id="numeroGroup"]').attr('id', 'paiement[' + paiementIndex + '].numeroGroup').end()
-                .find('[id="commentaireGroup"]').attr('id', 'paiement[' + paiementIndex + '].commentaireGroup').end()
-                .find('[id="montantGroup"]').attr('id', 'paiement[' + paiementIndex + '].montantGroup').end()
-
-                .find('[name="inputNom"]').attr('name', 'paiement[' + paiementIndex + '][inputNom]').end()
-                .find('[name="inputPrenom"]').attr('name', 'paiement[' + paiementIndex + '][inputPrenom]').end()
-                .find('[name="inputTelephone"]').attr('name', 'paiement[' + paiementIndex + '][inputTelephone]').end()
-                .find('[name="inputNumero"]').attr('name', 'paiement[' + paiementIndex + '][inputNumero]').end()
-                .find('[name="inputCommentaire"]').attr('name', 'paiement[' + paiementIndex + '][inputCommentaire]').end()
-                .find('[name="inputMontant"]').attr('name', 'paiement[' + paiementIndex + '][inputMontant]').end()
-
-                .find('[id="inputtypedepaiement"]').attr('id', 'paiement[' + paiementIndex + '][inputtypedepaiement]').end()
-                .find('[id="inputNom"]').attr('id', 'paiement[' + paiementIndex + '][inputNom]').end()
-                .find('[id="inputPrenom"]').attr('id', 'paiement[' + paiementIndex + '][inputPrenom]').end()
-                .find('[id="inputTelephone"]').attr('id', 'paiement[' + paiementIndex + '][inputTelephone]').end()
-                .find('[id="inputNumero"]').attr('id', 'paiement[' + paiementIndex + '][inputNumero]').end()
-                .find('[id="inputCommentaire"]').attr('id', 'paiement[' + paiementIndex + '][inputCommentaire]').end()
-                .find('[id="inputMontant"]').attr('id', 'paiement[' + paiementIndex + '][inputMontant]').end()
-
-            // Add new fields
-            // Note that we also pass the validator rules for new field as the third parameter
-            // $('#paiementForm')
-            //     .formValidation('addField', 'paiement[' + paiementIndex + '].typedematos', typeValidators)
-            //     .formValidation('addField', 'paiement[' + paiementIndex + '].marque', marqueValidators)
-            //     .formValidation('addField', 'paiement[' + paiementIndex + '].modele', modeleValidators)
-            //     .formValidation('addField', 'paiement[' + paiementIndex + '].ptvmax', ptvmaxValidators)
-            //     .formValidation('addField', 'paiement[' + paiementIndex + '].ptvmin', ptvminValidators)
-            //     .formValidation('addField', 'paiement[' + paiementIndex + '].taille', tailleValidators)
-            //     .formValidation('addField', 'paiement[' + paiementIndex + '].surface', surfaceValidators)
-            //     .formValidation('addField', 'paiement[' + paiementIndex + '].couleur', couleurValidators)
-            //     .formValidation('addField', 'paiement[' + paiementIndex + '].heure', heureValidators)
-            //     .formValidation('addField', 'paiement[' + paiementIndex + '].typeaccessoire', typeaccessoireValidators)
-            //     .formValidation('addField', 'paiement[' + paiementIndex + '].certificat', certificatValidators);
-
-        })
-        // Remove button click handler
-        .on('click', '.removeButton', function() {
-          paiementIndex--;
-          document.getElementById("index").value = paiementIndex;
-            var $row  = $(this).parents('.form-group'),
-                index = $row.attr('data-paiement-index');
-
-            // Remove fields
-            // $('#paiementForm')
-            //     .formValidation('removeField', $row.find('[name="paiement[' + index + '].typedematos"]'))
-            //     .formValidation('removeField', $row.find('[name="paiement[' + index + '].marque"]'))
-            //     .formValidation('removeField', $row.find('[name="paiement[' + index + '].modele"]'))
-            //     .formValidation('removeField', $row.find('[name="paiement[' + index + '].ptvmax"]'))
-            //     .formValidation('removeField', $row.find('[name="paiement[' + index + '].ptvmin"]'))
-            //     .formValidation('removeField', $row.find('[name="paiement[' + index + '].taille"]'))
-            //     .formValidation('removeField', $row.find('[name="paiement[' + index + '].surface"]'))
-            //     .formValidation('removeField', $row.find('[name="paiement[' + index + '].couleur"]'))
-            //     .formValidation('removeField', $row.find('[name="paiement[' + index + '].heure"]'))
-            //     .formValidation('removeField', $row.find('[name="paiement[' + index + '].typeaccessoire"]'))
-            //     .formValidation('removeField', $row.find('[name="paiement[' + index + '].certificat"]'));
-
-            // Remove element containing the fields
-            $row.remove();
-        });
-
-        // $(document).on('change', $('#paiement['+ paiementIndex +'].inputtypedematos'), function() {
-        //     var e = document.getElementById("paiement["+ paiementIndex +"].inputtypedematos");
-        //     console.log(paiementIndex);
-        //
-        //   });
-
-});
-
 
 function validateForm() {
   var index = document.getElementById("index").value
