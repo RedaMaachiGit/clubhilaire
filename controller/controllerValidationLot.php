@@ -20,6 +20,9 @@ class ControllerValidationLot {
 			$lotvalide = array();
 			$lotinvalide = array();
 			for($i=0;$i<$nombreLot;$i++){
+				if(!isset($_POST['validation'.$i]) && !isset($_POST['idLot'.$i])){
+					continue;
+				}
 				if(isset($_POST['validation'.$i]) && !empty($_POST['validation'.$i])){
 						$lot = Lot::getLotById($_POST['idLot'.$i]);
 						$lot->updateStatut("En préparation");

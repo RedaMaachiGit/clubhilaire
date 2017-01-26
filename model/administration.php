@@ -36,7 +36,7 @@ class Administration
 	public Static function addFraisDepot($niveau, $frais){
 	  $query = "INSERT INTO fraisdepotadmin (idDepotAdmin,niveauDepotAdmin,fraisDepotAdmin) VALUES ('','".$niveau."','".$frais."')";
 	  $db = new DB();
-	  $db->connect();	
+	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
@@ -84,6 +84,14 @@ class Administration
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	 }
+	 public Static function updateMarge($marge){
+ 	  $query = "UPDATE parametres SET marge ='$marge' WHERE 1";
+ 	  $db = new DB();
+ 	  $db->connect();
+ 	  $conn = $db->getConnectDb();
+ 	  $res = $conn->query($query) or die(mysqli_error($conn));
+ 	  $db->close();
+ 	 }
 
 	 public static function getParams(){
      $query = "SELECT * FROM fraisdepotadmin";
@@ -101,6 +109,23 @@ class Administration
      }
      $db->close();
      return $admins;
+    }
+		public static function getMarge(){
+      $query = "SELECT * FROM parametres";
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      $res=mysqli_query($conn,$query);
+      $i=0;
+      $admins = array();
+ 		 	$admin = array();
+      while($row = mysqli_fetch_array($res)){
+      $i++;
+ 		 	$admin = array("id" => (int)$row['idParametre'], "marge" => (int)$row['marge']);
+      array_push($admins, $admin);
+      }
+      $db->close();
+      return $admins;
     }
 }
 

@@ -4,9 +4,11 @@
   include_once('../model/lot.php');
   include_once('../model/article.php');
   include_once('../model/modele.php');
-  $lot= (String)$_SESSION['lot'];
-  $articles = $_SESSION['articles'];
+  $lot= unserialize(urldecode(($_SESSION['lot'])));
   $fraisDepot =$_SESSION['fraisDepot'];
+  $coupon = $lot->getCouponNoIncr();
+  $idLotActuel = $lot->getId();
+  $articles = Article::getArticlesByLot($idLotActuel);
   $nombreArticles = sizeof($articles);
   $vendeur = $lot->getVendeur();
   $prixLot = $lot->getPrix();

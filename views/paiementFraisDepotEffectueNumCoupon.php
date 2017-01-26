@@ -106,8 +106,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <ol class="breadcrumb">
-        <li><a href="index.html"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Vente lot</li>
+        <li><a href="../index.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Numéro de coupon</li>
       </ol>
     </section>
 

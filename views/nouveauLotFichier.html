@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Ajout lot</title>
+  <title>Ajout lot par fichier</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -108,8 +108,8 @@
         <small>Ajoutez avec précaution</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.html"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Nouveau lot</li>
+        <li><a href="../index.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Nouveau lot fichier</li>
       </ol>
     </section>
 
@@ -129,11 +129,9 @@
             <!-- form start -->
             <form role="form" id="fichierFormEcole" method="POST" action="../controller/controllerImportEcole.php" class="form-horizontal">
               <div class="box-body">
-                <div class="form-group">
                   <label for="exampleInputFileEcole">File input Ecole</label>
                   <input type="file" id="exampleInputFileEcole" name="exampleInputFileEcole">
                   <p class="help-block">Le fichier à importer ici doit être propre.</p>
-                </div>
               </div>
               <!-- /.box-body -->
 
@@ -153,11 +151,11 @@
             <!-- form start -->
             <form role="form" id="fichierFormParticulier" method="POST" action="../controller/controllerImportParticulier.php" class="form-horizontal">
               <div class="box-body">
-                <div class="form-group">
+                <!-- <div class="form-group"> -->
                   <label for="exampleInputFileParticulier">File input Particulier</label>
                   <input type="file" id="exampleInputFileParticulier" name="exampleInputFileParticulier">
                   <p class="help-block">Le fichier à importer ici doit être propre.</p>
-                </div>
+                <!-- </div> -->
               </div>
               <!-- /.box-body -->
               <div class="box-footer">

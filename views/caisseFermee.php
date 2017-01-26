@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Consultation des lots</title>
+  <title>Caisse fermée</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -89,12 +89,13 @@
     <section class="content-header">
       <h1>
         Caisse ouverture/fermeture
-        <small></small>
+        <small>Récapitulatif</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="../index.html"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="#">Caisse</a></li>
-        <li class="active">Ouverture/fermeture</li>
+        <li><a href="caisse.html">Ouverture/fermeture</a></li>
+        <li class="active">Caisse fermée</li>
       </ol>
     </section>
 

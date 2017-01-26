@@ -6,7 +6,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Vendre un lot</title>
+  <title>Récapitulatif lots validés</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -115,8 +115,9 @@
         <small>Récapitulatif</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.html"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Vente lot</li>
+        <li><a href="../index.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="rechercheLotPreInscription.html">Saisie numéro PreInscription</a></li>
+        <li class="active">Récapitulatif lots validés</li>
       </ol>
     </section>
 

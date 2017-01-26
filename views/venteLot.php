@@ -128,7 +128,8 @@ include_once('../model/marque.php');
         <small>Vous êtes sur le point de vendre un lot</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="../index.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="NumeroLotVente.html">Saisie numéro de lot</a></li>
         <li class="active">Vente lot</li>
       </ol>
     </section>

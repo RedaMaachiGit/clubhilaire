@@ -5,9 +5,7 @@
   include_once('../model/article.php');
   include_once('../model/modele.php');
   $lots= unserialize(urldecode(($_SESSION['lots'])));
-  $fraisDepot = $_SESSION['fraisDepot'];
   $_SESSION['lots']=urlencode(serialize($lots));
-  $_SESSION['fraisDepot'] = $fraisDepot;
   //$nombreArticles = sizeof($articles);
   $nombreLots = sizeof($lots);
   // $vendeur = $lot->getVendeur();

@@ -22,7 +22,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Vendre un lot</title>
+  <title>Restituer un lot</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -121,8 +121,9 @@
         <small>Vous êtes sur le point de restituer un lot</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.html"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Vente lot</li>
+        <li><a href="../index.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="../Resititution.html">Restitution</a></li>
+        <li class="active">Restitution de lots</li>
       </ol>
     </section>
 
@@ -143,8 +144,20 @@
         <form id="paiementForm" class="form-horizontal" method="POST" action="../controller/controllerrestitution.php" class="form-horizontal">
           <div class="box-footer">
             <lable for="numeroLot"> Cliquez sur "valider paiement" une fois le paiement au vendeur effectué. La somme à payer est de <?php echo $prixMarge ?>. </label>
+              <div class="col-xs-12">
+                <label class="control-label" for="nomEmetteur">Entrez votre nom</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="nomEmetteur" name="nomEmetteur">
+                </div>
+              </div>
+              <div class="col-xs-12">
+                <label class="control-label" for="nomEmetteur">Entrez votre prenom</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="prenomEmetteur" name="prenomEmetteur">
+                </div>
+              </div>
               <input class="form-control input-lg" name="numeroLot" id="numeroLot" type="hidden" value=<?php echo $lot->getCouponNoIncr(); ?> >
-              <input class="form-control input-lg" name="paiement" id="paiement" type="hidden" value="paiement">
+              <input class="form-control input-lg" name="paiement" id="paiement" type="hidden" value=<?php echo $prixMarge ?>>
             <button type="submit" value="Submit" class="btn btn-info center-block">Valider paiement</button>
           </div>
         </form>

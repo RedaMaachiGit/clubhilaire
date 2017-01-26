@@ -19,7 +19,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Vendre un lot</title>
+  <title>Consulter l'ensemble des lots</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -124,8 +124,8 @@
         <small></small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.html"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Vente lot</li>
+        <li><a href="../index.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Consultation des lots</li>
       </ol>
     </section>
 
@@ -134,7 +134,12 @@
       <?php for ($j = 0; $j < $nombreLots; $j++) { $coupon = $lots[$j]->getCouponNoIncr(); $idLotActuel = $lots[$j]->getId() ?>
         <div class="box">
           <div class="box-header">
+            <?php if($coupon != -1){ ?>
             <h3 class="box-title">Ce lot numéro <?php echo $coupon; ?> contient</h3>
+            <?php } ?>
+            <?php if($coupon == -1){ ?>
+            <h3 class="box-title">Ce lot n'a pas encore été validé. Mail du vendeur: <?php echo $lots[$j]->getVendeur()->getEmail(); ?></h3>
+            <?php } ?>
           </div>
 
 

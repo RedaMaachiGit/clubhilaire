@@ -1,13 +1,14 @@
 <?php
   session_start();
   $params = $_SESSION['params'];
+  $marge = $_SESSION['marge'];
 ?>
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Ajout lot</title>
+  <title>Modification de paramètres</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -108,12 +109,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Modification de lots
+        Modification de paramètres
         <small>Modifiez avec précaution</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.html"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Saisie numéro lot</li>
+        <li><a href="../index.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Modification params</li>
       </ol>
     </section>
 
@@ -122,7 +123,7 @@
 
       <div class="box box-success">
         <div class="box-header with-border">
-          <h3 class="box-title">Veuillez saisir le numéro du lot</h3>
+          <h3 class="box-title">Modification des paramètres</h3>
         </div>
         <form id="numeroLotForm" method="POST" action="../controller/controllerParametres.php" class="form-horizontal">
           <?php for($i=0;$i<sizeof($params);$i++){ ?>
@@ -154,6 +155,15 @@
               <div class="input-group">
                 <input class="form-control input-lg" name="newNiveauDepotAdmin" id="newNiveauDepotAdmin" type="text" placeholder="Niveau depot admin">
                 <input class="form-control input-lg" name="formEnvoie" type="hidden" id="formEnvoie" value="changementParams">
+              </div>
+            </div>
+          </div>
+          <div class="box-body">
+            <div class="col-xs-6">
+              <label class="control-label" for="niveauDepotAdmin">Entrez la nouvelle marge souhaitée</label>
+              <div class="input-group">
+                <input class="form-control input-lg" name="newMarge" value="<?php echo $marge[0]['marge'] ?>" id="newMarge" type="text" placeholder="Marge">
+                <input class="form-control input-lg" name="formEnvoie" type="hidden" id="formEnvoie" value="marge">
               </div>
             </div>
           </div>

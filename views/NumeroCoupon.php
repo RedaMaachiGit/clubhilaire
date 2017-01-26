@@ -11,7 +11,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Vendre un lot</title>
+  <title>Lot ajouté</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -112,12 +112,13 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Affectation du numéro de coupon pour les lots suivants <?php echo $_GET['numeroLot'] ?>
+        Veuillez valider le lot rentré pour obtenir un numéro de coupon
         <small></small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.html"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Vente lot</li>
+        <li><a href="../index.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="../nouveauLot.html"> Nouveau lot</a></li>
+        <li class="active">Lot rentré</li>
       </ol>
     </section>
 
@@ -130,10 +131,10 @@
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span></button>
-              <h4 class="modal-title">Votre numéro de coupon</h4>
+              <h4 class="modal-title">Votre lot a bien été entré</h4>
             </div>
             <div class="modal-body">
-              <p style="font-size:30px">Votre numéro de coupon: <?php echo $_GET['coupon'] ?></p>
+              <p style="font-size:30px">Veuillez valider le lot rentré pour obtenir un numéro de coupon. Pour valider utiliser l'adresse mail suivante: <?php echo $_GET['mail'] ?></p>
             </div>
             <div class="modal-footer">
               <!-- <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button> -->

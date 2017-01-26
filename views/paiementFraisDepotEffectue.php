@@ -105,8 +105,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <ol class="breadcrumb">
-        <li><a href="index.html"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Vente lot</li>
+        <li><a href="../index.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Paiement des frais de dépôt</li>
       </ol>
     </section>
 
@@ -122,7 +122,7 @@
               <h4 class="modal-title"> Paiement des frais de dépots effectué</h4>
             </div>
             <div class="modal-body">
-              <p style="font-size:30px"> Paiement des frais de dépots effectué:</p>
+              <p style="font-size:30px"> Paiement des frais de dépots effectué</p>
             </div>
             <div class="modal-footer">
               <!-- <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button> -->

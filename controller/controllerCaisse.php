@@ -11,12 +11,13 @@
 		$telephoneEmetteur = "0000000000";
 		$typeTransaction = "Ouverture caisse";
 		$numero = "";
+		$date = date('d/m/Y');
 		$commentaire = "Ouverture de caisse en début de journée";
 		$typePaiement = "liquide";
 		$beneficiare = "Caisse du Club Hilaire";
 		$caisse = new Caisse($journee,$fondCaisse,$typePaiement,$montantOperation,$beneficiare,
 													$nomEmetteur,$prenomEmetteur,$telephoneEmetteur,
-													$typeTransaction,$numero,$commentaire);
+													$typeTransaction,$date,$numero,$commentaire);
 		$caisse->ouvrirFermerCaisse();
 		header('location:../index.html');
 
@@ -33,7 +34,7 @@
 		$beneficiare = $_POST['prenomEmetteur'] ." ". $_POST['nomEmetteur'];
 		$caisse = new Caisse($journee,"0",$typePaiement,$montantOperation,$beneficiare,
 													$nomEmetteur,$prenomEmetteur,$telephoneEmetteur,
-													$typeTransaction,$numero,$commentaire);
+													$typeTransaction,$date,$numero,$commentaire);
 		$caisse->ouvrirFermerCaisse();
 		header("Location:../views/caisseFermee.php?montant=".$montantOperation);
 

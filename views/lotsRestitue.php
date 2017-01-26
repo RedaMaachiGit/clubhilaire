@@ -113,8 +113,9 @@
         <small>Récapitulatif</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.html"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Restitution lot</li>
+        <li><a href="../index.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="Resititution.html"><i class="fa fa-dashboard"></i> Restitution</a></li>
+        <li class="active">Lot restitué</li>
       </ol>
     </section>
 
@@ -122,8 +123,10 @@
     <section class="content">
 
      <div class="callout callout-warning">
-       <h4>Vous venez de restituer le lot numéro <?php echo $_GET['lot'] ?> !</h4>
-       <!-- <p>Pensez bien mettre ce montant de la caisse.</p> -->
+       <h4>Vous venez de restituer le lot numéro <?php echo $_GET['lot'];
+       if(isset($_GET['prixpaye'])){
+         echo ". Et avez donné au vendeur la somme de " .$_GET['prixpaye'];
+       } ?> !</h4>
      </div>
 
     </section>
