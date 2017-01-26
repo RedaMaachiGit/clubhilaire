@@ -12,6 +12,7 @@
   $nombreArticles = sizeof($articles);
   $vendeur = $lot->getVendeur();
   $prixLot = $lot->getPrix();
+  $prixMarge = $lot->getPrixMoinsMarge();
   $numeroLot = $lot->getId();
   $statut = $lot->getStatut();
   $numeroCoupon = $lot->getCouponNoIncr();
@@ -34,12 +35,6 @@
   <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="../dist/css/skins/skin-blue.min.css">
 
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="../https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="../https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -139,6 +134,22 @@
             <strong>ATTENTION!</strong> Ce lot numéro <?php echo $numeroCoupon ?> est indisponible à la restitution.
         </div>
       <?php } ?>
+      <?php if(strcmp($statut, "Vendu") == 0){ ?>
+        <div class="alert alert-warning fade in">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>ATTENTION!</strong> Vous devez cependant payer le vendeur la somme de <?php echo $prixMarge ?>.
+        </div>
+        <div class="box box-info">
+        <form id="paiementForm" class="form-horizontal" method="POST" action="../controller/controllerrestitution.php" class="form-horizontal">
+          <div class="box-footer">
+            <lable for="numeroLot"> Cliquez sur "valider paiement" une fois le paiement au vendeur effectué. La somme à payer est de <?php echo $prixMarge ?>. </label>
+              <input class="form-control input-lg" name="numeroLot" id="numeroLot" type="hidden" value=<?php echo $lot->getCouponNoIncr(); ?> >
+              <input class="form-control input-lg" name="paiement" id="paiement" type="hidden" value="paiement">
+            <button type="submit" value="Submit" class="btn btn-info center-block">Valider paiement</button>
+          </div>
+        </form>
+      </div>
+      <?php } ?>
 
       <div class="box">
         <div class="box-header">
@@ -225,6 +236,7 @@
           <div class="box-footer">
             <!-- <button type="submit" class="btn btn-default">Annuler</button> -->
 			      <input class="form-control input-lg" name="numeroLot" id="numeroLot" type="hidden" value=<?php echo $lot->getCouponNoIncr(); ?> >
+            <input class="form-control input-lg" name="restitution" id="restitution" type="hidden" value="restitution">
             <button type="submit" value="Submit" class="btn btn-info center-block">Valider restitution</button>
           </div>
         </form>

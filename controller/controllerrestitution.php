@@ -17,6 +17,14 @@ class Controllerrestitution {
 		header('location:../views/lotsRestitue.php?lot=' .$numeroLot);
 	}
 
+	public static function paiementLot(){
+		$numeroLot = $_POST['numeroLot'];
+		$lot = Lot::getLotByCoupon($numeroLot);
+		// $ecriture =
+		$lot->updateStatut("Paye au vendeur");
+		header('location:../views/lotsRestitue.php?lot=' .$numeroLot);
+	}
+
 
 }
 Controllerrestitution::restitutionLot();

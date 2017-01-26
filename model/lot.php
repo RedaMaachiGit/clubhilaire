@@ -267,7 +267,7 @@ class Lot
 	    Output : Void
 	*/
 
-	public function delete() {
+  public function delete() {
 		$id = $this->getId();
 		$query = "DELETE FROM lot WHERE idLot=".$id;
 		$db = new DB();
@@ -277,13 +277,27 @@ class Lot
 		$db->close();
 	}
 
+  public function getPrixMoinsMarge() {
+		$price = $this->getPrix();
+		$query = "SELECT * FROM parametres";
+		$db = new DB();
+		$db->connect();
+		$conn = $db->getConnectDb();
+		$res = $conn->query($query) or die(mysqli_error($conn));
+		$db->close();
+    $row = $res->fetch_row();
+    $marge = (String)$row[1];
+    $newprice = round($price * ((100-$marge) / 100));
+    return $newprice;
+	}
+
 		/*
 		public Static function getLotById($id) -> get en base de données l'instance ayant l'id $id
 		Input : $id
 	    Output : le vendeur lot l'id $id
 	*/
 
-	public Static function getLotById($id){
+	public static function getLotById($id){
 	  $query = "SELECT * FROM lot WHERE idLot=".$id;
 	  $db = new DB();
 	  $db->connect();
@@ -300,7 +314,7 @@ class Lot
 	  return $lot;
 	}
 
-	public Static function getLotByCoupon($coupon){
+	public static function getLotByCoupon($coupon){
 	  $query = "SELECT * FROM lot WHERE numeroCoupon='$coupon'";
 	  $db = new DB();
 	  $db->connect();
@@ -321,7 +335,7 @@ class Lot
 	   }
 	 }
 
-	 public Static function getLotByNumPre($numPre){
+	 public static function getLotByNumPre($numPre){
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -345,7 +359,7 @@ class Lot
 	 }
 
 
-	 public Static function deleteLotById($idLot){
+	 public static function deleteLotById($idLot){
 	  $query = "DELETE FROM lot WHERE idLot=".$idLot;
 	  $db = new DB();
 	  $db->connect();
