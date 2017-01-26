@@ -134,16 +134,23 @@
     <!-- Main content -->
     <section class="content">
       <?php
-      $nombreTotalArticles = 0;
-      for ($j = 0; $j <$nombreLots; $j++) { $coupon = $lots[$j]->getCouponNoIncr(); $idLotActuel = $lots[$j]->getId() ?>
+         $nombreTotalArticles = 0;
+         for ($j = 0; $j<$nombreLots; $j++) {
+         $statut = $lots[$j]->getStatut();
+         if(strcmp($statut, "En préparation") == 0){
+           continue;
+         }
+         $coupon = $lots[$j]->getCouponNoIncr();
+         $idLotActuel = $lots[$j]->getId()
+      ?>
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">Ce lot numéro <?php echo $coupon; ?> contient</h3>
+            <h3 class="box-title">Ce lot numéro <?php echo $idLotActuel; ?> contient</h3>
           </div>
           <div class="box-header">
           <form id="validation" method="POST" action="../controller/controllerValidationLot.php" class="form-horizontal">
-            <input type="checkbox" name="validation<?php echo $j ?>" value="<?php echo $coupon."valide" ?>" checked="checked"> Valider ce lot?<br>
-            <input type="hidden" name="coupon<?php echo $j ?>" id="coupon" value="<?php echo $coupon ?>">
+            <input type="checkbox" name="validation<?php echo $j ?>" value="<?php echo $idLotActuel."valide" ?>" checked="checked"> Valider ce lot?<br>
+            <input type="hidden" name="idLot<?php echo $j ?>" id="idLot" value="<?php echo $idLotActuel ?>">
             <input type="hidden" name="nombreLot" id="nombreLot" value="<?php echo $nombreLots ?>">
             <small>Décochez cette case si vous souhaitez NE PAS valider ce lot</small>
           </div>

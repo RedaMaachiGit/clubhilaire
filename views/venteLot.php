@@ -17,6 +17,7 @@ include_once('../model/marque.php');
   $articles = unserialize(urldecode($_SESSION['articles']));
   $nombreArticles = sizeof($articles);
   $vendeur = $lot->getVendeur();
+  $statut = $lot->getStatut();
   $prixLot = $lot->getPrix();
   $numeroLot = $lot->getId();
   $numeroCoupon = $lot->getCouponNoIncr();
@@ -123,7 +124,7 @@ include_once('../model/marque.php');
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Vente du lot numéro <?php echo $numeroLot ?>
+        Vente du lot numéro <?php echo $numeroCoupon ?>
         <small>Vous êtes sur le point de vendre un lot</small>
       </h1>
       <ol class="breadcrumb">
@@ -134,7 +135,12 @@ include_once('../model/marque.php');
 
     <!-- Main content -->
     <section class="content">
-
+      <?php if(strcmp($statut, "Vendu") == 0 && strcmp($statut, "En vente") != 0){ ?>
+        <div class="alert alert-danger fade in">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>ATTENTION!</strong> Ce lot numéro <?php echo $numeroCoupon ?> est indisponible à la vente.
+        </div>
+      <?php } ?>
       <div class="box">
         <div class="box-header">
           <h3 class="box-title">Ce lot contient</h3>
@@ -224,6 +230,7 @@ include_once('../model/marque.php');
         <!-- /.info-box -->
       </div>
 
+      <?php if(strcmp($statut, "Vendu") != 0 && strcmp($statut, "En vente") == 0){ ?>
       <div class="box box-info">
         <form id="paiementForm" class="form-horizontal" method="POST" action="../controller/paiementController.php" class="form-horizontal" onsubmit="return validateForm()">
           <div class="box-body">
@@ -293,6 +300,7 @@ include_once('../model/marque.php');
           </div>
         </form>
       </div>
+      <?php } ?>
     </section>
     <!-- /.content -->
 

@@ -13,6 +13,7 @@
   $vendeur = $lot->getVendeur();
   $prixLot = $lot->getPrix();
   $numeroLot = $lot->getId();
+  $statut = $lot->getStatut();
   $numeroCoupon = $lot->getCouponNoIncr();
 ?>
 <!DOCTYPE html>
@@ -132,6 +133,12 @@
 
     <!-- Main content -->
     <section class="content">
+      <?php if(strcmp($statut, "En vente") != 0){ ?>
+        <div class="alert alert-danger fade in">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>ATTENTION!</strong> Ce lot numéro <?php echo $numeroCoupon ?> est indisponible à la restitution.
+        </div>
+      <?php } ?>
 
       <div class="box">
         <div class="box-header">
@@ -212,6 +219,7 @@
         <!-- /.box-body -->
       </div>
 
+      <?php if(strcmp($statut, "En vente") == 0){ ?>
       <div class="box box-info">
         <form id="paiementForm" class="form-horizontal" method="POST" action="../controller/Controllerrestitution.php" class="form-horizontal">
           <div class="box-footer">
@@ -221,6 +229,7 @@
           </div>
         </form>
       </div>
+      <?php } ?>
     </section>
     <!-- /.content -->
 

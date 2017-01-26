@@ -503,14 +503,18 @@ class Lot
 
 	public function updateStatut($statut){
 	  $id = $this->getId();
-    if(strcmp($statur, "Vendu")){
+    if(strcmp($statut, "Vendu")==0){
       $query = "UPDATE lot SET statut =\"Vendu\" WHERE idLot=".$id;
-    } else if(strcmp($statur, "En préparation")){
+    } else if(strcmp($statut, "En préparation")==0){
       $query = "UPDATE lot SET statut =\"En préparation\" WHERE idLot=".$id;
-    } else if(strcmp($statur, "Restitué")){
-      $query = "UPDATE lot SET statut =\"Restitué\" WHERE idLot=".$id;
-    } else if(strcmp($statur, "En vente")){
+    } else if(strcmp($statut, "Restitue")==0){
+      $query = "UPDATE lot SET statut =\"Restitue\" WHERE idLot=".$id;
+    } else if(strcmp($statut, "En vente")==0){
       $query = "UPDATE lot SET statut =\"En vente\" WHERE idLot=".$id;
+    } else if(strcmp($statut, "En attente de restitution")==0){
+      $query = "UPDATE lot SET statut =\"En attente de restitution\" WHERE idLot=".$id;
+    } else if(strcmp($statut, "Non valide")==0){
+      $query = "UPDATE lot SET statut =\"Non valide\" WHERE idLot=".$id;
     }
 
 	  $db = new DB();
@@ -528,7 +532,6 @@ class Lot
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
-	  $this->setStatut($statut);
 	  $db->close();
 	 }
 
