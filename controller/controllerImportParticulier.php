@@ -258,4 +258,5 @@ class ControllerImportParticulier {
 	}
 	
 	ControllerImportParticulier::LireExcel();
+	header('location:../views/ajoutFichierEffectue.php');
 ?>
