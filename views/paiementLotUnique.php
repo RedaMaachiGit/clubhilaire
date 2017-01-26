@@ -1,16 +1,17 @@
 <?php
-session_start();
-include_once('../model/vendeur.php');
-include_once('../model/lot.php');
-include_once('../model/article.php');
-include_once('../model/modele.php');
-  //echo("Numero lot: " . $_POST['numeroLot'] . "<br />\n"); //TRACE
-  $lot= unserialize(urldecode((String)$_SESSION['lot']));
+  session_start();
+  include_once('../model/vendeur.php');
+  include_once('../model/lot.php');
+  include_once('../model/article.php');
+  include_once('../model/modele.php');
+  $lot= (String)$_SESSION['lot'];
+  $articles = $_SESSION['articles'];
   $fraisDepot =$_SESSION['fraisDepot'];
-//  $connect = ConnexionDB(); // Je me connecte à la base de donnée
-
-//  $updateLot = "SELECT * FROM Lot WHERE numeroLot = '$id'" or die("Erreur lors de la consultation de données (updateLot)" . mysqli_error($connect));
-//  $req = $connect->query($updateLot);
+  $nombreArticles = sizeof($articles);
+  $vendeur = $lot->getVendeur();
+  $prixLot = $lot->getPrix();
+  $numeroLot = $lot->getId();
+  $numeroCoupon = $lot->getCouponNoIncr();
 ?>
 <!DOCTYPE html>
 <html>
@@ -78,17 +79,6 @@ include_once('../model/modele.php');
         </div>
       </div>
 
-      <!-- search form (Optional) -->
-      <form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
-              <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-        </div>
-      </form>
-      <!-- /.search form -->
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu">
@@ -138,43 +128,73 @@ include_once('../model/modele.php');
 
         <!-- /.box-header -->
         <div class="box-body">
-          <table id="example1" class="table table-bordered table-striped">
-            <thead>
-            <tr>
-              <th>Numéro lot</th>
-              <th>Coupon</th>
-              <th>Nom</th>
-              <th>Email</th>
-              <th>Prix</th>
-              <th>État</th>
-              <th>Édition</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php for ($i = 1; $i <= rand(2,15); $i++) { // foreach ($shop as $row) : ?>
-            <tr>
-              <td><? echo rand(2,100); //$row[0]; ?></td>
-              <td><? echo rand(2,300); //$row[1]; ?></td>
-              <td><? echo "Durand"; //$row[2]; ?></td>
-              <td><? echo "durand@gmail.com"; //$row[3]; ?></td>
-              <td><? echo rand(2,1000); //$row[4]; ?></td>
-              <td><? echo "en préparation"; //$row[5]; ?></td>
-              <td><? echo "False"; //$row[6]; ?></td>
-            </tr>
-            <?php } ?>
-            </tbody>
-            <tfoot>
-            <tr>
-              <th>Numéro lot</th>
-              <th>Coupon</th>
-              <th>Nom</th>
-              <th>Email</th>
-              <th>Prix</th>
-              <th>État</th>
-              <th>Édition</th>
-            </tr>
-            </tfoot>
-          </table>
+          <div id="example1_wrapper" class="box-body table-responsive no-padding">
+            <div class="row">
+              <div class="col-sm-12">
+                <table id="example1" class="table table-hover">
+                  <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>PTV Minimum</th>
+                    <th>PTV Maximum</th>
+                    <th>Taille</th>
+                    <th>Annee</th>
+                    <th>Surface voile</th>
+                    <th>Couleur voile</th>
+                    <th>Heure voles voile</th>
+                    <th>Certificat revision voile</th>
+                    <th>Type protection selette</th>
+                    <th>Type accessoire</th>
+                    <th>MarqueIndex</th>
+                    <th>Modele</th>
+                    <th>Homologation</th>
+                    <th>Commentaire</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <?php for ($j = 0; $j < $nombreArticles; $j++) { // foreach ($shop as $row) : ?>
+                      <tr>
+                    <td><?php if(!empty($articles[$j]->getTypeArticle())) { echo $articles[$j]->getLibelleTypeArticle(); } else if(!empty($articles[$j]->getSurfaceVoile())){echo "Voile";} else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getPtvMin())) { echo $articles[$j]->getPtvMin(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getPtvMax())) { echo $articles[$j]->getPtvMax(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getTaille())) { echo $articles[$j]->getTaille(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getAnnee())) { echo $articles[$j]->getAnnee(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getSurfaceVoile())) { echo $articles[$j]->getSurfaceVoile(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getCouleurVoile())) { echo $articles[$j]->getCouleurVoile(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getHeureVoile())) { echo $articles[$j]->getHeureVoile(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getCertificat())) { echo $articles[$j]->getCertificat(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getTypeProtectionSelette())) { echo $articles[$j]->getTypeProtectionSelette(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getTypeAccessoire())) { echo $articles[$j]->getTypeAccessoire(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getMarque()->getLibelle())) { echo $articles[$j]->getMarque()->getLibelle(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getModele()->getLibelle())) { echo $articles[$j]->getModele()->getLibelle(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getHomologation())) { echo $articles[$j]->getHomologation(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getCommentaire())) { echo $articles[$j]->getCommentaire(); } else { echo "X";}?></td>
+                      </tr>
+                    <?php } ?>
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                    <th>Type</th>
+                    <th>PTV Minimum</th>
+                    <th>PTV Maximum</th>
+                    <th>Taille</th>
+                    <th>Annee</th>
+                    <th>Surface voile</th>
+                    <th>Couleur voile</th>
+                    <th>Heure voles voile</th>
+                    <th>Certificat revision voile</th>
+                    <th>Type protection selette</th>
+                    <th>Type accessoire</th>
+                    <th>MarqueIndex</th>
+                    <th>Modele</th>
+                    <th>Homologation</th>
+                    <th>Commentaire</th>
+                  </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
         <!-- /.box-body -->
       </div>
@@ -193,8 +213,7 @@ include_once('../model/modele.php');
       </div>
 
       <div class="box box-info">
-        <form id="paiementForm" class="form-horizontal" method="POST" action="../controller/controllerPaiementFraisDepot.php" class="form-horizontal">
-
+        <form id="paiementForm" class="form-horizontal" method="POST" action="../controller/paiementController.php" class="form-horizontal" onsubmit="return validateForm()">
           <div class="box-body">
             <div class="col-sm-12 form-group">
                 <label>Type d'paiement</label>
@@ -206,54 +225,55 @@ include_once('../model/modele.php');
             </div>
 
             <input type="hidden" class="form-control" id="index" name="index" value="0" />
-      			<input type="hidden" class="form-control" id="idLot" name="idLot" value= <?php echo $lot->getid(); ?> />
-      			<input type="hidden" class="form-control" id="formEnvoie" name="formEnvoie" value= <?php echo "unique" ?> />
-      			<input type="hidden" class="form-control" id="montant" name="montant" value= <?php echo $fraisDepot; ?> />
-            <div class="form-group" name="marque">
+
+            <div class="form-group" name="paiement[0].nomGroup">
               <label for="inputNom" class="col-sm-2 control-label">Nom</label>
               <div class="col-sm-10">
                 <input type="text" class="form-control" id="inputNom" name="paiement[0][inputNom]" value="" placeholder="Nom" />
+                <input class="form-control input-lg" name="paiementFraisDepotUnique" type="hidden" id="paiementFraisDepotUnique" value="paiementFraisDepotUnique">
               </div>
             </div>
 
-            <div class="form-group" name="prenom">
+            <div class="form-group" name="paiement[0].prenomGroup">
               <label for="inputPrenom" class="col-sm-2 control-label">Prénom</label>
               <div class="col-sm-10">
                 <input type="text" class="form-control" id="inputPrenom" name="paiement[0][inputPrenom]" value="" placeholder="Prénom" />
               </div>
             </div>
 
-            <div class="form-group" name="telephone" id="telephoneGroup">
+            <div class="form-group" name="paiement[0].telephoneGroup" id="paiement[0].telephoneGroup">
               <label for="inputTelephone" class="col-sm-2 control-label">Téléphone</label>
               <div class="col-sm-10">
                 <input type="text" class="form-control" id="inputTelephone" name="paiement[0][inputTelephone]" value="" placeholder="Téléphone" />
               </div>
             </div>
 
-            <div class="form-group" name="numero" id="numeroGroup">
+            <div class="form-group" name="paiement[0].numeroGroup" id="paiement[0].numeroGroup" style="display:none">
               <label for="inputTelephone" class="col-sm-2 control-label">Numéro</label>
               <div class="col-sm-10">
                 <input type="text" class="form-control" id="inputNumero" name="paiement[0][inputNumero]" value="" placeholder="Numéro" />
               </div>
             </div>
 
-            <div class="form-group" name="commentaire" id="commentaireGroup">
+            <div class="form-group" name="paiement[0].commentaireGroup" id="paiement[0].commentaireGroup" style="display:none">
               <label for="inputCommentaire" class="col-sm-2 control-label">Commentaire</label>
               <div class="col-sm-10">
                 <input type="text" class="form-control" id="inputCommentaire" name="paiement[0][inputCommentaire]" value="" placeholder="Commentaire" />
               </div>
             </div>
 
-            <div class="form-group" name="montant" id="montantGroup">
+            <div class="form-group" name="paiement[0].montantGroup" id="paiement[0].montantGroup">
               <label for="inputMontant" class="col-sm-2 control-label">Montant</label>
               <div class="col-sm-10">
                 <input type="text" class="form-control" id="inputMontant" name="paiement[0][inputMontant]" value="" placeholder="Montant" />
               </div>
             </div>
 
+            <input type="text" class="hidden" id="idLot" name="idLot" value="<?php echo $numeroLot ?>" />
+<!--
             <div class="col-xs-1">
               <button type="button" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>
-            </div>
+            </div> -->
           </div>
           <!-- /.box-body -->
           <div class="box-footer">
@@ -264,64 +284,6 @@ include_once('../model/modele.php');
       </div>
     </section>
     <!-- /.content -->
-
-    <div class="col-sm-12 form-group hide" id="paiementTemplate">
-
-      <div class="col-sm-12 form-group">
-          <label>Type d'paiement</label>
-          <select class="col-sm-5 form-control" id="inputtypedepaiement" name="typedepaiement" data-index='0' onchange="handleTypeChange(this)">
-            <option value="0">Carte Bancaire</option>
-            <option value="1">Chèque</option>
-            <option value="2">Liquide</option>
-          </select>
-      </div>
-
-      <div class="form-group" name="marque">
-        <label for="inputNom" class="col-sm-2 control-label">Nom</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="inputNom" name="inputNom" value="" placeholder="Nom" />
-        </div>
-      </div>
-
-      <div class="form-group" name="prenom">
-        <label for="inputPrenom" class="col-sm-2 control-label">Prénom</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="inputPrenom" name="inputPrenom" value="" placeholder="Prénom" />
-        </div>
-      </div>
-
-      <div class="form-group" name="telephone" id="telephoneGroup">
-        <label for="inputTelephone" class="col-sm-2 control-label">Téléphone</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="inputTelephone" name="inputTelephone" value="" placeholder="Téléphone" />
-        </div>
-      </div>
-
-      <div class="form-group" name="numero" id="numeroGroup">
-        <label for="inputTelephone" class="col-sm-2 control-label">Numéro</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="inputNumero" name="inputNumero" value="" placeholder="Numéro" />
-        </div>
-      </div>
-
-      <div class="form-group" name="commentaire" id="commentaireGroup">
-        <label for="inputCommentaire" class="col-sm-2 control-label">Commentaire</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="inputCommentaire" name="inputCommentaire" value="" placeholder="Commentaire" />
-        </div>
-      </div>
-
-      <div class="form-group" name="montant" id="montantGroup">
-        <label for="inputMontant" class="col-sm-2 control-label">Montant</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="inputMontant" name="inputMontant" value="" placeholder="Montant" />
-        </div>
-      </div>
-
-      <div class="col-xs-1">
-        <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
-      </div>
-    </div>
 
 
 
@@ -430,164 +392,82 @@ include_once('../model/modele.php');
 <script>
 var paiementIndex = 0;
 var handleTypeChange = function(e) {
-  console.log(e.value);
-  console.log(e.dataset);
-  console.log(e.dataset.index);
+  console.log("Value" + e.value);
+  console.log("Dataset" + e.dataset);
+  console.log("Dataset index" + e.dataset.index);
 
-  var paiementIndex = e.dataset.index;
+  var paiementIndex = (parseInt(e.dataset.index)).toString();
+
   if ( e.value == '0') // Voile
   {
     console.log('TRACE CB');
+    console.log(paiementIndex);
+    var numerogroup = document.getElementById("paiement[" + paiementIndex + "].numeroGroup");
+    numerogroup.style.display = "none";
+    var commentairegroup = document.getElementById("paiement[" + paiementIndex + "].commentaireGroup");
+    commentairegroup.style.display = "none";
   }
   else if ( e.value == '1') // Selette
   {
     console.log('TRACE cheque');
+    console.log(paiementIndex);
+    var numerogroup = document.getElementById("paiement[" + paiementIndex + "].numeroGroup");
+    numerogroup.style.display = "block";
+    var commentairegroup = document.getElementById("paiement[" + paiementIndex + "].commentaireGroup");
+    commentairegroup.style.display = "block";
   }
   else if ( e.value == '2') // Parachute de secours
   {
     console.log('TRACE liquide');
+    console.log(paiementIndex);
+    var numerogroup = document.getElementById("paiement[" + paiementIndex + "].numeroGroup");
+    numerogroup.style.display = "none";
+    var commentairegroup = document.getElementById("paiement[" + paiementIndex + "].commentaireGroup");
+    commentairegroup.style.display = "none";
   }
 }
-$(document).ready(function() {
 
-    var marqueValidators = {
-            row: '.col-xs-4',   // The title is placed inside a <div class="col-xs-4"> element
-            validators: {
-                notEmpty: {
-                    message: 'La marque est requise'
-                }
-            }
-        },
-        modeleValidators = {
-            row: '.col-xs-4',
-            validators: {
-                notEmpty: {
-                    message: 'Le modele est requis'
-                }
-            }
-        }
-
-    $('#paiementForm')
-        // .formValidation({
-        //     framework: 'bootstrap',
-        //     icon: {
-        //         valid: 'glyphicon glyphicon-ok',
-        //         invalid: 'glyphicon glyphicon-remove',
-        //         validating: 'glyphicon glyphicon-refresh'
-        //     },
-        //     fields: {
-        //         'paiement[0].marque': marqueValidators,
-        //         'paiement[0].modele': modeleValidators
-        //         'paiement[0].ptvmax': ptvmaxValidators
-        //         'paiement[0].ptvmin': ptvminValidators
-        //         'paiement[0].taille': tailleValidators
-        //         'paiement[0].surface': surfaceValidators
-        //         'paiement[0].couleur': couleurValidators
-        //         'paiement[0].heure': heureValidators
-        //         'paiement[0].typeaccessoire': typeaccessoireValidators
-        //         'paiement[0].certificat': certificatValidators
-        //     }
-        // })
-
-        // Add button click handler
-        .on('click', '.addButton', function() {
-            console.log('TRACE');
-            paiementIndex++;
-            console.log(paiementIndex);
-            document.getElementById("index").value = paiementIndex + 1;
-            console.log(document.getElementById("index").value);
-            var $form = $('#paiementForm .box-body');
-            var $template = $('#paiementTemplate'),
-                $clone    = $template
-                                .clone()
-                                .removeClass('hide')
-                                .removeAttr('id')
-                                .attr('data-paiement-index', paiementIndex);
-            $form.append($clone);
-
-            // Update the name attributes
-            $clone
-                .find('[name="typedepaiement"]').attr('name', 'paiement[' + paiementIndex + '][typedepaiement]').end()
-                .find('[name="nom"]').attr('name', 'paiement[' + paiementIndex + '].nom').end()
-                .find('[name="prenom"]').attr('name', 'paiement[' + paiementIndex + '].prenom').end()
-                .find('[name="telephone"]').attr('name', 'paiement[' + paiementIndex + '].telephone').end()
-                .find('[name="numero"]').attr('name', 'paiement[' + paiementIndex + '].numero').end()
-                .find('[name="commentaire"]').attr('name', 'paiement[' + paiementIndex + '].commentaire').end()
-                .find('[name="montant"]').attr('name', 'paiement[' + paiementIndex + '].montant').end()
-                // Ici on clone les identifiants
-                .find('[id="inputtypedepaiement"]').attr('data-index', '' + paiementIndex).end()
-                .find('[id="inputtypedepaiement"]').attr('id', 'paiement[' + paiementIndex + '].inputtypedepaiement').end()
-                .find('[id="nomgroup"]').attr('id', 'paiement[' + paiementIndex + '].nomgroup').end()
-                .find('[id="prenomgroup"]').attr('id', 'paiement[' + paiementIndex + '].prenomgroup').end()
-                .find('[id="telephonegroup"]').attr('id', 'paiement[' + paiementIndex + '].telephonegroup').end()
-                .find('[id="numerogroup"]').attr('id', 'paiement[' + paiementIndex + '].numerogroup').end()
-                .find('[id="commentairegroup"]').attr('id', 'paiement[' + paiementIndex + '].commentairegroup').end()
-                .find('[id="montantgroup"]').attr('id', 'paiement[' + paiementIndex + '].montantgroup').end()
-
-                .find('[name="inputNom"]').attr('name', 'paiement[' + paiementIndex + '][inputNom]').end()
-                .find('[name="inputPrenom"]').attr('name', 'paiement[' + paiementIndex + '][inputPrenom]').end()
-                .find('[name="inputTelephone"]').attr('name', 'paiement[' + paiementIndex + '][inputTelephone]').end()
-                .find('[name="inputNumero"]').attr('name', 'paiement[' + paiementIndex + '][inputNumero]').end()
-                .find('[name="inputCommentaire"]').attr('name', 'paiement[' + paiementIndex + '][inputCommentaire]').end()
-                .find('[name="inputMontant"]').attr('name', 'paiement[' + paiementIndex + '][inputMontant]').end()
-
-                .find('[id="inputtypedepaiement"]').attr('id', 'paiement[' + paiementIndex + '][inputtypedepaiement]').end()
-                .find('[id="inputNom"]').attr('id', 'paiement[' + paiementIndex + '][inputNom]').end()
-                .find('[id="inputPrenom"]').attr('id', 'paiement[' + paiementIndex + '][inputPrenom]').end()
-                .find('[id="inputTelephone"]').attr('id', 'paiement[' + paiementIndex + '][inputTelephone]').end()
-                .find('[id="inputNumero"]').attr('id', 'paiement[' + paiementIndex + '][inputNumero]').end()
-                .find('[id="inputCommentaire"]').attr('id', 'paiement[' + paiementIndex + '][inputCommentaire]').end()
-                .find('[id="inputMontant"]').attr('id', 'paiement[' + paiementIndex + '][inputMontant]').end()
-
-            // Add new fields
-            // Note that we also pass the validator rules for new field as the third parameter
-            // $('#paiementForm')
-            //     .formValidation('addField', 'paiement[' + paiementIndex + '].typedematos', typeValidators)
-            //     .formValidation('addField', 'paiement[' + paiementIndex + '].marque', marqueValidators)
-            //     .formValidation('addField', 'paiement[' + paiementIndex + '].modele', modeleValidators)
-            //     .formValidation('addField', 'paiement[' + paiementIndex + '].ptvmax', ptvmaxValidators)
-            //     .formValidation('addField', 'paiement[' + paiementIndex + '].ptvmin', ptvminValidators)
-            //     .formValidation('addField', 'paiement[' + paiementIndex + '].taille', tailleValidators)
-            //     .formValidation('addField', 'paiement[' + paiementIndex + '].surface', surfaceValidators)
-            //     .formValidation('addField', 'paiement[' + paiementIndex + '].couleur', couleurValidators)
-            //     .formValidation('addField', 'paiement[' + paiementIndex + '].heure', heureValidators)
-            //     .formValidation('addField', 'paiement[' + paiementIndex + '].typeaccessoire', typeaccessoireValidators)
-            //     .formValidation('addField', 'paiement[' + paiementIndex + '].certificat', certificatValidators);
-
-        })
-        // Remove button click handler
-        .on('click', '.removeButton', function() {
-          document.getElementById("index").value --;
-            var $row  = $(this).parents('.form-group'),
-                index = $row.attr('data-paiement-index');
-
-            // Remove fields
-            // $('#paiementForm')
-            //     .formValidation('removeField', $row.find('[name="paiement[' + index + '].typedematos"]'))
-            //     .formValidation('removeField', $row.find('[name="paiement[' + index + '].marque"]'))
-            //     .formValidation('removeField', $row.find('[name="paiement[' + index + '].modele"]'))
-            //     .formValidation('removeField', $row.find('[name="paiement[' + index + '].ptvmax"]'))
-            //     .formValidation('removeField', $row.find('[name="paiement[' + index + '].ptvmin"]'))
-            //     .formValidation('removeField', $row.find('[name="paiement[' + index + '].taille"]'))
-            //     .formValidation('removeField', $row.find('[name="paiement[' + index + '].surface"]'))
-            //     .formValidation('removeField', $row.find('[name="paiement[' + index + '].couleur"]'))
-            //     .formValidation('removeField', $row.find('[name="paiement[' + index + '].heure"]'))
-            //     .formValidation('removeField', $row.find('[name="paiement[' + index + '].typeaccessoire"]'))
-            //     .formValidation('removeField', $row.find('[name="paiement[' + index + '].certificat"]'));
-
-            // Remove element containing the fields
-            $row.remove();
-        });
-
-        // $(document).on('change', $('#paiement['+ paiementIndex +'].inputtypedematos'), function() {
-        //     var e = document.getElementById("paiement["+ paiementIndex +"].inputtypedematos");
-        //     console.log(paiementIndex);
-        //
-        //   });
-
-});
+function validateForm() {
+  var index = document.getElementById("index").value
+  var prix = "<?php echo $fraisDepot ?>";
+  if(index == 0){
+    var nom = document.getElementsByName("paiement[0][inputNom]");
+    var prenom = document.getElementsByName("paiement[0][inputPrenom]");
+    var tel = document.getElementsByName("paiement[0][inputTelephone]");
+    if(nom[0].value == "" || prenom[0].value == "" || tel[0].value == ""){
+      alert("Veuillez rentrez le nom, prenom ainsi que le numéro de téléphone SVP.");
+      return false;
+    }
+    var elem = document.getElementsByName("paiement[0][inputMontant]");
+    var montant = elem[0].value;
+    if(montant != prix){
+      alert("ATTENTION le montant entré ne correspond pas au prix du lot");
+      return false;
+    }
+  } else {
+    var montant = 0;
+    for (i = 0; i <= index; i++) {
+      var nom = document.getElementsByName("paiement[" + i + "][inputNom]");
+      var prenom = document.getElementsByName("paiement[" + i + "][inputPrenom]");
+      var tel = document.getElementsByName("paiement[" + i + "][inputTelephone]");
+      if(nom[0].value == "" || prenom[0].value == "" || tel[0].value == ""){
+        alert("Veuillez rentrez le nom, prenom ainsi que le numéro de téléphone SVP.");
+        return false;
+      }
+      var elem = document.getElementsByName("paiement[" + i + "][inputMontant]");
+      montant = parseInt(montant) + parseInt(elem[0].value);
+      console.log('Montant');
+      console.log(montant);
+      console.log('Prix');
+      console.log(prix);
+    }
+    if(montant != prix){
+      alert("ATTENTION la somme des montants entrés ne correspond pas au prix du lot");
+      return false;
+    }
+  }
+}
 </script>
-
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the

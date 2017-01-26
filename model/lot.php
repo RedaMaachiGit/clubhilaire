@@ -72,20 +72,33 @@ class Lot
 	}
 
 	//Getter numeroCoupon
-	 public function getCouponIncr(){
-     $query1 = "SELECT current FROM coupons WHERE 1";
-     $query2 = "UPDATE `coupons` SET `current`=`current`+1 WHERE 1";
+	 public static function getCouponNoIncrById($id){
+     $queryCoupon = "SELECT numeroCoupon FROM lot WHERE idLot=".$id;
      $db = new DB();
      $db->connect();
      $conn = $db->getConnectDb();
-     $res = $conn->query($query1) or die(mysqli_error($conn));
+     $res = $conn->query($queryCoupon) or die(mysqli_error($conn));
      $row = $res->fetch_row();
-     $this->setCoupon($row[0]);
-     $res1 = $conn->query($query2) or die(mysqli_error($conn));
-     $db->close();
-     //$row = $res->fetch_row();
-     return $row[0];
+     $row_cnt = $res->num_rows;
+     if($row_cnt != 0){
+       return $row[0];
+     }
 	  }
+
+    public function getCouponIncr(){
+      $query1 = "SELECT current FROM coupons WHERE 1";
+      $query2 = "UPDATE `coupons` SET `current`=`current`+1 WHERE 1";
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      $res = $conn->query($query1) or die(mysqli_error($conn));
+      $row = $res->fetch_row();
+      $this->setCoupon($row[0]);
+      $res1 = $conn->query($query2) or die(mysqli_error($conn));
+      $db->close();
+      //$row = $res->fetch_row();
+      return $row[0];
+ 	  }
     //Getter numeroCoupon
    public function getCouponNoIncr(){
      return $this->_numeroCoupon;
@@ -254,7 +267,7 @@ class Lot
 	    Output : Void
 	*/
 
-	public function delete() {
+  public function delete() {
 		$id = $this->getId();
 		$query = "DELETE FROM lot WHERE idLot=".$id;
 		$db = new DB();
@@ -264,13 +277,27 @@ class Lot
 		$db->close();
 	}
 
+  public function getPrixMoinsMarge() {
+		$price = $this->getPrix();
+		$query = "SELECT * FROM parametres";
+		$db = new DB();
+		$db->connect();
+		$conn = $db->getConnectDb();
+		$res = $conn->query($query) or die(mysqli_error($conn));
+		$db->close();
+    $row = $res->fetch_row();
+    $marge = (String)$row[1];
+    $newprice = round($price * ((100-$marge) / 100));
+    return $newprice;
+	}
+
 		/*
 		public Static function getLotById($id) -> get en base de données l'instance ayant l'id $id
 		Input : $id
 	    Output : le vendeur lot l'id $id
 	*/
 
-	public Static function getLotById($id){
+	public static function getLotById($id){
 	  $query = "SELECT * FROM lot WHERE idLot=".$id;
 	  $db = new DB();
 	  $db->connect();
@@ -287,7 +314,7 @@ class Lot
 	  return $lot;
 	}
 
-	public Static function getLotByCoupon($coupon){
+	public static function getLotByCoupon($coupon){
 	  $query = "SELECT * FROM lot WHERE numeroCoupon='$coupon'";
 	  $db = new DB();
 	  $db->connect();
@@ -308,7 +335,7 @@ class Lot
 	   }
 	 }
 
-	 public Static function getLotByNumPre($numPre){
+	 public static function getLotByNumPre($numPre){
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -332,7 +359,7 @@ class Lot
 	 }
 
 
-	 public Static function deleteLotById($idLot){
+	 public static function deleteLotById($idLot){
 	  $query = "DELETE FROM lot WHERE idLot=".$idLot;
 	  $db = new DB();
 	  $db->connect();
@@ -352,26 +379,48 @@ class Lot
 
 	public function getLotByStatus($status){
 	  $query = "SELECT * FROM lot WHERE statut=" . $status;
-	  $db = new DB();
-	  $db->connect();
-	  $conn = $db->getConnectDb();
-	  ///$res = $conn->query($query) or die(mysqli_error($conn));
+    $db = new DB();
+    $db->connect();
+    $conn = $db->getConnectDb();
     $res=mysqli_query($conn,$query);
-	  // $row = $res->fetch_row();
-    while($row = mysqli_fetch_array($res)){
-    $i++;
-	  $vendeur = Vendeur::getVendeurById((int)$row[$i][6]);
-	  $acheteur = Acheteur::getAcheteurById((int)$row[$i][5]);
-	  $lot = new Lot((String)$row[$i][1],(String)$row[$i][2],(int)$row[$i][3],$vendeur);
-	  $lot->setId((int)$row[$i][0]);
-	  $lot->setStatut((String)$row[$i][4]);
-	  $lot->setAcheteur($acheteur);
     $lots = array();
-    array_push($lots, $lot);
+    $i=0;
+    while($row = mysqli_fetch_array($res)){
+        $i++;
+        $vendeur = Vendeur::getVendeurById((int)$row['idVendeur']);
+        $acheteur = Acheteur::getAcheteurById((int)$row['idAcheteur']);
+        $lot = new Lot((String)$row['numeroCoupon'],(String)$row['numeroLotVendeur'],(int)$row['prixVente'],$vendeur);
+        $lot->setId((int)$row['idLot']);
+        $lot->setStatut((String)$row['statut']);
+        $lot->setAcheteur($acheteur);
+        array_push($lots, $lot);
     }
     $db->close();
-	  return $lots;
+    return $lots;
 	 }
+
+   public static function getAllLot(){
+      $query = "SELECT * FROM lot";
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      $res=mysqli_query($conn,$query);
+      $lots = array();
+      $i=0;
+      while($row = mysqli_fetch_array($res)){
+          $i++;
+          $vendeur = Vendeur::getVendeurById((int)$row['idVendeur']);
+          $acheteur = Acheteur::getAcheteurById((int)$row['idAcheteur']);
+          $lot = new Lot((String)$row['numeroCoupon'],(String)$row['numeroLotVendeur'],(int)$row['prixVente'],$vendeur);
+          $lot->setId((int)$row['idLot']);
+          $lot->setStatut((String)$row['statut']);
+          $lot->setAcheteur($acheteur);
+          array_push($lots, $lot);
+      }
+      $db->close();
+      return $lots;
+   }
+
    public function getLotEnVente(){
      $query = "SELECT * FROM lot WHERE statut='En vente'";
      $db = new DB();
@@ -403,16 +452,15 @@ class Lot
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
-	  $lots = Array();
-	  while($row = $res->fetch_row())
-	  {
-		$vendeur = Vendeur::getVendeurById((int)$row[6]);
-		$acheteur = Acheteur::getAcheteurById((int)$row[5]);
-		$lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],$vendeur);
-		$lot->setId((int)$row[0]);
-		$lot->setStatut((String)$row[4]);
-		$lot->setAcheteur($acheteur);
-		array_push($lots,$lot);
+	  $lots = array();
+	  while($row = $res->fetch_row()){
+  		$vendeur = Vendeur::getVendeurById((int)$row[6]);
+  		$acheteur = Acheteur::getAcheteurById((int)$row[5]);
+  		$lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],$vendeur);
+  		$lot->setId((int)$row[0]);
+  		$lot->setStatut((String)$row[4]);
+  		$lot->setAcheteur($acheteur);
+  		array_push($lots,$lot);
 	  }
 	  return $lots;
 	}
@@ -469,7 +517,20 @@ class Lot
 
 	public function updateStatut($statut){
 	  $id = $this->getId();
-	  $query = "UPDATE lot SET statut ='$statut' WHERE idLot=".$id;
+    if(strcmp($statut, "Vendu")==0){
+      $query = "UPDATE lot SET statut =\"Vendu\" WHERE idLot=".$id;
+    } else if(strcmp($statut, "En préparation")==0){
+      $query = "UPDATE lot SET statut =\"En préparation\" WHERE idLot=".$id;
+    } else if(strcmp($statut, "Restitue")==0){
+      $query = "UPDATE lot SET statut =\"Restitue\" WHERE idLot=".$id;
+    } else if(strcmp($statut, "En vente")==0){
+      $query = "UPDATE lot SET statut =\"En vente\" WHERE idLot=".$id;
+    } else if(strcmp($statut, "En attente de restitution")==0){
+      $query = "UPDATE lot SET statut =\"En attente de restitution\" WHERE idLot=".$id;
+    } else if(strcmp($statut, "Non valide")==0){
+      $query = "UPDATE lot SET statut =\"Non valide\" WHERE idLot=".$id;
+    }
+
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -485,7 +546,6 @@ class Lot
 	  $db->connect();
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
-	  $this->setStatut($statut);
 	  $db->close();
 	 }
 

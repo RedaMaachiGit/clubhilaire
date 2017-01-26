@@ -1,9 +1,13 @@
+<?php
+  session_start();
+  $params = $_SESSION['params'];
+?>
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Resitituer un lot non vendu</title>
+  <title>Ajout lot</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -64,6 +68,18 @@
         </div>
       </div>
 
+      <!-- search form (Optional) -->
+      <form action="#" method="get" class="sidebar-form">
+        <div class="input-group">
+          <input type="text" name="q" class="form-control" placeholder="Search...">
+              <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+        </div>
+      </form>
+      <!-- /.search form -->
+
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu">
         <li class="header">HEADER</li>
@@ -92,8 +108,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Restitution de lots
-        <small>Vérifier la non-vente du lot</small>
+        Modification de lots
+        <small>Modifiez avec précaution</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="index.html"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -103,23 +119,52 @@
 
     <!-- Main content -->
     <section class="content">
-      <!-- Form Element sizes -->
+
       <div class="box box-success">
         <div class="box-header with-border">
           <h3 class="box-title">Veuillez saisir le numéro du lot</h3>
         </div>
-        <form id="numeroLotForm" method="POST" action="../controller/controllerRechercheLot.php" class="form-horizontal">
+        <form id="numeroLotForm" method="POST" action="../controller/controllerParametres.php" class="form-horizontal">
+          <?php for($i=0;$i<sizeof($params);$i++){ ?>
           <div class="box-body">
-            <input class="form-control input-lg" name="numeroLot"  type="text" placeholder="Numéro lot">
-			<input class="form-control input-lg" name="formEnvoie"  type="hidden" value="restitution" id="formEnvoie">
-            <div class="box-footer">
-              <button type="submit" value="Submit" class="btn btn-info center-block">Restituer</button>
+            <div class="col-xs-6">
+              <label class="control-label" for="fraisDepotAdmin">Entrez les frais de dépôt</label>
+              <div class="input-group">
+                <input class="form-control input-lg" value="<?php echo $params[$i]["fraisDepotAdmin"] ?>" name="fraisDepotAdmin<?php echo $i?>" id="fraisDepotAdmin<?php echo $i?>" type="text" placeholder="Frais depot admin">
+              </div>
             </div>
+            <div class="col-xs-6">
+              <label class="control-label" for="niveauDepotAdmin">Entrez le niveau de dépôt correspodant</label>
+              <div class="input-group">
+                <input class="form-control input-lg" value="<?php echo $params[$i]["niveauDepotAdmin"] ?>" name="niveauDepotAdmin<?php echo $i?>" id="niveauDepotAdmin<?php echo $i?>" type="text" placeholder="Niveau depot admin">
+                <input class="form-control input-lg" name="nombreDeParams" type="hidden" id="nombreDeParams" value="<?php echo sizeof($params) ?>">
+              </div>
+            </div>
+          </div>
+          <?php } ?>
+          <div class="box-body">
+            <div class="col-xs-6">
+              <label class="control-label" for="fraisDepotAdmin">Entrez les frais de dépôt</label>
+              <div class="input-group">
+                <input class="form-control input-lg" name="newFraisDepotAdmin" id="newFraisDepotAdmin" type="text" placeholder="Frais depot admin">
+              </div>
+            </div>
+            <div class="col-xs-6">
+              <label class="control-label" for="niveauDepotAdmin">Entrez le niveau de dépôt correspodant</label>
+              <div class="input-group">
+                <input class="form-control input-lg" name="newNiveauDepotAdmin" id="newNiveauDepotAdmin" type="text" placeholder="Niveau depot admin">
+                <input class="form-control input-lg" name="formEnvoie" type="hidden" id="formEnvoie" value="changementParams">
+              </div>
+            </div>
+          </div>
+          <div class="box-footer">
+            <button type="submit" value="Submit" class="btn btn-info center-block">Valider</button>
           </div>
         </form>
         <!-- /.box-body -->
       </div>
-      <!-- /.box -->
+
+
     </section>
     <!-- /.content -->
 

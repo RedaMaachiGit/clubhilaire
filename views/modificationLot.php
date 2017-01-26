@@ -37,6 +37,10 @@
 	  <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
 	  <link rel="stylesheet" href="../dist/css/skins/skin-blue.min.css">
 
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+	  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
 	  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	  <!--[if lt IE 9]>
@@ -228,7 +232,7 @@
 											<div class="form-group" name="article[<?php echo $i; ?>].marque">
 												<label for="inputmarque" class="col-sm-2 control-label">Marque</label>
 												<div class="col-sm-10">
-													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputmarque" value="<?php echo($articles[$i]->getMarque()->getLibelle()) ?>" name="article[<?php echo $i; ?>][inputmarque]" placeholder="Marque" />
+													<input type="text" class="autoc" id="article[<?php echo $i; ?>].inputmarque" value="<?php echo($articles[$i]->getMarque()->getLibelle()) ?>" name="article[<?php echo $i; ?>][inputmarque]" placeholder="Marque" />
 												</div>
 											</div>
 
@@ -250,13 +254,38 @@
 				              <div class="col-sm-12 form-group" name="article[<?php echo $i; ?>].homologationGroup" id="article[<?php echo $i; ?>].homologationGroup">
 				                  <label for="inputtypehomologation" class="col-sm-2 control-label">Type d'homologation</label>
 				                  <div class="col-sm-10">
+														<?php $typehomologation = $articles[$i]->getHomologation(); ?>
 				                    <select class="form-control" id="article[<?php echo $i; ?>].inputtypehomologation" name="article[<?php echo $i; ?>][typehomologation]" >
-				                      <option value="EN A / DHV LTF-1">EN A / DHV LTF-1 </option>
-				                      <option value="EN B / DHV LTF 1-2">EN B / DHV LTF 1-2 </option>
-				                      <option value="EN C / DHV LTF 2">EN C / DHV LTF 2 </option>
-				                      <option value="EN D / DHV LTF 2-3">EN D / DHV LTF 2-3 </option>
-				                      <option value="NON HOMOLOGUE">NON HOMOLOGUE </option>
-				                      <option value="INCONNUE">INCONNUE</option>
+															<?php if(strcmp($typehomologation, "EN A / DHV LTF-1") == 0) { ?>
+																<option value="EN A / DHV LTF-1" selected="selected">EN A / DHV LTF-1 </option>
+															<?php } else { ?>
+																<option value="EN A / DHV LTF-1">EN A / DHV LTF-1 </option>
+															<?php } ?>
+															<?php if(strcmp($typehomologation, "EN B / DHV LTF 1-2") == 0) { ?>
+																<option value="EN B / DHV LTF 1-2" selected="selected">EN B / DHV LTF 1-2</option>
+															<?php } else { ?>
+																<option value="EN B / DHV LTF 1-2">EN B / DHV LTF 1-2 </option>
+															<?php } ?>
+															<?php if(strcmp($typehomologation, "EN C / DHV LTF 2") == 0) { ?>
+																<option value="EN C / DHV LTF 2" selected="selected">EN C / DHV LTF 2</option>
+															<?php } else { ?>
+																<option value="EN C / DHV LTF 2">EN C / DHV LTF 2 </option>
+															<?php } ?>
+															<?php if(strcmp($typehomologation, "EN D / DHV LTF 2-3") == 0) { ?>
+																<option value="EN D / DHV LTF 2-3" selected="selected">EN D / DHV LTF 2-3</option>
+															<?php } else { ?>
+																<option value="EN D / DHV LTF 2-3">EN D / DHV LTF 2-3 </option>
+															<?php } ?>
+															<?php if(strcmp($typehomologation, "NON HOMOLOGUE") == 0) { ?>
+																<option value="NON HOMOLOGUE" selected="selected">NON HOMOLOGUE</option>
+															<?php } else { ?>
+																<option value="NON HOMOLOGUE">NON HOMOLOGUE </option>
+															<?php } ?>
+															<?php if(strcmp($typehomologation, "INCONNUE") == 0) { ?>
+																<option value="INCONNUE" selected="selected">INCONNUE</option>
+															<?php } else { ?>
+																<option value="INCONNUE">INCONNUE </option>
+															<?php } ?>
 				                    </select>
 				                  </div>
 				              </div>
@@ -336,7 +365,7 @@
 											<div class="form-group" name="article[<?php echo $i; ?>].marque">
 												<label for="inputmarque" class="col-sm-2 control-label">Marque</label>
 												<div class="col-sm-10">
-													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputmarque" value="<?php echo($articles[$i]->getMarque()->getLibelle()) ?>" name="article[<?php echo $i; ?>][inputmarque]" placeholder="Marque" />
+													<input type="text" class="autoc" id="article[<?php echo $i; ?>].inputmarque" value="<?php echo($articles[$i]->getMarque()->getLibelle()) ?>" name="article[<?php echo $i; ?>][inputmarque]" placeholder="Marque" />
 												</div>
 											</div>
 
@@ -358,7 +387,7 @@
 											<div class="form-group" id="article[<?php echo $i; ?>].taillegroup" name="article[<?php echo $i; ?>].taille">
 												<label for="inputtaille" class="col-sm-2 control-label">Taille</label>
 												<div class="col-sm-10">
-													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputtaille" value="<?php echo($articles[$i]->getTaille()) ?>" name="article[<?php echo $i; ?>][inputtaille]"  placeholder="Taille" />
+													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputtaille" value="<?php echo $articles[$i]->getTaille() ?>" name="article[<?php echo $i; ?>][inputtaille]"  placeholder="Taille" />
 												</div>
 											</div>
 
@@ -390,7 +419,7 @@
 											<div class="form-group" name="article[<?php echo $i; ?>].marque">
 												<label for="inputmarque" class="col-sm-2 control-label">Marque</label>
 												<div class="col-sm-10">
-													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputmarque" value="<?php echo($articles[$i]->getMarque()->getLibelle()) ?>" name="article[<?php echo $i; ?>][inputmarque]" placeholder="Marque" />
+													<input type="text" class="autoc" id="article[<?php echo $i; ?>].inputmarque" value="<?php echo($articles[$i]->getMarque()->getLibelle()) ?>" name="article[<?php echo $i; ?>][inputmarque]" placeholder="Marque" />
 												</div>
 											</div>
 
@@ -442,7 +471,7 @@
 											<div class="form-group" name="article[<?php echo $i; ?>].marque">
 												<label for="inputmarque" class="col-sm-2 control-label">Marque</label>
 												<div class="col-sm-10">
-													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputmarque" value="<?php echo($articles[$i]->getMarque()->getLibelle()) ?>" name="article[<?php echo $i; ?>][inputmarque]" placeholder="Marque" />
+													<input type="text" class="autoc" id="article[<?php echo $i; ?>].inputmarque" value="<?php echo($articles[$i]->getMarque()->getLibelle()) ?>" name="article[<?php echo $i; ?>][inputmarque]" placeholder="Marque" />
 												</div>
 											</div>
 
@@ -512,7 +541,7 @@
 	                  <div class="form-group" name="marque">
 	                    <label for="inputmarque" class="col-sm-2 control-label">Marque</label>
 	                    <div class="col-sm-10">
-	                      <input type="text" class="form-control" id="inputmarque" name="inputmarque" value="" placeholder="Marque" />
+	                      <input type="text" class="autoc" id="inputmarque" name="inputmarque" value="" placeholder="Marque" />
 	                    </div>
 	                  </div>
 
@@ -714,7 +743,7 @@
 	<!-- REQUIRED JS SCRIPTS -->
 
 	<!-- jQuery 2.2.3 -->
-	<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+	<!-- <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script> -->
 	<!-- Bootstrap 3.3.6 -->
 	<script src="../bootstrap/js/bootstrap.min.js"></script>
 	<!-- AdminLTE App -->
@@ -886,6 +915,10 @@
 	                                .removeAttr('id')
 	                                .attr('data-article-index', articleIndex);
 	            $form.append($clone);
+							$('.autoc').autocomplete({
+										 minLength: 2,
+										 source: 'automarque.php'
+											});
 	            // Update the name attributes
 	            $clone
 	                .find('[name="typedematos"]').attr('name', 'article[' + articleIndex + '][typedematos]').end()
@@ -1027,4 +1060,11 @@
 	      return false;
 	  }
 	}
+
+	$('.autoc').on("focus", function(){
+	      $(this).autocomplete({
+	       minLength: 2,
+	       source: '../controller/automarque.php'
+	        });
+	});
 	</script>

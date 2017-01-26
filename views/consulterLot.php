@@ -1,9 +1,25 @@
+<?php
+  session_start();
+  include_once('../model/vendeur.php');
+  include_once('../model/lot.php');
+  include_once('../model/article.php');
+  include_once('../model/modele.php');
+  $lots= unserialize(urldecode(($_SESSION['lots'])));
+
+  //$nombreArticles = sizeof($articles);
+  $nombreLots = sizeof($lots);
+
+  // $vendeur = $lot->getVendeur();
+  // $prixLot = $lot->getPrix();
+  // $numeroLot = $lot->getId();
+  // $numeroCoupon = $lot->getCouponNoIncr();
+?>
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Resitituer un lot non vendu</title>
+  <title>Vendre un lot</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -64,6 +80,18 @@
         </div>
       </div>
 
+      <!-- search form (Optional) -->
+      <form action="#" method="get" class="sidebar-form">
+        <div class="input-group">
+          <input type="text" name="q" class="form-control" placeholder="Search...">
+              <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+        </div>
+      </form>
+      <!-- /.search form -->
+
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu">
         <li class="header">HEADER</li>
@@ -92,36 +120,105 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Restitution de lots
-        <small>Vérifier la non-vente du lot</small>
+        Visualisation de tous les lots
+        <small></small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="index.html"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Saisie numéro lot</li>
+        <li class="active">Vente lot</li>
       </ol>
     </section>
 
     <!-- Main content -->
     <section class="content">
-      <!-- Form Element sizes -->
-      <div class="box box-success">
-        <div class="box-header with-border">
-          <h3 class="box-title">Veuillez saisir le numéro du lot</h3>
-        </div>
-        <form id="numeroLotForm" method="POST" action="../controller/controllerRechercheLot.php" class="form-horizontal">
+      <?php for ($j = 0; $j < $nombreLots; $j++) { $coupon = $lots[$j]->getCouponNoIncr(); $idLotActuel = $lots[$j]->getId() ?>
+        <div class="box">
+          <div class="box-header">
+            <h3 class="box-title">Ce lot numéro <?php echo $coupon; ?> contient</h3>
+          </div>
+
+
+          <!-- /.box-header -->
           <div class="box-body">
-            <input class="form-control input-lg" name="numeroLot"  type="text" placeholder="Numéro lot">
-			<input class="form-control input-lg" name="formEnvoie"  type="hidden" value="restitution" id="formEnvoie">
-            <div class="box-footer">
-              <button type="submit" value="Submit" class="btn btn-info center-block">Restituer</button>
+            <div id="example1_wrapper" class="box-body table-responsive no-padding">
+              <div class="row">
+                <div class="col-sm-12">
+                  <table id="example1" class="table table-hover">
+                    <thead>
+                    <tr>
+                      <th>Type</th>
+                      <th>PTV Minimum</th>
+                      <th>PTV Maximum</th>
+                      <th>Taille</th>
+                      <th>Annee</th>
+                      <th>Surface voile</th>
+                      <th>Couleur voile</th>
+                      <th>Heure voles voile</th>
+                      <th>Certificat revision voile</th>
+                      <th>Type protection selette</th>
+                      <th>Type accessoire</th>
+                      <th>MarqueIndex</th>
+                      <th>Modele</th>
+                      <th>Homologation</th>
+                      <th>Commentaire</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      <?php
+                          $articles = Article::getArticlesByLot($idLotActuel);
+                          $nombreArticles = sizeof($articles);
+
+                          for ($i = 0; $i < $nombreArticles; $i++) { // foreach ($shop as $row) : ?>
+                        <tr>
+                      <td><?php if(!empty($articles[$i]->getTypeArticle())) { echo $articles[$i]->getLibelleTypeArticle(); } else if(!empty($articles[$i]->getSurfaceVoile())){echo "Voile";} else { echo "X";}?></td>
+                      <td><?php if(!empty($articles[$i]->getPtvMin())) { echo $articles[$i]->getPtvMin(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($articles[$i]->getPtvMax())) { echo $articles[$i]->getPtvMax(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($articles[$i]->getTaille())) { echo $articles[$i]->getTaille(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($articles[$i]->getAnnee())) { echo $articles[$i]->getAnnee(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($articles[$i]->getSurfaceVoile())) { echo $articles[$i]->getSurfaceVoile(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($articles[$i]->getCouleurVoile())) { echo $articles[$i]->getCouleurVoile(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($articles[$i]->getHeureVoile())) { echo $articles[$i]->getHeureVoile(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($articles[$i]->getCertificat())) { echo $articles[$i]->getCertificat(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($articles[$i]->getTypeProtectionSelette())) { echo $articles[$i]->getTypeProtectionSelette(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($articles[$i]->getTypeAccessoire())) { echo $articles[$i]->getTypeAccessoire(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($articles[$i]->getMarque()->getLibelle())) { echo $articles[$i]->getMarque()->getLibelle(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($articles[$i]->getModele()->getLibelle())) { echo $articles[$i]->getModele()->getLibelle(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($articles[$i]->getHomologation())) { echo $articles[$i]->getHomologation(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($articles[$i]->getCommentaire())) { echo $articles[$i]->getCommentaire(); } else { echo "X";}?></td>
+                        </tr>
+                      <?php } ?>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                      <th>Type</th>
+                      <th>PTV Minimum</th>
+                      <th>PTV Maximum</th>
+                      <th>Taille</th>
+                      <th>Annee</th>
+                      <th>Surface voile</th>
+                      <th>Couleur voile</th>
+                      <th>Heure voles voile</th>
+                      <th>Certificat revision voile</th>
+                      <th>Type protection selette</th>
+                      <th>Type accessoire</th>
+                      <th>MarqueIndex</th>
+                      <th>Modele</th>
+                      <th>Homologation</th>
+                      <th>Commentaire</th>
+                    </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
-        </form>
-        <!-- /.box-body -->
-      </div>
-      <!-- /.box -->
+          <!-- /.box-body -->
+        </div>
+      <?php } ?>
+
+
+
     </section>
-    <!-- /.content -->
 
   </div>
   <!-- /.content-wrapper -->
@@ -223,6 +320,5 @@
 <script src="../bootstrap/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../dist/js/app.min.js"></script>
-
 </body>
 </html>

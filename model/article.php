@@ -444,13 +444,13 @@ class Article
 		$conn = $db->getConnectDb();
 		$res = $conn->query($query) or die(mysqli_error($conn));
 		$db->close();
-		$articles = Array();
+		$articles = array();
 		while ($row = $res->fetch_row()) {
       // print_r($row);
 			$lot = Lot::getLotById((int)$row[14]);
 			$marque = Marque::getMarqueById((int)$row[12]);
 			$modele = Modele::getModeleById((int)$row[13]);
-			$article = new Article((String)$row[1],$lot,$marque, $modele,(String)$row[2],(int)$row[3],(int)$row[4],(String)$row[6],(string)$row[7]
+			$article = new Article((String)$row[1],$lot,$marque, $modele,(String)$row[2],(int)$row[3],(String)$row[4],(String)$row[6],(string)$row[7]
 			,(String)$row[8],(int)$row[9],(string)$row[10],(string)$row[11],(string)$row[5],(string)$row[16],(string)$row[15]);
 			$article->setId((int)$row[0]);
 			array_push($articles,$article);
@@ -598,5 +598,14 @@ class Article
       return "Accessoire";
     }
  	 }
+
+   public static function changeColumnValue($columnName, $newValue, $primaryKey){
+    $query = "UPDATE article SET ".$columnName." ='$newValue' WHERE idArticle=".$primaryKey;
+    $db = new DB();
+ 		$db->connect();
+ 		$conn = $db->getConnectDb();
+ 		$res = $conn->query($query) or die(mysqli_error($conn));
+ 		$db->close();
+   }
 }
 ?>

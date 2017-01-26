@@ -36,7 +36,7 @@ class Administration
 	public Static function addFraisDepot($niveau, $frais){
 	  $query = "INSERT INTO fraisdepotadmin (idDepotAdmin,niveauDepotAdmin,fraisDepotAdmin) VALUES ('','".$niveau."','".$frais."')";
 	  $db = new DB();
-	  $db->connect();
+	  $db->connect();	
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
@@ -62,7 +62,7 @@ class Administration
 		$query = "SELECT * FROM fraisdepotadmin ORDER BY fraisDepotAdmin asc";
 		$res = $conn->query($query) or die(mysqli_error($conn));
 		$row = $res->fetch_row();
-	  } 
+	  }
 	  $db->close();
 	  return (int)$row[1];
 	}
@@ -84,6 +84,24 @@ class Administration
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	 }
+
+	 public static function getParams(){
+     $query = "SELECT * FROM fraisdepotadmin";
+     $db = new DB();
+     $db->connect();
+     $conn = $db->getConnectDb();
+     $res=mysqli_query($conn,$query);
+     $i=0;
+     $admins = array();
+		 $admin = array();
+     while($row = mysqli_fetch_array($res)){
+     $i++;
+		 $admin = array("niveauDepotAdmin" => (int)$row['niveauDepotAdmin'], "fraisDepotAdmin" => (int)$row['fraisDepotAdmin'], "idDepotAdmin" => (int)$row['idDepotAdmin']);
+     array_push($admins, $admin);
+     }
+     $db->close();
+     return $admins;
+    }
 }
 
 

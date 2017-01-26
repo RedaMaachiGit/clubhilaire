@@ -5,6 +5,12 @@
 
   $numberOfOperations = $_SESSION['numberOfOperations'];
   $operations = $_SESSION['operations'];
+  $fondDeCaisse = $_SESSION['fond'];
+  $resultat = $_SESSION['resultat'];
+  $nombreLotVendu = $_SESSION['nombreLotVendu'];
+  $CB = $_SESSION['CB'];
+  $Liquide = $_SESSION['Liquide'];
+  $Cheque = $_SESSION['Cheque'];
 ?>
   <!DOCTYPE html>
   <html>
@@ -120,6 +126,60 @@
 
       <!-- Main content -->
       <section class="content">
+        <!-- DONUT CHART -->
+        <div class="col-sm-6">
+          <div class="box box-danger">
+          <div class="box-header with-border">
+            <h3 class="box-title">Donut Chart</h3>
+
+            <div class="box-tools pull-right">
+              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+          </div>
+          <div class="box-body">
+            <canvas id="pieChart" style="height:250px"></canvas>
+          </div></div>
+          <!-- /.box-body -->
+        </div>
+        <div class="col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Fond de caisse</span>
+              <span class="info-box-number"><?php echo $fondDeCaisse; ?></span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <div class="col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Résultat</span>
+              <span class="info-box-number"><?php echo $resultat; ?></span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <div class="col-sm-6 col-xs-12">
+            <div class="info-box">
+              <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Nombre de lot vendus</span>
+                <span class="info-box-number"><?php echo $nombreLotVendu; ?></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+
         <div class="row">
           <div class="col-xs-12">
 
@@ -137,6 +197,7 @@
                         <thead>
                         <tr>
                           <th>Identifiant de l'opération</th>
+                          <th>Lot(s)</th>
                           <th>Journée</th>
                           <th>Fond caisse après opération</th>
                           <th>Type de paiement</th>
@@ -146,17 +207,16 @@
                           <th>Prenom emetteur</th>
                           <th>Telephone emetteur</th>
                           <th>Type transaction</th>
-                          <th>Coupon</th>
-                          <th>Lot</th>
                           <th>Date</th>
                           <th>Numero</th>
                           <th>Commentaire</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <?php for ($i = 0; $i < $numberOfOperations; $i++) { // foreach ($shop as $row) : ?>
+                        <?php for ($i = 0; $i < $numberOfOperations; $i++) { $idCaisse = $operations[$i]->getIdPaiement(); ?>
                         <tr>
-                          <td><?php echo $operations[$i]->getIdPaiement(); ?></td>
+                          <td><?php echo $idCaisse; ?></td>
+                          <td><?php echo Caisse::getLotPayeString($idCaisse); ?></td>
                           <td><?php echo $operations[$i]->getJournee(); ?></td>
                           <td><?php echo $operations[$i]->getFonDeCaisse(); ?></td>
                           <td><?php echo $operations[$i]->getTypePaiement(); ?></td>
@@ -166,8 +226,6 @@
                           <td><?php echo $operations[$i]->getPrenom(); ?></td>
                           <td><?php echo $operations[$i]->gettelephoneEmetteur(); ?></td>
                           <td><?php echo $operations[$i]->gettypeTransaction(); ?></td>
-                          <td><?php echo $operations[$i]->getCoupon(); ?></td>
-                          <td><?php echo $operations[$i]->getlot(); ?></td>
                           <td><?php echo $operations[$i]->getdate(); ?></td>
                           <td><?php echo $operations[$i]->getNumero(); ?></td>
                           <td><?php echo $operations[$i]->getCommentaire(); ?></td>
@@ -186,8 +244,6 @@
                           <th>Prenom emetteur</th>
                           <th>Telephone emetteur</th>
                           <th>Type transaction</th>
-                          <th>Coupon</th>
-                          <th>Lot</th>
                           <th>Date</th>
                           <th>Numero</th>
                           <th>Commentaire</th>
@@ -229,10 +285,70 @@
   <!-- FastClick -->
   <script src="../plugins/fastclick/fastclick.js"></script>
   <!-- AdminLTE App -->
+  <script src="../plugins/chartjs/Chart.min.js"></script>
+  <!-- FastClick -->
   <script src="../dist/js/app.min.js"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="../dist/js/demo.js"></script>
   <!-- page script -->
+
+  <script>
+    $(function () {
+      //-------------
+      //- PIE CHART -
+      //-------------
+      // Get context with jQuery - using jQuery's .get() method.
+      var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
+      var pieChart = new Chart(pieChartCanvas);
+      var PieData = [
+        {
+          value: <?php echo $CB ?>,
+          color: "#f56954",
+          highlight: "#f56954",
+          label: "Carte bancaire"
+        },
+        {
+          value: <?php echo $Liquide ?>,
+          color: "#00a65a",
+          highlight: "#00a65a",
+          label: "Liquide"
+        },
+        {
+          value: <?php echo $Cheque ?>,
+          color: "#00c0ef",
+          highlight: "#00c0ef",
+          label: "Cheque"
+        }
+      ];
+      var pieOptions = {
+        //Boolean - Whether we should show a stroke on each segment
+        segmentShowStroke: true,
+        //String - The colour of each segment stroke
+        segmentStrokeColor: "#fff",
+        //Number - The width of each segment stroke
+        segmentStrokeWidth: 2,
+        //Number - The percentage of the chart that we cut out of the middle
+        percentageInnerCutout: 50, // This is 0 for Pie charts
+        //Number - Amount of animation steps
+        animationSteps: 100,
+        //String - Animation easing effect
+        animationEasing: "easeOutBounce",
+        //Boolean - Whether we animate the rotation of the Doughnut
+        animateRotate: true,
+        //Boolean - Whether we animate scaling the Doughnut from the centre
+        animateScale: false,
+        //Boolean - whether to make the chart responsive to window resizing
+        responsive: true,
+        // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+        maintainAspectRatio: true,
+        //String - A legend template
+        legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
+      };
+      //Create pie or douhnut chart
+      // You can switch between pie and douhnut using the method below.
+      pieChart.Doughnut(PieData, pieOptions);
+    });
+  </script>
   <script>
     $(function () {
       $("#example1").DataTable();

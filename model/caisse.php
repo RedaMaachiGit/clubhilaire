@@ -25,7 +25,7 @@ class Caisse
 /////CONSTRUCTEUR////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	 public function __construct($journee,$fondecaisse,$typePaiement,$montant,$beneficiare,$nomEmetteur,$prenomEmetteur,$telephoneEmetteur,$typeTransaction,$coupon,$lot,$numero,$commentaire){
+	 public function __construct($journee,$fondecaisse,$typePaiement,$montant,$beneficiare,$nomEmetteur,$prenomEmetteur,$telephoneEmetteur,$typeTransaction,$date,$numero,$commentaire){
     $this->setJournee($journee);
     $this->setFonDeCaisse($fondecaisse);
     $this->setTypePaiement($typePaiement);
@@ -34,9 +34,8 @@ class Caisse
 		$this->setPrenom($prenomEmetteur);
 		$this->settelephoneEmetteur($telephoneEmetteur);
     $this->settypeTransaction($typeTransaction);
-    $this->setcoupon($coupon);
     $this->setBeneficiaire($beneficiare);
-    $this->setlot($lot);
+    $this->setdate($date);
     $this->setNumero($numero);
 		$this->setCommentaire($commentaire);
 	}
@@ -124,7 +123,7 @@ class Caisse
   }
 
   public function setTypePaiement($typePaiement){
-  $this->_typePaiement = $typePaiement;
+  return $this->_typePaiement = $typePaiement;
   }
 
   public function getMontant(){
@@ -132,7 +131,7 @@ class Caisse
   }
 
   public function setMontant($montant){
-  $this->_montant = $montant;
+  return $this->_montant = $montant;
   }
 
   public function getNom(){
@@ -140,7 +139,7 @@ class Caisse
   }
 
   public function setNom($nomEmetteur){
-  $this->_nomEmetteur = $nomEmetteur;
+  return $this->_nomEmetteur = $nomEmetteur;
   }
 
   public function getPrenom(){
@@ -148,7 +147,7 @@ class Caisse
   }
 
   public function setPrenom($prenomEmetteur){
-  $this->_prenomEmetteur = $prenomEmetteur;
+  return $this->_prenomEmetteur = $prenomEmetteur;
   }
 
   public function gettelephoneEmetteur(){
@@ -156,7 +155,7 @@ class Caisse
   }
 
   public function settelephoneEmetteur($telephoneEmetteur){
-  $this->_telephoneEmetteur = $telephoneEmetteur;
+  return $this->_telephoneEmetteur = $telephoneEmetteur;
   }
 
   public function getNumero(){
@@ -164,7 +163,7 @@ class Caisse
   }
 
   public function setNumero($numero){
-  $this->_numero = $numero;
+  return $this->_numero = $numero;
   }
 
   public function getCommentaire(){
@@ -172,7 +171,7 @@ class Caisse
   }
 
   public function setCommentaire($commentaire){
-  $this->_commentaire = $commentaire;
+  return $this->_commentaire = $commentaire;
   }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -202,16 +201,71 @@ class Caisse
     $typeTransaction = $this->gettypeTransaction();
     $lot = $this->getLot();
     $coupon = $this->getCoupon();
-	  $query = "INSERT INTO caisse (journee,fondCaisse,typePaiement,montant,beneficiaire,nomEmetteur,prenomEmetteur,telephoneEmetteur,typeTransaction,coupon, lot, numero,commentaire)
-	  VALUES ('".$journee."','".$fondCaisse."','".$typePaiement."','".$montant."','".$beneficiare."','".$nomEmetteur."','".$prenomEmetteur."','".$telephoneEmetteur."','".$typeTransaction."','".$coupon."','".$lot."','".$numero."','".$commentaire."')";
-	  $db = new DB();
-	  $db->connect();
-	  $conn = $db->getConnectDb();
-	  $res = $conn->query($query) or die(mysqli_error($conn));
-	  $idModele = $conn->insert_id;
-	  $this->setId($idModele);
+    $db = new DB();
+    $db->connect();
+    $conn = $db->getConnectDb();
+	  $query = "INSERT INTO caisse (journee,fondCaisse,typePaiement,montant,beneficiaire,nomEmetteur,prenomEmetteur,telephoneEmetteur,typeTransaction, numero,commentaire)
+	  VALUES ('".$journee."','".$fondCaisse."','".$typePaiement."','".$montant."','".$beneficiare."','".$nomEmetteur."','".$prenomEmetteur."','".$telephoneEmetteur."','".$typeTransaction."','".$numero."','".$commentaire."')";
+
+    $res = $conn->query($query) or die(mysqli_error($conn));
+	  $idCaisse = $conn->insert_id;
+	  $this->setId($idCaisse);
+
+    $numeroDeLot = $lot->getId();
+    $numeroDeCoupon = $lot->getCouponNoIncr();
+    $queryForeign = "INSERT INTO paiementLot (idCaisse,idLot,numCoupon) VALUES ('".$idCaisse."','".$numeroDeLot."','".$numeroDeCoupon."')";
+    $resForeign = $conn->query($queryForeign) or die(mysqli_error($conn));
+    $lot->updateStatut("En vente");
+
 	  $db->close();
 	 }
+
+    public function ouvrirFermerCaisse(){
+      $journee = $this->getJournee();
+      $fondCaisse = $this->getFonDeCaisse();
+      $typePaiement = $this->getTypePaiement();
+      $montant = $this->getMontant();
+      $beneficiare = $this->getBeneficiaire();
+      $nomEmetteur = $this->getNom();
+      $prenomEmetteur = $this->getPrenom();
+      $telephoneEmetteur = $this->gettelephoneEmetteur();
+      $numero = $this->getNumero();
+      $commentaire = $this->getCommentaire();
+      $typeTransaction = $this->gettypeTransaction();
+      $lot = $this->getLot();
+      $coupon = $this->getCoupon();
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      $query = "INSERT INTO caisse (journee,fondCaisse,typePaiement,montant,beneficiaire,nomEmetteur,prenomEmetteur,telephoneEmetteur,typeTransaction, numero,commentaire)
+      VALUES ('".$journee."','".$fondCaisse."','".$typePaiement."','".$montant."','".$beneficiare."','".$nomEmetteur."','".$prenomEmetteur."','".$telephoneEmetteur."','".$typeTransaction."','".$numero."','".$commentaire."')";
+
+      $res = $conn->query($query) or die(mysqli_error($conn));
+      $idCaisse = $conn->insert_id;
+      $this->setId($idCaisse);
+      $db->close();
+     }
+
+    public static function payerLotMultiple($nombreDeLots, $journee,$fondecaisse,$typePaiement,$montant,$beneficiare,$nomEmetteur,$prenomEmetteur,$telephoneEmetteur,$typeTransaction,$lots,$numero,$commentaire){
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      $query = "INSERT INTO caisse (journee,fondCaisse,typePaiement,montant,beneficiaire,nomEmetteur,prenomEmetteur,telephoneEmetteur,typeTransaction, numero,commentaire)
+      VALUES ('".$journee."','".$fondecaisse."','".$typePaiement."','".$montant."','".$beneficiare."','".$nomEmetteur."','".$prenomEmetteur."','".$telephoneEmetteur."','".$typeTransaction."','".$numero."','".$commentaire."')";
+
+      $res = $conn->query($query) or die(mysqli_error($conn));
+      $idCaisse = $conn->insert_id;
+
+      for($i=0;$i<$nombreDeLots;$i++){
+        $numeroDeLot = $lots[$i]->getId();
+        $numeroDeCoupon = $lots[$i]->getCouponNoIncr();
+        $queryForeign = "INSERT INTO paiementLot (idCaisse,idLot,numCoupon) VALUES ('".$idCaisse."','".$numeroDeLot."','".$numeroDeCoupon."')";
+        $resForeign = $conn->query($queryForeign) or die(mysqli_error($conn));
+        $lots[$i]->updateStatut("En vente");
+      }
+      $db->close();
+    }
+
 
     public static function getLastOpeartion(){
       $query = "SELECT * FROM caisse ORDER BY idPaiement DESC LIMIT 1";
@@ -224,8 +278,8 @@ class Caisse
                              (String)$row['typePaiement'], (int)$row['montant'],
                              (String)$row['beneficiaire'], (String)$row['nomEmetteur'],
                              (String)$row['prenomEmetteur'], (String)$row['telephoneEmetteur'],
-                             (String)$row['typeTransaction'], (int)$row['coupon'], (int)$row['lot'],
-                             (String)$row['date'], (String)$row['numero'], (String)$row['commentaire']);
+                             (String)$row['typeTransaction'], (String)$row['date'], (String)$row['numero'],
+                             (String)$row['commentaire']);
        $paiement->setIdPaiement((int)$row['idPaiement']);
   		  return $paiement;
   	  }else{
@@ -233,6 +287,18 @@ class Caisse
   	  }
     }
 
+   public static function getLotPayeString($idCaisse){
+      $query = "SELECT * FROM paiementLot WHERE idCaisse=" .$idCaisse;
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      $res=mysqli_query($conn,$query);
+      $lotsString = "";
+      while($row = mysqli_fetch_array($res)){
+        $lotsString .= (String)$row[3] . "<br>";
+      }
+      return $lotsString;
+   }
 
    public static function getLastFond(){
      $query = "SELECT * FROM caisse ORDER BY idPaiement DESC LIMIT 1";
@@ -270,17 +336,69 @@ class Caisse
      while($row = mysqli_fetch_array($res)){
      $i++;
     //  print_r($row);
-     $paiement = new Caisse((String)$row['journee'],(int)$row['fondCaisse'],
-                           (String)$row['typePaiement'], (int)$row['montant'],
-                           (String)$row['beneficiaire'], (String)$row['nomEmetteur'],
-                           (String)$row['prenomEmetteur'], (String)$row['telephoneEmetteur'],
-                           (String)$row['typeTransaction'], (int)$row['coupon'], (int)$row['lot'],
-                           (String)$row['date'], (String)$row['numero'], (String)$row['commentaire']);
+    $paiement = new Caisse((String)$row['journee'],(int)$row['fondCaisse'],
+                          (String)$row['typePaiement'], (int)$row['montant'],
+                          (String)$row['beneficiaire'], (String)$row['nomEmetteur'],
+                          (String)$row['prenomEmetteur'], (String)$row['telephoneEmetteur'],
+                          (String)$row['typeTransaction'], (String)$row['date'], (String)$row['numero'],
+                          (String)$row['commentaire']);
      $paiement->setIdPaiement((int)$row['idPaiement']);
      array_push($paiements, $paiement);
      }
      $db->close();
      return $paiements;
+    }
+
+    public static function getMontantPayeParTypePaiement($typeDePaiement){
+      $query = "SELECT * FROM caisse WHERE typePaiement=\"" .$typeDePaiement."\"";
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      $res=mysqli_query($conn,$query);
+      $i=0;
+      $montantTotal = 0;
+      $paiements = array();
+      while($row = mysqli_fetch_array($res)){
+      $i++;
+      $montantTotal = $montantTotal + (int)$row['montant'];
+      }
+      $db->close();
+      return $montantTotal;
+    }
+
+    public static function getResultat(){
+      $query = "SELECT * FROM caisse WHERE typeTransaction = \"Paiement de frais de dépôt\"";
+      $query1 = "SELECT * FROM caisse WHERE typeTransaction = \"Vente de lots\"";
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      $res=mysqli_query($conn,$query);
+      $res1=mysqli_query($conn,$query1);
+      $i=0;
+      $j=0;
+      $montantFraisDepot = 0;
+      $montantVentes = 0;
+      while($row = mysqli_fetch_array($res)){
+        $i++;
+        $montantFraisDepot = $montantFraisDepot + (int)$row['montant'];
+      }
+      while($row1 = mysqli_fetch_array($res1)){
+        $j++;
+        $montantVentes = $montantVentes + (int)$row1['montant'];
+      }
+      $db->close();
+      return $montantFraisDepot - $montantVentes;
+    }
+
+    public static function getNombreLotVendu(){
+      $query = "SELECT * FROM lot WHERE statut = \"Vendu\"";
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      $res=mysqli_query($conn,$query);
+      $rowCount = $res->num_rows;
+      $db->close();
+      return $rowCount;
     }
 }
 
