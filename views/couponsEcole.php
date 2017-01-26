@@ -1,9 +1,19 @@
+<?php
+  session_start();
+  include_once('../model/vendeur.php');
+  include_once('../model/lot.php');
+  include_once('../model/article.php');
+  include_once('../model/modele.php');
+  $lots= unserialize(urldecode(($_SESSION['lots'])));
+
+  $nombreLots = sizeof($lots);
+?>
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Ajout lot particulier Pre Inscription</title>
+  <title>Consulter l'ensemble des lots</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -64,58 +74,103 @@
 
 
   </aside>
-
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Ajout Lot Particulier Pre Inscription
+        Visualisation de tous les lots
+        <small></small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="../index.html"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Saisie numéro PreInscription</li>
+        <li class="active">Consultation des lots</li>
       </ol>
     </section>
 
     <!-- Main content -->
     <section class="content">
-      <!-- Form Element sizes -->
-      <div class="box box-success">
-        <div class="box-header with-border">
-          <h3 class="box-title">Veuillez saisir le numéro de préInscription</h3>
-        </div>
-        <form id="numeroLotForm" method="POST" action="../controller/controllerRechercheLotPreInscription.php" class="form-horizontal">
-          <div class="box-body">
-            <input class="form-control input-lg" name="numPre" id="numPre" type="text" placeholder="Numéro preInscription">
-      			<input class="form-control input-lg" name="formEnvoie" type="hidden" id="formEnvoie" value="preInscriptionParticulier">
-            <div class="box-footer">
-              <button type="submit" value="Submit" class="btn btn-info center-block">Valider</button>
+      <div class="row">
+        <div class="col-xs-12">
+
+
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Détail de tous les paiement enregistrés à ce jour</h3>
             </div>
-          </div>
-        </form>
-        <!-- /.box-body -->
-      </div>
-      <!-- /.box -->
-	  <!-- Form Element sizes -->
-      <div class="box box-success">
-        <div class="box-header with-border">
-          <h3 class="box-title">Veuillez saisir l'addresse de preInscription</h3>
-        </div>
-        <form id="numeroLotForm" method="POST" action="../controller/controllerRechercheLotPreInscription.php" class="form-horizontal">
-          <div class="box-body">
-            <input class="form-control input-lg" name="adressePre" id="adressePre" type="text" placeholder="Adresse preInscription">
-			<input class="form-control input-lg" name="formEnvoie" type="hidden" id="formEnvoie" value="preInscriptionEcole">
-            <div class="box-footer">
-              <button type="submit" value="Submit" class="btn btn-info center-block">Valider</button>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div id="example1_wrapper" class="box-body table-responsive no-padding">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <table id="example1" class="table table-hover">
+                      <thead>
+                      <tr>
+                        <th>Numéro de lot</th>
+                        <th>Lot(s)</th>
+                        <th>Journée</th>
+                        <th>Fond caisse après opération</th>
+                        <th>Type de paiement</th>
+                        <th>Montant de l'opération</th>
+                        <th>Beneficiaire</th>
+                        <th>Nom emetteur</th>
+                        <th>Prenom emetteur</th>
+                        <th>Telephone emetteur</th>
+                        <th>Type transaction</th>
+                        <th>Date</th>
+                        <th>Numero</th>
+                        <th>Commentaire</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <?php for ($i = 0; $i < $numberOfOperations; $i++) { $idCaisse = $operations[$i]->getIdPaiement(); ?>
+                      <tr>
+                        <td><?php echo $idCaisse; ?></td>
+                        <td><?php echo Caisse::getLotPayeString($idCaisse); ?></td>
+                        <td><?php echo $operations[$i]->getJournee(); ?></td>
+                        <td><?php echo $operations[$i]->getFonDeCaisse(); ?></td>
+                        <td><?php echo $operations[$i]->getTypePaiement(); ?></td>
+                        <td><?php echo $operations[$i]->getMontant(); ?></td>
+                        <td><?php echo $operations[$i]->getBeneficiaire(); ?></td>
+                        <td><?php echo $operations[$i]->getNom(); ?></td>
+                        <td><?php echo $operations[$i]->getPrenom(); ?></td>
+                        <td><?php echo $operations[$i]->gettelephoneEmetteur(); ?></td>
+                        <td><?php echo $operations[$i]->gettypeTransaction(); ?></td>
+                        <td><?php echo $operations[$i]->getdate(); ?></td>
+                        <td><?php echo $operations[$i]->getNumero(); ?></td>
+                        <td><?php echo $operations[$i]->getCommentaire(); ?></td>
+                      </tr>
+                      <?php } ?>
+                      </tbody>
+                      <tfoot>
+                      <tr>
+                        <th>Identifiant de l'opération</th>
+                        <th>Journée</th>
+                        <th>Fond caisse après opération</th>
+                        <th>Type de paiement</th>
+                        <th>Montant de l'opération</th>
+                        <th>Beneficiaire</th>
+                        <th>Nom emetteur</th>
+                        <th>Prenom emetteur</th>
+                        <th>Telephone emetteur</th>
+                        <th>Type transaction</th>
+                        <th>Date</th>
+                        <th>Numero</th>
+                        <th>Commentaire</th>
+                      </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+                </div>
+              </div>
             </div>
+            <!-- /.box-body -->
           </div>
-        </form>
-        <!-- /.box-body -->
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
       </div>
-      <!-- /.box -->
     </section>
-    <!-- /.content -->
 
   </div>
   <!-- /.content-wrapper -->
@@ -217,6 +272,5 @@
 <script src="../bootstrap/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../dist/js/app.min.js"></script>
-
 </body>
 </html>
