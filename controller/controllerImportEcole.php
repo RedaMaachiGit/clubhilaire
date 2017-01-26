@@ -123,4 +123,5 @@ class ControllerImportEcole {
 	}
 	
 	ControllerImportEcole::LireExcel();
+	header('location:../views/ajoutFichierEffectue.php');
 ?>

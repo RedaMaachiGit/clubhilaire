@@ -519,7 +519,9 @@ class Lot
 	  $id = $this->getId();
     if(strcmp($statut, "Vendu")==0){
       $query = "UPDATE lot SET statut =\"Vendu\" WHERE idLot=".$id;
-    } else if(strcmp($statut, "En préparation")==0){
+    } else if(strcmp($statut, "En preInscription")==0){
+	  $query = "UPDATE lot SET statut =\"En preInscription\" WHERE idLot=".$id;
+	} else if(strcmp($statut, "En préparation")==0){
       $query = "UPDATE lot SET statut =\"En préparation\" WHERE idLot=".$id;
     } else if(strcmp($statut, "Restitue")==0){
       $query = "UPDATE lot SET statut =\"Restitue\" WHERE idLot=".$id;
