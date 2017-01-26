@@ -25,7 +25,7 @@ class ControllerValidationLot {
 				}
 				if(isset($_POST['validation'.$i]) && !empty($_POST['validation'.$i])){
 						$lot = Lot::getLotById($_POST['idLot'.$i]);
-						$lot->updateStatut("En préparation");
+						$lot->updateStatut("En vente");
 						$numCoupon = $lot->getCouponIncr();
 						$lot->updateCoupon($numCoupon);
 						// $lotvalide = array("numLot" => $_POST['coupon'.$i]);

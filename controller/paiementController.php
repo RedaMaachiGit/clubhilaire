@@ -186,7 +186,8 @@ class PaiementController {
 						$ecriture->setcoupon($numCoupon);
 						$ecriture->save();
 					}
-					header("Location:../views/paiementOk.php?montant=". $MontantTotal . "&coupon=" . $numCoupon);
+					header("Location:../views/paiementOk.php?montant=". $MontantTotal . "&coupon=" . $numCoupon.
+					"&nom=".$Nom."&prenom=".$Prenom."&tel=".$Telephone);
 				}
 			}
 	}

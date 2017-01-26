@@ -15,6 +15,7 @@ class ControllerRechercheLot {
 	public static function rechercheLotByNum(){
 		$lots = Lot::getAllLot();
 		// $listArticle = urlencode(serialize(Article::getArticlesByLot($lot->getId())));
+		session_unset();
 		$_SESSION['lots']=urlencode(serialize($lots));
 		// $_SESSION['articles']=$listArticle;
 		header('location:../views/consulterLot.php');

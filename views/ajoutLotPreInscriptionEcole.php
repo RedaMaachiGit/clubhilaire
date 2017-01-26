@@ -4,6 +4,7 @@
   include_once('../model/lot.php');
   include_once('../model/article.php');
   include_once('../model/modele.php');
+  // print_r($_SESSION)
   $lots= unserialize(urldecode(($_SESSION['lots'])));
   $_SESSION['lots']=urlencode(serialize($lots));
   //$nombreArticles = sizeof($articles);
@@ -135,7 +136,7 @@
          $nombreTotalArticles = 0;
          for ($j = 0; $j<$nombreLots; $j++) {
          $statut = $lots[$j]->getStatut();
-         if(strcmp($statut, "En préparation") == 0){
+         if(strcmp($statut, "En préparation") != 0){
            continue;
          }
          $coupon = $lots[$j]->getCouponNoIncr();

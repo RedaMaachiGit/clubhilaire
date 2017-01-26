@@ -9,6 +9,7 @@
 		public static function getParams(){
 			$params = Administration::getParams();
 			$marge = Administration::getMarge();
+			session_unset();
 			$_SESSION['params']= $params;
 			$_SESSION['marge']= $marge;
 			header('location:../views/parametres.php');
@@ -30,6 +31,7 @@
 				Administration::addFraisDepot($niveauDepotAdmin, $fraisDepotAdmin);
 			}
 			$params = Administration::getParams();
+			session_unset();
 			$_SESSION['params']= $params;
 			header('location:../views/parametres.php');
 		}

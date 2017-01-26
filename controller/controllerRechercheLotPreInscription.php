@@ -19,6 +19,7 @@ class ControllerRechercheLotPreInscritpion {
 				header('location:../views/rechercheLotPreInscriptionError.html');
 			}else{
 				$listArticle = urlencode(serialize(Article::getArticlesByLot($lot->getId())));
+				session_unset();
 				$_SESSION['lot']=urlencode(serialize($lot));
 				$_SESSION['articles']=$listArticle;
 				header('location:../views/ajoutLotPreInscriptionParticulier.php');
@@ -31,6 +32,7 @@ class ControllerRechercheLotPreInscritpion {
 				header('location:../views/rechercheLotPreInscriptionError.html');
 			}else{
 				$lots = Lot::getLotByVendeur($vendeur->getId());
+				session_unset();
 				$_SESSION['lots']=urlencode(serialize($lots));
 				header('location:../views/ajoutLotPreInscriptionEcole.php');
 			}
