@@ -9,7 +9,7 @@ include_once('../model/caisse.php');
 class PaiementController {
 
 	public static function payerFraisDeDepot(){
-			// print_r($_POST);
+			print_r($_POST);
 			$lots = unserialize(urldecode(($_SESSION['lots'])));
 			$fraisDepot = $_SESSION['fraisDepot'];
 			$nombreLots = sizeof($lots);

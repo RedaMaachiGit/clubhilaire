@@ -77,7 +77,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Veuillez valider le lot rentré pour obtenir un numéro de coupon
+        Veuillez payer le lot rentré pour obtenir un numéro de coupon
         <small></small>
       </h1>
       <ol class="breadcrumb">
@@ -99,7 +99,7 @@
               <h4 class="modal-title">Votre lot a bien été entré</h4>
             </div>
             <div class="modal-body">
-              <p style="font-size:30px">Veuillez valider le lot rentré pour obtenir un numéro de coupon. Pour valider utiliser l'adresse mail suivante: <?php echo $_GET['mail'] ?></p>
+              <p style="font-size:30px">Veuillez payer les frais de dépôt pour le lot rentré pour obtenir un numéro de coupon. Pour payer utiliser l'adresse mail suivante: <?php echo $_GET['mail'] ?></p>
             </div>
             <div class="modal-footer">
               <!-- <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button> -->
