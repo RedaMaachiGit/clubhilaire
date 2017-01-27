@@ -59,6 +59,9 @@ for ($j = 0; $j < $nombreLots; $j++) {
     $prixLot = $lots[$j]->getPrix();
     $numeroLot = $lots[$j]->getId();
     $numeroCoupon = $lots[$j]->getCouponNoIncr();
+    if($numeroCoupon==-1){
+      continue;
+    }
     $articles = Article::getArticlesByLot($numeroLot);
     $nombreArticles = sizeof($articles);
     if(empty($articles[0])){
