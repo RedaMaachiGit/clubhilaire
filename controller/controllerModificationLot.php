@@ -120,6 +120,8 @@ class ControllerModificationLot {
 	public static function modificationLot(){
 		$prixVente = $_POST['inputPrix'];
 		$lot= Lot::getLotById((int)$_POST['inputLot']);
+		$idLot = $lot->getId();
+		$coupon = $lot->getCouponNoIncr();
 		$vendeur = ControllerModificationLot::modifierVendeur($lot->getVendeur()->getId());
 		//echo "ID vendeur: " .$lot->getVendeur()->getId() . "<br>";
 		$lot->updatePrix($prixVente);
@@ -128,7 +130,7 @@ class ControllerModificationLot {
 		} else {
 			$numberOfProducts = 1;
 		}
-		Article::deleteArticlesByIdLot($lot->getId());
+		Article::deleteArticlesByIdLot($idLot);
 		for ($i =0; $i <= $numberOfProducts; $i++){		//Pour chaque article
 			if(isset($_POST['article'][$i]['typedematos']) && $_POST['article'][$i]['typedematos'] >= 0 &&  $_POST['article'][$i]['typedematos'] <=3 ){
 				// echo "Le fameux i: " .$i;
@@ -137,7 +139,7 @@ class ControllerModificationLot {
 				ControllerModificationLot::modificationArticle($i,$lot,$marque,$modele);
 			}
 		}
-		header('location:../index.html');
+		header('location:../controller/impressionLotModifie.php?numeroLot=' .$coupon);
 	}
 
 

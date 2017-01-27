@@ -82,41 +82,19 @@ include_once('../model/marque.php');
   <aside class="main-sidebar">
 
     <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
 
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel">
-        <div class="pull-left image">
-          <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-        </div>
-        <div class="pull-left info">
-          <p>Vendeur dashboard</p>
-          <!-- Status -->
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-        </div>
-      </div>
-
+      <!-- jQuery 2.2.3 -->
+      <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+      <script>
+          $(document).ready(function() {
+              $('#menu').load("common/sidebar.html");
+          });
+      </script>
       <!-- Sidebar Menu -->
-      <ul class="sidebar-menu">
-        <li class="header">HEADER</li>
-        <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-        <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
-        <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#">Link in level 2</a></li>
-            <li><a href="#">Link in level 2</a></li>
-          </ul>
-        </li>
-      </ul>
+      <div id='menu' class="sidebar-menu"/>
       <!-- /.sidebar-menu -->
-    </section>
-    <!-- /.sidebar -->
+
+
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
@@ -128,7 +106,8 @@ include_once('../model/marque.php');
         <small>Vous êtes sur le point de vendre un lot</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="../index.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="NumeroLotVente.html">Saisie numéro de lot</a></li>
         <li class="active">Vente lot</li>
       </ol>
     </section>

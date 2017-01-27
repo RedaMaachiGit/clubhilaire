@@ -215,7 +215,6 @@ class Caisse
     $numeroDeCoupon = $lot->getCouponNoIncr();
     $queryForeign = "INSERT INTO paiementLot (idCaisse,idLot,numCoupon) VALUES ('".$idCaisse."','".$numeroDeLot."','".$numeroDeCoupon."')";
     $resForeign = $conn->query($queryForeign) or die(mysqli_error($conn));
-    $lot->updateStatut("En vente");
 
 	  $db->close();
 	 }
@@ -258,10 +257,10 @@ class Caisse
 
       for($i=0;$i<$nombreDeLots;$i++){
         $numeroDeLot = $lots[$i]->getId();
-        $numeroDeCoupon = $lots[$i]->getCouponNoIncr();
+        $numeroDeCoupon = $lots[$i]->getCouponIncr();
+        $lots[$i]->updateCoupon($numeroDeCoupon);
         $queryForeign = "INSERT INTO paiementLot (idCaisse,idLot,numCoupon) VALUES ('".$idCaisse."','".$numeroDeLot."','".$numeroDeCoupon."')";
         $resForeign = $conn->query($queryForeign) or die(mysqli_error($conn));
-        $lots[$i]->updateStatut("En vente");
       }
       $db->close();
     }

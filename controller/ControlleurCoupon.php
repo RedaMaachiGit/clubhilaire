@@ -13,8 +13,8 @@ class ControllerModificationCoupon {
 		} else {
 			$obselete = 0;
 			$coupon = new Coupon($debut,$fin,$current,$obselete);
-			$coupon::updateCoupon($debut,$fin,$current,$obselete);
-			header('location:../index.html');	
+			$coupon->updateCoupon($debut,$fin,$current,$obselete);
+			header('location:../index.html');
 		}
 	}
 }

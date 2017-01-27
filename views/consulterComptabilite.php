@@ -17,7 +17,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Consultation des lots</title>
+    <title>Comptabilité</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
@@ -61,66 +61,31 @@
     <aside class="main-sidebar">
 
       <!-- sidebar: style can be found in sidebar.less -->
-      <section class="sidebar">
 
-        <!-- Sidebar user panel (optional) -->
-        <div class="user-panel">
-          <div class="pull-left image">
-            <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-          </div>
-          <div class="pull-left info">
-            <p>Vendeur dashboard</p>
-            <!-- Status -->
-            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-          </div>
-        </div>
-
-        <!-- search form (Optional) -->
-        <form action="#" method="get" class="sidebar-form">
-          <div class="input-group">
-            <input type="text" name="q" class="form-control" placeholder="Search...">
-                <span class="input-group-btn">
-                  <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                  </button>
-                </span>
-          </div>
-        </form>
-        <!-- /.search form - ->
-
+        <!-- jQuery 2.2.3 -->
+        <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#menu').load("common/sidebar.html");
+            });
+        </script>
         <!-- Sidebar Menu -->
-        <ul class="sidebar-menu">
-          <li class="header">HEADER</li>
-          <!-- Optionally, you can add icons to the links -->
-          <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-          <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
-          <li class="treeview">
-            <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu">
-              <li><a href="#">Link in level 2</a></li>
-              <li><a href="#">Link in level 2</a></li>
-            </ul>
-          </li>
-        </ul>
+        <div id='menu' class="sidebar-menu"/>
         <!-- /.sidebar-menu -->
-      </section>
-      <!-- /.sidebar -->
+
+
     </aside>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <h1>
-          Data Tables
-          <small>advanced tables</small>
+          Bilan comptable
+          <small></small>
         </h1>
         <ol class="breadcrumb">
-          <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-          <li><a href="#">Tables</a></li>
-          <li class="active">Data tables</li>
+          <li><a href="../index.html"><i class="fa fa-dashboard"></i> Home</a></li>
+          <li class="active">Consultation comptabilité</li>
         </ol>
       </section>
 
@@ -130,7 +95,7 @@
         <div class="col-sm-6">
           <div class="box box-danger">
           <div class="box-header with-border">
-            <h3 class="box-title">Donut Chart</h3>
+            <h3 class="box-title">Récapitulatif des paiements</h3>
 
             <div class="box-tools pull-right">
               <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -138,9 +103,10 @@
               <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
             </div>
           </div>
-          <div class="box-body">
-            <canvas id="pieChart" style="height:250px"></canvas>
-          </div></div>
+          <div class="box-body chart-responsive">
+            <div class="chart" id="paiement" style="height: 235px; position: relative;"></div>
+          </div>
+        </div>
           <!-- /.box-body -->
         </div>
         <div class="col-sm-6 col-xs-12">
@@ -186,7 +152,7 @@
 
             <div class="box">
               <div class="box-header">
-                <h3 class="box-title">Data Table With Full Features</h3>
+                <h3 class="box-title">Détail de tous les paiement enregistrés à ce jour</h3>
               </div>
               <!-- /.box-header -->
               <div class="box-body">
@@ -282,6 +248,9 @@
   <script src="../plugins/datatables/dataTables.bootstrap.min.js"></script>
   <!-- SlimScroll -->
   <script src="../plugins/slimScroll/jquery.slimscroll.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+  <script src="../../plugins/morris/morris.min.js"></script>
   <!-- FastClick -->
   <script src="../plugins/fastclick/fastclick.js"></script>
   <!-- AdminLTE App -->
@@ -294,59 +263,19 @@
 
   <script>
     $(function () {
-      //-------------
-      //- PIE CHART -
-      //-------------
-      // Get context with jQuery - using jQuery's .get() method.
-      var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
-      var pieChart = new Chart(pieChartCanvas);
-      var PieData = [
-        {
-          value: <?php echo $CB ?>,
-          color: "#f56954",
-          highlight: "#f56954",
-          label: "Carte bancaire"
-        },
-        {
-          value: <?php echo $Liquide ?>,
-          color: "#00a65a",
-          highlight: "#00a65a",
-          label: "Liquide"
-        },
-        {
-          value: <?php echo $Cheque ?>,
-          color: "#00c0ef",
-          highlight: "#00c0ef",
-          label: "Cheque"
-        }
-      ];
-      var pieOptions = {
-        //Boolean - Whether we should show a stroke on each segment
-        segmentShowStroke: true,
-        //String - The colour of each segment stroke
-        segmentStrokeColor: "#fff",
-        //Number - The width of each segment stroke
-        segmentStrokeWidth: 2,
-        //Number - The percentage of the chart that we cut out of the middle
-        percentageInnerCutout: 50, // This is 0 for Pie charts
-        //Number - Amount of animation steps
-        animationSteps: 100,
-        //String - Animation easing effect
-        animationEasing: "easeOutBounce",
-        //Boolean - Whether we animate the rotation of the Doughnut
-        animateRotate: true,
-        //Boolean - Whether we animate scaling the Doughnut from the centre
-        animateScale: false,
-        //Boolean - whether to make the chart responsive to window resizing
-        responsive: true,
-        // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-        maintainAspectRatio: true,
-        //String - A legend template
-        legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
-      };
-      //Create pie or douhnut chart
-      // You can switch between pie and douhnut using the method below.
-      pieChart.Doughnut(PieData, pieOptions);
+      "use strict";
+      //DONUT CHART
+      var donut = new Morris.Donut({
+        element: 'paiement',
+        resize: true,
+        colors: ["#3c8dbc", "#f56954", "#00a65a"],
+        data: [
+          {label: "Paiement par CB", value: <?php echo $CB ?>},
+          {label: "Paiement par chèque", value: <?php echo $Cheque ?>},
+          {label: "Paiement en liquide", value: <?php echo $Liquide ?>}
+        ],
+        hideHover: 'auto'
+      });
     });
   </script>
   <script>

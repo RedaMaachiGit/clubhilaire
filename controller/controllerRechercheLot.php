@@ -20,6 +20,7 @@ class ControllerRechercheLot {
 		}else{
 			$listArticle = urlencode(serialize(Article::getArticlesByLot($lot->getId())));
 			$idForm = (String)$_POST['formEnvoie'];
+			session_unset();
 			$_SESSION['lot']=urlencode(serialize($lot));
 			$_SESSION['articles']=$listArticle;
 			if(strcmp($idForm,"restitution")==0){

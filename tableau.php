@@ -1,67 +1,17 @@
 <?php
-  include_once('../model/vendeur.php');
-  include_once('../model/lot.php');
-  include_once('../model/article.php');
-  include_once('../model/modele.php');
-  include_once('../model/marque.php');
-  if(isset($_POST['mail']) && !empty($_POST['mail'])){
-    $mail = $_POST['mail'];
-  } else if(isset($_GET['mail']) && !empty($_GET['mail'])){
-    $mail = $_GET['mail'];
-  } else if(empty($_GET['mail']) || empty($_POST['mail'])){
-    ?>
-      <div id="timer_div">Aucune adresse mail entrée.</div>
-      <script>
-          var seconds_left = 4;
-          var interval = setInterval(function() {
-            document.getElementById('timer_div').innerHTML = "Aucune adresse mail entrée. Redirection dans " + --seconds_left;
-
-            if (seconds_left <= 0)
-            {
-              //  document.getElementById('timer_div').innerHTML = "You are Ready!";
-              window.setTimeout("location=('../views/imprimerLots.html');",0);
-               clearInterval(interval);
-            }
-          }, 1000);
-       </script>
-
-    <?php
-    return false;
-  }
-
-  $vendeur = Vendeur::getVendeurByMail($mail);
-  if(empty($vendeur)){ ?>
-    <div id="timer_div">Pas de vendeur avec cette adresse mail.</div>
-    <script>
-        var seconds_left = 4;
-        var interval = setInterval(function() {
-          document.getElementById('timer_div').innerHTML = "Pas de vendeur avec cette adresse mail. Redirection dans " + --seconds_left;
-
-          if (seconds_left <= 0)
-          {
-            //  document.getElementById('timer_div').innerHTML = "You are Ready!";
-            window.setTimeout("location=('../views/imprimerLots.html');",0);
-             clearInterval(interval);
-          }
-        }, 1000);
-     </script>
-
-  <?php
-  } else {
-    $idVendeur = $vendeur->getId();
-    $lots = Lot::getLotByVendeur($idVendeur);
-    $nombreLots = sizeof($lots);
-
-
+  include_once('model/vendeur.php');
+  include_once('model/lot.php');
+  include_once('model/article.php');
+  include_once('model/modele.php');
+  include_once('model/marque.php');
+  $lots = Lot::getLotEnVenteStatic();
+  $nombreLots = sizeof($lots);
 for ($j = 0; $j < $nombreLots; $j++) {
     $numeroLot = $lots[$j]->getId();
     $vendeur = $lots[$j]->getVendeur();
     $prixLot = $lots[$j]->getPrix();
     $numeroLot = $lots[$j]->getId();
     $numeroCoupon = $lots[$j]->getCouponNoIncr();
-    if($numeroCoupon==-1){
-      continue;
-    }
     $articles = Article::getArticlesByLot($numeroLot);
     $nombreArticles = sizeof($articles);
     if(empty($articles[0])){
@@ -238,9 +188,7 @@ for ($j = 0; $j < $nombreLots; $j++) {
   ?>
 </table></div>
 <div style="page-break-after:always"></div>
-<?php }
-  }
-?>
+<?php } ?>
 
 
 

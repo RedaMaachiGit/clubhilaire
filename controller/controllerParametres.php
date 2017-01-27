@@ -8,7 +8,10 @@
 
 		public static function getParams(){
 			$params = Administration::getParams();
+			$marge = Administration::getMarge();
+			session_unset();
 			$_SESSION['params']= $params;
+			$_SESSION['marge']= $marge;
 			header('location:../views/parametres.php');
 		}
 		public static function setParams(){
@@ -28,10 +31,26 @@
 				Administration::addFraisDepot($niveauDepotAdmin, $fraisDepotAdmin);
 			}
 			$params = Administration::getParams();
+			session_unset();
 			$_SESSION['params']= $params;
 			header('location:../views/parametres.php');
 		}
 
+		public static function setMarge(){
+			if(isset($_POST['marge']) && !empty($_POST['marge'])){
+				$marge = $_POST['marge'];
+				Administration::updateMarge($marge);
+			}
+			header('location:../views/parametres.php');
+		}
+
+
+
+	}
+	if(isset($_POST['formEnvoie'])){
+		if($_POST['formEnvoie'] == "marge"){
+			ControllerParametres::setMarge();
+		}
 	}
 	if(isset($_POST['formEnvoie'])){
 		ControllerParametres::setParams();

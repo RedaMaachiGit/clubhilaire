@@ -99,6 +99,21 @@ class Lot
       //$row = $res->fetch_row();
       return $row[0];
  	  }
+
+    public static function getCouponIncrStatic(){
+      $query1 = "SELECT current FROM coupons WHERE 1";
+      $query2 = "UPDATE `coupons` SET `current`=`current`+1 WHERE 1";
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      $res = $conn->query($query1) or die(mysqli_error($conn));
+      $row = $res->fetch_row();
+      $this->setCoupon($row[0]);
+      $res1 = $conn->query($query2) or die(mysqli_error($conn));
+      $db->close();
+      //$row = $res->fetch_row();
+      return $row[0];
+ 	  }
     //Getter numeroCoupon
    public function getCouponNoIncr(){
      return $this->_numeroCoupon;
@@ -176,7 +191,7 @@ class Lot
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
-	  $coupon = $conn->real_escape_string($this->getCouponIncr());
+	  $coupon = "-1";
 	  $numeroLotVendeur = $conn->real_escape_string($this->getNumeroLotVendeur());
 	  $prix = $conn->real_escape_string($this->getPrix());
 	  $status = $conn->real_escape_string($this->getStatut());
@@ -445,6 +460,30 @@ class Lot
      return $lots;
     }
 
+   public static function getLotEnVenteStatic(){
+     $query = "SELECT * FROM lot WHERE statut='En vente'";
+     $db = new DB();
+     $db->connect();
+     $conn = $db->getConnectDb();
+    //  $resT = $conn->query($query) or die(mysqli_error($conn));
+    //  $rowT = $res->fetch_row();
+     $res=mysqli_query($conn,$query);
+     $i=0;
+     $lots = array();
+     while($row = mysqli_fetch_array($res)){
+     $i++;
+     $vendeur = Vendeur::getVendeurById((int)$row['idVendeur']);
+     $acheteur = Acheteur::getAcheteurById((int)$row['idAcheteur']);
+     $lot = new Lot((String)$row['numeroCoupon'],(String)$row['numeroLotVendeur'],(int)$row['prixVente'],$vendeur);
+     $lot->setId((int)$row['idLot']);
+     $lot->setStatut((String)$row['statut']);
+     $lot->setAcheteur($acheteur);
+     array_push($lots, $lot);
+     }
+     $db->close();
+     return $lots;
+    }
+
 	 public Static function getLotByVendeur($idVendeur){
 	  $query = "SELECT * FROM lot WHERE idVendeur=".$idVendeur;
 	  $db = new DB();
@@ -531,8 +570,9 @@ class Lot
       $query = "UPDATE lot SET statut =\"En attente de restitution\" WHERE idLot=".$id;
     } else if(strcmp($statut, "Non valide")==0){
       $query = "UPDATE lot SET statut =\"Non valide\" WHERE idLot=".$id;
+    } else if(strcmp($statut, "Payé au vendeur")==0){
+      $query = "UPDATE lot SET statut =\"Payé au vendeur\" WHERE idLot=".$id;
     }
-
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();

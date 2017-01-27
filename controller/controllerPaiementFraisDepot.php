@@ -41,6 +41,7 @@ class ControllerPaiementFraisDepot {
 		if($lot->getCouponNoIncr()==0){
 			$couponIncr = $lot->getCouponIncr();
 			$lot->updateCoupon($couponIncr);
+			session_unset();
 			$_SESSION["coupon"]=$couponIncr;
 			header('location:../views/paiementFraisDepotEffectueNumCoupon.php');
 		}else{

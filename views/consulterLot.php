@@ -5,21 +5,15 @@
   include_once('../model/article.php');
   include_once('../model/modele.php');
   $lots= unserialize(urldecode(($_SESSION['lots'])));
-
-  //$nombreArticles = sizeof($articles);
   $nombreLots = sizeof($lots);
 
-  // $vendeur = $lot->getVendeur();
-  // $prixLot = $lot->getPrix();
-  // $numeroLot = $lot->getId();
-  // $numeroCoupon = $lot->getCouponNoIncr();
 ?>
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Vendre un lot</title>
+  <title>Consulter l'ensemble des lots</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -66,55 +60,21 @@
   <aside class="main-sidebar">
 
     <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
 
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel">
-        <div class="pull-left image">
-          <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-        </div>
-        <div class="pull-left info">
-          <p>Vendeur dashboard</p>
-          <!-- Status -->
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-        </div>
-      </div>
-
-      <!-- search form (Optional) -->
-      <form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
-              <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-        </div>
-      </form>
-      <!-- /.search form -->
-
+      <!-- jQuery 2.2.3 -->
+      <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+      <script>
+          $(document).ready(function() {
+              $('#menu').load("common/sidebar.html");
+          });
+      </script>
       <!-- Sidebar Menu -->
-      <ul class="sidebar-menu">
-        <li class="header">HEADER</li>
-        <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-        <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
-        <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#">Link in level 2</a></li>
-            <li><a href="#">Link in level 2</a></li>
-          </ul>
-        </li>
-      </ul>
+      <div id='menu' class="sidebar-menu"/>
       <!-- /.sidebar-menu -->
-    </section>
-    <!-- /.sidebar -->
-  </aside>
 
+
+  </aside>
+  
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -124,8 +84,8 @@
         <small></small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.html"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Vente lot</li>
+        <li><a href="../index.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Consultation des lots</li>
       </ol>
     </section>
 
@@ -134,7 +94,12 @@
       <?php for ($j = 0; $j < $nombreLots; $j++) { $coupon = $lots[$j]->getCouponNoIncr(); $idLotActuel = $lots[$j]->getId() ?>
         <div class="box">
           <div class="box-header">
+            <?php if($coupon != -1){ ?>
             <h3 class="box-title">Ce lot numéro <?php echo $coupon; ?> contient</h3>
+            <?php } ?>
+            <?php if($coupon == -1){ ?>
+            <h3 class="box-title">Ce lot n'a pas encore été validé. Mail du vendeur: <?php echo $lots[$j]->getVendeur()->getEmail(); ?></h3>
+            <?php } ?>
           </div>
 
 
@@ -314,8 +279,6 @@
 
 <!-- REQUIRED JS SCRIPTS -->
 
-<!-- jQuery 2.2.3 -->
-<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="../bootstrap/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->

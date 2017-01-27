@@ -3,8 +3,7 @@ include_once('../model/vendeur.php');
 include_once('../model/lot.php');
 include_once('../model/article.php');
 include_once('../model/modele.php');
-$GLOBALS['numeroCoupon'] = 'Erreur veuillez réessayer';
-$GLOBALS['numeroLot'] = '';
+
 // print_r($_POST);
 class ControllerAjoutLot {
 
@@ -128,7 +127,7 @@ class ControllerAjoutLot {
 		$vendeur = ControllerAjoutLot::ajoutVendeur();
 		$lot = new Lot(1,$numeroLotVendeur,$prixVente,$vendeur); //On créer le lot et on l'associe au vendeur
 		$lot->save();
-		$GLOBALS['numeroCoupon'] = $lot->getCouponNoIncr();
+		$GLOBALS['numeroCoupon'] = -1;
 		$GLOBALS['numeroLot'] = $lot->getId();
 		if(isset($_POST['index']) && !empty($_POST['index'])) {
 			$numberOfProducts = $_POST['index'];
@@ -147,5 +146,5 @@ class ControllerAjoutLot {
 	ControllerAjoutLot::AjouterLot();
 ?>
 <script>
-	window.top.location='../views/NumeroCoupon.php?coupon=<?php Print($GLOBALS['numeroCoupon']); ?>&numeroLot=<?php Print($GLOBALS['numeroLot']); ?>';
+	window.top.location='../views/NumeroCoupon.php?mail=<?php echo $_POST['inputEmail']; ?>';
 </script>

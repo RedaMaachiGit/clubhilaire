@@ -9,7 +9,7 @@ include_once('../model/caisse.php');
 class PaiementController {
 
 	public static function payerFraisDeDepot(){
-			// print_r($_POST);
+			print_r($_POST);
 			$lots = unserialize(urldecode(($_SESSION['lots'])));
 			$fraisDepot = $_SESSION['fraisDepot'];
 			$nombreLots = sizeof($lots);
@@ -37,6 +37,9 @@ class PaiementController {
 												$nouveauFond,"CB",$Montant,"Caisse Club Hilaire",
 												$Nom,$Prenom,$Telephone,
 												"Paiement de frais de dépôt",$lots,"Pas de numéro","Pas de commentaire");
+						for($i=0;$i<sizeof($lots);$i++){
+							$lots[$i]->updateStatut("En vente");
+						}
 					} else if ($Type == 1){
 						$journee = date('d/m/Y');
 						$ancienFond = Caisse::getLastFond();
@@ -47,7 +50,9 @@ class PaiementController {
 												$nouveauFond,"Cheque",$Montant,"Caisse Club Hilaire",
 												$Nom,$Prenom,$Telephone,
 												"Paiement de frais de dépôt",$lots,$Numero,$Commentaire);
-
+						for($i=0;$i<sizeof($lots);$i++){
+							$lots[$i]->updateStatut("En vente");
+						}
 					} else if ($Type == 2){
 						$journee = date('d/m/Y');
 						$ancienFond = Caisse::getLastFond();
@@ -56,7 +61,9 @@ class PaiementController {
 												$nouveauFond,"Liquide",$Montant,"Caisse Club Hilaire",
 												$Nom,$Prenom,$Telephone,
 												"Paiement de frais de dépôt",$lots,"Pas de numéro","Pas de commentaire");
-
+						for($i=0;$i<sizeof($lots);$i++){
+							$lots[$i]->updateStatut("En vente");
+						}
 					}
 					header("Location:../views/paiementOk.php?montant=".$MontantTotal);
 				}
@@ -95,6 +102,7 @@ class PaiementController {
 												$nouveauFond,"CB",$Montant,"Caisse Club Hilaire",
 												$Nom,$Prenom,$Telephone,
 												"Paiement de frais de dépôt",$lots,"Pas de numéro","Pas de commentaire");
+						$lot->updateStatut("En vente");
 					} else if ($Type == 1){
 						$journee = date('d/m/Y');
 						$ancienFond = Caisse::getLastFond();
@@ -105,7 +113,7 @@ class PaiementController {
 												$nouveauFond,"Cheque",$Montant,"Caisse Club Hilaire",
 												$Nom,$Prenom,$Telephone,
 												"Paiement de frais de dépôt",$lots,$Numero,$Commentaire);
-
+						$lot->updateStatut("En vente");
 					} else if ($Type == 2){
 						$journee = date('d/m/Y');
 						$ancienFond = Caisse::getLastFond();
@@ -114,7 +122,7 @@ class PaiementController {
 												$nouveauFond,"Liquide",$Montant,"Caisse Club Hilaire",
 												$Nom,$Prenom,$Telephone,
 												"Paiement de frais de dépôt",$lots,"Pas de numéro","Pas de commentaire");
-
+						$lot->updateStatut("En vente");
 					}
 					header("Location:../views/paiementOk.php?montant=".$MontantTotal);
 				}
@@ -149,7 +157,7 @@ class PaiementController {
 						$ecriture = new Caisse($journee,$nouveauFond,"CB",$Montant,
 						"Caisse Club Hilaire",$Nom,$Prenom,$Telephone,
 						"Vente de lot","SQL","Pas de numéro","Pas de commentaire");
-						$lot->updateStatut("Vendu");
+ 						$lot->updateStatut("Vendu");
 						$ecriture->setLot($lot);
 						$ecriture->setcoupon($numCoupon);
 						$ecriture->save();
@@ -178,7 +186,8 @@ class PaiementController {
 						$ecriture->setcoupon($numCoupon);
 						$ecriture->save();
 					}
-					header("Location:../views/paiementOk.php?montant=". $MontantTotal . "&coupon=" . $numCoupon);
+					header("Location:../views/paiementOk.php?montant=". $MontantTotal . "&coupon=" . $numCoupon.
+					"&nom=".$Nom."&prenom=".$Prenom."&tel=".$Telephone);
 				}
 			}
 	}
@@ -187,12 +196,15 @@ class PaiementController {
 }
 	if(isset($_POST['multiple'])) {
 		if ($_POST['multiple']=="multiple"){
+			// echo "0";
 			PaiementController::payerFraisDeDepot();
 		}
 	}
 	else if (isset($_POST['paiementFraisDepotUnique'])){
+		// echo "1";
 		PaiementController::payerFraisDeDepotUnique();
 	} else {
+		// echo "2";
 		PaiementController::payerVente();
 	}
 
