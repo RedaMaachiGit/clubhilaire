@@ -1,15 +1,17 @@
-<!DOCTYPE html>
 <?php
+session_start();
 include_once('../model/vendeur.php');
 include_once('../model/lot.php');
 include_once('../model/article.php');
 include_once('../model/modele.php');
 include_once('../model/marque.php');
+// print_r($_SESSION);
 if(isset($_GET['coupon'])){
   $lot = Lot::getLotByCoupon($_GET['coupon']);
   $articles = Article::getArticlesByLot($lot->getId());
 }
 ?>
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -20,9 +22,9 @@ if(isset($_GET['coupon'])){
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="../ionicons-2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="../dist/css/skins/skin-blue.min.css">
@@ -100,6 +102,45 @@ if(isset($_GET['coupon'])){
           <h4>Le paiement a bien été enregistré et vous avez récupéré <?php echo $_GET['montant'] ?> € tous moyens de paiement confondus !</h4>
           <p>Pensez bien mettre ce montant de la caisse.</p>
         </div>
+        <?php if(isset($_SESSION['correspondance'])){ ?>
+          <section class="invoice">
+            <!-- title row -->
+            <div class="row">
+              <div class="col-xs-12">
+                <h2 class="page-header">
+                  <i class="fa fa-globe"></i> Correspondance numero lot vendeur et numero coupon
+                  <small class="pull-right">Date: <?php echo date("j/m/Y"); ?></small>
+                </h2>
+              </div>
+              <!-- /.col -->
+            </div>
+            <div class="row">
+              <div class="col-xs-12 table-responsive">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Num Lot Vendeur</th>
+                      <th>Num Coupon</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                  <?php
+                    $tabCorrespondance = $_SESSION['correspondance'];
+                    for($i=0;$i<sizeof($tabCorrespondance);$i++){
+                  ?>
+                    <td><?php echo array_keys($tabCorrespondance)[$i]; ?></td>
+                    <td><?php echo array_values($tabCorrespondance)[$i]; ?></td>
+                  </tr>
+                  <?php } ?>
+                </tbody>
+              </table>
+            </div>
+            <!-- /.col -->
+          </div>
+        </section>
+        <?php } ?>
+
 
         <?php if(isset($_GET['coupon'])){ ?>
           <!-- <div class="modal"> -->
@@ -121,6 +162,7 @@ if(isset($_GET['coupon'])){
               </div>
               <!-- /.modal-content -->
             </div>
+            <?php if(isset($_GET['tel']) && isset($_GET['prenom']) && isset($_GET['nom'])){ ?>
 
             <!-- <div class="wrapper"> -->
             <!-- Main content -->
@@ -327,6 +369,7 @@ if(isset($_GET['coupon'])){
                 </div>
               </section>
               <?php } ?>
+              <?php } ?>
               <!-- </div> -->
 
             </section>
@@ -363,6 +406,12 @@ if(isset($_GET['coupon'])){
           <!-- AdminLTE App -->
           <script src="../dist/js/app.min.js"></script>
           <!-- AdminLTE for demo purposes -->
-          <script src="../dist/js/demo.js"></script>
+          <?php if(isset($_SESSION['correspondance'])){ ?>
+          <script src="../dist/js/demo.js"></script><script type="text/javascript">
+            <!--
+            window.print();
+            //-->
+          </script>
+          <?php } ?>
         </body>
         </html>

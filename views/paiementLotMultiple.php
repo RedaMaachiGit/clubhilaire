@@ -9,7 +9,12 @@
   $fraisDepot = $_SESSION['fraisDepot'];
   $_SESSION['lots']=urlencode(serialize($lots));
   $_SESSION['fraisDepot'] = $fraisDepot;
-  
+  if(sizeof($lots)>0){
+    $vendeur = $lots[0]->getVendeur();
+    $nomVendeur = $vendeur->getNom();
+    $prenomVendeur = $vendeur->getPrenom();
+    $telVendeur = $vendeur->getTel();
+  }
   //$nombreArticles = sizeof($articles);
   $nombreLots = sizeof($lots);
 
@@ -29,9 +34,9 @@
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="../ionicons-2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="../dist/css/skins/skin-blue.min.css">
@@ -89,6 +94,12 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
+      <?php if(sizeof($lots) == 0) { ?>
+        <h1>
+          Pas de lots à payer
+          <small></small>
+        </h1>
+      <?php return false;} ?>
       <h1>
         Paiement du dépôt pour les lots suivants <?php //for($i=0; $i<count($lots)-1 ; $i++){ echo ("   ".$lots[$i]->getCoupon());}?>
         <small>Vous êtes sur le point de recevoir le paiement pour plusieurs lots</small>
@@ -202,11 +213,11 @@
         <form id="paiementForm" class="form-horizontal" method="POST" action="../controller/paiementController.php" class="form-horizontal" onsubmit="return validateForm()">
           <div class="box-body">
             <div class="col-sm-12 form-group">
-                <label>Type d'paiement</label>
+                <label>Type de paiement</label>
                 <select class="col-sm-5 form-control" id="paiement[0].inputtypedepaiement" name="paiement[0][typedepaiement]" data-index='0' onchange="handleTypeChange(this)">
                   <option value="0">Carte Bancaire</option>
                   <option value="1">Chèque</option>
-                  <option value="2">Liquide</option>
+                  <option value="2" selected="selected">Liquide</option>
                 </select>
             </div>
 
@@ -216,21 +227,21 @@
             <div class="form-group" name="paiement[0].nomGroup">
               <label for="inputNom" class="col-sm-2 control-label">Nom</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputNom" name="paiement[0][inputNom]" value="" placeholder="Nom" />
+                <input type="text" class="form-control" id="inputNom" name="paiement[0][inputNom]" value="<?php echo $nomVendeur; ?>" placeholder="Nom" />
               </div>
             </div>
 
             <div class="form-group" name="paiement[0].prenomGroup">
               <label for="inputPrenom" class="col-sm-2 control-label">Prénom</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputPrenom" name="paiement[0][inputPrenom]" value="" placeholder="Prénom" />
+                <input type="text" class="form-control" id="inputPrenom" name="paiement[0][inputPrenom]" value="<?php echo $prenomVendeur; ?>" placeholder="Prénom" />
               </div>
             </div>
 
             <div class="form-group" name="paiement[0].telephoneGroup" id="paiement[0].telephoneGroup">
               <label for="inputTelephone" class="col-sm-2 control-label">Téléphone</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputTelephone" name="paiement[0][inputTelephone]" value="" placeholder="Téléphone" />
+                <input type="text" class="form-control" id="inputTelephone" name="paiement[0][inputTelephone]" value="<?php echo $telVendeur; ?>" placeholder="Téléphone" />
               </div>
             </div>
 
@@ -255,11 +266,8 @@
               </div>
             </div>
 
-            
 
-            <div class="col-xs-1">
-              <button type="button" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>
-            </div>
+
           </div>
           <!-- /.box-body -->
           <div class="box-footer">
@@ -285,21 +293,21 @@
       <div class="form-group" name="nomGroup"  id="nomGroup">
         <label for="inputNom" class="col-sm-2 control-label">Nom</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="inputNom" name="inputNom" value="" placeholder="Nom" />
+          <input type="text" class="form-control" id="inputNom" name="inputNom" value="<?php echo $nomVendeur; ?>" placeholder="Nom" />
         </div>
       </div>
 
       <div class="form-group" name="prenomGroup" id="prenomGroup">
         <label for="inputPrenom" class="col-sm-2 control-label">Prénom</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="inputPrenom" name="inputPrenom" value="" placeholder="Prénom" />
+          <input type="text" class="form-control" id="inputPrenom" name="inputPrenom" value="<?php echo $prenomVendeur; ?>" placeholder="Prénom" />
         </div>
       </div>
 
       <div class="form-group" name="telephone" id="telephoneGroup">
         <label for="inputTelephone" class="col-sm-2 control-label">Téléphone</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="inputTelephone" name="inputTelephone" value="" placeholder="Téléphone" />
+          <input type="text" class="form-control" id="inputTelephone" name="inputTelephone" value="<?php echo $telVendeur; ?>" placeholder="Téléphone" />
         </div>
       </div>
 
@@ -615,13 +623,13 @@ function validateForm() {
   var index = document.getElementById("index").value
   var prix = "<?php echo $fraisDepot ?>";
   if(index == 0){
-    var nom = document.getElementsByName("paiement[0][inputNom]");
-    var prenom = document.getElementsByName("paiement[0][inputPrenom]");
-    var tel = document.getElementsByName("paiement[0][inputTelephone]");
-    if(nom[0].value == "" || prenom[0].value == "" || tel[0].value == ""){
-      alert("Veuillez rentrez le nom, prenom ainsi que le numéro de téléphone SVP.");
-      return false;
-    }
+    // var nom = document.getElementsByName("paiement[0][inputNom]");
+    // var prenom = document.getElementsByName("paiement[0][inputPrenom]");
+    // var tel = document.getElementsByName("paiement[0][inputTelephone]");
+    // if(nom[0].value == "" || prenom[0].value == "" || tel[0].value == ""){
+    //   alert("Veuillez rentrez le nom, prenom ainsi que le numéro de téléphone SVP.");
+    //   return false;
+    // }
     var elem = document.getElementsByName("paiement[0][inputMontant]");
     var montant = elem[0].value;
     if(montant != prix){

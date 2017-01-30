@@ -17,8 +17,8 @@
   <link rel="stylesheet" href="../dist/css/skins/skin-blue.min.css">
 
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <!-- <script src="//code.jquery.com/jquery-1.10.2.js"></script> -->
+  <!-- <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script> -->
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -178,14 +178,14 @@
                 <div class="form-group" name="article[0].marque">
                   <label for="inputmarque" class="col-sm-2 control-label">Marque</label>
                   <div class="col-sm-10">
-                    <input type="text" class="autoc" id="article[0].inputmarque" value="" name="article[0][inputmarque]" placeholder="Marque" />
+                    <input type="text" class="autocMarque" id="article[0].inputmarque" value="" name="article[0][inputmarque]" placeholder="Marque" />
                   </div>
                 </div>
 
                 <div class="form-group" name="article[0].annee">
                   <label for="inputannee" class="col-sm-2 control-label">Année</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="article[0].inputannee" value="" name="article[0][inputannee]" placeholder="Année" />
+                    <input type="number" class="form-control" id="article[0].inputannee" value="" name="article[0][inputannee]" placeholder="Année" />
                   </div>
                 </div>
 
@@ -210,17 +210,17 @@
                   </div>
                 </div>
 
-                <div class="form-group" id="article[0].ptvmaxgroup" name="article[0].ptvmax">
-                  <label for="inputptvmax" class="col-sm-2 control-label">PTV Max</label>
-                  <div class="col-sm-10">
-                    <input type="number" class="form-control" id="article[0].inputptvmax" value="" name="article[0][inputptvmax]"  placeholder="PTV Maximum" />
-                  </div>
-                </div>
-
                 <div class="form-group" id="article[0].ptvmingroup" name="article[0].ptvmin">
                   <label for="inputptvmin" class="col-sm-2 control-label">PTV Min</label>
                   <div class="col-sm-10">
                     <input type="number" class="form-control" id="article[0].inputptvmin"  name="article[0][inputptvmin]"  placeholder="PTV Minimum" />
+                  </div>
+                </div>
+
+                <div class="form-group" id="article[0].ptvmaxgroup" name="article[0].ptvmax">
+                  <label for="inputptvmax" class="col-sm-2 control-label">PTV Max</label>
+                  <div class="col-sm-10">
+                    <input type="number" class="form-control" id="article[0].inputptvmax" value="" name="article[0][inputptvmax]"  placeholder="PTV Maximum" />
                   </div>
                 </div>
 
@@ -307,14 +307,14 @@
                   <div class="form-group" name="marque">
                     <label for="inputmarque" class="col-sm-2 control-label">Marque</label>
                     <div class="col-sm-10">
-                      <input type="text" class="autoc" id="inputmarque" name="inputmarque" value="" placeholder="Marque" />
+                      <input type="text" class="autocMarque" id="inputmarque" name="inputmarque" value="" placeholder="Marque" />
                     </div>
                   </div>
 
                   <div class="form-group" name="annee">
                     <label for="inputannee" class="col-sm-2 control-label">Année</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputannee" value="" name="inputannee" placeholder="Année" />
+                      <input type="number" class="form-control" id="inputannee" value="" name="inputannee" placeholder="Année" />
                     </div>
                   </div>
 
@@ -339,17 +339,17 @@
                     </div>
                   </div>
 
-                  <div class="form-group" name="ptvmax" id="ptvmaxgroup">
-                    <label for="inputptvmax" class="col-sm-2 control-label">PTV Max</label>
-                    <div class="col-sm-10">
-                      <input type="number" class="form-control" id="inputptvmax" name="inputptvmax" value="" placeholder="PTV Maximum" />
-                    </div>
-                  </div>
-
                   <div class="form-group" name="ptvmin" id="ptvmingroup">
                     <label for="inputptvmin" class="col-sm-2 control-label">PTV Min</label>
                     <div class="col-sm-10">
                       <input type="number" class="form-control" id="inputptvmin" name="inputptvmin" value="" placeholder="PTV Minimum" />
+                    </div>
+                  </div>
+                  
+                  <div class="form-group" name="ptvmax" id="ptvmaxgroup">
+                    <label for="inputptvmax" class="col-sm-2 control-label">PTV Max</label>
+                    <div class="col-sm-10">
+                      <input type="number" class="form-control" id="inputptvmax" name="inputptvmax" value="" placeholder="PTV Maximum" />
                     </div>
                   </div>
 
@@ -503,12 +503,12 @@
 <!-- REQUIRED JS SCRIPTS -->
 
 <!-- jQuery 2.2.3 -->
-<!-- <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script> -->
+<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="../jquery-ui-1.12.1/jquery-ui.js"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="../bootstrap/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../dist/js/app.min.js"></script>
-
 
 <script>
 var articleIndex = 0;
@@ -673,7 +673,7 @@ $(document).ready(function() {
                                 .attr('data-article-index', articleIndex)
 
             $form.append($clone);
-            $('.autoc').autocomplete({
+            $('.autocMarque').autocomplete({
                    minLength: 2,
                    source: '../controller/automarque.php'
                     });
@@ -807,12 +807,10 @@ function validateForm() {
   }
 }
 
-$('.autoc').on("focus", function(){
-      $(this).autocomplete({
+$('.autocMarque').autocomplete({
        minLength: 2,
        source: '../controller/automarque.php'
         });
-});
 </script>
 
 

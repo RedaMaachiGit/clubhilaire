@@ -22,7 +22,7 @@ class ControllerModificationLot {
 			$heuresDeVol ="";
 			$certificat ="";
 			$surface ="";
-			$typeProtectionSelette=$_POST['article'][$i]['inputprotectionSelette']; 
+			$typeProtectionSelette=$_POST['article'][$i]['inputprotectionSelette'];
 			$annee= $_POST['article'][$i]['inputannee']; // A rajouter ?
 			$typeAccessoire="";
 			$typehomologation="";
@@ -120,6 +120,7 @@ class ControllerModificationLot {
 	public static function modificationLot(){
 		$prixVente = $_POST['inputPrix'];
 		$lot= Lot::getLotById((int)$_POST['inputLot']);
+		$lot->updateStatut("En attente d\'affichage");
 		$idLot = $lot->getId();
 		$coupon = $lot->getCouponNoIncr();
 		$vendeur = ControllerModificationLot::modifierVendeur($lot->getVendeur()->getId());

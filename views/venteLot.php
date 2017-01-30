@@ -37,9 +37,9 @@ include_once('../model/marque.php');
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="../ionicons-2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="../dist/css/skins/skin-blue.min.css">
@@ -214,11 +214,11 @@ include_once('../model/marque.php');
         <form id="paiementForm" class="form-horizontal" method="POST" action="../controller/paiementController.php" class="form-horizontal" onsubmit="return validateForm()">
           <div class="box-body">
             <div class="col-sm-12 form-group">
-                <label>Type d'paiement</label>
+                <label>Type de paiement</label>
                 <select class="col-sm-5 form-control" id="paiement[0].inputtypedepaiement" name="paiement[0][typedepaiement]" data-index='0' onchange="handleTypeChange(this)">
                   <option value="0">Carte Bancaire</option>
                   <option value="1">Chèque</option>
-                  <option value="2">Liquide</option>
+                  <option value="2" selected="selected">Liquide</option>
                 </select>
             </div>
 
@@ -627,13 +627,13 @@ function validateForm() {
   var index = document.getElementById("index").value
   var prixDuLot = "<?php echo $prixLot ?>";
   if(index == 0){
-    var nom = document.getElementsByName("paiement[0][inputNom]");
-    var prenom = document.getElementsByName("paiement[0][inputPrenom]");
-    var tel = document.getElementsByName("paiement[0][inputTelephone]");
-    if(nom[0].value == "" || prenom[0].value == "" || tel[0].value == ""){
-      alert("Veuillez rentrez le nom, prenom ainsi que le numéro de téléphone SVP.");
-      return false;
-    }
+    // var nom = document.getElementsByName("paiement[0][inputNom]");
+    // var prenom = document.getElementsByName("paiement[0][inputPrenom]");
+    // var tel = document.getElementsByName("paiement[0][inputTelephone]");
+    // if(nom[0].value == "" || prenom[0].value == "" || tel[0].value == ""){
+    //   alert("Veuillez rentrez le nom, prenom ainsi que le numéro de téléphone SVP.");
+    //   return false;
+    // }
     var elem = document.getElementsByName("paiement[0][inputMontant]");
     var montant = elem[0].value;
     if(montant != prixDuLot){
@@ -643,13 +643,13 @@ function validateForm() {
   } else {
     var montant = 0;
     for (i = 0; i <= index; i++) {
-      var nom = document.getElementsByName("paiement[" + i + "][inputNom]");
-      var prenom = document.getElementsByName("paiement[" + i + "][inputPrenom]");
-      var tel = document.getElementsByName("paiement[" + i + "][inputTelephone]");
-      if(nom[0].value == "" || prenom[0].value == "" || tel[0].value == ""){
-        alert("Veuillez rentrez le nom, prenom ainsi que le numéro de téléphone SVP.");
-        return false;
-      }
+      // var nom = document.getElementsByName("paiement[" + i + "][inputNom]");
+      // var prenom = document.getElementsByName("paiement[" + i + "][inputPrenom]");
+      // var tel = document.getElementsByName("paiement[" + i + "][inputTelephone]");
+      // if(nom[0].value == "" || prenom[0].value == "" || tel[0].value == ""){
+      //   alert("Veuillez rentrez le nom, prenom ainsi que le numéro de téléphone SVP.");
+      //   return false;
+      // }
       var elem = document.getElementsByName("paiement[" + i + "][inputMontant]");
       montant = parseInt(montant) + parseInt(elem[0].value);
       console.log('Montant');

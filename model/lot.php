@@ -520,7 +520,7 @@ class Lot
 	}
 
 	 public static function getLotEnPreparationByVendeur($idVendeur){
-	  $statut = "En preparation";
+	  $statut = "En preInscription";
 	  $query = "SELECT * FROM lot WHERE idVendeur=".$idVendeur." AND statut ='$statut'";
 	  $db = new DB();
 	  $db->connect();
@@ -554,23 +554,7 @@ class Lot
 
 	public function updateStatut($statut){
 	  $id = $this->getId();
-    if(strcmp($statut, "Vendu")==0){
-      $query = "UPDATE lot SET statut =\"Vendu\" WHERE idLot=".$id;
-    } else if(strcmp($statut, "En preInscription")==0){
-	  $query = "UPDATE lot SET statut =\"En preInscription\" WHERE idLot=".$id;
-	} else if(strcmp($statut, "En preparation")==0){
-      $query = "UPDATE lot SET statut =\"En preparation\" WHERE idLot=".$id;
-    } else if(strcmp($statut, "Restitue")==0){
-      $query = "UPDATE lot SET statut =\"Restitue\" WHERE idLot=".$id;
-    } else if(strcmp($statut, "En vente")==0){
-      $query = "UPDATE lot SET statut =\"En vente\" WHERE idLot=".$id;
-    } else if(strcmp($statut, "En attente de restitution")==0){
-      $query = "UPDATE lot SET statut =\"En attente de restitution\" WHERE idLot=".$id;
-    } else if(strcmp($statut, "Non valide")==0){
-      $query = "UPDATE lot SET statut =\"Non valide\" WHERE idLot=".$id;
-    } else if(strcmp($statut, "Payé au vendeur")==0){
-      $query = "UPDATE lot SET statut =\"Payé au vendeur\" WHERE idLot=".$id;
-    }
+    $query = "UPDATE lot SET statut ='$statut' WHERE idLot=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();

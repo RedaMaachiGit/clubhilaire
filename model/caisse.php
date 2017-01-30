@@ -254,7 +254,7 @@ class Caisse
 	  $conn->query("SET NAMES UTF8");
       $query = "INSERT INTO caisse (journee,fondCaisse,typePaiement,montant,beneficiaire,nomEmetteur,prenomEmetteur,telephoneEmetteur,typeTransaction, numero,commentaire)
       VALUES ('".$journee."','".$fondecaisse."','".$typePaiement."','".$montant."','".$beneficiare."','".$nomEmetteur."','".$prenomEmetteur."','".$telephoneEmetteur."','".$typeTransaction."','".$numero."','".$commentaire."')";
-		
+
       $res = $conn->query($query) or die(mysqli_error($conn));
       $idCaisse = $conn->insert_id;
 
@@ -370,16 +370,20 @@ class Caisse
 
     public static function getResultat(){
       $query = "SELECT * FROM caisse WHERE typeTransaction = \"Paiement de frais de dépôt\"";
-      $query1 = "SELECT * FROM caisse WHERE typeTransaction = \"Vente de lots\"";
+      $query1 = "SELECT * FROM caisse WHERE typeTransaction = \"Vente de lot\"";
+      $query2 = "SELECT * FROM caisse WHERE typeTransaction = \"Ouverture caisse\"";
       $db = new DB();
       $db->connect();
       $conn = $db->getConnectDb();
       $res=mysqli_query($conn,$query);
       $res1=mysqli_query($conn,$query1);
+      $res2=mysqli_query($conn,$query2);
       $i=0;
       $j=0;
+      $k=0;
       $montantFraisDepot = 0;
       $montantVentes = 0;
+      $ouvertures = 0;
       while($row = mysqli_fetch_array($res)){
         $i++;
         $montantFraisDepot = $montantFraisDepot + (int)$row['montant'];
@@ -388,19 +392,31 @@ class Caisse
         $j++;
         $montantVentes = $montantVentes + (int)$row1['montant'];
       }
+      while($row2 = mysqli_fetch_array($res2)){
+        $k++;
+        $ouvertures = $ouvertures + (int)$row2['montant'];
+      }
       $db->close();
-      return $montantFraisDepot - $montantVentes;
+      return (($montantFraisDepot + 0.1*$montantVentes) - 0.9*$montantVentes) - $ouvertures;
     }
 
     public static function getNombreLotVendu(){
       $query = "SELECT * FROM lot WHERE statut = \"Vendu\"";
+      $query1 = "SELECT DISTINCT(idLot) FROM paiementLot";
       $db = new DB();
       $db->connect();
       $conn = $db->getConnectDb();
       $res=mysqli_query($conn,$query);
+      $res1=mysqli_query($conn,$query1);
       $rowCount = $res->num_rows;
+      $rowCount1 = $res1->num_rows;
       $db->close();
-      return $rowCount;
+      if($rowCount == $rowCount1){
+        return $rowCount;
+      } else {
+        return "Attention: nbre de lots vendu (".$rowCount.") différent du nbre de paiement enregistrés (".$rowCount1.")";
+      }
+
     }
 }
 
