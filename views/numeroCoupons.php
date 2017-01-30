@@ -1,3 +1,10 @@
+<?php
+  require_once('../model/coupon.php');
+  $coupon = Coupon::getCoupon();
+  $deb = $coupon->getDebut();
+  $fin = $coupon->getFin();
+  $cou = $coupon->getCourant();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,9 +16,9 @@
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="../ionicons-2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="../dist/css/skins/skin-blue.min.css">
@@ -93,21 +100,21 @@
               <label for="inputDebut" class="col-sm-2 control-label">Début de carnet</label>
 
               <div class="col-sm-10">
-                <input type="text" class="form-control" name="inputDebut" placeholder="Début des coupons">
+                <input type="text" class="form-control" value="<?php echo $deb; ?>" name="inputDebut" placeholder="Début des coupons">
               </div>
             </div>
             <div class="form-group">
               <label for="inputFin" class="col-sm-2 control-label">Fin de carnet</label>
 
               <div class="col-sm-10">
-                <input type="text" class="form-control" name="inputFin" placeholder="Fin de coupons">
+                <input type="text" class="form-control" value="<?php echo $fin; ?>" name="inputFin" placeholder="Fin de coupons">
               </div>
             </div>
             <div class="form-group">
               <label for="inputCourant" class="col-sm-2 control-label">Courant</label>
 
               <div class="col-sm-10">
-                <input type="text" class="form-control" name="inputCourant" placeholder="Numéro de coupon courant qui n'a pas encore été utilisé">
+                <input type="text" class="form-control" value="<?php echo $cou; ?>" name="inputCourant" placeholder="Numéro de coupon courant qui n'a pas encore été utilisé">
               </div>
             </div>
 

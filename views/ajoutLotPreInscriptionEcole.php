@@ -7,12 +7,7 @@
   // print_r($_SESSION)
   $lots= unserialize(urldecode(($_SESSION['lots'])));
   $_SESSION['lots']=urlencode(serialize($lots));
-  //$nombreArticles = sizeof($articles);
   $nombreLots = sizeof($lots);
-  // $vendeur = $lot->getVendeur();
-  // $prixLot = $lot->getPrix();
-  // $numeroLot = $lot->getId();
-  // $numeroCoupon = $lot->getCouponNoIncr();
 ?>
 <!DOCTYPE html>
 <html>
@@ -331,7 +326,7 @@ $.fn.editable.defaults.mode = 'inline';
 //   dds[i].onclick = info(dds[i]);
 
 $(document).ready(function() {
-  for (i = 0; i < 2; i++) {
+  for (i = 0; i < <?php echo $nombreTotalArticles ?>; i++) {
     $("#type" + i).editable();
     $("#pTVMinimum" + i).editable();
     $("#pTVMinimum" + i).editable();
