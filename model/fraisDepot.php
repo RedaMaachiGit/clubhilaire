@@ -139,6 +139,7 @@ class FraisDepot
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
+	  $conn->query("SET NAMES UTF8");
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $idModele = $conn->insert_id;
 	  $this->setId($idModele);

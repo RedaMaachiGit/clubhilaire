@@ -89,6 +89,7 @@ class Coupon
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
+	  $conn->query("SET NAMES UTF8");
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  // $idVendeur = $conn->insert_id;
 	  // $this->setId($idVendeur);
@@ -101,6 +102,7 @@ class Coupon
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
+	  $conn->query("SET NAMES UTF8");
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	 }

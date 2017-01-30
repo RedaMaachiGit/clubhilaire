@@ -22,8 +22,8 @@ class ControllerModificationLot {
 			$heuresDeVol ="";
 			$certificat ="";
 			$surface ="";
-			$typeProtectionSelette=""; // A rajouter ?
-			$annee=2000; // A rajouter ?
+			$typeProtectionSelette=$_POST['article'][$i]['inputprotectionSelette']; 
+			$annee= $_POST['article'][$i]['inputannee']; // A rajouter ?
 			$typeAccessoire="";
 			$typehomologation="";
 			$type = $_POST['article'][$i]['typedematos'];

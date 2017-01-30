@@ -9,7 +9,6 @@ include_once('../model/caisse.php');
 class PaiementController {
 
 	public static function payerFraisDeDepot(){
-			print_r($_POST);
 			$lots = unserialize(urldecode(($_SESSION['lots'])));
 			$fraisDepot = $_SESSION['fraisDepot'];
 			$nombreLots = sizeof($lots);
@@ -23,13 +22,14 @@ class PaiementController {
 				if(!isset($_POST['paiement'][$i]['typedepaiement']) || !isset($_POST['paiement'][$i]['inputMontant'])){
 					header("Location:../views/error.php");
 				} else {
+					echo "Else";
 					$Type = $_POST['paiement'][$i]['typedepaiement'];
 					$Nom = $_POST['paiement'][$i]['inputNom'];
 					$Prenom = $_POST['paiement'][$i]['inputPrenom'];
 					$Telephone = $_POST['paiement'][$i]['inputTelephone'];
 					$Montant = $_POST['paiement'][$i]['inputMontant'];
 					$MontantTotal = $MontantTotal + $Montant;
-					if($Type == 0){
+					if($Type == 0){  // Type est 0
 						$journee = date('d/m/Y');
 						$ancienFond = Caisse::getLastFond();
 						$nouveauFond = $ancienFond + $Montant;
@@ -37,8 +37,8 @@ class PaiementController {
 												$nouveauFond,"CB",$Montant,"Caisse Club Hilaire",
 												$Nom,$Prenom,$Telephone,
 												"Paiement de frais de dépôt",$lots,"Pas de numéro","Pas de commentaire");
-						for($i=0;$i<sizeof($lots);$i++){
-							$lots[$i]->updateStatut("En vente");
+						for($j=0;$j<sizeof($lots);$j++){
+							$lots[$j]->updateStatut("En vente");
 						}
 					} else if ($Type == 1){
 						$journee = date('d/m/Y');
@@ -50,8 +50,8 @@ class PaiementController {
 												$nouveauFond,"Cheque",$Montant,"Caisse Club Hilaire",
 												$Nom,$Prenom,$Telephone,
 												"Paiement de frais de dépôt",$lots,$Numero,$Commentaire);
-						for($i=0;$i<sizeof($lots);$i++){
-							$lots[$i]->updateStatut("En vente");
+						for($j=0;$j<sizeof($lots);$j++){
+							$lots[$j]->updateStatut("En vente");
 						}
 					} else if ($Type == 2){
 						$journee = date('d/m/Y');
@@ -61,13 +61,13 @@ class PaiementController {
 												$nouveauFond,"Liquide",$Montant,"Caisse Club Hilaire",
 												$Nom,$Prenom,$Telephone,
 												"Paiement de frais de dépôt",$lots,"Pas de numéro","Pas de commentaire");
-						for($i=0;$i<sizeof($lots);$i++){
-							$lots[$i]->updateStatut("En vente");
+						for($j=0;$j<sizeof($lots);$j++){
+							$lots[$j]->updateStatut("En vente");
 						}
 					}
-					header("Location:../views/paiementOk.php?montant=".$MontantTotal);
 				}
 			}
+			header("Location:../views/paiementOk.php?montant=".$MontantTotal);
 	}
 
 	public static function payerFraisDeDepotUnique(){
@@ -75,7 +75,7 @@ class PaiementController {
 			$lots = array();
 			$lot = Lot::getLotById($idLot);
 			array_push($lots, $lot);
-
+			print_r($_POST);
 			// $fraisDepot = $_SESSION['fraisDepot'];
 			$nombreLots = sizeof($lots);
 			$MontantTotal = 0;
@@ -84,6 +84,7 @@ class PaiementController {
 			} else {
 				$numberOfPaiement = 0;
 			}
+			echo "Nombre: ". $numberOfPaiement;
 			for ($i = 0; $i <= $numberOfPaiement; $i++) {
 				if(!isset($_POST['paiement'][$i]['typedepaiement']) || !isset($_POST['paiement'][$i]['inputMontant'])){
 					header("Location:../views/error.php");
@@ -124,7 +125,7 @@ class PaiementController {
 												"Paiement de frais de dépôt",$lots,"Pas de numéro","Pas de commentaire");
 						$lot->updateStatut("En vente");
 					}
-					header("Location:../views/paiementOk.php?montant=".$MontantTotal);
+					//header("Location:../views/paiementOk.php?montant=".$MontantTotal);
 				}
 			}
 	}
@@ -186,8 +187,8 @@ class PaiementController {
 						$ecriture->setcoupon($numCoupon);
 						$ecriture->save();
 					}
-					header("Location:../views/paiementOk.php?montant=". $MontantTotal . "&coupon=" . $numCoupon.
-					"&nom=".$Nom."&prenom=".$Prenom."&tel=".$Telephone);
+					//header("Location:../views/paiementOk.php?montant=". $MontantTotal . "&coupon=" . $numCoupon.
+					//"&nom=".$Nom."&prenom=".$Prenom."&tel=".$Telephone);
 				}
 			}
 	}
@@ -196,15 +197,15 @@ class PaiementController {
 }
 	if(isset($_POST['multiple'])) {
 		if ($_POST['multiple']=="multiple"){
-			// echo "0";
+			echo "0";
 			PaiementController::payerFraisDeDepot();
 		}
 	}
 	else if (isset($_POST['paiementFraisDepotUnique'])){
-		// echo "1";
+		echo "1";
 		PaiementController::payerFraisDeDepotUnique();
 	} else {
-		// echo "2";
+		echo "2";
 		PaiementController::payerVente();
 	}
 

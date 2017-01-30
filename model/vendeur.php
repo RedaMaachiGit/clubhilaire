@@ -150,6 +150,7 @@ class Vendeur
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
+	  $conn->query("SET NAMES UTF8");
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $idVendeur = $conn->insert_id;
 	  $this->setId($idVendeur);
@@ -304,6 +305,7 @@ class Vendeur
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
+	  $conn->query("SET NAMES UTF8");
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $this->setNom($nom);
 	  $db->close();
@@ -321,6 +323,7 @@ class Vendeur
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
+	  $conn->query("SET NAMES UTF8");
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $this->setPrenom($prenom);
 	  $db->close();
@@ -340,6 +343,7 @@ class Vendeur
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
+	  $conn->query("SET NAMES UTF8");
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $this->setEmail($mail);
 	  $db->close();
@@ -358,6 +362,7 @@ class Vendeur
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
+	  $conn->query("SET NAMES UTF8");
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $this->setAdresse($adresse);
 	  $db->close();
@@ -375,6 +380,7 @@ class Vendeur
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
+	  $conn->query("SET NAMES UTF8");
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $this->setTel($tel);
 	  $db->close();
@@ -392,6 +398,7 @@ class Vendeur
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
+	  $conn->query("SET NAMES UTF8");
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $this->setTypeVendeur($type);
 	  $db->close();
@@ -409,6 +416,7 @@ class Vendeur
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
+	  $conn->query("SET NAMES UTF8");
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $this->setNumPre($numPre);
 	  $db->close();
@@ -420,6 +428,7 @@ class Vendeur
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
+	  $conn->query("SET NAMES UTF8");
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	 }

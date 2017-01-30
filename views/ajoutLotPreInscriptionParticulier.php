@@ -146,6 +146,15 @@
 	                  </div>
 	                </div>
 
+					
+	                <div class="form-group">
+	                  <label for="inputPrix" class="col-sm-2 control-label">Prix du lot</label>
+
+	                  <div class="col-sm-10">
+	                    <input type="number" class="form-control" value="<?php echo $lot->getPrix(); ?>" id="inputPrix" name="inputPrix" placeholder="Prix du lot">
+	                  </div>
+	                </div>
+
 					<div class="form-group">
 	                  <div class="col-sm-10">
 	                    <input type="hidden" class="form-control" value="<?php echo $lot->getId(); ?>" id="inputLot" name="inputLot" >

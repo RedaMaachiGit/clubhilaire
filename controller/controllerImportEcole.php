@@ -50,40 +50,37 @@ class ControllerImportEcole {
 			$colonne++;
 			while($objPHPExcel->getActiveSheet()->getCell($colonne.$ligne)!=""){
 				$typeMatos = htmlspecialchars($objPHPExcel->getActiveSheet()->getCell($colonne.$ligne));
-				echo $typeMatos;
+				if(strcmp($typeMatos,"voile")==0){
+					$typeMatos=0;
+				}else if(strcmp($typeMatos,"selette")==0){
+					$typeMatos=1;
+				}else if(strcmp($typeMatos,"accessoire")==0){
+					$typeMatos=3;
+				}else if(strcmp($typeMatos,"secours")==0){
+					$typeMatos=2;
+				}
 				$colonne++;
 				$marque = htmlspecialchars($objPHPExcel->getActiveSheet()->getCell($colonne.$ligne));
-				echo $marque;
 				$colonne++;
 				$modele = htmlspecialchars($objPHPExcel->getActiveSheet()->getCell($colonne.$ligne));
-				echo $modele;
 				$colonne++;
 				$categorie = htmlspecialchars($objPHPExcel->getActiveSheet()->getCell($colonne.$ligne));
-				echo $categorie;
 				$colonne++;
 				$annee = (int)htmlspecialchars($objPHPExcel->getActiveSheet()->getCell($colonne.$ligne));
-				echo $annee;
 				$colonne++;
 				$couleur = htmlspecialchars($objPHPExcel->getActiveSheet()->getCell($colonne.$ligne));
-				echo $couleur;
 				$colonne++;
 				$taille = htmlspecialchars($objPHPExcel->getActiveSheet()->getCell($colonne.$ligne));
-				echo $taille;
 				$colonne++;
 				$ptvmin = (int)htmlspecialchars($objPHPExcel->getActiveSheet()->getCell($colonne.$ligne));
-				echo $ptvmin;
 				$colonne++;
 				$ptvmax = (int)htmlspecialchars($objPHPExcel->getActiveSheet()->getCell($colonne.$ligne));
-				echo $ptvmax;
 				$colonne++;
 				$homologation = htmlspecialchars($objPHPExcel->getActiveSheet()->getCell($colonne.$ligne));
-				echo $homologation;
 				$colonne++;
 				$certificat = htmlspecialchars($objPHPExcel->getActiveSheet()->getCell($colonne.$ligne));
-				echo $certificat;
 				$colonne++;
 				$nbHeureVole = (int)htmlspecialchars($objPHPExcel->getActiveSheet()->getCell($colonne.$ligne));
-				echo $nbHeureVole;
 				$colonne++;
 				$commentaire = htmlspecialchars($objPHPExcel->getActiveSheet()->getCell($colonne.$ligne));
 				$colonne++;

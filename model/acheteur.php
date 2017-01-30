@@ -136,6 +136,7 @@ class Acheteur
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
+	  $conn->query("SET NAMES UTF8");
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $idAcheteur = $conn->insert_id;
 	  $this->setId($idAcheteur);
@@ -249,6 +250,7 @@ class Acheteur
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
+	  $conn->query("SET NAMES UTF8");
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $this->setNom($nom);
 	  $db->close();
@@ -266,6 +268,7 @@ class Acheteur
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
+	  $conn->query("SET NAMES UTF8");
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $this->setPrenom($prenom);
 	  $db->close();
@@ -285,6 +288,7 @@ class Acheteur
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
+	  $conn->query("SET NAMES UTF8");
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $this->setEmail($mail);
 	  $db->close();
@@ -303,6 +307,7 @@ class Acheteur
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
+	  $conn->query("SET NAMES UTF8");
 	  $this->setAdresse($adresse);
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
@@ -320,6 +325,7 @@ class Acheteur
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
+	  $conn->query("SET NAMES UTF8");
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $this->setTel($tel);
 	  $db->close();  

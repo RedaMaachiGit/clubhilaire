@@ -100,7 +100,7 @@
          $nombreTotalArticles = 0;
          for ($j = 0; $j<$nombreLots; $j++) {
          $statut = $lots[$j]->getStatut();
-         if(strcmp($statut, "En préparation") != 0){
+         if(strcmp($statut, "En preInscription") != 0){
            continue;
          }
          $coupon = $lots[$j]->getCouponNoIncr();
@@ -154,10 +154,8 @@
                           $idArticle = $articles[$i]->getId();
                           if(!empty($articles[$i]->getTypeArticle())) {
                              $type = $articles[$i]->getLibelleTypeArticle();
-                          } else if(!empty($articles[$i]->getSurfaceVoile())){
-                             $type = "Voile";
                           } else {
-                             $type = "X";
+                             $type = "Voile";
                           }
                           if(!empty($articles[$i]->getPtvMin())) {
                              $ptvmin = $articles[$i]->getPtvMin();

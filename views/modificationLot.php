@@ -177,6 +177,7 @@
 	                  <div class="col-sm-10">
 	                    <input type="number" class="form-control" value="<?php echo $lot->getPrix(); ?>" id="inputPrix" name="inputPrix" placeholder="Prix du lot">
 	                  </div>
+	                  </div>
 	                </div>
 
 									<div class="form-group">
@@ -892,10 +893,6 @@
 	                                .removeAttr('id')
 	                                .attr('data-article-index', articleIndex);
 	            $form.append($clone);
-							$('.autoc').autocomplete({
-										 minLength: 2,
-										 source: 'automarque.php'
-											});
 	            // Update the name attributes
 	            $clone
 	                .find('[name="typedematos"]').attr('name', 'article[' + articleIndex + '][typedematos]').end()

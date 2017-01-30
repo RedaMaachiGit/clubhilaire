@@ -204,6 +204,7 @@ class Caisse
     $db = new DB();
     $db->connect();
     $conn = $db->getConnectDb();
+	$conn->query("SET NAMES UTF8");
 	  $query = "INSERT INTO caisse (journee,fondCaisse,typePaiement,montant,beneficiaire,nomEmetteur,prenomEmetteur,telephoneEmetteur,typeTransaction, numero,commentaire)
 	  VALUES ('".$journee."','".$fondCaisse."','".$typePaiement."','".$montant."','".$beneficiare."','".$nomEmetteur."','".$prenomEmetteur."','".$telephoneEmetteur."','".$typeTransaction."','".$numero."','".$commentaire."')";
 
@@ -236,6 +237,7 @@ class Caisse
       $db = new DB();
       $db->connect();
       $conn = $db->getConnectDb();
+	  $conn->query("SET NAMES UTF8");
       $query = "INSERT INTO caisse (journee,fondCaisse,typePaiement,montant,beneficiaire,nomEmetteur,prenomEmetteur,telephoneEmetteur,typeTransaction, numero,commentaire)
       VALUES ('".$journee."','".$fondCaisse."','".$typePaiement."','".$montant."','".$beneficiare."','".$nomEmetteur."','".$prenomEmetteur."','".$telephoneEmetteur."','".$typeTransaction."','".$numero."','".$commentaire."')";
 
@@ -249,9 +251,10 @@ class Caisse
       $db = new DB();
       $db->connect();
       $conn = $db->getConnectDb();
+	  $conn->query("SET NAMES UTF8");
       $query = "INSERT INTO caisse (journee,fondCaisse,typePaiement,montant,beneficiaire,nomEmetteur,prenomEmetteur,telephoneEmetteur,typeTransaction, numero,commentaire)
       VALUES ('".$journee."','".$fondecaisse."','".$typePaiement."','".$montant."','".$beneficiare."','".$nomEmetteur."','".$prenomEmetteur."','".$telephoneEmetteur."','".$typeTransaction."','".$numero."','".$commentaire."')";
-
+		
       $res = $conn->query($query) or die(mysqli_error($conn));
       $idCaisse = $conn->insert_id;
 

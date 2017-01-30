@@ -99,7 +99,7 @@ class ControllerAjoutLotPreInscriptionParticulier {
 	}
 
 	public static function modificationLot(){
-		$prixVente = 675;
+		$prixVente = (int)$_POST['inputPrix'];
 		$lot= Lot::getLotById((int)$_POST['inputLot']);
 		$vendeur = ControllerAjoutLotPreInscriptionParticulier::modifierVendeur($lot->getVendeur()->getId());
 		//echo "ID vendeur: " .$lot->getVendeur()->getId() . "<br>";

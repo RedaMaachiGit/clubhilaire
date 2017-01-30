@@ -127,6 +127,7 @@ class ControllerAjoutLot {
 		$vendeur = ControllerAjoutLot::ajoutVendeur();
 		$lot = new Lot(1,$numeroLotVendeur,$prixVente,$vendeur); //On créer le lot et on l'associe au vendeur
 		$lot->save();
+		$lot->updateStatut("En preparation");
 		$GLOBALS['numeroCoupon'] = -1;
 		$GLOBALS['numeroLot'] = $lot->getId();
 		if(isset($_POST['index']) && !empty($_POST['index'])) {

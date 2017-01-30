@@ -322,6 +322,7 @@ class Article
 			}
 		}
 	  }
+	  $conn->query("SET NAMES UTF8");
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $idArticle = $conn->insert_id;
 	  $this->setId($idArticle);
@@ -494,6 +495,7 @@ class Article
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
+		$conn->query("SET NAMES UTF8");
 		$res = $conn->query($query) or die(mysqli_error($conn));
 		$db->close();
 		$this->setPtvMin($ptvMin);
@@ -505,6 +507,7 @@ class Article
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
+		$conn->query("SET NAMES UTF8");
 		$res = $conn->query($query) or die(mysqli_error($conn));
 		$db->close();
 		$this->setPtvMax($ptvMax);
@@ -516,6 +519,7 @@ class Article
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
+		$conn->query("SET NAMES UTF8");
 		$res = $conn->query($query) or die(mysqli_error($conn));
 		$db->close();
 		$this->setSurfaceVoile($surface);
@@ -527,6 +531,7 @@ class Article
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
+		$conn->query("SET NAMES UTF8");
 		$res = $conn->query($query) or die(mysqli_error($conn));
 		$db->close();
 		$this->setTypeArticle($typeActicle);
@@ -538,6 +543,7 @@ class Article
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
+		$conn->query("SET NAMES UTF8");
 		$res = $conn->query($query) or die(mysqli_error($conn));
 		$db->close();
 		$this->setTypeAccessoire($typeAccessoire);
@@ -549,6 +555,7 @@ class Article
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
+		$conn->query("SET NAMES UTF8");
 		$res = $conn->query($query) or die(mysqli_error($conn));
 		$db->close();
 		$this->setCouleurVoile($couleurVoile);
@@ -560,6 +567,7 @@ class Article
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
+		$conn->query("SET NAMES UTF8");
 		$res = $conn->query($query) or die(mysqli_error($conn));
 		$db->close();
 		$this->setHeureVoile($heureVoile);
@@ -571,6 +579,7 @@ class Article
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
+		$conn->query("SET NAMES UTF8");
 		$res = $conn->query($query) or die(mysqli_error($conn));
 		$db->close();
 		$this->setCertificat($certificat);
@@ -582,6 +591,7 @@ class Article
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
+		$conn->query("SET NAMES UTF8");
 		$res = $conn->query($query) or die(mysqli_error($conn));
 		$db->close();
 		$this->setTypeProtectionSelette($typeProtectionSelette);

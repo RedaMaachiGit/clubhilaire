@@ -9,6 +9,7 @@
   $fraisDepot = $_SESSION['fraisDepot'];
   $_SESSION['lots']=urlencode(serialize($lots));
   $_SESSION['fraisDepot'] = $fraisDepot;
+  
   //$nombreArticles = sizeof($articles);
   $nombreLots = sizeof($lots);
 
@@ -254,7 +255,7 @@
               </div>
             </div>
 
-            <input type="text" class="hidden" id="idLot" name="idLot" value="<?php echo $numeroLot ?>" />
+            
 
             <div class="col-xs-1">
               <button type="button" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>

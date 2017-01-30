@@ -29,7 +29,6 @@ class Lot
 		$this->setCoupon($numeroCoupon);
 		$this->setNumeroLotVendeur($numeroLotVendeur);
 		$this->setPrix($prix);
-		$this->setStatut("En préparation");
 		$this->setVendeur($vendeur);
 		$today = date("d-m-Y H:i:s");
 		$this->setDateDepot($today);
@@ -197,8 +196,7 @@ class Lot
 	  $status = $conn->real_escape_string($this->getStatut());
 	  $acheteur = $conn->real_escape_string($this->getAcheteur());
 	  $vendeur = $this->getVendeur();
-	  //$dateDepot = $this->getDateDepot();
-    //$numeroCoupon = $this->getNumeroDeCoupon();
+	  $conn->query("SET NAMES UTF8");
 	  $idA=null;
 	  $idV=null;
 	  if($vendeur!=null){
@@ -236,13 +234,13 @@ class Lot
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
+	  $conn->query("SET NAMES UTF8");
 	  $coupon = -1;
 	  $numeroLotVendeur = $conn->real_escape_string($this->getNumeroLotVendeur());
 	  $prix = $conn->real_escape_string($this->getPrix());
 	  $status = $conn->real_escape_string($this->getStatut());
 	  $acheteur = $conn->real_escape_string($this->getAcheteur());
 	  $vendeur = $this->getVendeur();
-	  //$dateDepot = $this->getDateDepot();
 	  $idA=null;
 	  $idV=null;
 	  if($vendeur!=null){
@@ -560,8 +558,8 @@ class Lot
       $query = "UPDATE lot SET statut =\"Vendu\" WHERE idLot=".$id;
     } else if(strcmp($statut, "En preInscription")==0){
 	  $query = "UPDATE lot SET statut =\"En preInscription\" WHERE idLot=".$id;
-	} else if(strcmp($statut, "En préparation")==0){
-      $query = "UPDATE lot SET statut =\"En préparation\" WHERE idLot=".$id;
+	} else if(strcmp($statut, "En preparation")==0){
+      $query = "UPDATE lot SET statut =\"En preparation\" WHERE idLot=".$id;
     } else if(strcmp($statut, "Restitue")==0){
       $query = "UPDATE lot SET statut =\"Restitue\" WHERE idLot=".$id;
     } else if(strcmp($statut, "En vente")==0){
@@ -576,6 +574,7 @@ class Lot
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
+	  $conn->query("SET NAMES UTF8");
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $this->setStatut($statut);
 	  $db->close();
@@ -587,6 +586,7 @@ class Lot
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
+	  $conn->query("SET NAMES UTF8");
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	 }
@@ -597,6 +597,7 @@ class Lot
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
+	  $conn->query("SET NAMES UTF8");
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $this->setNumeroLotVendeur($numeroLotVendeur);
 	  $db->close();
@@ -608,6 +609,7 @@ class Lot
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
+	  $conn->query("SET NAMES UTF8");
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $this->setNumPre($numPre);
 	  $db->close();
