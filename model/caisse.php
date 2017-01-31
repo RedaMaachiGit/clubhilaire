@@ -221,11 +221,12 @@ class Caisse
 	 }
 
     public static function getOuvertureCaisse($journee){
-      $query = "SELECT * FROM caisse WHERE `typeTransaction`=\"Ouverture caisse\" AND journee='$journee'";
+      $query = "SELECT count(*) FROM caisse WHERE `typeTransaction`=\"Ouverture caisse\" AND journee='$journee'";
       $db = new DB();
       $db->connect();
       $conn = $db->getConnectDb();
       $res=mysqli_query($conn,$query);
+      $lotsString = 0;
       while($row = mysqli_fetch_array($res)){
         $lotsString = (int)$row[0];
       }
@@ -242,6 +243,7 @@ class Caisse
       $db->connect();
       $conn = $db->getConnectDb();
       $res=mysqli_query($conn,$query);
+      $lotsString = 0;
       while($row = mysqli_fetch_array($res)){
         $lotsString = (int)$row[0];
       }

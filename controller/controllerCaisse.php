@@ -23,7 +23,7 @@
 														$nomEmetteur,$prenomEmetteur,$telephoneEmetteur,
 														$typeTransaction,$date,$numero,$commentaire);
 			$caisse->ouvrirFermerCaisse();
-			// header('location:../index.html');
+			header("Location:../views/caisseOuverte.php?montant=".$montantOperation);
 		}
 	} else if(isset($_POST['nomEmetteur']) && !isset($_POST['montantOuvertureCaisse'])){
 		$montantOperation = Caisse::getLastFond();
@@ -45,10 +45,10 @@
 														$nomEmetteur,$prenomEmetteur,$telephoneEmetteur,
 														$typeTransaction,$date,$numero,$commentaire);
 			$caisse->ouvrirFermerCaisse();
-			// header("Location:../views/caisseFermee.php?montant=".$montantOperation);
+			header("Location:../views/caisseFermee.php?montant=".$montantOperation);
 		}
 	} else {
-		header('location:../e.html');
+		
 	}
 
 
