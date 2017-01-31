@@ -126,7 +126,7 @@
             </div>
             <div class="modal-footer">
               <!-- <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button> -->
-              <a href:"../index.html"><button type="button" class="btn btn-primary">Retourner à l'acceuil</button></a>
+              <a class = "btn btn-primary" href = "../index.html" role = "button">Retourner à l'accueil</a>
             </div>
           </div>
           <!-- /.modal-content -->

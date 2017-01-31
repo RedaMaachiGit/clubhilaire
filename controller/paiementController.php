@@ -171,7 +171,7 @@ class PaiementController {
 	}
 
 	public static function payerVente(){
-			session_unset();	
+			session_unset();
 			$MontantTotal = 0;
 			$idLot = $_POST['idLot'];
 			$lot = Lot::getLotById($idLot);

@@ -87,8 +87,8 @@ if(isset($_GET['coupon'])){
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <h1>
-          Vente de lot pour <?php echo $_GET['montant'] ?> €
-          <small>Vous êtes sur le point de vendre un lot</small>
+          Paiement de frais de dépôt d'un montant de: <?php echo $_GET['montant'] ?> €
+          <small>Vous avez reçu le paiement d'un frais de dépôt</small>
         </h1>
         <ol class="breadcrumb">
           <li><a href="../index.html"><i class="fa fa-dashboard"></i> Home</a></li>

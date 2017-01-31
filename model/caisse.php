@@ -220,6 +220,38 @@ class Caisse
 	  $db->close();
 	 }
 
+    public static function getOuvertureCaisse($journee){
+      $query = "SELECT * FROM caisse WHERE `typeTransaction`=\"Ouverture caisse\" AND journee='$journee'";
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      $res=mysqli_query($conn,$query);
+      while($row = mysqli_fetch_array($res)){
+        $lotsString = (int)$row[0];
+      }
+      if($lotsString >= 1){
+        return 0; // La caisse a déjà été ouverte aujourd'hui
+      } else {
+        return 1; // La caisse n'a pas encore été ouverte
+      }
+    }
+
+    public static function getFermetureCaisse($journee){
+      $query = "SELECT count(*) FROM caisse WHERE `typeTransaction`=\"Fermeture caisse\" AND journee='$journee'";
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      $res=mysqli_query($conn,$query);
+      while($row = mysqli_fetch_array($res)){
+        $lotsString = (int)$row[0];
+      }
+      if($lotsString >= 1){
+        return 0; // La caisse a déjà été ouverte aujourd'hui
+      } else {
+        return 1; // La caisse n'a pas encore été ouverte
+      }
+    }
+
     public function ouvrirFermerCaisse(){
       $journee = $this->getJournee();
       $fondCaisse = $this->getFonDeCaisse();
@@ -237,7 +269,7 @@ class Caisse
       $db = new DB();
       $db->connect();
       $conn = $db->getConnectDb();
-	  $conn->query("SET NAMES UTF8");
+	    $conn->query("SET NAMES UTF8");
       $query = "INSERT INTO caisse (journee,fondCaisse,typePaiement,montant,beneficiaire,nomEmetteur,prenomEmetteur,telephoneEmetteur,typeTransaction, numero,commentaire)
       VALUES ('".$journee."','".$fondCaisse."','".$typePaiement."','".$montant."','".$beneficiare."','".$nomEmetteur."','".$prenomEmetteur."','".$telephoneEmetteur."','".$typeTransaction."','".$numero."','".$commentaire."')";
 
@@ -260,7 +292,11 @@ class Caisse
 
       for($i=0;$i<$nombreDeLots;$i++){
         $numeroDeLot = $lots[$i]->getId();
-        $numeroDeCoupon = $lots[$i]->getCouponIncr();
+        if($lots[$i]->getCouponNoIncr() == -1){
+          $numeroDeCoupon = $lots[$i]->getCouponIncr();
+        } else {
+          $numeroDeCoupon = $lots[$i]->getCouponNoIncr();
+        }
         $lots[$i]->updateCoupon($numeroDeCoupon);
         $queryForeign = "INSERT INTO paiementLot (idCaisse,idLot,numCoupon) VALUES ('".$idCaisse."','".$numeroDeLot."','".$numeroDeCoupon."')";
         $resForeign = $conn->query($queryForeign) or die(mysqli_error($conn));
@@ -402,7 +438,7 @@ class Caisse
 
     public static function getNombreLotVendu(){
       $query = "SELECT * FROM lot WHERE statut = \"Vendu\"";
-      $query1 = "SELECT DISTINCT(idLot) FROM paiementLot";
+      $query1 = "SELECT DISTINCT(idLot) FROM paiementLot WHERE idLot IN (SELECT idLot FROM lot WHERE statut='Vendu');";
       $db = new DB();
       $db->connect();
       $conn = $db->getConnectDb();

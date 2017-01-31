@@ -1,11 +1,10 @@
-<?php session_start() ?>
 <!DOCTYPE html>
 
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Paiement Frais Depot Effectué</title>
+  <title>Fermeture caisse</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -73,7 +72,7 @@
     <section class="content-header">
       <ol class="breadcrumb">
         <li><a href="../index.html"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Numéro de coupon</li>
+        <li class="active">Erreur</li>
       </ol>
     </section>
 
@@ -86,10 +85,7 @@
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span></button>
-              <h4 class="modal-title"> Paiement des frais de dépots effectué</h4>
-            </div>
-            <div class="modal-body">
-              <p style="font-size:30px"> Numero Coupon : <?php echo $_SESSION['coupon'] ?></p>
+                <h4 class="modal-title"> ERREUR La caisse a déjà été fermée  aujourd'hui</h4>
             </div>
             <div class="modal-footer">
               <!-- <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button> -->
@@ -210,4 +206,3 @@
 
 </body>
 </html>
-++

@@ -266,7 +266,9 @@
               </div>
             </div>
 
-
+            <div class="col-xs-1">
+              <button type="button" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>
+            </div>
 
           </div>
           <!-- /.box-body -->
@@ -642,16 +644,12 @@ function validateForm() {
       var nom = document.getElementsByName("paiement[" + i + "][inputNom]");
       var prenom = document.getElementsByName("paiement[" + i + "][inputPrenom]");
       var tel = document.getElementsByName("paiement[" + i + "][inputTelephone]");
-      if(nom[0].value == "" || prenom[0].value == "" || tel[0].value == ""){
-        alert("Veuillez rentrez le nom, prenom ainsi que le numéro de téléphone SVP.");
+      var elem = document.getElementsByName("paiement[" + i + "][inputMontant]");
+      if(parseInt(elem[0].value) <= 0){
+        alert("Vous ne pouvez pas rentrez un paiement ni de 0 ni négatif.");
         return false;
       }
-      var elem = document.getElementsByName("paiement[" + i + "][inputMontant]");
       montant = parseInt(montant) + parseInt(elem[0].value);
-      console.log('Montant');
-      console.log(montant);
-      console.log('Prix lot');
-      console.log(prix);
     }
     if(montant != prix){
       alert("ATTENTION la somme des montants entrés ne correspond pas au prix du lot");
