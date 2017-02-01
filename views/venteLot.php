@@ -1,29 +1,23 @@
 <?php
 session_start();
-// ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
-// error_reporting(E_ALL);
-include_once('../model/vendeur.php');
-include_once('../model/lot.php');
-include_once('../model/article.php');
-include_once('../model/modele.php');
-include_once('../model/marque.php');
-  //echo("Numero lot: " . $_POST['numeroLot'] . "<br />\n"); //TRACE
-  //$id = $_POST['numeroLot'];
-//  $connect = ConnexionDB(); // Je me connecte à la base de donnée
-//  $updateLot = "SELECT * FROM Lot WHERE numeroLot = '$id'" or die("Erreur lors de la consultation de données (updateLot)" . mysqli_error($connect));
-//  $req = $connect->query($updateLot);
+
+  include_once('../model/vendeur.php');
+  include_once('../model/lot.php');
+  include_once('../model/article.php');
+  include_once('../model/modele.php');
+  include_once('../model/marque.php');
   $lot= unserialize(urldecode(($_SESSION['lot'])));
   $articles = unserialize(urldecode($_SESSION['articles']));
-  $nombreArticles = sizeof($articles);
+  $numeroLot = $lot->getId();
+  if(!Lot::lotPossedeProduits($numeroLot)){
+    $nombreArticles = 0;
+  } else {
+    $nombreArticles = sizeof($articles);
+  }
   $vendeur = $lot->getVendeur();
   $statut = $lot->getStatut();
   $prixLot = $lot->getPrix();
-  $numeroLot = $lot->getId();
   $numeroCoupon = $lot->getCouponNoIncr();
-
-  //echo $articles[0]->getMarque()->getLibelle(); o $articles[0]->getMarque()->getLibelle();
-  //echo $articles[0]->getTypeArticle();
 ?>
 <!DOCTYPE html>
 
@@ -114,10 +108,17 @@ include_once('../model/marque.php');
 
     <!-- Main content -->
     <section class="content">
+
       <?php if(strcmp($statut, "Vendu") == 0 && strcmp($statut, "En vente") != 0){ ?>
         <div class="alert alert-danger fade in">
             <a href="#" class="close" data-dismiss="alert">&times;</a>
             <strong>ATTENTION!</strong> Ce lot numéro <?php echo $numeroCoupon ?> est indisponible à la vente.
+        </div>
+      <?php } ?>
+      <?php if($nombreArticles==0){ ?>
+        <div class="alert alert-danger fade in">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>ATTENTION!</strong> Ce lot numéro <?php echo $numeroCoupon ?> ne possède pas de produits ajoutez en d'abords.
         </div>
       <?php } ?>
       <div class="box">
@@ -209,7 +210,7 @@ include_once('../model/marque.php');
         <!-- /.info-box -->
       </div>
 
-      <?php if(strcmp($statut, "Vendu") != 0 && strcmp($statut, "En vente") == 0){ ?>
+      <?php if(strcmp($statut, "Vendu") != 0 && $nombreArticles > 0){ ?>
       <div class="box box-info">
         <form id="paiementForm" class="form-horizontal" method="POST" action="../controller/paiementController.php" class="form-horizontal" onsubmit="return validateForm()">
           <div class="box-body">

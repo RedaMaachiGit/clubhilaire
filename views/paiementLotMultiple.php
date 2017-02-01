@@ -112,10 +112,15 @@
 
     <!-- Main content -->
     <section class="content">
-      <?php for ($j = 0; $j < $nombreLots; $j++) { $coupon = $lots[$j]->getCouponNoIncr(); $idLotActuel = $lots[$j]->getId() ?>
+      <?php for ($j = 0; $j < $nombreLots; $j++) { $coupon = $lots[$j]->getCouponNoIncr(); $idLotActuel = $lots[$j]->getId();
+        $prix = $lots[$j]->getPrix();
+        $vendeur = $lots[$j]->getVendeur();
+        $mail = $vendeur->getEmail();
+        ?>
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">Ce lot numéro <?php echo $coupon; ?> contient</h3>
+            <h3 class="box-title">Ce lot numéro <?php echo $coupon; ?> contient (Il ne s'agit pas du numéro de coupon)</h3>
+            <h3>Mail vendeur: <b><?php echo $mail; ?> </b> | Prix du lot: <b><?php echo $prix; ?>€</b></h3>
           </div>
 
 

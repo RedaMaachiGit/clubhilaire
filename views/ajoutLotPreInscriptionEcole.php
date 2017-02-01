@@ -99,11 +99,15 @@
            continue;
          }
          $coupon = $lots[$j]->getCouponNoIncr();
+         $prix = $lots[$j]->getPrix();
+         $vendeur = $lots[$j]->getVendeur();
+         $mail = $vendeur->getEmail();
          $idLotActuel = $lots[$j]->getId()
       ?>
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">Ce lot numéro <?php echo $idLotActuel; ?> contient</h3>
+            <h3 class="box-title">Ce lot numéro <?php echo $idLotActuel; ?> contient. (Il ne s'agit pas du numéro de coupon)</h3>
+            <h2>Mail vendeur: <b><?php echo $mail; ?> </b> | Prix: <b><?php echo $prix; ?>€</b></h2>
           </div>
           <div class="box-header">
           <form id="validation" method="POST" action="../controller/controllerValidationLot.php" class="form-horizontal">

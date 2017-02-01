@@ -48,7 +48,7 @@
 			header("Location:../views/caisseFermee.php?montant=".$montantOperation);
 		}
 	} else {
-		
+
 	}
 
 

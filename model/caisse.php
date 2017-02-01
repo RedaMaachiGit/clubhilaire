@@ -222,35 +222,45 @@ class Caisse
 
     public static function getOuvertureCaisse($journee){
       $query = "SELECT count(*) FROM caisse WHERE `typeTransaction`=\"Ouverture caisse\" AND journee='$journee'";
+      $query1 = "SELECT count(*) FROM caisse WHERE `typeTransaction`=\"Fermeture caisse\" AND journee='$journee'";
       $db = new DB();
       $db->connect();
       $conn = $db->getConnectDb();
-      $res=mysqli_query($conn,$query);
+      $res = mysqli_query($conn,$query);
+      $res1 = mysqli_query($conn,$query1);
       $lotsString = 0;
       while($row = mysqli_fetch_array($res)){
-        $lotsString = (int)$row[0];
+        $nombreOuverture = (int)$row[0];
       }
-      if($lotsString >= 1){
-        return 0; // La caisse a déjà été ouverte aujourd'hui
+      while($row1 = mysqli_fetch_array($res1)){
+        $nombreFermeture = (int)$row1[0];
+      }
+      if($nombreOuverture > $nombreFermeture){
+        return 0; // Refuser l'ouverture
       } else {
-        return 1; // La caisse n'a pas encore été ouverte
+        return 1; // Accepter
       }
     }
 
     public static function getFermetureCaisse($journee){
-      $query = "SELECT count(*) FROM caisse WHERE `typeTransaction`=\"Fermeture caisse\" AND journee='$journee'";
+      $query = "SELECT count(*) FROM caisse WHERE `typeTransaction`=\"Ouverture caisse\" AND journee='$journee'";
+      $query1 = "SELECT count(*) FROM caisse WHERE `typeTransaction`=\"Fermeture caisse\" AND journee='$journee'";
       $db = new DB();
       $db->connect();
       $conn = $db->getConnectDb();
-      $res=mysqli_query($conn,$query);
+      $res = mysqli_query($conn,$query);
+      $res1 = mysqli_query($conn,$query1);
       $lotsString = 0;
       while($row = mysqli_fetch_array($res)){
-        $lotsString = (int)$row[0];
+        $nombreOuverture = (int)$row[0];
       }
-      if($lotsString >= 1){
-        return 0; // La caisse a déjà été ouverte aujourd'hui
+      while($row1 = mysqli_fetch_array($res1)){
+        $nombreFermeture = (int)$row1[0];
+      }
+      if($nombreOuverture == 0 || $nombreOuverture == $nombreFermeture){
+        return 0; // Refuser la fermeture
       } else {
-        return 1; // La caisse n'a pas encore été ouverte
+        return 1; // Accepter
       }
     }
 

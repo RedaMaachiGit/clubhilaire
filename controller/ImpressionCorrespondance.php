@@ -33,7 +33,7 @@ if(isset($_POST['mail']) && !empty($_POST['mail'])){
     if (seconds_left <= 0)
     {
       //  document.getElementById('timer_div').innerHTML = "You are Ready!";
-      window.setTimeout("location=('../views/imprimerLots.html');",0);
+      window.setTimeout("location=('../views/imprimerLots.php');",0);
       clearInterval(interval);
     }
   }, 1000);
@@ -54,7 +54,7 @@ if(empty($vendeur)){ ?>
     if (seconds_left <= 0)
     {
       //  document.getElementById('timer_div').innerHTML = "You are Ready!";
-      window.setTimeout("location=('../views/imprimerLots.html');",0);
+      window.setTimeout("location=('../views/imprimerLots.php');",0);
       clearInterval(interval);
     }
   }, 1000);

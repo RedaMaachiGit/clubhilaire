@@ -458,6 +458,30 @@ class Lot
      return $lots;
     }
 
+   public static function getLotEnAttenteImpressionStatic(){
+     $query = "SELECT * FROM lot WHERE statut='En attente d\'affichage'";
+     $db = new DB();
+     $db->connect();
+     $conn = $db->getConnectDb();
+    //  $resT = $conn->query($query) or die(mysqli_error($conn));
+    //  $rowT = $res->fetch_row();
+     $res=mysqli_query($conn,$query);
+     $i=0;
+     $lots = array();
+     while($row = mysqli_fetch_array($res)){
+     $i++;
+     $vendeur = Vendeur::getVendeurById((int)$row['idVendeur']);
+     $acheteur = Acheteur::getAcheteurById((int)$row['idAcheteur']);
+     $lot = new Lot((String)$row['numeroCoupon'],(String)$row['numeroLotVendeur'],(int)$row['prixVente'],$vendeur);
+     $lot->setId((int)$row['idLot']);
+     $lot->setStatut((String)$row['statut']);
+     $lot->setAcheteur($acheteur);
+     array_push($lots, $lot);
+     }
+     $db->close();
+     return $lots;
+    }
+
    public static function getLotEnVenteStatic(){
      $query = "SELECT * FROM lot WHERE statut='En vente'";
      $db = new DB();
@@ -502,26 +526,65 @@ class Lot
 	  return $lots;
 	}
 
+  public static function lotPossedeProduits($idLot){
+    $query = "SELECT * FROM article WHERE idLot='$idLot'";
+    $db = new DB();
+    $db->connect();
+    $conn = $db->getConnectDb();
+    $res = $conn->query($query) or die(mysqli_error($conn));
+    $db->close();
+    $i = 0;
+    while($row = $res->fetch_row()) {
+      if($i==1){
+        return true;
+      }
+      $type = (int)$row[1];
+      $id = (String)$row[0];
+      $pTVMinimum = (String)$row[2];
+      $PTVMaximum = (String)$row[3];
+      $taille = (String)$row[4];
+      $annee = (int)$row[5];
+      $surfaceVoile = (String)$row[6];
+      $couleurVoile = (String)$row[7];
+      $heureVolesVoile = (String)$row[8];
+      $certificatRevisionVoile = (String)$row[9];
+      $typeProtectionSelette = (String)$row[10];
+      $typeAccessoire = (String)$row[11];
+      $idMarqueIndex = (int)$row[12];
+      $idModele = (int)$row[13];
+      $homologation = (String)$row[15];
+      $commentaire = (String)$row[16];
+      if($type != 0 && $pTVMinimum != "" && $PTVMaximum != "" && $taille != "" && $annee != 0 && $surfaceVoile != ""
+          && $couleurVoile !="" && $heureVolesVoile !="" && $certificatRevisionVoile !="" && $typeProtectionSelette !=""
+          && $typeAccessoire !="" && $idMarqueIndex != 0 && $idModele != 0
+          && $homologation != "EN A / DHV LTF-1" && $commentaire !="") {
+            return true;
+          }
+      $i++;
+    }
+    return false;
+  }
 
-	 public static function veriferPayerFraisDepot($idLot){
-		$statut = "En vente";
-		$query = "SELECT * FROM lot WHERE idLot=".$idLot." AND statut !='$statut'";
-		$db = new DB();
-		$db->connect();
-		$conn = $db->getConnectDb();
-		$res = $conn->query($query) or die(mysqli_error($conn));
-		$db->close();
-		$row = $res->fetch_row();
-		if(empty($row)){
-			return false;
-		}else{
-			return true;
-		}
-	}
+  public static function veriferPayerFraisDepot($idLot){
+    $statut = "En vente";
+    $query = "SELECT * FROM lot WHERE idLot=".$idLot." AND statut !='$statut'";
+    $db = new DB();
+    $db->connect();
+    $conn = $db->getConnectDb();
+    $res = $conn->query($query) or die(mysqli_error($conn));
+    $db->close();
+    $row = $res->fetch_row();
+    if(empty($row)){
+    	return false;
+    }else{
+    	return true;
+    }
+  }
 
 	 public static function getLotEnPreparationByVendeur($idVendeur){
-	  $statut = "En preInscription";
-	  $query = "SELECT * FROM lot WHERE idVendeur=".$idVendeur." AND statut ='$statut'";
+    $statut1 = "En preInscription";
+    $statut2 = "En preparation";
+	  $query = "SELECT * FROM lot WHERE (idVendeur='$idVendeur' AND statut ='$statut1') OR (idVendeur='$idVendeur' AND statut ='$statut2')";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -530,13 +593,13 @@ class Lot
 	  $lots = Array();
 	  while($row = $res->fetch_row())
 	  {
-		$vendeur = Vendeur::getVendeurById((int)$row[6]);
-		$acheteur = Acheteur::getAcheteurById((int)$row[5]);
-		$lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],$vendeur);
-		$lot->setId((int)$row[0]);
-		$lot->setStatut((String)$row[4]);
-		$lot->setAcheteur($acheteur);
-		array_push($lots,$lot);
+  		$vendeur = Vendeur::getVendeurById((int)$row[6]);
+  		$acheteur = Acheteur::getAcheteurById((int)$row[5]);
+  		$lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],$vendeur);
+  		$lot->setId((int)$row[0]);
+  		$lot->setStatut((String)$row[4]);
+  		$lot->setAcheteur($acheteur);
+  		array_push($lots,$lot);
 	  }
 	  return $lots;
 	 }

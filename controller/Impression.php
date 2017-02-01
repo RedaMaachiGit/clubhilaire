@@ -4,7 +4,7 @@
   include_once('../model/article.php');
   include_once('../model/modele.php');
   include_once('../model/marque.php');
-  $lots = Lot::getLotEnVenteStatic();
+  $lots = Lot::getLotEnAttenteImpressionStatic();
   $nombreLots = sizeof($lots);
 for ($j = 0; $j < $nombreLots; $j++) {
     $numeroLot = $lots[$j]->getId();
@@ -13,8 +13,12 @@ for ($j = 0; $j < $nombreLots; $j++) {
     $numeroLot = $lots[$j]->getId();
     $numeroCoupon = $lots[$j]->getCouponNoIncr();
     $articles = Article::getArticlesByLot($numeroLot);
-    $nombreArticles = sizeof($articles);
-    if(empty($articles[0])){
+    if(!Lot::lotPossedeProduits($numeroLot)){
+      $nombreArticles = 0;
+    } else {
+      $nombreArticles = sizeof($articles);
+    }
+    if(empty($articles[0] || $nombreArticles == 0)){
       continue;
     }
     $principal = 0;

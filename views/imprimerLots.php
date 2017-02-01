@@ -1,3 +1,10 @@
+<?php
+  if(isset($_GET['numeroCoupon'])) {
+    $coupon = $_GET['numeroCoupon'];
+  } else {
+    $coupon = "";
+  }
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,9 +16,9 @@
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="../ionicons-2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="../dist/css/skins/skin-blue.min.css">
@@ -64,19 +71,20 @@
 
 
   </aside>
-  <div class="content-wrapper">
-    <section class="content-header">
-      <h1>
-        Imprimer un ou des lots
-        <small>Vous pouvez imprimez des lots</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="../index.html"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Impression</li>
-      </ol>
-    </section>
+<div class="content-wrapper">
+  <section class="content-header">
+    <h1>
+      Imprimer un ou des lots
+      <small>Vous pouvez imprimez des lots</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="../index.html"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li class="active">Impression</li>
+    </ol>
+  </section>
 
-    <section class="content">
+  <section class="content">
+    <div class="row">
       <div class="col-md-6" >
         <div class="box box-success">
           <div class="box-header with-border">
@@ -84,9 +92,9 @@
           </div>
           <form id="numeroLotForm" method="POST" action="../controller/ImpressionLotUnique.php" class="form-horizontal">
             <div class="box-body">
-              <input class="form-control input-lg" name="numeroLot"  type="text" id="numeroLot" placeholder="Numéro lot">
+              <input class="form-control input-lg" name="numeroLot"  type="text" id="numeroLot" placeholder="Numéro lot" value="<?php echo $coupon; ?>">
               <div class="box-footer">
-                <button type="submit" value="Submit" class="btn btn-info center-block">Imprimer</button>
+                <button type="submit" value="Submit" class="btn btn-info center-block">Imprimer affiche</button>
               </div>
             </div>
           </form>
@@ -99,7 +107,7 @@
           </div>
           <form id="numeroLotForm" method="POST" action="../controller/ImpressionBenevoleLotUnique.php" class="form-horizontal">
             <div class="box-body">
-              <input class="form-control input-lg" name="numeroLot"  type="text" id="numeroLot" placeholder="Numéro lot">
+              <input class="form-control input-lg" name="numeroLot"  type="text" id="numeroLot" placeholder="Numéro lot" value="<?php echo $coupon; ?>">
               <div class="box-footer">
                 <button type="submit" value="Submit" class="btn btn-info center-block">Imprimer fiche bénévole</button>
               </div>
@@ -107,7 +115,7 @@
           </form>
         </div>
       </div>
-      <div class="col-md-12" >
+      <div class="col-md-6" >
         <div class="box box-success">
           <div class="box-header with-border">
             <h3 class="box-title">S'il s'agit d'une impresion pour plusieurs lots : veuillez saisir l'email du vendeur</h3>
@@ -116,7 +124,22 @@
             <div class="box-body">
               <input class="form-control input-lg" name="mail"  id="mail" type="text" placeholder="Email vendeur">
               <div class="box-footer">
-                <button type="submit" value="Submit" class="btn btn-info center-block">Imprimer</button>
+                <button type="submit" value="Submit" class="btn btn-info center-block">Imprimer affiche</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-6" >
+        <div class="box box-success">
+          <div class="box-header with-border">
+            <h3 class="box-title">S'il s'agit d'une impresion pour plusieurs lots : veuillez saisir l'email du vendeur</h3>
+          </div>
+          <form id="numeroLotForm" method="POST" action="../controller/ImpressionBenevoleMail.php" class="form-horizontal">
+            <div class="box-body">
+              <input class="form-control input-lg" name="mail"  id="mail" type="text" placeholder="Email vendeur">
+              <div class="box-footer">
+                <button type="submit" value="Submit" class="btn btn-info center-block">Imprimer fiche bénévole</button>
               </div>
             </div>
           </form>
@@ -131,7 +154,7 @@
         </div>
       </div>
 
-      <div class="col-md-12" >
+      <div class="col-md-6" >
         <div class="box box-success">
           <div class="box-header with-border">
             <h3 class="box-title">Pour imprimer tous les lots</h3>
@@ -139,13 +162,28 @@
           <form id="numeroLotForm" method="POST" action="../controller/Impression.php" class="form-horizontal">
             <div class="box-body">
   			      <input class="form-control input-lg" name="formEnvoie" type="hidden" id="formEnvoie" value="multiple">
-                <button type="submit" value="Submit" class="btn btn-info center-block">Imprimer</button>
+                <button type="submit" value="Submit" class="btn btn-info center-block">Imprimer affiches</button>
             </div>
           </form>
         </div>
       </div>
-    </section>
-  </div>
+
+      <div class="col-md-6" >
+        <div class="box box-success">
+          <div class="box-header with-border">
+            <h3 class="box-title">Pour imprimer tous les lots</h3>
+          </div>
+          <form id="numeroLotForm" method="POST" action="../controller/ImpressionBenevoles.php" class="form-horizontal">
+            <div class="box-body">
+  			      <input class="form-control input-lg" name="formEnvoie" type="hidden" id="formEnvoie" value="multiple">
+                <button type="submit" value="Submit" class="btn btn-info center-block">Imprimer fiches bénévoles</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
 
 
 </div>

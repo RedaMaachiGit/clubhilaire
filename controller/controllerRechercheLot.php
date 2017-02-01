@@ -22,6 +22,7 @@ class ControllerRechercheLot {
 			$idForm = (String)$_POST['formEnvoie'];
 			session_unset();
 			$_SESSION['lot']=urlencode(serialize($lot));
+			$_SESSION['statut']=$lot->getStatut();
 			$_SESSION['articles']=$listArticle;
 			if(strcmp($idForm,"restitution")==0){
 				header('location:../views/restitutionLot.php');

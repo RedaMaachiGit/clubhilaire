@@ -7,6 +7,7 @@
 	include_once('../model/modele.php');
 	include_once('../model/marque.php');
 	$lot= unserialize(urldecode(($_SESSION['lot'])));
+	$statut = $_SESSION['statut'];
 	$vendeur = $lot->getVendeur();
 	$articles = unserialize(urldecode($_SESSION['articles']));
 	?>
@@ -165,10 +166,8 @@
 
 	                <div class="form-group">
 	                  <label for="inputPrix" class="col-sm-2 control-label">Prix du lot</label>
-
 	                  <div class="col-sm-10">
 	                    <input type="number" class="form-control" value="<?php echo $lot->getPrix(); ?>" id="inputPrix" name="inputPrix" placeholder="Prix du lot">
-	                  </div>
 	                  </div>
 	                </div>
 
@@ -183,19 +182,16 @@
 
 									<!-- The template for adding new field -->
 									<?php for ($i=0; $i<sizeof($articles); $i++) { ?>
-
-									<div class="col-sm-12 form-group">
-	                    <label>Type d'article</label>
-	                    <select class="col-sm-5 form-control" id="article[<?php echo $i; ?>].inputtypedematos" name="article[<?php echo $i; ?>][typedematos]" data-index='0' onchange="handleTypeChange(this)">
-
 												<?php if($articles[$i]->getTypeArticle() == 0) { ?>
-
+											<div class="col-sm-12 form-group">
+			                    <label>Type d'article</label>
+													<select class="col-sm-5 form-control" id="article[<?php echo $i; ?>].inputtypedematos" name="article[<?php echo $i; ?>][typedematos]" data-index='0' onchange="handleTypeChange(this)">
 														<option value="0" selected="selected">Voile</option>
 														<option value="1">Selette</option>
 														<option value="2">Parachute de secours</option>
 														<option value="3">Accessoire</option>
 													</select>
-									</div>
+											</div>
 
 
 
@@ -323,6 +319,9 @@
 											</div>
 												<?php }
 												else if($articles[$i]->getTypeArticle() == 1) { ?>
+											<div class="col-sm-12 form-group">
+			                    <label>Type d'article</label>
+													<select class="col-sm-5 form-control" id="article[<?php echo $i; ?>].inputtypedematos" name="article[<?php echo $i; ?>][typedematos]" data-index='0' onchange="handleTypeChange(this)">
 														<option value="0">Voile</option>
 														<option value="1" selected="selected">Selette</option>
 														<option value="2">Parachute de secours</option>
@@ -377,6 +376,9 @@
 
 												<?php }
 													else if($articles[$i]->getTypeArticle() == 2) { ?>
+												<div class="col-sm-12 form-group">
+				                    <label>Type d'article</label>
+														<select class="col-sm-5 form-control" id="article[<?php echo $i; ?>].inputtypedematos" name="article[<?php echo $i; ?>][typedematos]" data-index='0' onchange="handleTypeChange(this)">
 														<option value="0">Voile</option>
 														<option value="1">Selette</option>
 														<option value="2" selected="selected">Parachute de secours</option>
@@ -427,8 +429,11 @@
 													<input type="checkbox" id="article[<?php echo $i; ?>].inputsuppression"  name="article[<?php echo $i; ?>][inputsuppression]" value="YES"> Supprimer article ? <output></output>
 												</label>
 											</div>
-												<?php }
-												else if($articles[$i]->getTypeArticle() == 3) { ?>
+											<?php }
+											else if($articles[$i]->getTypeArticle() == 3) { ?>
+											<div class="col-sm-12 form-group">
+			                    <label>Type d'article</label>
+													<select class="col-sm-5 form-control" id="article[<?php echo $i; ?>].inputtypedematos" name="article[<?php echo $i; ?>][typedematos]" data-index='0' onchange="handleTypeChange(this)">
 														<option value="0">Voile</option>
 														<option value="1">Selette</option>
 														<option value="2">Parachute de secours</option>

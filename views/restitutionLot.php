@@ -9,6 +9,7 @@
 
   $lot= unserialize(urldecode(($_SESSION['lot'])));
   $articles = unserialize(urldecode($_SESSION['articles']));
+  $_SESSION['articles'] = urlencode(serialize($articles));
   $nombreArticles = sizeof($articles);
   $vendeur = $lot->getVendeur();
   $prixLot = $lot->getPrix();
@@ -28,9 +29,9 @@
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="../ionicons-2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="../dist/css/skins/skin-blue.min.css">
@@ -95,40 +96,81 @@
 
     <!-- Main content -->
     <section class="content">
-      <?php if(strcmp($statut, "En vente") != 0){ ?>
+      <div class="row">
+      <div class="col-md-12">
+      <?php if(strcmp($statut, "Paye remis") == 0){ ?>
         <div class="alert alert-danger fade in">
             <a href="#" class="close" data-dismiss="alert">&times;</a>
-            <strong>ATTENTION!</strong> Ce lot numéro <?php echo $numeroCoupon ?> est indisponible à la restitution.
+            <strong>ATTENTION!</strong> Ce lot numéro <?php echo $numeroCoupon ?> est déjà payé remis.
         </div>
-      <?php } ?>
-      <?php if(strcmp($statut, "Vendu") == 0){ ?>
+      <?php return false;} ?>
+      <?php if(strcmp($statut, "Vendu") == 0 || strcmp($statut, "Prepaye") == 0){ ?>
         <div class="alert alert-warning fade in">
             <a href="#" class="close" data-dismiss="alert">&times;</a>
-            <strong>ATTENTION!</strong> Vous devez cependant payer le vendeur la somme de <?php echo $prixMarge ?>.
+            <strong>ATTENTION!</strong> Vous devez payer le vendeur la somme de <?php echo $prixMarge ?>€.
         </div>
-        <div class="box box-info">
-        <form id="paiementForm" class="form-horizontal" method="POST" action="../controller/controllerrestitution.php" class="form-horizontal">
-          <div class="box-footer">
-            <lable for="numeroLot"> Cliquez sur "valider paiement" une fois le paiement au vendeur effectué. La somme à payer est de <?php echo $prixMarge ?>. </label>
-              <div class="col-xs-12">
-                <label class="control-label" for="nomEmetteur">Entrez votre nom</label>
-                <div class="input-group">
-                    <input type="text" class="form-control" id="nomEmetteur" name="nomEmetteur">
-                </div>
-              </div>
-              <div class="col-xs-12">
-                <label class="control-label" for="nomEmetteur">Entrez votre prenom</label>
-                <div class="input-group">
-                    <input type="text" class="form-control" id="prenomEmetteur" name="prenomEmetteur">
-                </div>
-              </div>
-              <input class="form-control input-lg" name="numeroLot" id="numeroLot" type="hidden" value=<?php echo $lot->getCouponNoIncr(); ?> >
-              <input class="form-control input-lg" name="paiement" id="paiement" type="hidden" value=<?php echo $prixMarge ?>>
-            <button type="submit" value="Submit" class="btn btn-info center-block">Valider paiement</button>
-          </div>
-        </form>
       </div>
+        <?php if(strcmp($statut, "Prepaye") != 0 && strcmp($statut, "Paye remis") != 0) { ?>
+          <div class="col-md-12">
+            <div class="box box-info">
+              <form id="paiementForm" class="form-horizontal" method="POST" action="../controller/controllerrestitution.php" class="form-horizontal">
+                <div class="box-body">
+                  <p for="numeroLot"> Cliquez sur "Préparer paiement" une fois que vous avez préparé le paiement. La somme à préparer est de <u><b><?php echo $prixMarge ?>€</b></u>. </p>
+                  <div class="form-group">
+                    <div class="col-sm-6">
+                      <label for="inputNumero" class="col-sm-4 control-label">Type de paiement</label>
+                      <select class="col-sm-3 form-control" id="inputtypedepaiement" name="inputtypedepaiement" data-index='0' onchange="handleTypeChange(this)">
+                        <option value="0">Cheque</option>
+                        <option value="1">Liquide</option>
+                      </select>
+                    </div>
+
+
+                    <div class="col-sm-6">
+                      <label for="inputNumero" id="inputNumeroLabel" class="col-sm-4 control-label">Numéro de chèque</label>
+                      <input class="form-control input" name="inputNumero" id="inputNumero">
+                    </div>
+                    <div class="col-sm-12">
+                      <label class="control-label" for="nomEmetteur">Entrez votre nom</label>
+                      <div class="input-group">
+                          <input type="text" class="form-control" id="nomEmetteur" name="nomEmetteur">
+                      </div>
+                    </div>
+                    <div class="col-sm-12">
+                      <label class="control-label" for="nomEmetteur">Entrez votre prenom</label>
+                      <div class="input-group">
+                          <input type="text" class="form-control" id="prenomEmetteur" name="prenomEmetteur">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="box-footer">
+                  <input class="form-control input-lg" name="numeroLot" id="numeroLot" type="hidden" value=<?php echo $lot->getCouponNoIncr(); ?> >
+                  <input class="form-control input-lg" name="prepPaiement" id="prepPaiement" type="hidden" value=<?php echo $prixMarge ?>>
+                  <button type="submit" value="Submit" class="btn btn-info center-block">Préparer paiement</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        <?php } ?>
+        <?php if(strcmp($statut, "Prepaye") == 0 && strcmp($statut, "Paye remis") != 0){ ?>
+          <div class="col-sm-12">
+            <div class="box box-info">
+              <form id="paiementForm" class="form-horizontal" method="POST" action="../controller/controllerrestitution.php" class="form-horizontal">
+                <div class="box-body">
+                  <lable for="numeroLot"> Cliquez sur "Remettre paiement" une fois le paiement préalablement préapré remis au vendeur, pour rappel la somme est de: <u><b><?php echo $prixMarge ?></b></u>. </label>
+                </div>
+                <div class="box-footer">
+                    <input class="form-control input-lg" name="numeroLot" id="numeroLot" type="hidden" value=<?php echo $lot->getCouponNoIncr(); ?> >
+                    <input class="form-control input-lg" name="paiement" id="paiement" type="hidden" value=<?php echo $prixMarge ?>>
+                  <button type="submit" value="Submit" class="btn btn-info center-block">Valider paiement</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        <?php } ?>
       <?php } ?>
+    </div>
 
       <div class="box">
         <div class="box-header">
@@ -206,20 +248,28 @@
             </div>
           </div>
         </div>
+      </div>
         <!-- /.box-body -->
-      </div>
 
-      <?php if(strcmp($statut, "En vente") == 0){ ?>
-      <div class="box box-info">
-        <form id="paiementForm" class="form-horizontal" method="POST" action="../controller/Controllerrestitution.php" class="form-horizontal">
-          <div class="box-footer">
-            <!-- <button type="submit" class="btn btn-default">Annuler</button> -->
-			      <input class="form-control input-lg" name="numeroLot" id="numeroLot" type="hidden" value=<?php echo $lot->getCouponNoIncr(); ?> >
-            <input class="form-control input-lg" name="restitution" id="restitution" type="hidden" value="restitution">
-            <button type="submit" value="Submit" class="btn btn-info center-block">Valider restitution</button>
+      <?php if(strcmp($statut, "Vendu") != 0 && strcmp($statut, "Paye remis") != 0 && strcmp($statut, "Prepaye") != 0){ ?>
+
+          <div class="col-md-12">
+            <div class="box box-info">
+              <form id="paiementForm" class="form-horizontal" method="POST" action="../controller/Controllerrestitution.php" class="form-horizontal">
+                <div class="box-body">
+                  <label for="numeroLot">Il s'agit de la restitution physique du lot car ce dernier n'a pas été vendu et son propriétaire le réclame. </label>
+                  </br><small>Restituez ce lot et cliquez sur "Valider restitution"</small>
+                </div>
+                <div class="box-footer">
+                  <!-- <button type="submit" class="btn btn-default">Annuler</button> -->
+      			      <input class="form-control input-lg" name="numeroLot" id="numeroLot" type="hidden" value=<?php echo $lot->getCouponNoIncr(); ?> >
+                  <input class="form-control input-lg" name="restitution" id="restitution" type="hidden" value="restitution">
+                  <button type="submit" value="Submit" class="btn btn-info center-block">Valider restitution</button>
+                </div>
+              </form>
+            </div>
           </div>
-        </form>
-      </div>
+
       <?php } ?>
     </section>
     <!-- /.content -->
@@ -320,7 +370,27 @@
 <script src="../bootstrap/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../dist/js/app.min.js"></script>
+<script>
+var articleIndex = 0;
+var handleTypeChange = function(e) {
+  console.log(e.value);
+  console.log(e.dataset);
+  console.log(e.dataset.index);
 
+  var articleIndex = e.dataset.index;
+  if ( e.value == '0'){
+    var inputNumeroLabel = document.getElementById("inputNumeroLabel");
+    var inputNumero = document.getElementById("inputNumero");
+    inputNumeroLabel.style.display = "block";
+    inputNumero.style.display = "block";
+  } else if ( e.value == '1'){
+    var inputNumeroLabel = document.getElementById("inputNumeroLabel");
+    inputNumeroLabel.style.display = "none";
+    var inputNumero = document.getElementById("inputNumero");
+    inputNumero.style.display = "none";
+  }
+}
+</script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. Slimscroll is required when using the
