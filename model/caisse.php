@@ -445,7 +445,7 @@ class Caisse
         $ouvertures = $ouvertures + (int)$row2['montant'];
       }
       $db->close();
-      return (($montantFraisDepot + 0.1*$montantVentes) - 0.9*$montantVentes) - $ouvertures;
+      return $montantFraisDepot + 0.1*$montantVentes;
     }
 
     public static function getNombreLotVendu(){

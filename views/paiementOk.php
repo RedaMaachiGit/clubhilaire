@@ -87,8 +87,8 @@ if(isset($_GET['coupon'])){
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <h1>
-          Paiement de frais de dépôt d'un montant de: <?php echo $_GET['montant'] ?> €
-          <small>Vous avez reçu le paiement d'un frais de dépôt</small>
+          Paiement d'un montant de: <?php echo $_GET['montant'] ?> €
+          <small>Vous avez reçu un paiement</small>
         </h1>
         <ol class="breadcrumb">
           <li><a href="../index.html"><i class="fa fa-dashboard"></i> Home</a></li>
