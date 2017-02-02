@@ -417,8 +417,8 @@ class Caisse
     }
 
     public static function getResultat(){
-      $fraisDeDepot = "Paiement de frais de dépôt COLLATE utf8_bin";
-      $query = "SELECT * FROM caisse WHERE typeTransaction =\"Paiement de frais de dépôt\" COLLATE utf8_bin";
+      $fraisDeDepot = mysql_real_escape_string(iconv('UTF-8', 'ASCII//TRANSLIT', "Paiement de frais de dépôt"));
+      $query = "SELECT * FROM caisse WHERE typeTransaction =". $fraisDeDepot;
       $query1 = "SELECT * FROM caisse WHERE typeTransaction = \"Vente de lot\"";
       $query2 = "SELECT * FROM caisse WHERE typeTransaction = \"Ouverture caisse\"";
       $db = new DB();
