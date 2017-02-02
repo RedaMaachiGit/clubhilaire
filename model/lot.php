@@ -113,6 +113,36 @@ class Lot
       //$row = $res->fetch_row();
       return $row[0];
  	  }
+
+    public static function ficheImprime($idLot){
+      $query1 = "SELECT fiche FROM lot WHERE idLot=".$idLot;
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      $res = $conn->query($query1) or die(mysqli_error($conn));
+      $row = $res->fetch_row();
+      $db->close();
+      if(strcmp($row[0],"OUI")){
+        return true;
+      } else {
+        return false;
+      }
+ 	  }
+
+    public static function afficheImprime($idLot){
+      $query1 = "SELECT affiche FROM lot WHERE idLot=".$idLot;
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      $res = $conn->query($query1) or die(mysqli_error($conn));
+      $row = $res->fetch_row();
+      $db->close();
+      if(strcmp($row[0],"OUI")){
+        return true;
+      } else {
+        return false;
+      }
+ 	  }
     //Getter numeroCoupon
    public function getCouponNoIncr(){
      return $this->_numeroCoupon;
@@ -371,6 +401,29 @@ class Lot
 	  }
 	 }
 
+   public static function getLotByNumPreEnPreparation($numPre){
+	  $db = new DB();
+	  $db->connect();
+	  $conn = $db->getConnectDb();
+	  $numPreInscription = $conn->real_escape_string($numPre);
+	  $query = "SELECT * FROM lot WHERE numeroPreInscription='$numPreInscription' AND statut=\"En preparation\"";
+	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $db->close();
+	  $row = $res->fetch_row();
+	  if(!empty($row)){
+		  $vendeur = Vendeur::getVendeurById((int)$row[6]);
+		  $acheteur = Acheteur::getAcheteurById((int)$row[5]);
+		  $lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],$vendeur);
+		  $lot->setId((int)$row[0]);
+		  $lot->setStatut((String)$row[4]);
+		  $lot->setAcheteur($acheteur);
+		  $lot->setNumPre($numPre);
+		  return $lot;
+	  }else{
+		  return null;
+	  }
+	 }
+
 
 	 public static function deleteLotById($idLot){
 	  $query = "DELETE FROM lot WHERE idLot=".$idLot;
@@ -413,7 +466,7 @@ class Lot
 	 }
 
    public static function getAllLot(){
-      $query = "SELECT * FROM lot";
+      $query = "SELECT * FROM lot WHERE statut<>\"Non valide\"";
       $db = new DB();
       $db->connect();
       $conn = $db->getConnectDb();
@@ -459,7 +512,7 @@ class Lot
     }
 
    public static function getLotEnAttenteImpressionStatic(){
-     $query = "SELECT * FROM lot WHERE statut='En attente d\'affichage'";
+     $query = "SELECT * FROM lot WHERE statut='En attente impression'";
      $db = new DB();
      $db->connect();
      $conn = $db->getConnectDb();
@@ -554,10 +607,10 @@ class Lot
       $idModele = (int)$row[13];
       $homologation = (String)$row[15];
       $commentaire = (String)$row[16];
-      if($type != 0 && $pTVMinimum != "" && $PTVMaximum != "" && $taille != "" && $annee != 0 && $surfaceVoile != ""
-          && $couleurVoile !="" && $heureVolesVoile !="" && $certificatRevisionVoile !="" && $typeProtectionSelette !=""
-          && $typeAccessoire !="" && $idMarqueIndex != 0 && $idModele != 0
-          && $homologation != "EN A / DHV LTF-1" && $commentaire !="") {
+      if($type != 0 || $pTVMinimum != "" || $PTVMaximum != "" || $taille != "" || $annee != 0 || $surfaceVoile != ""
+          || $couleurVoile !="" || $heureVolesVoile !="" || $certificatRevisionVoile !="" || $typeProtectionSelette !=""
+          || $typeAccessoire !="" || $idMarqueIndex != 0 || $idModele != 0
+          || $homologation != "EN A / DHV LTF-1" || $commentaire !="") {
             return true;
           }
       $i++;
@@ -612,6 +665,23 @@ class Lot
 	  $conn = $db->getConnectDb();
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $this->setPrix($prix);
+	  $db->close();
+	 }
+
+   public static function updateFiche($idLot, $fiche){
+    $query = "UPDATE lot SET fiche ='$fiche' WHERE idLot=".$idLot;
+	  $db = new DB();
+	  $db->connect();
+    $conn = $db->getConnectDb();
+    $res = $conn->query($query) or die(mysqli_error($conn));
+	  $db->close();
+	 }
+   public static function updateAffiche($idLot, $affiche){
+    $query1 = "UPDATE lot SET affiche ='$affiche' WHERE idLot=".$idLot;
+	  $db = new DB();
+	  $db->connect();
+    $conn = $db->getConnectDb();
+    $res1 = $conn->query($query1) or die(mysqli_error($conn));
 	  $db->close();
 	 }
 

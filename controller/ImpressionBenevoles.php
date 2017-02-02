@@ -27,6 +27,14 @@ for($k=0;$k<$nombreLots;$k++){
   if($numeroCoupon==-1 || empty($articles[0]) || $nombreArticles == 0){
     continue;
   }
+  if(Lot::ficheImprime($numeroLot) == 0){
+    continue;
+  } else {
+    Lot::updateFiche($numeroLot, "OUI");
+  }
+  if(Lot::afficheImprime($numeroLot) == 0){
+    $lots[$k]->updateStatut("En vente");
+  }
   ?>
   <body class="hold-transition skin-blue sidebar-mini" onload="window.print();">
 

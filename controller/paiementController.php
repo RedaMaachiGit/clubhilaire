@@ -39,7 +39,9 @@ class PaiementController {
 												"Paiement de frais de dépôt",$lots,"Pas de numéro","Pas de commentaire");
 						$correspondanceNumsCoupons = array();
 						for($j=0;$j<sizeof($lots);$j++){
-							$lots[$j]->updateStatut("En vente");
+							$lots[$j]->updateStatut("En attente impression");
+							$idLot = $lots[$j]->getId();
+							Lot::updateFicheAffiche($idLot, "NON", "NON");
 							$numeroLotVendeur = $lots[$j]->getNumeroLotVendeur();
 							if(sizeof($lots) == 1){
 								$numCoupon = $lots[0]->getCouponNoIncr();
@@ -47,7 +49,7 @@ class PaiementController {
 							if(strcmp($numeroLotVendeur, "numeroLotVendeur") != 0){
 								$numCoupon = $lots[$j]->getCouponNoIncr();
 								$correspondanceNumsCoupons[$numeroLotVendeur] = $numCoupon;
-								// print_r($correspondanceNumsCoupons);
+
 								$_SESSION['correspondance'] = $correspondanceNumsCoupons;
 							}
 						}
@@ -63,7 +65,9 @@ class PaiementController {
 												"Paiement de frais de dépôt",$lots,$Numero,$Commentaire);
 						$correspondanceNumsCoupons = array();
 						for($j=0;$j<sizeof($lots);$j++){
-							$lots[$j]->updateStatut("En vente");
+							$lots[$j]->updateStatut("En attente impression");
+							$idLot = $lots[$j]->getId();
+							Lot::updateFicheAffiche($idLot, "NON", "NON");
 							$numeroLotVendeur = $lots[$j]->getNumeroLotVendeur();
 							if(sizeof($lots) == 1){
 								$numCoupon = $lots[0]->getCouponNoIncr();
@@ -85,7 +89,9 @@ class PaiementController {
 												"Paiement de frais de dépôt",$lots,"Pas de numéro","Pas de commentaire");
 						$correspondanceNumsCoupons = array();
 						for($j=0;$j<sizeof($lots);$j++){
-							$lots[$j]->updateStatut("En vente");
+							$lots[$j]->updateStatut("En attente impression");
+							$idLot = $lots[$j]->getId();
+							Lot::updateFicheAffiche($idLot, "NON", "NON");
 							$numeroLotVendeur = $lots[$j]->getNumeroLotVendeur();
 							if(sizeof($lots) == 1){
 								$numCoupon = $lots[0]->getCouponNoIncr();
@@ -140,7 +146,9 @@ class PaiementController {
 												$nouveauFond,"CB",$Montant,"Caisse Club Hilaire",
 												$Nom,$Prenom,$Telephone,
 												"Paiement de frais de dépôt",$lots,"Pas de numéro","Pas de commentaire");
-						$lot->updateStatut("En vente");
+						$lots[$j]->updateStatut("En attente impression");
+						$idLot = $lots[$j]->getId();
+						Lot::updateFicheAffiche($idLot, "NON", "NON");
 						$numCoupon = $lot->getCouponNoIncr();
 					} else if ($Type == 1){
 						$journee = date('d/m/Y');
@@ -152,7 +160,9 @@ class PaiementController {
 												$nouveauFond,"Cheque",$Montant,"Caisse Club Hilaire",
 												$Nom,$Prenom,$Telephone,
 												"Paiement de frais de dépôt",$lots,$Numero,$Commentaire);
-						$lot->updateStatut("En vente");
+						$lots[$j]->updateStatut("En attente impression");
+						$idLot = $lots[$j]->getId();
+						Lot::updateFicheAffiche($idLot, "NON", "NON");
 						$numCoupon = $lot->getCouponNoIncr();
 					} else if ($Type == 2){
 						$journee = date('d/m/Y');
@@ -162,7 +172,9 @@ class PaiementController {
 												$nouveauFond,"Liquide",$Montant,"Caisse Club Hilaire",
 												$Nom,$Prenom,$Telephone,
 												"Paiement de frais de dépôt",$lots,"Pas de numéro","Pas de commentaire");
-						$lot->updateStatut("En vente");
+						$lots[$j]->updateStatut("En attente impression");
+						$idLot = $lots[$j]->getId();
+						Lot::updateFicheAffiche($idLot, "NON", "NON");
 						$numCoupon = $lot->getCouponNoIncr();
 					}
 					header("Location:../views/paiementOk.php?montant=". $MontantTotal . "&coupon=" . $numCoupon);

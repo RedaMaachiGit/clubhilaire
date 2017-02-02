@@ -36,6 +36,9 @@
       } else {
         $nombreArticles = sizeof($articles);
       }
+      if(Lot::afficheImprime($numeroLot) == 0){
+        return false;
+      }
       if(empty($articles[0]) || $nombreArticles == 0){
         ?>
           <div id="timer_div">Pas d'article dans ce lot.</div>
@@ -57,6 +60,10 @@
           return false;
         }
       $principal = 0;
+      Lot::updateAffiche($numeroLot, "OUI");
+      if(Lot::ficheImprime($numeroLot) == 0){
+        $lots->updateStatut("En vente");
+      }
       for ($k = 1; $k < $nombreArticles; $k++) {
         if(!empty($articles[$k]->getTypeArticle())) {
            $type = $articles[$k]->getLibelleTypeArticle();

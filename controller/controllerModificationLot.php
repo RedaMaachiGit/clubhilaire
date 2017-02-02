@@ -120,8 +120,9 @@ class ControllerModificationLot {
 	public static function modificationLot(){
 		$prixVente = $_POST['inputPrix'];
 		$lot= Lot::getLotById((int)$_POST['inputLot']);
-		$lot->updateStatut("En attente d\'affichage");
+		$lot->updateStatut("En attente impression");
 		$idLot = $lot->getId();
+		Lot::updateFicheAffiche($idLot, "NON", "NON");
 		$coupon = $lot->getCouponNoIncr();
 		$vendeur = ControllerModificationLot::modifierVendeur($lot->getVendeur()->getId());
 		//echo "ID vendeur: " .$lot->getVendeur()->getId() . "<br>";

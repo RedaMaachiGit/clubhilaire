@@ -77,6 +77,14 @@ for ($j = 0; $j < $nombreLots; $j++) {
     if(empty($articles[0]) || $nombreArticles == 0){
       continue;
     }
+    if(Lot::afficheImprime($numeroLot) == 0){
+      continue;
+    } else {
+      Lot::updateAffiche($numeroLot, "OUI");
+    }
+    if(Lot::ficheImprime($numeroLot) == 0){
+      $lots[$j]->updateStatut("En vente");
+    }
     $principal = 0;
     for ($k = 1; $k < $nombreArticles; $k++) {
       if(!empty($articles[$k]->getTypeArticle())) {
@@ -100,7 +108,7 @@ for ($j = 0; $j < $nombreLots; $j++) {
   <table class="tg">
   <tr>
     <td class="tg-if35" colspan="2">Marque</td>
-    <td class="tg-if35">Type(NumeroLot)</td>
+    <td class="tg-if35">Type(NumeroCoupon)</td>
     <td class="tg-if35" colspan="2">Prix</td>
   </tr>
   <tr>
@@ -285,7 +293,7 @@ for ($j = 0; $j < $nombreLots; $j++) {
   ?>
 </table></div>
   <?php
-    if($nombreArticles> 3 || $nombreArticlesSuivants > 3){
+    if($nombreArticles> 2 || $nombreArticlesSuivants > 2){
         echo "<div style=\"page-break-after:always\"></div>";
     } else {
         echo "</br>";

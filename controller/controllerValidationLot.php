@@ -27,14 +27,14 @@ class ControllerValidationLot {
 						$lot = Lot::getLotById($_POST['idLot'.$i]);
 						$vendeur = $lot->getVendeur();
 						$mail = $vendeur->getEmail();
-						$lot->updateStatut("En vente");
-						$numCoupon = $lot->getCouponIncr();
-						$lot->updateCoupon($numCoupon);
+						$lot->updateStatut("En preparation");
+						// $numCoupon = $lot->getCouponIncr();
+						// $lot->updateCoupon($numCoupon);
 						// $lotvalide = array("numLot" => $_POST['coupon'.$i]);
 						array_push($lotsvalide, $_POST['idLot'.$i]);
 				} else {
 					$lot = Lot::getLotById($_POST['idLot'.$i]);
-					$lot->updateStatut("Non valide");
+					$lot->updateStatut("En preparation");
 					// $lotinvalide = array("numLot" => $_POST['coupon'.$i]);
 					array_push($lotsinvalide, $_POST['idLot'.$i]);
 				}

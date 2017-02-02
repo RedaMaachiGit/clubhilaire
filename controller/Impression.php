@@ -7,6 +7,11 @@
   $lots = Lot::getLotEnAttenteImpressionStatic();
   $nombreLots = sizeof($lots);
 for ($j = 0; $j < $nombreLots; $j++) {
+    if($j < $nombreLots-1){
+      $numeroLotSuivant = $lots[$j+1]->getId();
+      $articlesSuivants = Article::getArticlesByLot($numeroLotSuivant);
+      $nombreArticlesSuivants = sizeof($articlesSuivants);
+    }
     $numeroLot = $lots[$j]->getId();
     $vendeur = $lots[$j]->getVendeur();
     $prixLot = $lots[$j]->getPrix();
@@ -19,6 +24,9 @@ for ($j = 0; $j < $nombreLots; $j++) {
       $nombreArticles = sizeof($articles);
     }
     if(empty($articles[0] || $nombreArticles == 0)){
+      continue;
+    }
+    if(Lot::afficheImprime($numeroLot) == 0){
       continue;
     }
     $principal = 0;
@@ -34,7 +42,10 @@ for ($j = 0; $j < $nombreLots; $j++) {
         $principal = $k;
       }
     }
-
+    Lot::updateAffiche($numeroLot, "OUI");
+    if(Lot::ficheImprime($numeroLot) == 0 && Lot::afficheImprime($numeroLot) == 0){
+      $lots[$j]->updateStatut("En vente");
+    }
 ?>
 
 
@@ -43,20 +54,13 @@ for ($j = 0; $j < $nombreLots; $j++) {
 <div class="tg-wrap">
   <table class="tg">
   <tr>
-    <th class="tg-zul5"><?php if(!empty($articles[$principal]->getLibelleTypeArticle())) { echo $articles[$principal]->getLibelleTypeArticle(); } else { echo "X";}?></th>
-    <th class="tg-baqh"></th>
-    <th class="tg-baqh"></th>
-    <th class="tg-if35">Num coupon</th>
-    <th class="tg-zul5"><?php echo $numeroCoupon; ?></th>
-  </tr>
-  <tr>
     <td class="tg-if35" colspan="2">Marque</td>
-    <td class="tg-if35">Type</td>
+    <td class="tg-if35">Type(NumeroCoupon)</td>
     <td class="tg-if35" colspan="2">Prix</td>
   </tr>
   <tr>
     <td class="tg-0s10" colspan="2"><?php if(!empty($articles[$principal]->getMarque()->getLibelle())) { echo $articles[$principal]->getMarque()->getLibelle(); } else { echo "X";}?></td>
-    <td class="tg-0s10"><?php if(!empty($articles[$principal]->getLibelleTypeArticle())) { echo $articles[$principal]->getLibelleTypeArticle(); } else { echo "X";}?></td>
+    <td class="tg-0s10"><?php if(!empty($articles[$principal]->getLibelleTypeArticle())) { echo $articles[$principal]->getLibelleTypeArticle().$numeroCoupon; } else { echo "X";}?></td>
     <td class="tg-0s10" colspan="2"><?php echo $prixLot; ?></td>
   </tr>
   <?php if(!empty($articles[0]->getPtvMin())) { $ptvMin = $articles[$principal]->getPtvMin(); } else {  $ptvMin = "X";}
@@ -65,11 +69,13 @@ for ($j = 0; $j < $nombreLots; $j++) {
   ?>
   <tr>
     <td class="tg-if35" colspan="2">Modele</td>
+    <td class="tg-if35">Coupon</td>
     <td class="tg-if35">Année</td>
     <td class="tg-if35" colspan="2">Taille</td>
   </tr>
   <tr>
     <td class="tg-0s10" colspan="2"><?php if(!empty($articles[$principal]->getModele()->getLibelle())) { echo $articles[$principal]->getModele()->getLibelle(); } else { echo "X";}?></td>
+    <td class="tg-0s10"><?php echo $numeroCoupon;?></td>
     <td class="tg-0s10"><?php if(!empty($articles[$principal]->getAnnee())) { echo $articles[$principal]->getAnnee(); } else { echo "X";}?></td>
     <td class="tg-0s10" colspan="2">Taille: <?php echo $taille. " / " .$ptvMin. " / " .$ptvMax ?></td>
   </tr>
@@ -191,8 +197,14 @@ for ($j = 0; $j < $nombreLots; $j++) {
     }
   ?>
 </table></div>
-<div style="page-break-after:always"></div>
-<?php } ?>
+
+<?php
+  if($nombreArticles> 2 || $nombreArticlesSuivants > 2){
+      echo "<div style=\"page-break-after:always\"></div>";
+  } else {
+      echo "</br>";
+  }
+} ?>
 
 
 

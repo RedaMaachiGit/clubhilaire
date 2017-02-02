@@ -62,7 +62,14 @@
       return false;
     }
     }
-
+    if(Lot::ficheImprime($numeroLot) == 0){
+      return false;
+    } else {
+      Lot::updateFiche($numeroLot, "OUI");
+    }
+    if(Lot::afficheImprime($numeroLot) == 0){
+      $lots->updateStatut("En vente");
+    }
 
   ?>
   <body class="hold-transition skin-blue sidebar-mini" onload="window.print();">

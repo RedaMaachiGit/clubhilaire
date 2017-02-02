@@ -26,7 +26,7 @@ class ControllerCalculFraisDepot {
 
 	public static function calculFraisDepotByNumPre(){
 		$numeroPre = $_POST['numeroPre'];
-		$lot = Lot::getLotByNumPre($numeroPre);
+		$lot = Lot::getLotByNumPreEnPreparation($numeroPre);
 		if($lot ==null || !Lot::veriferPayerFraisDepot($lot->getId())){
 			header('location:../views/paiementFraisDepotError.html');
 		}else{

@@ -109,7 +109,7 @@ session_start();
     <!-- Main content -->
     <section class="content">
 
-      <?php if(strcmp($statut, "Vendu") == 0 && strcmp($statut, "En vente") != 0){ ?>
+      <?php if(strcmp($statut, "Vendu") == 0 || strcmp($statut, "En vente") != 0){ ?>
         <div class="alert alert-danger fade in">
             <a href="#" class="close" data-dismiss="alert">&times;</a>
             <strong>ATTENTION!</strong> Ce lot numéro <?php echo $numeroCoupon ?> est indisponible à la vente.
@@ -124,6 +124,7 @@ session_start();
       <div class="box">
         <div class="box-header">
           <h3 class="box-title">Ce lot contient</h3>
+          <h2>Statut: <?php echo $statut ?></h2>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -210,7 +211,7 @@ session_start();
         <!-- /.info-box -->
       </div>
 
-      <?php if(strcmp($statut, "Vendu") != 0 && $nombreArticles > 0){ ?>
+      <?php if(strcmp($statut, "En vente") == 0 && $nombreArticles > 0){ ?>
       <div class="box box-info">
         <form id="paiementForm" class="form-horizontal" method="POST" action="../controller/paiementController.php" class="form-horizontal" onsubmit="return validateForm()">
           <div class="box-body">
