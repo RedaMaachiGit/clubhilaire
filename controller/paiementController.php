@@ -146,8 +146,8 @@ class PaiementController {
 												$nouveauFond,"CB",$Montant,"Caisse Club Hilaire",
 												$Nom,$Prenom,$Telephone,
 												"Paiement de frais de dépôt",$lots,"Pas de numéro","Pas de commentaire");
-						$lots[$j]->updateStatut("En attente impression");
-						$idLot = $lots[$j]->getId();
+						$lots[$i]->updateStatut("En attente impression");
+						$idLot = $lots[$i]->getId();
 						Lot::updateFicheAffiche($idLot, "NON", "NON");
 						$numCoupon = $lot->getCouponNoIncr();
 					} else if ($Type == 1){
@@ -160,8 +160,8 @@ class PaiementController {
 												$nouveauFond,"Cheque",$Montant,"Caisse Club Hilaire",
 												$Nom,$Prenom,$Telephone,
 												"Paiement de frais de dépôt",$lots,$Numero,$Commentaire);
-						$lots[$j]->updateStatut("En attente impression");
-						$idLot = $lots[$j]->getId();
+						$lots[$i]->updateStatut("En attente impression");
+						$idLot = $lots[$i]->getId();
 						Lot::updateFicheAffiche($idLot, "NON", "NON");
 						$numCoupon = $lot->getCouponNoIncr();
 					} else if ($Type == 2){
@@ -172,8 +172,8 @@ class PaiementController {
 												$nouveauFond,"Liquide",$Montant,"Caisse Club Hilaire",
 												$Nom,$Prenom,$Telephone,
 												"Paiement de frais de dépôt",$lots,"Pas de numéro","Pas de commentaire");
-						$lots[$j]->updateStatut("En attente impression");
-						$idLot = $lots[$j]->getId();
+						$lots[$i]->updateStatut("En attente impression");
+						$idLot = $lots[$i]->getId();
 						Lot::updateFicheAffiche($idLot, "NON", "NON");
 						$numCoupon = $lot->getCouponNoIncr();
 					}
