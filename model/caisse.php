@@ -417,12 +417,14 @@ class Caisse
     }
 
     public static function getResultat(){
-      $query = "SELECT * FROM caisse WHERE typeTransaction = \"Paiement de frais de dépôt\"";
+      $fraisDeDepot = "Paiement de frais de dépôt COLLATE utf8_bin";
+      $query = "SELECT * FROM caisse WHERE typeTransaction =\"Paiement de frais de dépôt\" COLLATE utf8_bin";
       $query1 = "SELECT * FROM caisse WHERE typeTransaction = \"Vente de lot\"";
       $query2 = "SELECT * FROM caisse WHERE typeTransaction = \"Ouverture caisse\"";
       $db = new DB();
       $db->connect();
       $conn = $db->getConnectDb();
+      // $mysqli->query('SET NAMES utf8');
       $res=mysqli_query($conn,$query);
       $res1=mysqli_query($conn,$query1);
       $res2=mysqli_query($conn,$query2);
