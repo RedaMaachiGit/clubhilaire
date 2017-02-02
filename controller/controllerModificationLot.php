@@ -51,7 +51,7 @@ class ControllerModificationLot {
 				$typeAccessoire = $_POST['article'][$i]['inputtypeaccessoire'];
 				$annee = $_POST['article'][$i]['inputannee'];
 			}
-			$article = new Article($type,$lot,$marque,$modele,$ptvMin,$ptvMax,$taille,$surface,$couleur,$heuresDeVol,
+			$article = new Article($type,$lot,$marque,$modele,$Ptvmin,$Ptvmax,$taille,$surface,$couleur,$heuresDeVol,
 			$certificat,$typeProtectionSelette,$typeAccessoire,$annee,"",$typehomologation);
 			$article->save();
 		}

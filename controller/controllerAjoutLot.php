@@ -8,8 +8,8 @@ include_once('../model/modele.php');
 class ControllerAjoutLot {
 
 		public static function ajoutArticle($i,$lot,$marque,$modele){
-			$ptvMax ="";
-			$ptvMin ="";
+			$ptvmax ="";
+			$ptvmin ="";
 			$taille ="";
 			$surface ="";
 			$couleur ="";
@@ -25,8 +25,8 @@ class ControllerAjoutLot {
 				$annne = $_POST['article'][$i]['inputannee'];
 			}
 			if($type == 0){
-				$ptvMax = $_POST['article'][$i]['inputptvmax'];
-				$ptvMin = $_POST['article'][$i]['inputptvmin'];
+				$ptvmax = $_POST['article'][$i]['inputptvmax'];
+				$ptvmin = $_POST['article'][$i]['inputptvmin'];
 				$annee = $_POST['article'][$i]['inputannee'];
 				if($_POST['article'][$i]['typehomologation'] == 0){
 					$homologation = "EN A / DHV LTF-1";
@@ -60,7 +60,7 @@ class ControllerAjoutLot {
 				$typeAccessoire = $_POST['article'][$i]['inputtypeaccessoire'];
 				$annee = $_POST['article'][$i]['inputannee'];
 			}
-		$article = new Article($type,$lot,$marque,$modele,$ptvMin,$ptvMax,$taille,$surface,$couleur,$heuresDeVol,
+		$article = new Article($type,$lot,$marque,$modele,$ptvmin,$ptvmax,$taille,$surface,$couleur,$heuresDeVol,
 		$certificat,$typeProtectionSelette,$typeAccessoire,$annee,"",$homologation);
 		$article->save();
 	}
