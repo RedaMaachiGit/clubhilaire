@@ -173,7 +173,7 @@
                     </select>
                 </div>
 
-                <input type="hidden" class="form-control" id="index" name="index" value="0" />
+                <input type="hidden" class="form-control" id="index" name="index" value="-1" />
 
                 <div class="form-group" name="article[0].marque">
                   <label for="inputmarque" class="col-sm-2 control-label">Marque</label>
@@ -767,10 +767,11 @@ $(document).ready(function() {
         // Remove button click handler
         .on('click', '.removeButton', function() {
             articleIndex--;
-            document.getElementById("index").value = articleIndex - 1;
+            document.getElementById("index").value = articleIndex;
             var $row  = $(this).parents('.form-group'),
                 index = $row.attr('data-article-index');
-
+            console.log('TRACE MOINS');
+            console.log(articleIndex);
             // Remove fields
             // $('#articleForm')
             //     .formValidation('removeField', $row.find('[name="article[' + index + '].typedematos"]'))

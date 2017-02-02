@@ -139,7 +139,16 @@
                           for ($i = 0; $i < $nombreArticles; $i++) {
                     ?>
                     <tr>
-                      <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?><form id="modification" action="../controller/ControllerRechercheLot.php" method="post"><p><input type="hidden" name="numeroLot" value="<?php echo $coupon ?>" /><input type="hidden" name="formEnvoie" value="modification" /><input type="submit" value="MODIFIER"></p></form></td>
+                      <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?>
+                          <?php if($coupon!=-1) { ?>
+                            <form id="modification" action="../controller/ControllerRechercheLot.php" method="post"><p>
+                              <input type="hidden" name="numeroLot" value="<?php echo $coupon ?>" />
+                              <input type="hidden" name="formEnvoie" value="modification" />
+                              <input type="submit" value="MODIFIER"></p></form>
+                          <?php } else { ?>
+                            NON MODIFIABLE </td>
+                          <?php } ?>
+                        </td>
                       <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?><?php echo $coupon; ?></td>
                       <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?><?php echo $lots[$j]->getStatut(); ?></td>
                       <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?><?php echo $lots[$j]->getVendeur()->getEmail(); ?></td>
@@ -168,22 +177,23 @@
                     </tbody>
                     <tfoot>
                     <tr>
-                      <th>Numero de coupon</th>
+                      <th>Modifier</th>
+                      <th>Coupon</th>
                       <th>Statut</th>
                       <th>Mail vendeur</th>
                       <th>Nom Prenom vendeur</th>
-                      <th>Téléphone vendeur</th>
+                      <th>Tél vendeur</th>
                       <th>Prix</th>
-                      <th>Numero lot vendeur</th>
+                      <th>Num lot vendeur</th>
                       <th>Type</th>
-                      <th>PTV Minimum</th>
-                      <th>PTV Maximum</th>
+                      <th>PTV Min</th>
+                      <th>PTV Max</th>
                       <th>Taille</th>
                       <th>Annee</th>
                       <th>Surface voile</th>
                       <th>Couleur voile</th>
-                      <th>Heure voles voile</th>
-                      <th>Certificat revision voile</th>
+                      <th>Heure voile</th>
+                      <th>Certificat</th>
                       <th>Type protection selette</th>
                       <th>Type accessoire</th>
                       <th>MarqueIndex</th>

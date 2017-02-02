@@ -23,7 +23,7 @@ class ControllerModificationLot {
 			$certificat = "";
 			$surface = "";
 			$typeProtectionSelette = "";
-			$annee = $_POST['article'][$i]['inputannee']; // A rajouter ?
+			$annee = $_POST['article'][$i]['inputannee'];
 			$typeAccessoire="";
 			$typehomologation="";
 			$type = $_POST['article'][$i]['typedematos'];

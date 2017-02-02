@@ -977,8 +977,8 @@
 	        })
 	        // Remove button click handler
 	        .on('click', '.removeButton', function() {
-						articleIndex--;
-						document.getElementById("index").value = articleIndex - 1;
+						// articleIndex--;
+						document.getElementById("index").value = articleIndex;
 	            var $row  = $(this).parents('.form-group'),
 	                index = $row.attr('data-article-index');
 	            // Remove fields
@@ -1010,31 +1010,8 @@
 	  var inputEmail = document.forms["articleForm"]["inputEmail"].value;
 	  var inputAdresse = document.forms["articleForm"]["inputAdresse"].value;
 	  var inputPrix = document.forms["articleForm"]["inputPrix"].value;
-	  if (inputPrix == "") {
-	      alert("Le prix du lot doit être renseigné");
-	      return false;
-	  } else if(inputPrix%10!=0) {
-	    alert("Le prix du lot doit être un multiple de 10");
-	    return false;
-	  }
-	  if (inputNom == "") {
-	      alert("Le nom doit être renseigné");
-	      return false;
-	  }
-	  if (inputPrenom == "") {
-	      alert("Le prenom doit être renseigné");
-	      return false;
-	  }
-	  if (inputTelephone == "") {
-	      alert("Le telephone doit être renseigné");
-	      return false;
-	  }
 	  if (inputEmail == "") {
 	      alert("Le email doit être renseigné");
-	      return false;
-	  }
-	  if (inputAdresse == "") {
-	      alert("Le adresse doit être renseigné");
 	      return false;
 	  }
 	}

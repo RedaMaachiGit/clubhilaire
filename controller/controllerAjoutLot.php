@@ -100,6 +100,8 @@ class ControllerAjoutLot {
 				$newMarque = Marque::getMarqueByLibelle($marque); //la marque existe alors on la récupère
 			}
 			return $newMarque;
+		} else {
+			return "";
 		}
 	}
 
@@ -113,6 +115,8 @@ class ControllerAjoutLot {
 					$newModele = Modele::getModeleByLibelle($modele); //sinon on récupère le modele
 				}
 			return $newModele;
+		} else {
+			return "";
 		}
 	}
 
@@ -135,17 +139,20 @@ class ControllerAjoutLot {
 		} else {
 			$numberOfProducts = 1;
 		}
-		for ($i = 0; $i <= $numberOfProducts; $i++){		//Pour chaque article
+		for ($i = 0; $i <= $numberOfProducts+2; $i++){		//Pour chaque article
 			if(isset($_POST['article'][$i]['typedematos']) && $_POST['article'][$i]['typedematos'] >= 0 &&  $_POST['article'][$i]['typedematos'] <=3 ){
 				$marque = ControllerAjoutLot::ajoutMarque($i);
 				$modele = ControllerAjoutLot::ajoutModele($i,$marque);
 				ControllerAjoutLot::AjoutArticle($i,$lot,$marque,$modele);
 			}
 		}
+		header('location:../views/NumeroCoupon.php?mail='. $_POST['inputEmail']);
 	}
+
+
+
 }
+
 	ControllerAjoutLot::AjouterLot();
+
 ?>
-<script>
-	window.top.location='../views/NumeroCoupon.php?mail=<?php echo $_POST['inputEmail']; ?>';
-</script>
