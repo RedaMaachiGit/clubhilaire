@@ -668,6 +668,13 @@ class Lot
 	  $db->close();
 	 }
 
+
+   public static function updateFicheAffiche($idLot, $fiche, $affiche){
+     Lot::updateFiche($idLot, $fiche);
+     Lot::updateAffiche($idLot, $affiche);
+     return;
+   }
+
    public static function updateFiche($idLot, $fiche){
     $query = "UPDATE lot SET fiche ='$fiche' WHERE idLot=".$idLot;
 	  $db = new DB();
