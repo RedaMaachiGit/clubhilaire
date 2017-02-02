@@ -34,7 +34,7 @@ class ControllerValidationLot {
 						array_push($lotsvalide, $_POST['idLot'.$i]);
 				} else {
 					$lot = Lot::getLotById($_POST['idLot'.$i]);
-					$lot->updateStatut("En preparation");
+					$lot->updateStatut("Non valide");
 					// $lotinvalide = array("numLot" => $_POST['coupon'.$i]);
 					array_push($lotsinvalide, $_POST['idLot'.$i]);
 				}
