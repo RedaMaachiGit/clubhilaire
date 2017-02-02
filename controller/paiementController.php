@@ -36,7 +36,7 @@ class PaiementController {
 						$ecriture = Caisse::payerLotMultiple($nombreLots, $journee,
 												$nouveauFond,"CB",$Montant,"Caisse Club Hilaire",
 												$Nom,$Prenom,$Telephone,
-												"Paiement de frais de dépôt",$lots,"Pas de numéro","Pas de commentaire");
+												"Paiement de frais de depot",$lots,"Pas de numéro","Pas de commentaire");
 						$correspondanceNumsCoupons = array();
 						for($j=0;$j<sizeof($lots);$j++){
 							$lots[$j]->updateStatut("En attente impression");
@@ -62,7 +62,7 @@ class PaiementController {
 						$ecriture = Caisse::payerLotMultiple($nombreLots, $journee,
 												$nouveauFond,"Cheque",$Montant,"Caisse Club Hilaire",
 												$Nom,$Prenom,$Telephone,
-												"Paiement de frais de dépôt",$lots,$Numero,$Commentaire);
+												"Paiement de frais de depot",$lots,$Numero,$Commentaire);
 						$correspondanceNumsCoupons = array();
 						for($j=0;$j<sizeof($lots);$j++){
 							$lots[$j]->updateStatut("En attente impression");
@@ -86,7 +86,7 @@ class PaiementController {
 						$ecriture = Caisse::payerLotMultiple($nombreLots, $journee,
 												$nouveauFond,"Liquide",$Montant,"Caisse Club Hilaire",
 												$Nom,$Prenom,$Telephone,
-												"Paiement de frais de dépôt",$lots,"Pas de numéro","Pas de commentaire");
+												"Paiement de frais de depot",$lots,"Pas de numéro","Pas de commentaire");
 						$correspondanceNumsCoupons = array();
 						for($j=0;$j<sizeof($lots);$j++){
 							$lots[$j]->updateStatut("En attente impression");
@@ -145,7 +145,7 @@ class PaiementController {
 						$ecriture = Caisse::payerLotMultiple($nombreLots, $journee,
 												$nouveauFond,"CB",$Montant,"Caisse Club Hilaire",
 												$Nom,$Prenom,$Telephone,
-												"Paiement de frais de dépôt",$lots,"Pas de numéro","Pas de commentaire");
+												"Paiement de frais de depot",$lots,"Pas de numéro","Pas de commentaire");
 						$lots[$i]->updateStatut("En attente impression");
 						$idLot = $lots[$i]->getId();
 						Lot::updateFicheAffiche($idLot, "NON", "NON");
@@ -159,7 +159,7 @@ class PaiementController {
 						$ecriture = Caisse::payerLotMultiple($nombreLots, $journee,
 												$nouveauFond,"Cheque",$Montant,"Caisse Club Hilaire",
 												$Nom,$Prenom,$Telephone,
-												"Paiement de frais de dépôt",$lots,$Numero,$Commentaire);
+												"Paiement de frais de depot",$lots,$Numero,$Commentaire);
 						$lots[$i]->updateStatut("En attente impression");
 						$idLot = $lots[$i]->getId();
 						Lot::updateFicheAffiche($idLot, "NON", "NON");
@@ -171,7 +171,7 @@ class PaiementController {
 						$ecriture = Caisse::payerLotMultiple($nombreLots, $journee,
 												$nouveauFond,"Liquide",$Montant,"Caisse Club Hilaire",
 												$Nom,$Prenom,$Telephone,
-												"Paiement de frais de dépôt",$lots,"Pas de numéro","Pas de commentaire");
+												"Paiement de frais de depot",$lots,"Pas de numéro","Pas de commentaire");
 						$lots[$i]->updateStatut("En attente impression");
 						$idLot = $lots[$i]->getId();
 						Lot::updateFicheAffiche($idLot, "NON", "NON");

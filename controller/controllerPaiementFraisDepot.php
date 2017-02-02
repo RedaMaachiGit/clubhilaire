@@ -24,7 +24,7 @@ class ControllerPaiementFraisDepot {
 		}else if($type==1){
 			$type="Cheque";
 		}else if($type==2){
-			$type="espece";
+			$type="Liquide";
 		}
 		$nom = (String) $_POST['paiement'][0]['inputNom'];
 		$prenom = (String) $_POST['paiement'][0]['inputPrenom'];
@@ -62,7 +62,7 @@ class ControllerPaiementFraisDepot {
 		}else if($type==1){
 			$type="Cheque";
 		}else if($type==2){
-			$type="espece";
+			$type="Liquide";
 		}
 		$nom = (String) $_POST['paiement'][$i]['inputNom'];
 		$prenom = (String) $_POST['paiement'][$i]['inputPrenom'];

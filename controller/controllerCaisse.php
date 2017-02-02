@@ -16,8 +16,8 @@
 			$typeTransaction = "Ouverture caisse";
 			$numero = "";
 			$date = date('d/m/Y');
-			$commentaire = "Ouverture de caisse en début de journée";
-			$typePaiement = "liquide";
+			$commentaire = "Ouverture de caisse en début de journee";
+			$typePaiement = "Liquide";
 			$beneficiare = "Caisse du Club Hilaire";
 			$caisse = new Caisse($journee,$fondCaisse,$typePaiement,$montantOperation,$beneficiare,
 														$nomEmetteur,$prenomEmetteur,$telephoneEmetteur,
@@ -37,8 +37,8 @@
 			$telephoneEmetteur = "0000000000";
 			$typeTransaction = "Fermeture caisse";
 			$numero = "";
-			$commentaire = "Fermeture de caisse en fin de journée";
-			$typePaiement = "liquide";
+			$commentaire = "Fermeture de caisse en fin de journee";
+			$typePaiement = "Liquide";
 			$date = date('d/m/Y');
 			$beneficiare = $_POST['prenomEmetteur'] ." ". $_POST['nomEmetteur'];
 			$caisse = new Caisse($journee,"0",$typePaiement,$montantOperation,$beneficiare,

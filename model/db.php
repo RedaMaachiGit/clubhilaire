@@ -52,7 +52,7 @@
 
 	public function connect() {
 
-    $connect_db = new mysqli( $this->getServername(), $this->getUsername(), $this->getPassword(), $this->getDBname() , $this->getPort());
+    $connect_db = new mysqli( $this->getServername(), $this->getUsername(), $this->getPassword(), $this->getDBname());
 
 		if ( mysqli_connect_errno() ) {
 			printf("Connection failed: %s\ ", mysqli_connect_error());
