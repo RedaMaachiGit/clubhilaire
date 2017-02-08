@@ -1,3 +1,7 @@
+<?php
+  require_once('../model/lot.php');
+  $lots = Lot::getAllLot();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,12 +19,28 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="../dist/css/skins/skin-blue.min.css">
+  <link rel="stylesheet" href="../bootstrap-select/css/bootstrap-multiselect.css">
+  <!-- Latest compiled and minified CSS -->
+  <!-- jQuery 2.2.3 -->
+  <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+
+  <script src="../bootstrap-select/js/jquery.validate.min.js"></script>
+
+  <script src="../bootstrap-select/js/bootstrap-multiselect.js"></script>
+
+  <!-- Bootstrap 3.3.6 -->
+  <script src="../bootstrap/js/bootstrap.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="../dist/js/app.min.js"></script>
+  <!-- <link rel="stylesheet" href="/vendor/bootstrap-multiselect/css/bootstrap-multiselect.css" />
+  <script src="/vendor/bootstrap-multiselect/js/bootstrap-multiselect.js"></script> -->
+
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
   <script src="../https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="../https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
   <![endif]-->
 </head>
 
@@ -51,8 +71,7 @@
 
     <!-- sidebar: style can be found in sidebar.less -->
 
-      <!-- jQuery 2.2.3 -->
-      <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+
       <script>
           $(document).ready(function() {
               $('#menu').load("common/sidebar.html");
@@ -82,22 +101,48 @@
     <!-- Main content -->
     <section class="content">
       <!-- Form Element sizes -->
-      <div class="box box-success">
-        <div class="box-header with-border">
-          <h3 class="box-title">Veuillez saisir le numéro du lot</h3>
-        </div>
-        <form id="numeroLotForm" method="POST" action="../controller/controllerRechercheLot.php" class="form-horizontal">
-          <div class="box-body">
-            <input class="form-control input-lg" name="numeroLot" id="numeroLot" type="text" placeholder="Numéro lot">
-            <input class="form-control input-lg" name="formEnvoie" id="numeroLot" type="hidden" id="formEnvoie" value="vente">
-            <div class="box-footer">
-              <button type="submit" value="Submit" class="btn btn-info center-block">Vendre</button>
-            </div>
+        <div class="box box-success">
+          <div class="box-header with-border">
+            <h3 class="box-title">Veuillez saisir le numéro du lot</h3>
           </div>
-        </form>
-        <!-- /.box-body -->
-      </div>
-      <!-- /.box -->
+          <form id="numeroLotForm" method="POST" action="../controller/controllerRechercheLot.php" class="form-horizontal">
+            <div class="box-body">
+              <input class="form-control input-lg" name="numeroLot" id="numeroLot" type="text" placeholder="Numéro lot" onkeyup="verifStatut()">
+              <input class="form-control input-lg" name="formEnvoie" id="formEnvoie" type="hidden" value="vente">
+              <span id="NumLotInnexact"></span>
+              <div class="box-footer">
+                <button type="submit" value="Submit" id="buttonValider" class="btn btn-info center-block">Vendre</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div class="box box-success">
+          <div class="box-header with-border">
+            <h3 class="box-title"></h3>
+          </div>
+          <form id="multiselectForm" method="post" action="../controller/controllerRechercheLotPourVenteMultiple.php" class="form-horizontal">
+            <div class="box-body">
+                <label class="col-xs-3 control-label">Lots disponible</label>
+                <div class="col-xs-5">
+                    <select class="form-control" name="lotsDisponible[]" multiple>
+                      <?php foreach ($lots as $key => $lot) {
+                              if($lot->getCouponNoIncr() != -1 && $lot->getStatut()==="En vente"){ ?>
+                        <option value="<?php echo $lot->getCouponNoIncr(); ?>"><?php echo $lot->getCouponNoIncr(); ?></option>
+                        <?php
+                              }
+                            } ?>
+                    </select>
+                </div>
+            </div>
+
+            <div class="box-footer">
+                <div class="col-xs-5 col-xs-offset-3">
+                    <button type="submit" class="btn btn-default">Vendre</button>
+                </div>
+            </div>
+          </form>
+        </div>
     </section>
     <!-- /.content -->
 
@@ -193,14 +238,84 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- REQUIRED JS SCRIPTS -->
+<script>
+$(document).ready(function() {
+    $('#multiselectForm')
+        .find('[name="lotsDisponible[]"]')
+            .multiselect({
+            includeSelectAllOption: true,
+        enableFiltering: true,
+        enableCaseInsensitiveFiltering: true,
+        filterPlaceholder: "Trouvez un lot",
+        maxHeight: 200,
+        nonSelectedText: "Selectionnez un lot",
+        allSelectedText: "Vous avez tous selectionné",
+        selectAllText: "Tous les lots",
+        numberDisplayed: 10,
+                // Re-validate the multiselect field when it is changed
+                onChange: function(element, checked) {
+                    $('#multiselectForm').validate('revalidateField', 'lotsDisponible[]');
+                    // adjustByScrollHeight();
+                },
+                onDropdownShown: function(e) {
+                    // adjustByScrollHeight();
+                },
+                onDropdownHidden: function(e) {
+                    // adjustByHeight();
+                }
+            })
+            .end()
+        .validate({
+            framework: 'bootstrap',
+            // Exclude only disabled fields
+            // The invisible fields set by Bootstrap Multiselect must be validated
+            excluded: ':disabled',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                browsers: {
+                    validators: {
+                        callback: {
+                            message: 'Selectionnez au moins 2 lots',
+                            callback: function(value, validator, $field) {
+                                // Get the selected options
+                                var options = validator.getFieldElements('lotsDisponible[]').val();
+                                return (options != null
+                                        && options.length >= 2 && options.length <= 3);
+                            }
+                        }
+                    }
+                }
+            }
+        });
+});
+</script>
+<script type="text/javascript">
+  console.log("ok");
+  var f=document.forms["numeroLotForm"].elements;
 
-<!-- jQuery 2.2.3 -->
-<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
-<!-- Bootstrap 3.3.6 -->
-<script src="../bootstrap/js/bootstrap.min.js"></script>
-<!-- AdminLTE App -->
-<script src="../dist/js/app.min.js"></script>
-
+  function verifStatut(){
+  	var regNumLot = new RegExp('^[0-9]+$','i');
+    var identifiant= f['numeroLot'].value;
+    if (!regNumLot.test(f['numeroLot'].value)){
+	     document.getElementById("NumLotInnexact").innerHTML = "Numéro de coupon invalide ! Exemple valide : 12";
+       document.getElementById("buttonValider").disabled = true;
+    }
+    else if(numeroLot != ''){
+       $.post('../controller/checkStatutVente.php',{ identifiant: identifiant}, function(data) {
+       $('#NumLotInnexact').text(data);
+       if(document.getElementById("NumLotInnexact").innerHTML == 'Cliquez sur Vendre pour vendre le lot') {
+         document.getElementById("buttonValider").disabled = false;
+       }
+       else {
+         document.getElementById("buttonValider").disabled = true;
+       }
+       });
+    }
+  }
+</script>
 </body>
 </html>

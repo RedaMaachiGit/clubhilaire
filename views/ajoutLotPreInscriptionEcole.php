@@ -227,7 +227,7 @@
                              $commentaire = "X";
                           } ?>
 
-                         <td><a href="#" <?php echo "id=\"type$nombreTotalArticles\"";?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $type ?></a></td>
+                         <td><u><?php echo $type ?></u></td>
                          <td><a href="#" <?php echo "id=\"pTVMinimum$nombreTotalArticles\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $ptvmin ?></a></td>
                          <td><a href="#" <?php echo "id=\"PTVMaximum$nombreTotalArticles\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $ptvmax ?></a></td>
                          <td><a href="#" <?php echo "id=\"taille$nombreTotalArticles\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $taille ?></a></td>

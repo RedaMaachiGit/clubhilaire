@@ -13,7 +13,7 @@ class PaiementController {
 			$fraisDepot = $_SESSION['fraisDepot'];
 			session_unset();
 			$nombreLots = sizeof($lots);
-			$MontantTotal = 0;
+			$montantTotal = 0;
 			if(isset($_POST['index']) && !empty($_POST['index'])) {
 				$numberOfPaiement = $_POST['index'];
 			} else {
@@ -23,20 +23,20 @@ class PaiementController {
 				if(!isset($_POST['paiement'][$i]['typedepaiement']) || !isset($_POST['paiement'][$i]['inputMontant'])){
 					header("Location:../views/error.php");
 				} else {
-					$Type = $_POST['paiement'][$i]['typedepaiement'];
-					$Nom = $_POST['paiement'][$i]['inputNom'];
-					$Prenom = $_POST['paiement'][$i]['inputPrenom'];
-					$Telephone = $_POST['paiement'][$i]['inputTelephone'];
-					$Montant = $_POST['paiement'][$i]['inputMontant'];
-					$MontantTotal = $MontantTotal + $Montant;
-					if($Type == 0) {
+					$type = $_POST['paiement'][$i]['typedepaiement'];
+					$nom = $_POST['paiement'][$i]['inputNom'];
+					$prenom = $_POST['paiement'][$i]['inputPrenom'];
+					$telephone = $_POST['paiement'][$i]['inputTelephone'];
+					$montant = $_POST['paiement'][$i]['inputMontant'];
+					$montantTotal = $montantTotal + $montant;
+					if($type == 0) {
 						$journee = date('d/m/Y');
 						$ancienFond = Caisse::getLastFond();
-						$nouveauFond = $ancienFond + $Montant;
+						$nouveauFond = $ancienFond + $montant;
 						$ecriture = Caisse::payerLotMultiple($nombreLots, $journee,
-												$nouveauFond,"CB",$Montant,"Caisse Club Hilaire",
-												$Nom,$Prenom,$Telephone,
-												"Paiement de frais de depot",$lots,"Pas de numéro","Pas de commentaire");
+												$nouveauFond,"CB",$montant,"Caisse Club Hilaire",
+												$nom,$prenom,$telephone,
+												"Paiement de frais de depot",$lots,"Pas de numero","Pas de commentaire");
 						$correspondanceNumsCoupons = array();
 						for($j=0;$j<sizeof($lots);$j++){
 							$lots[$j]->updateStatut("En attente impression");
@@ -53,15 +53,15 @@ class PaiementController {
 								$_SESSION['correspondance'] = $correspondanceNumsCoupons;
 							}
 						}
-					} else if ($Type == 1){
+					} else if ($type == 1){
 						$journee = date('d/m/Y');
 						$ancienFond = Caisse::getLastFond();
-						$nouveauFond = $ancienFond + $Montant;
+						$nouveauFond = $ancienFond + $montant;
 						$Numero = $_POST['paiement'][$i]['inputNumero'];
 						$Commentaire = $_POST['paiement'][$i]['inputCommentaire'];
 						$ecriture = Caisse::payerLotMultiple($nombreLots, $journee,
-												$nouveauFond,"Cheque",$Montant,"Caisse Club Hilaire",
-												$Nom,$Prenom,$Telephone,
+												$nouveauFond,"Cheque",$montant,"Caisse Club Hilaire",
+												$nom,$prenom,$telephone,
 												"Paiement de frais de depot",$lots,$Numero,$Commentaire);
 						$correspondanceNumsCoupons = array();
 						for($j=0;$j<sizeof($lots);$j++){
@@ -79,14 +79,14 @@ class PaiementController {
 								$_SESSION['correspondance'] = $correspondanceNumsCoupons;
 							}
 						}
-					} else if ($Type == 2){
+					} else if ($type == 2){
 						$journee = date('d/m/Y');
 						$ancienFond = Caisse::getLastFond();
-						$nouveauFond = $ancienFond + $Montant;
+						$nouveauFond = $ancienFond + $montant;
 						$ecriture = Caisse::payerLotMultiple($nombreLots, $journee,
-												$nouveauFond,"Liquide",$Montant,"Caisse Club Hilaire",
-												$Nom,$Prenom,$Telephone,
-												"Paiement de frais de depot",$lots,"Pas de numéro","Pas de commentaire");
+												$nouveauFond,"Liquide",$montant,"Caisse Club Hilaire",
+												$nom,$prenom,$telephone,
+												"Paiement de frais de depot",$lots,"Pas de numero","Pas de commentaire");
 						$correspondanceNumsCoupons = array();
 						for($j=0;$j<sizeof($lots);$j++){
 							$lots[$j]->updateStatut("En attente impression");
@@ -107,9 +107,9 @@ class PaiementController {
 				}
 			}
 			if(sizeof($lots) == 1){
-				header("Location:../views/paiementOk.php?montant=". $MontantTotal . "&coupon=" . $numCoupon);
+				header("Location:../views/paiementOk.php?montant=". $montantTotal . "&coupon=" . $numCoupon);
 			} else {
-				header("Location:../views/paiementOk.php?montant=". $MontantTotal);
+				header("Location:../views/paiementOk.php?montant=". $montantTotal);
 			}
 	}
 
@@ -122,7 +122,7 @@ class PaiementController {
 			// print_r($_POST);
 			// $fraisDepot = $_SESSION['fraisDepot'];
 			$nombreLots = sizeof($lots);
-			$MontantTotal = 0;
+			$montantTotal = 0;
 			if(isset($_POST['index']) && !empty($_POST['index'])) {
 				$numberOfPaiement = $_POST['index'];
 			} else {
@@ -132,59 +132,59 @@ class PaiementController {
 				if(!isset($_POST['paiement'][$i]['typedepaiement']) || !isset($_POST['paiement'][$i]['inputMontant'])){
 					header("Location:../views/error.php");
 				} else {
-					$Type = $_POST['paiement'][$i]['typedepaiement'];
-					$Nom = $_POST['paiement'][$i]['inputNom'];
-					$Prenom = $_POST['paiement'][$i]['inputPrenom'];
-					$Telephone = $_POST['paiement'][$i]['inputTelephone'];
-					$Montant = $_POST['paiement'][$i]['inputMontant'];
-					$MontantTotal = $MontantTotal + $Montant;
-					if($Type == 0){
+					$type = $_POST['paiement'][$i]['typedepaiement'];
+					$nom = $_POST['paiement'][$i]['inputNom'];
+					$prenom = $_POST['paiement'][$i]['inputPrenom'];
+					$telephone = $_POST['paiement'][$i]['inputTelephone'];
+					$montant = $_POST['paiement'][$i]['inputMontant'];
+					$montantTotal = $montantTotal + $montant;
+					if($type == 0){
 						$journee = date('d/m/Y');
 						$ancienFond = Caisse::getLastFond();
-						$nouveauFond = $ancienFond + $Montant;
+						$nouveauFond = $ancienFond + $montant;
 						$ecriture = Caisse::payerLotMultiple($nombreLots, $journee,
-												$nouveauFond,"CB",$Montant,"Caisse Club Hilaire",
-												$Nom,$Prenom,$Telephone,
-												"Paiement de frais de depot",$lots,"Pas de numéro","Pas de commentaire");
+												$nouveauFond,"CB",$montant,"Caisse Club Hilaire",
+												$nom,$prenom,$telephone,
+												"Paiement de frais de depot",$lots,"Pas de numero","Pas de commentaire");
 						$lots[$i]->updateStatut("En attente impression");
 						$idLot = $lots[$i]->getId();
 						Lot::updateFicheAffiche($idLot, "NON", "NON");
 						$numCoupon = $lot->getCouponNoIncr();
-					} else if ($Type == 1){
+					} else if ($type == 1){
 						$journee = date('d/m/Y');
 						$ancienFond = Caisse::getLastFond();
-						$nouveauFond = $ancienFond + $Montant;
+						$nouveauFond = $ancienFond + $montant;
 						$Numero = $_POST['paiement'][$i]['inputNumero'];
 						$Commentaire = $_POST['paiement'][$i]['inputCommentaire'];
 						$ecriture = Caisse::payerLotMultiple($nombreLots, $journee,
-												$nouveauFond,"Cheque",$Montant,"Caisse Club Hilaire",
-												$Nom,$Prenom,$Telephone,
+												$nouveauFond,"Cheque",$montant,"Caisse Club Hilaire",
+												$nom,$prenom,$telephone,
 												"Paiement de frais de depot",$lots,$Numero,$Commentaire);
 						$lots[$i]->updateStatut("En attente impression");
 						$idLot = $lots[$i]->getId();
 						Lot::updateFicheAffiche($idLot, "NON", "NON");
 						$numCoupon = $lot->getCouponNoIncr();
-					} else if ($Type == 2){
+					} else if ($type == 2){
 						$journee = date('d/m/Y');
 						$ancienFond = Caisse::getLastFond();
-						$nouveauFond = $ancienFond + $Montant;
+						$nouveauFond = $ancienFond + $montant;
 						$ecriture = Caisse::payerLotMultiple($nombreLots, $journee,
-												$nouveauFond,"Liquide",$Montant,"Caisse Club Hilaire",
-												$Nom,$Prenom,$Telephone,
-												"Paiement de frais de depot",$lots,"Pas de numéro","Pas de commentaire");
+												$nouveauFond,"Liquide",$montant,"Caisse Club Hilaire",
+												$nom,$prenom,$telephone,
+												"Paiement de frais de depot",$lots,"Pas de numero","Pas de commentaire");
 						$lots[$i]->updateStatut("En attente impression");
 						$idLot = $lots[$i]->getId();
 						Lot::updateFicheAffiche($idLot, "NON", "NON");
 						$numCoupon = $lot->getCouponNoIncr();
 					}
-					header("Location:../views/paiementOk.php?montant=". $MontantTotal . "&coupon=" . $numCoupon);
+					header("Location:../views/paiementOk.php?montant=". $montantTotal . "&coupon=" . $numCoupon);
 				}
 			}
 	}
 
 	public static function payerVente(){
 			session_unset();
-			$MontantTotal = 0;
+			$montantTotal = 0;
 			$idLot = $_POST['idLot'];
 			$lot = Lot::getLotById($idLot);
 			$numCoupon = $lot->getCouponNoIncr(); // Recup du num coupon
@@ -197,56 +197,124 @@ class PaiementController {
 				if(!isset($_POST['paiement'][$i]['typedepaiement']) || !isset($_POST['paiement'][$i]['inputMontant'])){
 					header("Location:../views/error.php");
 				} else {
-					$Type = $_POST['paiement'][$i]['typedepaiement'];
-					$Nom = $_POST['paiement'][$i]['inputNom'];
-					$Prenom = $_POST['paiement'][$i]['inputPrenom'];
-					$Telephone = $_POST['paiement'][$i]['inputTelephone'];
-					$Montant = $_POST['paiement'][$i]['inputMontant'];
-					$MontantTotal = $MontantTotal + $Montant;
-					if($Type == 0){
+					$type = $_POST['paiement'][$i]['typedepaiement'];
+					$nom = $_POST['paiement'][$i]['inputNom'];
+					$prenom = $_POST['paiement'][$i]['inputPrenom'];
+					$telephone = $_POST['paiement'][$i]['inputTelephone'];
+					$montant = $_POST['paiement'][$i]['inputMontant'];
+					$montantTotal = $montantTotal + $montant;
+					if($type == 0){
 						$journee = date('d/m/Y');
 						$ancienFond = Caisse::getLastFond();
-						$nouveauFond = $ancienFond + $Montant;
-						$ecriture = new Caisse($journee,$nouveauFond,"CB",$Montant,
-						"Caisse Club Hilaire",$Nom,$Prenom,$Telephone,
-						"Vente de lot","SQL","Pas de numéro","Pas de commentaire");
+						$nouveauFond = $ancienFond + $montant;
+						$ecriture = new Caisse($journee,$nouveauFond,"CB",$montant,
+						"Caisse Club Hilaire",$nom,$prenom,$telephone,
+						"Vente de lot","SQL","Pas de numero","Pas de commentaire");
  						$lot->updateStatut("Vendu");
 						$ecriture->setLot($lot);
 						$ecriture->setcoupon($numCoupon);
 						$ecriture->save();
-					} else if ($Type == 1){
+					} else if ($type == 1){
 						$journee = date('d/m/Y');
 						$ancienFond = Caisse::getLastFond();
-						$nouveauFond = $ancienFond + $Montant;
+						$nouveauFond = $ancienFond + $montant;
 						$Numero = $_POST['paiement'][$i]['inputNumero'];
 						$Commentaire = $_POST['paiement'][$i]['inputCommentaire'];
-						$ecriture = new Caisse($journee,$nouveauFond,"Cheque",$Montant,
-						"Caisse Club Hilaire",$Nom,$Prenom,$Telephone,
+						$ecriture = new Caisse($journee,$nouveauFond,"Cheque",$montant,
+						"Caisse Club Hilaire",$nom,$prenom,$telephone,
 						"Vente de lot","SQL",$Numero,$Commentaire);
 						$lot->updateStatut("Vendu");
 						$ecriture->setLot($lot);
 						$ecriture->setcoupon($numCoupon);
 						$ecriture->save();
-					} else if ($Type == 2){
+					} else if ($type == 2){
 						$journee = date('d/m/Y');
 						$ancienFond = Caisse::getLastFond();
-						$nouveauFond = $ancienFond + $Montant;
-						$ecriture = new Caisse($journee,$nouveauFond,"Liquide",$Montant,
-						"Caisse Club Hilaire",$Nom,$Prenom,$Telephone,
-						"Vente de lot","SQL","Pas de numéro","Pas de commentaire");
+						$nouveauFond = $ancienFond + $montant;
+						$ecriture = new Caisse($journee,$nouveauFond,"Liquide",$montant,
+						"Caisse Club Hilaire",$nom,$prenom,$telephone,
+						"Vente de lot","SQL","Pas de numero","Pas de commentaire");
 						$lot->updateStatut("Vendu");
 						$ecriture->setLot($lot);
 						$ecriture->setcoupon($numCoupon);
 						$ecriture->save();
 					}
-					header("Location:../views/paiementOk.php?montant=". $MontantTotal . "&coupon=" . $numCoupon.
-					"&nom=".$Nom."&prenom=".$Prenom."&tel=".$Telephone);
+					header("Location:../views/paiementOk.php?montant=". $montantTotal . "&coupon=" . $numCoupon.
+					"&nom=".$nom."&prenom=".$prenom."&tel=".$telephone);
+				}
+			}
+	}
+
+	public static function payerVenteMultiple(){
+			$montantTotal = 0;
+			$coupons = $_POST['lots'];
+			$lots = array();
+			foreach($coupons as $coupon){
+				$lot = Lot::getLotByCoupon($coupon);
+				array_push($lots, $lot);
+				$numCoupon = $lot->getCouponNoIncr(); // Recup du num coupon
+			}
+			if(isset($_POST['index']) && !empty($_POST['index'])) {
+				$numberOfPaiement = $_POST['index'];
+			} else {
+				$numberOfPaiement = 0;
+			}
+			for ($i = 0; $i <= $numberOfPaiement; $i++) {
+				if(!isset($_POST['paiement'][$i]['typedepaiement']) || !isset($_POST['paiement'][$i]['inputMontant'])){
+					header("Location:../views/error.php");
+				} else {
+					$type = $_POST['paiement'][$i]['typedepaiement'];
+					$nom = $_POST['paiement'][$i]['inputNom'];
+					$prenom = $_POST['paiement'][$i]['inputPrenom'];
+					$telephone = $_POST['paiement'][$i]['inputTelephone'];
+					$montant = $_POST['paiement'][$i]['inputMontant'];
+					$montantTotal = $montantTotal + $montant;
+					if($type == 0){
+						$journee = date('d/m/Y');
+						$ancienFond = Caisse::getLastFond();
+						$nouveauFond = $ancienFond + $montant;
+						Caisse::payerLotMultiple(0, $journee,$nouveauFond,"CB",$montant,
+														 "Caisse Club Hilaire",$nom,$prenom,$telephone,
+														 "Vente de lot",$lots,"Pas de numero","Pas de commentaire");
+						foreach ($lots as $key => $lot) {
+							$lot->updateStatut("Vendu");
+						}
+					} else if ($type == 1){
+						$journee = date('d/m/Y');
+						$ancienFond = Caisse::getLastFond();
+						$nouveauFond = $ancienFond + $montant;
+						$Numero = $_POST['paiement'][$i]['inputNumero'];
+						$Commentaire = $_POST['paiement'][$i]['inputCommentaire'];
+						Caisse::payerLotMultiple(0, $journee,$nouveauFond,"Cheque",$montant,
+														 "Caisse Club Hilaire",$nom,$prenom,$telephone,
+														 "Vente de lot",$lots,"Pas de numero","Pas de commentaire");
+						foreach ($lots as $key => $lot) {
+							$lot->updateStatut("Vendu");
+						}
+					} else if ($type == 2){
+						$journee = date('d/m/Y');
+						$ancienFond = Caisse::getLastFond();
+						$nouveauFond = $ancienFond + $montant;
+						Caisse::payerLotMultiple(0, $journee,$nouveauFond,"Liquide",$montant,
+														 "Caisse Club Hilaire",$nom,$prenom,$telephone,
+														 "Vente de lot",$lots,"Pas de numero","Pas de commentaire");
+						foreach ($lots as $key => $lot) {
+							$lot->updateStatut("Vendu");
+						}
+					}
+					$_SESSION['lots'] = $lots;
+					header("Location:../views/paiementOk.php?montant=". $montantTotal .
+					"&nom=".$nom."&prenom=".$prenom."&tel=".$telephone);
 				}
 			}
 	}
 
 
 }
+	if(isset($_POST['venteLotsMultiple'])) {
+		PaiementController::payerVenteMultiple();
+		return;
+	}
 	if(isset($_POST['multiple'])) {
 		if ($_POST['multiple']=="multiple"){
 			PaiementController::payerFraisDeDepot();

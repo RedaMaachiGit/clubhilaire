@@ -753,5 +753,24 @@ class Lot
 		  return true;
 	  }
 	 }
+
+   public static function sortArrayByKey(&$array,$string = false,$asc = true){
+       if($string){
+           usort($array,function ($a, $b) use(&$key,&$asc)
+           {
+               if($asc)    return strcmp(strtolower($a->getLibelleTypeArticle()), strtolower($b->getLibelleTypeArticle()));
+               else        return strcmp(strtolower($b->getLibelleTypeArticle()), strtolower($a->getLibelleTypeArticle()));
+           });
+       }else{
+           usort($array,function ($a, $b) use(&$key,&$asc)
+           {
+               if($a[$key] == $b[$key]){return 0;}
+               if($asc) return ($a->getLibelleTypeArticle() < $b->getLibelleTypeArticle()) ? -1 : 1;
+               else     return ($a->getLibelleTypeArticle() > $b->getLibelleTypeArticle()) ? -1 : 1;
+
+           });
+       }
+   }
+
 }
 ?>

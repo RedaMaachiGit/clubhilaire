@@ -23,6 +23,7 @@
   <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="../dist/css/skins/skin-blue.min.css">
 
+  <link rel="stylesheet" href="../jquery-ui-1.12.1/jquery-ui.css">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -90,7 +91,7 @@
           <div class="box-header with-border">
             <h3 class="box-title">S'il s'agit d'une impression pour un seul lot : veuillez saisir le numéro du lot</h3>
           </div>
-          <form id="numeroLotForm" method="POST" action="../controller/ImpressionLotUnique.php" class="form-horizontal">
+          <form target="_blank" id="numeroLotForm" method="POST" action="../controller/ImpressionLotUnique.php" class="form-horizontal">
             <div class="box-body">
               <input class="form-control input-lg" name="numeroLot"  type="text" id="numeroLot" placeholder="Numéro lot" value="<?php echo $coupon; ?>">
               <div class="box-footer">
@@ -105,7 +106,7 @@
           <div class="box-header with-border">
             <h3 class="box-title">S'il s'agit d'une impression pour un seul lot : veuillez saisir le numéro du lot</h3>
           </div>
-          <form id="numeroLotForm" method="POST" action="../controller/ImpressionBenevoleLotUnique.php" class="form-horizontal">
+          <form target="_blank" id="numeroLotForm" method="POST" action="../controller/ImpressionBenevoleLotUnique.php" class="form-horizontal">
             <div class="box-body">
               <input class="form-control input-lg" name="numeroLot"  type="text" id="numeroLot" placeholder="Numéro lot" value="<?php echo $coupon; ?>">
               <div class="box-footer">
@@ -120,9 +121,9 @@
           <div class="box-header with-border">
             <h3 class="box-title">S'il s'agit d'une impresion pour plusieurs lots : veuillez saisir l'email du vendeur</h3>
           </div>
-          <form id="numeroLotForm" method="POST" action="../controller/ImpressionMail.php" class="form-horizontal">
+          <form target="_blank" id="numeroLotForm" method="POST" action="../controller/ImpressionMail.php" class="form-horizontal">
             <div class="box-body">
-              <input class="form-control input-lg" name="mail"  id="mail" type="text" placeholder="Email vendeur">
+              <input class="autocMail" name="mail"  id="mail" type="text" placeholder="Email vendeur">
               <div class="box-footer">
                 <button type="submit" value="Submit" class="btn btn-info center-block">Imprimer affiche</button>
               </div>
@@ -135,9 +136,9 @@
           <div class="box-header with-border">
             <h3 class="box-title">S'il s'agit d'une impresion pour plusieurs lots : veuillez saisir l'email du vendeur</h3>
           </div>
-          <form id="numeroLotForm" method="POST" action="../controller/ImpressionBenevoleMail.php" class="form-horizontal">
+          <form target="_blank" id="numeroLotForm" method="POST" action="../controller/ImpressionBenevoleMail.php" class="form-horizontal">
             <div class="box-body">
-              <input class="form-control input-lg" name="mail"  id="mail" type="text" placeholder="Email vendeur">
+              <input class="autocMail" name="mail"  id="mail" type="text" placeholder="Email vendeur">
               <div class="box-footer">
                 <button type="submit" value="Submit" class="btn btn-info center-block">Imprimer fiche bénévole</button>
               </div>
@@ -159,7 +160,7 @@
           <div class="box-header with-border">
             <h3 class="box-title">Pour imprimer tous les lots</h3>
           </div>
-          <form id="numeroLotForm" method="POST" action="../controller/Impression.php" class="form-horizontal">
+          <form target="_blank" id="numeroLotForm" method="POST" action="../controller/Impression.php" class="form-horizontal">
             <div class="box-body">
   			      <input class="form-control input-lg" name="formEnvoie" type="hidden" id="formEnvoie" value="multiple">
                 <button type="submit" value="Submit" class="btn btn-info center-block">Imprimer affiches</button>
@@ -173,7 +174,7 @@
           <div class="box-header with-border">
             <h3 class="box-title">Pour imprimer tous les lots</h3>
           </div>
-          <form id="numeroLotForm" method="POST" action="../controller/ImpressionBenevoles.php" class="form-horizontal">
+          <form target="_blank" id="numeroLotForm" method="POST" action="../controller/ImpressionBenevoles.php" class="form-horizontal">
             <div class="box-body">
   			      <input class="form-control input-lg" name="formEnvoie" type="hidden" id="formEnvoie" value="multiple">
                 <button type="submit" value="Submit" class="btn btn-info center-block">Imprimer fiches bénévoles</button>
@@ -188,12 +189,21 @@
 
 </div>
 
+
 <!-- jQuery 2.2.3 -->
 <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="../jquery-ui-1.12.1/jquery-ui.js"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="../bootstrap/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../dist/js/app.min.js"></script>
+<script>
+$('.autocMail').autocomplete({
+       minLength: 2,
+       source: '../controller/automail.php'
+});
+$('.autocMail').addClass('form-control input-lg').removeClass('autocMail');
 
+</script>
 </body>
 </html>

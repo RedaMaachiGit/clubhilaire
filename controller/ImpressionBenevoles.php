@@ -47,8 +47,8 @@ for($k=0;$k<$nombreLots;$k++){
         <th class="tg-yw4l" colspan="3">Email</th>
       </tr>
       <tr>
-        <td class="tg-6k2t"><?php echo $nom ." ". $prenom; ?></td>
-        <td class="tg-6k2t"><?php echo $tel; ?></td>
+        <td class="tg-6k2t"><br></td>
+        <td class="tg-6k2t"><br></td>
         <td class="tg-6k2t" colspan="2"><?php echo $numeroCoupon; ?></td>
         <td class="tg-6k2t" colspan="3"><?php echo $prixLot; ?></td>
         <td class="tg-6k2t" colspan="3"><?php echo $mailVendeur; ?></td>

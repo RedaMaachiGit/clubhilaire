@@ -9,9 +9,9 @@
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="../ionicons-2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="../dist/css/skins/skin-blue.min.css">
@@ -86,10 +86,11 @@
         </div>
         <form id="numeroLotForm" method="POST" action="../controller/controllerRechercheLot.php" class="form-horizontal">
           <div class="box-body">
-            <input class="form-control input-lg" name="numeroLot" id="numeroLot" type="text" placeholder="Numéro lot">
-			      <input class="form-control input-lg" name="formEnvoie" id="numeroLot" type="hidden" id="formEnvoie" value="modification">
+            <input class="form-control input-lg" name="numeroLot" id="numeroLot" type="text" placeholder="Numéro lot" onkeyup="verifStatut()">
+			      <input class="form-control input-lg" name="formEnvoie" type="hidden" id="formEnvoie" value="modification">
+            <span id="NumLotInnexact"></span>
             <div class="box-footer">
-              <button type="submit" value="Submit" class="btn btn-info center-block">Modifier</button>
+              <button type="submit" value="Submit" id="buttonValider" class="btn btn-info center-block">Modifier</button>
             </div>
           </div>
         </form>
@@ -202,3 +203,28 @@
 
 </body>
 </html>
+<script type="text/javascript">
+  console.log("ok");
+  var f=document.forms["numeroLotForm"].elements;
+
+  function verifStatut(){
+  	var regNumLot = new RegExp('^[0-9]+$','i');
+    var identifiant= f['numeroLot'].value;
+    console.log(identifiant);
+    console.log(f['numeroLot'].value);
+    if (!regNumLot.test(f['numeroLot'].value)){
+	     document.getElementById("NumLotInnexact").innerHTML = "Numéro de coupon invalide ! Exemple valide : 12";
+       document.getElementById("buttonValider").disabled = true;
+    }
+    else if(numeroLot != ''){
+       $.post('../controller/checkStatut.php',{ identifiant: identifiant}, function(data) {
+       $('#NumLotInnexact').text(data);
+       if(document.getElementById("NumLotInnexact").innerHTML == 'Cliquez sur MODIFIER pour modifier le lot') {
+         document.getElementById("buttonValider").disabled = false;
+       } else {
+         document.getElementById("buttonValider").disabled = true;
+       }
+       });
+    }
+  }
+</script>

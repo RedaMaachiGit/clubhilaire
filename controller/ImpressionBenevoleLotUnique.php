@@ -51,7 +51,6 @@
 
                 if (seconds_left <= 0)
                 {
-                  //  document.getElementById('timer_div').innerHTML = "You are Ready!";
                   window.setTimeout("location=('../views/imprimerLots.php');",0);
                    clearInterval(interval);
                 }

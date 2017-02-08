@@ -14,6 +14,8 @@
   $prixLot = $lot->getPrix();
   $numeroLot = $lot->getId();
   $numeroCoupon = $lot->getCouponNoIncr();
+  $mailVendeur = $vendeur->getEmail();
+  $statut = $lot->getStatut();
 ?>
 <!DOCTYPE html>
 <html>
@@ -101,7 +103,7 @@
 
       <div class="box">
         <div class="box-header">
-          <h3 class="box-title">Ce lot numéro <?php echo $lot->getCouponNoIncr(); ?> contient</h3>
+          <h3 class="box-title"><?php echo "Coupon numéro: ". $numeroCoupon . ", ID: " . $numeroLot . ", Prix: " . $prixLot . ", mail vendeur: " .$mailVendeur; ?></h3>
         </div>
 
 

@@ -15,6 +15,7 @@ session_start();
     $nombreArticles = sizeof($articles);
   }
   $vendeur = $lot->getVendeur();
+  $mailVendeur = $vendeur->getEmail();
   $statut = $lot->getStatut();
   $prixLot = $lot->getPrix();
   $numeroCoupon = $lot->getCouponNoIncr();
@@ -52,7 +53,11 @@ session_start();
 
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-
+  <script>
+    function preventBack(){window.history.forward();}
+    setTimeout("preventBack()", 0);
+    window.onunload=function(){null};
+  </script>
   <!-- Main Header -->
   <header class="main-header">
 
@@ -123,7 +128,7 @@ session_start();
       <?php } ?>
       <div class="box">
         <div class="box-header">
-          <h3 class="box-title">Ce lot contient</h3>
+          <h3 class="box-title"><?php echo "Coupon numéro: ". $numeroCoupon . ", ID: " . $numeroLot . ", Prix: " . $prixLot . ", mail vendeur: " .$mailVendeur; ?></h3>
           <h2>Statut: <?php echo $statut ?></h2>
         </div>
         <!-- /.box-header -->

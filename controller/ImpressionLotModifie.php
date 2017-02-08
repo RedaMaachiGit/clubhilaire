@@ -61,14 +61,8 @@
         <?php
       }
       $principal = 0;
-      for ($k = 1; $k < $nombreArticles; $k++) {
-        if(!empty($articles[$k]->getTypeArticle())) {
-           $type = $articles[$k]->getLibelleTypeArticle();
-        } else if(!empty($articles[$k]->getSurfaceVoile())){
-           $type = "Voile";
-        } else {
-           $type = "";
-        }
+      for ($k = 0; $k < $nombreArticles; $k++) {
+        $type = $articles[$k]->getLibelleTypeArticle();
         if(strcmp($type, "Voile") == 0){
           $principal = $k;
         }

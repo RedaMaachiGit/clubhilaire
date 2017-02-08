@@ -5,23 +5,16 @@
   include_once('../model/article.php');
   include_once('../model/modele.php');
   $lots= unserialize(urldecode(($_SESSION['lots'])));
-
   $fraisDepot = $_SESSION['fraisDepot'];
   $_SESSION['lots']=urlencode(serialize($lots));
   $_SESSION['fraisDepot'] = $fraisDepot;
-  if(sizeof($lots)>0){
-    $vendeur = $lots[0]->getVendeur();
+  foreach ($lots as $key => $lot) {
+    $vendeur = $lot->getVendeur();
     $nomVendeur = $vendeur->getNom();
     $prenomVendeur = $vendeur->getPrenom();
     $telVendeur = $vendeur->getTel();
   }
-  //$nombreArticles = sizeof($articles);
-  $nombreLots = sizeof($lots);
-
-  // $vendeur = $lot->getVendeur();
-  // $prixLot = $lot->getPrix();
-  // $numeroLot = $lot->getId();
-  // $numeroCoupon = $lot->getCouponNoIncr();
+  
 ?>
 <!DOCTYPE html>
 <html>
@@ -101,7 +94,7 @@
         </h1>
       <?php return false;} ?>
       <h1>
-        Paiement du dépôt pour les lots suivants <?php //for($i=0; $i<count($lots)-1 ; $i++){ echo ("   ".$lots[$i]->getCoupon());}?>
+        Paiement du dépôt pour les lots suivants <?php //for($i=0; $i<count($lots)-1 ; $i++){ echo ("   ".$lot->getCoupon());}?>
         <small>Vous êtes sur le point de recevoir le paiement pour plusieurs lots</small>
       </h1>
       <ol class="breadcrumb">
@@ -112,15 +105,21 @@
 
     <!-- Main content -->
     <section class="content">
-      <?php for ($j = 0; $j < $nombreLots; $j++) { $coupon = $lots[$j]->getCouponNoIncr(); $idLotActuel = $lots[$j]->getId();
-        $prix = $lots[$j]->getPrix();
-        $vendeur = $lots[$j]->getVendeur();
+      <?php foreach ($lots as $keyLot=>$lot) {
+        $coupon = $lot->getCouponNoIncr();
+        $idLotActuel = $lot->getId();
+        $prix = $lot->getPrix();
+        $vendeur = $lot->getVendeur();
         $mail = $vendeur->getEmail();
         ?>
         <div class="box">
           <div class="box-header">
             <h3 class="box-title">Ce lot numéro <?php echo $coupon; ?> contient (Il ne s'agit pas du numéro de coupon)</h3>
             <h3>Mail vendeur: <b><?php echo $mail; ?> </b> | Prix du lot: <b><?php echo $prix; ?>€</b></h3>
+            <form id="modification" action="../controller/controllerCalculFraisDepot.php" method="post"><p>
+              <input type="hidden" name="numeroLot" id="numeroLot" value="<?php echo $coupon ?>" />
+              <input type="hidden" name="formEnvoie" id="formEnvoie" value="multipleRetrait">
+              <input type="submit" value="Retirer"></p></form>
           </div>
 
 
@@ -152,25 +151,25 @@
                     <tbody>
                       <?php
                           $articles = Article::getArticlesByLot($idLotActuel);
-                          $nombreArticles = sizeof($articles);
 
-                          for ($i = 0; $i < $nombreArticles; $i++) { // foreach ($shop as $row) : ?>
+                          foreach ($articles as $key=>$article) { // foreach ($shop as $row) :
+                             ?>
                         <tr>
-                      <td><?php if(!empty($articles[$i]->getTypeArticle())) { echo $articles[$i]->getLibelleTypeArticle(); } else if(!empty($articles[$i]->getSurfaceVoile())){echo "Voile";} else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getPtvMin())) { echo $articles[$i]->getPtvMin(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getPtvMax())) { echo $articles[$i]->getPtvMax(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getTaille())) { echo $articles[$i]->getTaille(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getAnnee())) { echo $articles[$i]->getAnnee(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getSurfaceVoile())) { echo $articles[$i]->getSurfaceVoile(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getCouleurVoile())) { echo $articles[$i]->getCouleurVoile(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getHeureVoile())) { echo $articles[$i]->getHeureVoile(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getCertificat())) { echo $articles[$i]->getCertificat(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getTypeProtectionSelette())) { echo $articles[$i]->getTypeProtectionSelette(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getTypeAccessoire())) { echo $articles[$i]->getTypeAccessoire(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getMarque()->getLibelle())) { echo $articles[$i]->getMarque()->getLibelle(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getModele()->getLibelle())) { echo $articles[$i]->getModele()->getLibelle(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getHomologation())) { echo $articles[$i]->getHomologation(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getCommentaire())) { echo $articles[$i]->getCommentaire(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($article->getTypeArticle())) { echo $article->getLibelleTypeArticle(); } else if(!empty($article->getSurfaceVoile())){echo "Voile";} else { echo "X";}?></td>
+                      <td><?php if(!empty($article->getPtvMin())) { echo $article->getPtvMin(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($article->getPtvMax())) { echo $article->getPtvMax(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($article->getTaille())) { echo $article->getTaille(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($article->getAnnee())) { echo $article->getAnnee(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($article->getSurfaceVoile())) { echo $article->getSurfaceVoile(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($article->getCouleurVoile())) { echo $article->getCouleurVoile(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($article->getHeureVoile())) { echo $article->getHeureVoile(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($article->getCertificat())) { echo $article->getCertificat(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($article->getTypeProtectionSelette())) { echo $article->getTypeProtectionSelette(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($article->getTypeAccessoire())) { echo $article->getTypeAccessoire(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($article->getMarque()->getLibelle())) { echo $article->getMarque()->getLibelle(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($article->getModele()->getLibelle())) { echo $article->getModele()->getLibelle(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($article->getHomologation())) { echo $article->getHomologation(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($article->getCommentaire())) { echo $article->getCommentaire(); } else { echo "X";}?></td>
                         </tr>
                       <?php } ?>
                     </tbody>

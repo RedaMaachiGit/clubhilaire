@@ -44,14 +44,14 @@ class ControllerModificationLot {
 				$annee = $_POST['article'][$i]['inputannee'];
 				$typeProtectionSelette = $_POST['article'][$i]['inputprotectionSelette'];
 			} else if ($type == 2){
-				$Ptvmax = $_POST['article'][$i]['inputptvmax'];
-				$Ptvmin = $_POST['article'][$i]['inputptvmin'];
+				$ptvMax = $_POST['article'][$i]['inputptvmax'];
+				$ptvMin = $_POST['article'][$i]['inputptvmin'];
 				$annee = $_POST['article'][$i]['inputannee'];
 			} else if ($type == 3){
 				$typeAccessoire = $_POST['article'][$i]['inputtypeaccessoire'];
 				$annee = $_POST['article'][$i]['inputannee'];
 			}
-			$article = new Article($type,$lot,$marque,$modele,$Ptvmin,$Ptvmax,$taille,$surface,$couleur,$heuresDeVol,
+			$article = new Article($type,$lot,$marque,$modele,$ptvMin,$ptvMax,$taille,$surface,$couleur,$heuresDeVol,
 			$certificat,$typeProtectionSelette,$typeAccessoire,$annee,"",$typehomologation);
 			$article->save();
 		}

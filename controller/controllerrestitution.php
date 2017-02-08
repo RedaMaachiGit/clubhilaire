@@ -42,7 +42,7 @@ class Controllerrestitution {
 		$ancienFond = Caisse::getLastFond();
 		$nouveauFond = $ancienFond - $montant;
 		$ecriture = new Caisse($journee,$nouveauFond,"Liquide",$montant, $beneficiaire,$Nom,$Prenom,"0000000000",
-		"Paiement de lot vendu","SQL","Pas de numéro","Pas de commentaire");
+		"Paiement de lot vendu","SQL","Pas de numero","Pas de commentaire");
 		$lot->updateStatut("Prepaye");
 		$ecriture->setLot($lot);
 		$ecriture->setcoupon($numeroLot);

@@ -28,6 +28,12 @@
 			$_SESSION['CB']= Caisse::getMontantPayeParTypePaiement("CB");
 			$_SESSION['Liquide']= Caisse::getMontantPayeParTypePaiement("Liquide");
 			$_SESSION['Cheque']= Caisse::getMontantPayeParTypePaiement("Cheque");
+			$_SESSION['CBCumul']= Caisse::getMontantPayeParTypePaiementCumul("CB");
+			$_SESSION['LiquideCumul']= Caisse::getMontantPayeParTypePaiementCumul("Liquide");
+			$_SESSION['ChequeCumul']= Caisse::getMontantPayeParTypePaiementCumul("Cheque");
+			$_SESSION['CBDebitCredit']= Caisse::getMontantPayeParTypePaiementDebitCredit("CB");
+			$_SESSION['LiquideDebitCredit']= Caisse::getMontantPayeParTypePaiementDebitCredit("Liquide");
+			$_SESSION['ChequeDebitCredit']= Caisse::getMontantPayeParTypePaiementDebitCredit("Cheque");
 			header('location:../views/consulterComptabilite.php');
 		}
 

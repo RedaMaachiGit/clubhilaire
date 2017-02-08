@@ -7,7 +7,7 @@
   $lots = Lot::getLotEnAttenteImpressionStatic();
   $nombreLots = sizeof($lots);
 for ($j = 0; $j < $nombreLots; $j++) {
-    if($j < $nombreLots-1){
+    if($j < $nombreLots-1 && $nombreLots != 0){
       $numeroLotSuivant = $lots[$j+1]->getId();
       $articlesSuivants = Article::getArticlesByLot($numeroLotSuivant);
       $nombreArticlesSuivants = sizeof($articlesSuivants);
@@ -30,14 +30,8 @@ for ($j = 0; $j < $nombreLots; $j++) {
       continue;
     }
     $principal = 0;
-    for ($k = 1; $k < $nombreArticles; $k++) {
-      if(!empty($articles[$k]->getTypeArticle())) {
-         $type = $articles[$k]->getLibelleTypeArticle();
-      } else if(!empty($articles[$k]->getSurfaceVoile())){
-         $type = "Voile";
-      } else {
-         $type = "";
-      }
+    for ($k = 0; $k < $nombreArticles; $k++) {
+      $type = $articles[$k]->getLibelleTypeArticle();
       if(strcmp($type, "Voile") == 0){
         $principal = $k;
       }
@@ -93,17 +87,16 @@ for ($j = 0; $j < $nombreLots; $j++) {
     <td class="tg-0s10"><?php if(!empty($articles[$principal]->getHeureVoile())) { echo $articles[$principal]->getHeureVoile(); } else { echo "X";}?></td>
     <td class="tg-0s10"><?php if(!empty($articles[$principal]->getCertificat())) { echo $articles[$principal]->getCertificat(); } else { echo "X";}?></td>
   </tr>
-
+  <tr>
+    <td class="tg-wxgh" colspan="4">Articles supplémentaires dans le lot :</td>
+    <td class="tg-wxgh">Commentaires</td>
+  </tr>
   <?php
       for ($i = 0; $i < $nombreArticles; $i++) {
         if($principal == $i){
           continue;
         }
   ?>
-    <tr>
-      <td class="tg-wxgh" colspan="4">Articles supplémentaires dans le lot :</td>
-      <td class="tg-wxgh">Commentaires</td>
-    </tr>
     <tr>
       <?php
       $idArticle = $articles[$i]->getId();

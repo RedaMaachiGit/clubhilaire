@@ -18,7 +18,6 @@
 
             if (seconds_left <= 0)
             {
-              //  document.getElementById('timer_div').innerHTML = "You are Ready!";
               window.setTimeout("location=('../views/imprimerLots.php');",0);
                clearInterval(interval);
             }
@@ -86,19 +85,12 @@ for ($j = 0; $j < $nombreLots; $j++) {
       $lots[$j]->updateStatut("En vente");
     }
     $principal = 0;
-    for ($k = 1; $k < $nombreArticles; $k++) {
-      if(!empty($articles[$k]->getTypeArticle())) {
-         $type = $articles[$k]->getLibelleTypeArticle();
-      } else if(!empty($articles[$k]->getSurfaceVoile())){
-         $type = "Voile";
-      } else {
-         $type = "";
-      }
+    for ($k = 0; $k < $nombreArticles; $k++) {
+      $type = $articles[$k]->getLibelleTypeArticle();
       if(strcmp($type, "Voile") == 0){
         $principal = $k;
       }
     }
-
 ?>
 
 
@@ -182,16 +174,15 @@ for ($j = 0; $j < $nombreLots; $j++) {
     <td class="tg-0s10"><?php if(!empty($articles[$principal]->getHeureVoile())) { echo $articles[$principal]->getHeureVoile(); } else { echo "X";}?></td>
     <td class="tg-0s10"><?php if(!empty($articles[$principal]->getCertificat())) { echo "OUI"; } else { echo "NON";}?></td>
   </tr>
-
+  <tr>
+    <td class="tg-wxgh" colspan="4">Articles supplémentaires dans le lot :</td>
+    <td class="tg-wxgh">Commentaires</td>
+  </tr>
 
   <?php
       for ($i = 0; $i < $nombreArticles; $i++) {
         if($i==1){
   ?>
-        <tr>
-          <td class="tg-wxgh" colspan="4">Articles supplémentaires dans le lot :</td>
-          <td class="tg-wxgh">Commentaires</td>
-        </tr>
 
   <?php
 }

@@ -12,6 +12,7 @@
   $_SESSION['articles'] = urlencode(serialize($articles));
   $nombreArticles = sizeof($articles);
   $vendeur = $lot->getVendeur();
+  $mailVendeur = $vendeur->getEmail();
   $prixLot = $lot->getPrix();
   $prixMarge = $lot->getPrixMoinsMarge();
   $numeroLot = $lot->getId();
@@ -21,6 +22,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <script>
+    function preventBack(){window.history.forward();}
+    setTimeout("preventBack()", 0);
+    window.onunload=function(){null};
+  </script>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Restituer un lot</title>

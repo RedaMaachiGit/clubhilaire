@@ -6,9 +6,16 @@ include_once('../model/article.php');
 include_once('../model/modele.php');
 include_once('../model/marque.php');
 // print_r($_SESSION);
-if(isset($_GET['coupon'])){
+if(isset($_SESSION['lots'])){
+  $lots = $_SESSION['lots'];
+} else if(isset($_GET['coupon'])){
   $lot = Lot::getLotByCoupon($_GET['coupon']);
   $articles = Article::getArticlesByLot($lot->getId());
+  $vendeur = $lot->getVendeur();
+  $nomVendeur = $vendeur->getNom();
+  $prenomVendeur = $vendeur->getPrenom();
+  $telVendeur = $vendeur->getTel();
+  $mailVendeur = $vendeur->getEMail();
 }
 ?>
 <!DOCTYPE html>
@@ -132,7 +139,15 @@ if(isset($_GET['coupon'])){
                     <td><?php echo array_keys($tabCorrespondance)[$i]; ?></td>
                     <td><?php echo array_values($tabCorrespondance)[$i]; ?></td>
                   </tr>
-                  <?php } ?>
+                  <?php
+                        $lot = Lot::getLotByCoupon(array_values($tabCorrespondance)[$i]);
+                        $vendeur = $lot->getVendeur();
+                        $typeVendeur = $vendeur->getTypeVendeur();
+                        if($typeVendeur === "professionnel"){
+                          $pro = true;
+                        }
+                      }
+                  ?>
                 </tbody>
               </table>
             </div>
@@ -182,11 +197,9 @@ if(isset($_GET['coupon'])){
                 <div class="col-sm-4 invoice-col">
                   From
                   <address>
-                    <strong>Club Hilaire, Inc.</strong><br>
-                    14 Chemin du Funiculaire<br>
-                    38660 Saint-Hilaire, France<br>
-                    Phone: (33) 123-5432<br>
-                    Email: info@clubhilaire.com
+                    <strong><?php echo $nomVendeur. " " .$prenomVendeur; ?></strong><br>
+                    Phone: <?php echo $telVendeur; ?><br>
+                    Email: <?php echo $mailVendeur; ?>
                   </address>
                 </div>
                 <!-- /.col -->
@@ -199,7 +212,7 @@ if(isset($_GET['coupon'])){
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
-                  <b>Facture #<?php echo $_GET['coupon'] ?></b><br>
+                  <b>Paiement lot #<?php echo $_GET['coupon'] ?></b><br>
                   <br>
                   <b>Numero de coupon:</b> <?php echo $_GET['coupon'] ?><br>
                   <b>Date de paiement:</b> <?php echo date("j/m/Y"); ?><br>
@@ -226,10 +239,8 @@ if(isset($_GET['coupon'])){
                       <?php
                       $nombreArticles = sizeof($articles);
                       for ($i = 0; $i < $nombreArticles; $i++) {
-                        if(!empty($articles[$i]->getTypeArticle())) {
+                        if(!empty($articles[$i]->getLibelleTypeArticle())) {
                           $type = $articles[$i]->getLibelleTypeArticle();
-                        } else if(!empty($articles[$i]->getSurfaceVoile())){
-                          $type = "Voile";
                         } else {
                           $type = "";
                         }
@@ -327,7 +338,7 @@ if(isset($_GET['coupon'])){
                     <img src="../../dist/img/credit/american-express.png" alt="American Express">
 
                     <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-                      Ceci est une facture délivrée par le Club Hil'aie dans le cadre de la coup Icare.
+                      Ceci est une preuve de paiement délivrée par le Club Hil'aie dans le cadre de la coup Icare.
                     </p>
                   </div>
                   <!-- /.col -->
@@ -338,11 +349,7 @@ if(isset($_GET['coupon'])){
                       <table class="table">
                         <tr>
                           <th style="width:50%">Total:</th>
-                          <td><?php echo $lot->getPrix() - (20 / 100) * $lot->getPrix() ?>€</td>
-                        </tr>
-                        <tr>
-                          <th>TVA (20%)</th>
-                          <td><?php echo (20 / 100) * $lot->getPrix(); ?>€</td>
+                          <td><?php echo $lot->getPrix(); ?>€</td>
                         </tr>
                         <tr>
                           <th>Frais de port:</th>
@@ -407,11 +414,12 @@ if(isset($_GET['coupon'])){
           <script src="../dist/js/app.min.js"></script>
           <!-- AdminLTE for demo purposes -->
           <?php if(isset($_SESSION['correspondance'])){ ?>
-          <script src="../dist/js/demo.js"></script><script type="text/javascript">
-            <!--
-            window.print();
-            //-->
-          </script>
+          <script src="../dist/js/demo.js"></script>
+          <?php if($pro){ ?>
+            <script type="text/javascript">
+              window.print();
+            </script>
+          <?php } ?>
           <?php } ?>
         </body>
         </html>

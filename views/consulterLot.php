@@ -156,7 +156,7 @@
                       <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?><?php echo $lots[$j]->getVendeur()->getTel(); ?></td>
                       <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?><?php echo $lots[$j]->getPrix(); ?></td>
                       <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?><?php echo $lots[$j]->getNumeroLotVendeur(); ?></td>
-                      <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?><?php if(!empty($articles[$i]->getTypeArticle())) { $o = $articles[$i]->getLibelleTypeArticle(); echo $o; } else if(!empty($articles[$i]->getSurfaceVoile())){echo "Voile";} else { echo "NC";}?></td>
+                      <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?><?php if(!empty($articles[$i]->getLibelleTypeArticle())) { $o = $articles[$i]->getLibelleTypeArticle(); echo $o; } else { echo "NC";}?></td>
                       <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?><?php if(!empty($articles[$i]->getPtvMin())) { echo $articles[$i]->getPtvMin(); } else { echo "NC";}?></td>
                       <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?><?php if(!empty($articles[$i]->getPtvMax())) { echo $articles[$i]->getPtvMax(); } else { echo "NC";}?></td>
                       <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?><?php if(!empty($articles[$i]->getTaille())) { echo $articles[$i]->getTaille(); } else { echo "NC";}?></td>

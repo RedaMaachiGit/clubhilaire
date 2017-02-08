@@ -1,5 +1,6 @@
 <?php
 require_once('db.php');
+require_once('lot.php');
 
 
 
@@ -302,14 +303,28 @@ class Caisse
       $res = $conn->query($query) or die(mysqli_error($conn));
       $idCaisse = $conn->insert_id;
 
-      for($i=0;$i<$nombreDeLots;$i++){
-        $numeroDeLot = $lots[$i]->getId();
-        if($lots[$i]->getCouponNoIncr() == -1){
-          $numeroDeCoupon = $lots[$i]->getCouponIncr();
+      foreach ($lots as $lot) {
+        $numeroDeLot = $lot->getId();
+        if($lot->getCouponNoIncr() == -1){
+          $numeroDeCoupon = $lot->getCouponIncr();
         } else {
-          $numeroDeCoupon = $lots[$i]->getCouponNoIncr();
+          $numeroDeCoupon = $lot->getCouponNoIncr();
         }
-        $lots[$i]->updateCoupon($numeroDeCoupon);
+        $lot->updateCoupon($numeroDeCoupon);
+        $queryForeign = "INSERT INTO paiementLot (idCaisse,idLot,numCoupon) VALUES ('".$idCaisse."','".$numeroDeLot."','".$numeroDeCoupon."')";
+        $resForeign = $conn->query($queryForeign) or die(mysqli_error($conn));
+      }
+      $db->close();
+    }
+
+    public function setMultipleLots($arrayOfLots){
+      $this->getId();
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      foreach ($arrayOfLots as $lot) {
+        $numeroDeLot = $lot->getId();
+        $numeroDeCoupon = $lot->getCouponNoIncr();
         $queryForeign = "INSERT INTO paiementLot (idCaisse,idLot,numCoupon) VALUES ('".$idCaisse."','".$numeroDeLot."','".$numeroDeCoupon."')";
         $resForeign = $conn->query($queryForeign) or die(mysqli_error($conn));
       }
@@ -357,11 +372,11 @@ class Caisse
      $conn = $db->getConnectDb();
      $res=mysqli_query($conn,$query);
      $row = $res->fetch_row();
-     if(!empty($row)){
-      return (int)$row[2];
- 	  }else{
- 		  return null;
- 	  }
+      if(!empty($row)){
+        return (int)$row[2];
+      }else{
+        return null;
+      }
    }
 
    public static function getNumberOfOperations(){
@@ -415,6 +430,49 @@ class Caisse
       $db->close();
       return $montantTotal;
     }
+    public static function getMontantPayeParTypePaiementCumul($typeDePaiement){
+      $query = "SELECT * FROM caisse WHERE typePaiement=\"" .$typeDePaiement."\"";
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      $res=mysqli_query($conn,$query);
+      $i=0;
+      $montantTotal = 0;
+      $paiements = array();
+      while($row = mysqli_fetch_array($res)){
+      $i++;
+      if((String)$row['beneficiaire']==="Caisse Club Hilaire"){
+        $montantTotal = $montantTotal + (int)$row['montant'];
+      } else {
+        $montantTotal = $montantTotal - (int)$row['montant'];
+      }
+
+      }
+      $db->close();
+      return $montantTotal;
+    }
+    public static function getMontantPayeParTypePaiementDebitCredit($typeDePaiement){
+      $query = "SELECT * FROM caisse WHERE typePaiement=\"" .$typeDePaiement."\"";
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      $res=mysqli_query($conn,$query);
+      $i=0;
+      $montantTotalPos = 0;
+      $montantTotalNeg = 0;
+      $paiements = array();
+      while($row = mysqli_fetch_array($res)){
+      $i++;
+      if((String)$row['beneficiaire']==="Caisse Club Hilaire"){
+        $montantTotalPos = $montantTotalPos + (int)$row['montant'];
+      } else {
+        $montantTotalNeg = $montantTotalNeg + (int)$row['montant'];
+      }
+
+      }
+      $db->close();
+      return [$montantTotalPos, $montantTotalNeg];
+    }
 
     public static function getResultat(){
       $db = new DB();
@@ -455,8 +513,8 @@ class Caisse
     }
 
     public static function getNombreLotVendu(){
-      $query = "SELECT * FROM lot WHERE statut = \"Vendu\"";
-      $query1 = "SELECT DISTINCT(idLot) FROM paiementLot WHERE idLot IN (SELECT idLot FROM lot WHERE statut='Vendu');";
+      $query = "SELECT * FROM lot WHERE (statut = \"Vendu\") OR (statut = \"Prepaye\") OR (statut = \"Paye remis\")";
+      $query1 = "SELECT DISTINCT(idLot) FROM paiementLot WHERE idLot IN (SELECT idLot FROM lot WHERE (statut = \"Vendu\") OR (statut = \"Prepaye\") OR (statut = \"Paye remis\"));";
       $db = new DB();
       $db->connect();
       $conn = $db->getConnectDb();

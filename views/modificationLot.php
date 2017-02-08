@@ -6,10 +6,16 @@
 	include_once('../model/article.php');
 	include_once('../model/modele.php');
 	include_once('../model/marque.php');
+
 	$lot= unserialize(urldecode(($_SESSION['lot'])));
 	$statut = $_SESSION['statut'];
+	if($statut === "En vente" || $statut === "Restitue" || $statut === "Prepaye" || $statut === "Paye remis" || $statut === "En attente impression" || $statut === "Vendu"){
+			header('location:NumeroLotModification.html');
+	}
 	$vendeur = $lot->getVendeur();
 	$articles = unserialize(urldecode($_SESSION['articles']));
+
+	Lot::sortArrayByKey($articles,true,false); //String sort (descending order)
 	?>
 	<!DOCTYPE html>
 
@@ -47,7 +53,11 @@
 
 	  <!-- Main Header -->
 	  <header class="main-header">
-
+			<script>
+	      function preventBack(){window.history.forward();}
+	      setTimeout("preventBack()", 0);
+	      window.onunload=function(){null};
+	    </script>
 	    <!-- Logo -->
 	    <a href="../index.html" class="logo">
 	      <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -167,7 +177,7 @@
 	                <div class="form-group">
 	                  <label for="inputPrix" class="col-sm-2 control-label">Prix du lot</label>
 	                  <div class="col-sm-10">
-	                    <input type="number" class="form-control" value="<?php echo $lot->getPrix(); ?>" id="inputPrix" name="inputPrix" placeholder="Prix du lot">
+	                    <input type="number" min="50" step="10" class="form-control" value="<?php echo $lot->getPrix(); ?>" id="inputPrix" name="inputPrix" placeholder="Prix du lot">
 	                  </div>
 	                </div>
 
@@ -185,14 +195,14 @@
 												<?php if($articles[$i]->getTypeArticle() == 0) { ?>
 											<div class="col-sm-12 form-group">
 			                    <label>Type d'article</label>
-													<select class="col-sm-5 form-control" id="article[<?php echo $i; ?>].inputtypedematos" name="article[<?php echo $i; ?>][typedematos]" data-index='0' onchange="handleTypeChange(this)">
+													<select disabled="disabled" class="col-sm-5 form-control" onchange="handleTypeChange(this)">
 														<option value="0" selected="selected">Voile</option>
 														<option value="1">Selette</option>
 														<option value="2">Parachute de secours</option>
 														<option value="3">Accessoire</option>
 													</select>
 											</div>
-
+											<input id="article[<?php echo $i; ?>].inputtypedematos" type="hidden" name="article[<?php echo $i; ?>][typedematos]" data-index='0'>
 
 
 											<div class="form-group" name="article[<?php echo $i; ?>].marque">
@@ -321,14 +331,14 @@
 												else if($articles[$i]->getTypeArticle() == 1) { ?>
 											<div class="col-sm-12 form-group">
 			                    <label>Type d'article</label>
-													<select class="col-sm-5 form-control" id="article[<?php echo $i; ?>].inputtypedematos" name="article[<?php echo $i; ?>][typedematos]" data-index='0' onchange="handleTypeChange(this)">
+													<select disabled="disabled" class="col-sm-5 form-control" onchange="handleTypeChange(this)">
 														<option value="0">Voile</option>
 														<option value="1" selected="selected">Selette</option>
 														<option value="2">Parachute de secours</option>
 														<option value="3">Accessoire</option>
 													</select>
 											</div>
-
+<input id="article[<?php echo $i; ?>].inputtypedematos" type="hidden" name="article[<?php echo $i; ?>][typedematos]" data-index='0'>
 
 
 											<div class="form-group" name="article[<?php echo $i; ?>].marque">
@@ -378,14 +388,14 @@
 													else if($articles[$i]->getTypeArticle() == 2) { ?>
 												<div class="col-sm-12 form-group">
 				                    <label>Type d'article</label>
-														<select class="col-sm-5 form-control" id="article[<?php echo $i; ?>].inputtypedematos" name="article[<?php echo $i; ?>][typedematos]" data-index='0' onchange="handleTypeChange(this)">
+														<select disabled="disabled" class="col-sm-5 form-control" onchange="handleTypeChange(this)">
 														<option value="0">Voile</option>
 														<option value="1">Selette</option>
 														<option value="2" selected="selected">Parachute de secours</option>
 														<option value="3">Accessoire</option>
 													</select>
 											</div>
-
+											<input id="article[<?php echo $i; ?>].inputtypedematos" type="hidden" name="article[<?php echo $i; ?>][typedematos]" data-index='0'>
 
 
 											<div class="form-group" name="article[<?php echo $i; ?>].marque">
@@ -433,14 +443,14 @@
 											else if($articles[$i]->getTypeArticle() == 3) { ?>
 											<div class="col-sm-12 form-group">
 			                    <label>Type d'article</label>
-													<select class="col-sm-5 form-control" id="article[<?php echo $i; ?>].inputtypedematos" name="article[<?php echo $i; ?>][typedematos]" data-index='0' onchange="handleTypeChange(this)">
+													<select disabled="disabled" class="col-sm-5 form-control" data-index='0' onchange="handleTypeChange(this)">
 														<option value="0">Voile</option>
 														<option value="1">Selette</option>
 														<option value="2">Parachute de secours</option>
 														<option value="3" selected="selected">Accessoire</option>
 													</select>
 											</div>
-
+											<input id="article[<?php echo $i; ?>].inputtypedematos" type="hidden" name="article[<?php echo $i; ?>][typedematos]" data-index='0'>
 
 
 											<div class="form-group" name="article[<?php echo $i; ?>].marque">
@@ -1014,6 +1024,14 @@
 	      alert("Le email doit être renseigné");
 	      return false;
 	  }
+		if (inputPrix == "") {
+				alert("Le prix du lot doit être renseigné");
+				return false;
+		} else if(inputPrix%10!=0) {
+			alert("Le prix du lot doit être un multiple de 10");
+			return false;
+		}
+
 	}
 
 	$('.autocMarque').autocomplete({
