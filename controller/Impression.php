@@ -6,6 +6,8 @@
   include_once('../model/marque.php');
   $lots = Lot::getLotEnAttenteImpressionStatic();
   $nombreLots = sizeof($lots);
+  $pageVide = true;
+
 for ($j = 0; $j < $nombreLots; $j++) {
     if($j < $nombreLots-1 && $nombreLots != 0){
       $numeroLotSuivant = $lots[$j+1]->getId();
@@ -36,6 +38,7 @@ for ($j = 0; $j < $nombreLots; $j++) {
         $principal = $k;
       }
     }
+    $pageVide = false;
     Lot::updateAffiche($numeroLot, "OUI");
     if(Lot::ficheImprime($numeroLot) == 0 && Lot::afficheImprime($numeroLot) == 0){
       $lots[$j]->updateStatut("En vente");
@@ -102,8 +105,6 @@ for ($j = 0; $j < $nombreLots; $j++) {
       $idArticle = $articles[$i]->getId();
       if(!empty($articles[$i]->getTypeArticle())) {
          $type = $articles[$i]->getLibelleTypeArticle();
-      } else if(!empty($articles[$i]->getSurfaceVoile())){
-         $type = "Voile";
       } else {
          $type = "";
       }
@@ -189,15 +190,15 @@ for ($j = 0; $j < $nombreLots; $j++) {
   <?php
     }
   ?>
-</table></div>
-
+</table>
+</div>
+<div style=\"page-break-after:always\"></div>
 <?php
-  if($nombreArticles> 2 || $nombreArticlesSuivants > 2){
-      echo "<div style=\"page-break-after:always\"></div>";
-  } else {
-      echo "</br>";
-  }
-} ?>
+}
+if($pageVide){
+  echo "Auncun lot à imprimer";
+}
+ ?>
 
 
 

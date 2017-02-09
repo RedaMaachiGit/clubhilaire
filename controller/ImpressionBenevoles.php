@@ -7,6 +7,7 @@ include_once('../model/marque.php');
 
 $lots = Lot::getLotEnAttenteImpressionStatic();
 $nombreLots = sizeof($lots);
+$pageVide = true;
 for($k=0;$k<$nombreLots;$k++){
   $numeroLot = $lots[$k]->getId();
   $vendeur = $lots[$k]->getVendeur();
@@ -14,10 +15,10 @@ for($k=0;$k<$nombreLots;$k++){
   $numeroLot = $lots[$k]->getId();
   $numeroCoupon = $lots[$k]->getCouponNoIncr();
   $vendeur = $lots[$k]->getVendeur();
-  $mailVendeur = $vendeur->getEmail();
-  $nom = $vendeur->getNom();
-  $prenom = $vendeur->getPrenom();
-  $tel = $vendeur->getTel();
+  $mailVendeur = "";
+  $nom = "";
+  $prenom = "";
+  $tel = "";
   $articles = Article::getArticlesByLot($numeroLot);
   if(!Lot::lotPossedeProduits($numeroLot)){
     $nombreArticles = 0;
@@ -35,6 +36,7 @@ for($k=0;$k<$nombreLots;$k++){
   if(Lot::afficheImprime($numeroLot) == 0){
     $lots[$k]->updateStatut("En vente");
   }
+  $pageVide = false;
   ?>
   <body class="hold-transition skin-blue sidebar-mini" onload="window.print();">
 
@@ -176,7 +178,10 @@ for($k=0;$k<$nombreLots;$k++){
         </tr>
       </table>
       <div style="page-break-after:always"></div>
-      <?php } ?>
+      <?php }
+      if($pageVide){
+        echo "Auncun lot à imprimer";
+      }?>
 
 
 

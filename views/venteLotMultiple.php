@@ -7,6 +7,9 @@ session_start();
   include_once('../model/modele.php');
   include_once('../model/marque.php');
   $lots = unserialize(urldecode(($_SESSION['lots'])));
+  session_unset();
+  $_SESSION['lots'] = urlencode(serialize($lots));
+  // $_SESSION['lots'] = urlencode(serialize($lots));
 ?>
 <!DOCTYPE html>
 

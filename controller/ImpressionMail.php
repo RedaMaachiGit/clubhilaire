@@ -50,8 +50,7 @@
     $idVendeur = $vendeur->getId();
     $lots = Lot::getLotByVendeur($idVendeur);
     $nombreLots = sizeof($lots);
-
-
+    $pageVide = true;
 for ($j = 0; $j < $nombreLots; $j++) {
     $nombreArticlesSuivants = 0;
     if($j < $nombreLots-1){
@@ -85,6 +84,7 @@ for ($j = 0; $j < $nombreLots; $j++) {
       $lots[$j]->updateStatut("En vente");
     }
     $principal = 0;
+    $pageVide = false;
     for ($k = 0; $k < $nombreArticles; $k++) {
       $type = $articles[$k]->getLibelleTypeArticle();
       if(strcmp($type, "Voile") == 0){
@@ -283,13 +283,13 @@ for ($j = 0; $j < $nombreLots; $j++) {
     }
   ?>
 </table></div>
+<div style=\"page-break-after:always\"></div>
   <?php
-    if($nombreArticles> 2 || $nombreArticlesSuivants > 2){
-        echo "<div style=\"page-break-after:always\"></div>";
-    } else {
-        echo "</br>";
-    }
+
   }
+}
+if($pageVide){
+  echo "Auncun lot à imprimer";
 }
 ?>
 

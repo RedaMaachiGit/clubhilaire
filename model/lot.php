@@ -635,9 +635,8 @@ class Lot
   }
 
 	 public static function getLotEnPreparationByVendeur($idVendeur){
-    $statut1 = "En preInscription";
     $statut2 = "En preparation";
-	  $query = "SELECT * FROM lot WHERE (idVendeur='$idVendeur' AND statut ='$statut1') OR (idVendeur='$idVendeur' AND statut ='$statut2')";
+	  $query = "SELECT * FROM lot WHERE idVendeur='$idVendeur' AND statut ='$statut2'";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();

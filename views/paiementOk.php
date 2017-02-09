@@ -7,7 +7,9 @@ include_once('../model/modele.php');
 include_once('../model/marque.php');
 // print_r($_SESSION);
 if(isset($_SESSION['lots'])){
-  $lots = $_SESSION['lots'];
+  $lots = unserialize(urldecode(($_SESSION['lots'])));
+
+  $multiple = true;
 } else if(isset($_GET['coupon'])){
   $lot = Lot::getLotByCoupon($_GET['coupon']);
   $articles = Article::getArticlesByLot($lot->getId());
@@ -177,10 +179,208 @@ if(isset($_SESSION['lots'])){
               </div>
               <!-- /.modal-content -->
             </div>
-            <?php if(isset($_GET['tel']) && isset($_GET['prenom']) && isset($_GET['nom'])){ ?>
 
-            <!-- <div class="wrapper"> -->
-            <!-- Main content -->
+            <?php }
+              if($multiple){
+                foreach ($lots as $key => $lot){
+                  $articles = Article::getArticlesByLot($lot->getId());
+                  $vendeur = $lot->getVendeur();
+                  $nomVendeur = $vendeur->getNom();
+                  $prenomVendeur = $vendeur->getPrenom();
+                  $telVendeur = $vendeur->getTel();
+                  $mailVendeur = $vendeur->getEMail(); ?>
+                  <section class="invoice">
+                    <!-- title row -->
+                    <div class="row">
+                      <div class="col-xs-12">
+                        <h2 class="page-header">
+                          <i class="fa fa-globe"></i> Club Hilaire
+                          <small class="pull-right">Date: <?php echo date("j/m/Y"); ?></small>
+                        </h2>
+                      </div>
+                      <!-- /.col -->
+                    </div>
+                    <!-- info row -->
+                    <div class="row invoice-info">
+                      <div class="col-sm-4 invoice-col">
+                        From
+                        <address>
+                          <strong><?php echo $nomVendeur. " " .$prenomVendeur; ?></strong><br>
+                          Phone: <?php echo $telVendeur; ?><br>
+                          Email: <?php echo $mailVendeur; ?>
+                        </address>
+                      </div>
+                      <!-- /.col -->
+                      <div class="col-sm-4 invoice-col">
+                        To
+                        <address>
+                          <strong><?php echo $_GET['nom']." ".$_GET['prenom'] ?></strong><br>
+                          Phone: <?php echo $_GET['tel'] ?><br>
+                        </address>
+                      </div>
+                      <!-- /.col -->
+                      <div class="col-sm-4 invoice-col">
+                        <b>Paiement lot #<?php echo $_GET['coupon'] ?></b><br>
+                        <br>
+                        <b>Numero de coupon:</b> <?php echo $_GET['coupon'] ?><br>
+                        <b>Date de paiement:</b> <?php echo date("j/m/Y"); ?><br>
+                        <b>Compte:</b> Caisse du club Hil'Air
+                      </div>
+                      <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+
+                    <!-- Table row -->
+                    <div class="row">
+                      <div class="col-xs-12 table-responsive">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th>Quantité</th>
+                              <th>Produit</th>
+                              <th>Marque / Modele</th>
+                              <th>Commentaire</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <?php
+                            $nombreArticles = sizeof($articles);
+                            for ($i = 0; $i < $nombreArticles; $i++) {
+                              if(!empty($articles[$i]->getLibelleTypeArticle())) {
+                                $type = $articles[$i]->getLibelleTypeArticle();
+                              } else {
+                                $type = "";
+                              }
+                              if(!empty($articles[$i]->getPtvMin())) {
+                                $ptvmin = $articles[$i]->getPtvMin();
+                              } else {
+                                $ptvmin = "";
+                              }
+                              if(!empty($articles[$i]->getPtvMax())) {
+                                $ptvmax = $articles[$i]->getPtvMax();
+                              } else {
+                                $ptvmax = "";
+                              }
+                              if(!empty($articles[$i]->getTaille())) {
+                                $taille = $articles[$i]->getTaille();
+                              } else {
+                                $taille = "";
+                              }
+                              if(!empty($articles[$i]->getAnnee())) {
+                                $annee = $articles[$i]->getAnnee();
+                              } else {
+                                $annee = "";
+                              }
+                              if(!empty($articles[$i]->getSurfaceVoile())) {
+                                $surfaceVoile = $articles[$i]->getSurfaceVoile();
+                              } else {
+                                $surfaceVoile = "";
+                              }
+                              if(!empty($articles[$i]->getCouleurVoile())) {
+                                $couleurVoile = $articles[$i]->getCouleurVoile();
+                              } else {
+                                $couleurVoile = "";
+                              }
+                              if(!empty($articles[$i]->getHeureVoile())) {
+                                $heureVoile = $articles[$i]->getHeureVoile();
+                              } else {
+                                $heureVoile = "";
+                              }
+                              if(!empty($articles[$i]->getCertificat())) {
+                                $certificat = $articles[$i]->getCertificat();
+                              } else {
+                                $certificat = "";
+                              }
+                              if(!empty($articles[$i]->getTypeProtectionSelette())) {
+                                $typeProtectionSelette = $articles[$i]->getTypeProtectionSelette();
+                              } else {
+                                $typeProtectionSelette = "";
+                              }
+                              if(!empty($articles[$i]->getTypeAccessoire())) {
+                                $typeAccessoire = $articles[$i]->getTypeAccessoire();
+                              } else {
+                                $typeAccessoire = "";
+                              }
+                              if(!empty($articles[$i]->getMarque()->getLibelle())) {
+                                $marque = $articles[$i]->getMarque()->getLibelle();
+                              } else {
+                                $marque = "";
+                              }
+                              if(!empty($articles[$i]->getModele()->getLibelle())) {
+                                $modele = $articles[$i]->getModele()->getLibelle();
+                              } else {
+                                $modele = "";
+                              }
+                              if(!empty($articles[$i]->getHomologation())) {
+                                $homologation = $articles[$i]->getHomologation();
+                              } else {
+                                $homologation = "";
+                              }
+                              if(!empty($articles[$i]->getCommentaire())) {
+                                $commentaire = $articles[$i]->getCommentaire();
+                              } else {
+                                $commentaire = "";
+                              } ?>
+                              <tr>
+                                <td>1</td>
+                                <td><?php echo $type; ?></td>
+                                <td><?php echo $marque." / ".$modele; ?></td>
+                                <td><?php echo $commentaire; ?></td>
+                              </tr>
+                              <?php } ?>
+                            </tbody>
+                          </table>
+                        </div>
+                        <!-- /.col -->
+                      </div>
+                      <!-- /.row -->
+
+                      <div class="row">
+                        <!-- accepted payments column -->
+                        <div class="col-xs-6">
+                          <p class="lead">Méthodes de paiement:</p>
+
+                          <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                            Ceci est une preuve de paiement délivrée par le Club Hil'aie dans le cadre de la coup Icare.
+                          </p>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-xs-6">
+                          <p class="lead">Sommes payée</p>
+
+                          <div class="table-responsive">
+                            <table class="table">
+                              <tr>
+                                <th style="width:50%">Total:</th>
+                                <td><?php echo $lot->getPrix(); ?>€</td>
+                              </tr>
+                              <tr>
+                                <th>Frais de port:</th>
+                                <td>0€</td>
+                              </tr>
+                              <tr>
+                                <th>Total:</th>
+                                <td><?php echo $lot->getPrix() ?>€</td>
+                              </tr>
+                            </table>
+                          </div>
+                        </div>
+                        <!-- /.col -->
+                      </div>
+                      <!-- /.row -->
+
+                      <!-- /.content -->
+                      <!-- </div> -->
+                      <!-- /.content -->
+                      <div class="row no-print">
+                        <div class="col-xs-12">
+                          <a onClick="window.print()" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
+                        </div>
+                      </div>
+                    </section>
+        <?php }
+                }
+                if(isset($_GET['tel']) && isset($_GET['prenom']) && isset($_GET['nom']) && !$multiple){ ?>
             <section class="invoice">
               <!-- title row -->
               <div class="row">
@@ -232,7 +432,6 @@ if(isset($_SESSION['lots'])){
                         <th>Produit</th>
                         <th>Marque / Modele</th>
                         <th>Commentaire</th>
-                        <th>Total</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -319,7 +518,6 @@ if(isset($_SESSION['lots'])){
                           <td><?php echo $type; ?></td>
                           <td><?php echo $marque." / ".$modele; ?></td>
                           <td><?php echo $commentaire; ?></td>
-                          <td><?php echo ($lot->getPrix())/sizeof($articles) ?>€</td>
                         </tr>
                         <?php } ?>
                       </tbody>
@@ -333,9 +531,6 @@ if(isset($_SESSION['lots'])){
                   <!-- accepted payments column -->
                   <div class="col-xs-6">
                     <p class="lead">Méthodes de paiement:</p>
-                    <img src="../../dist/img/credit/visa.png" alt="Visa">
-                    <img src="../../dist/img/credit/mastercard.png" alt="Mastercard">
-                    <img src="../../dist/img/credit/american-express.png" alt="American Express">
 
                     <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
                       Ceci est une preuve de paiement délivrée par le Club Hil'aie dans le cadre de la coup Icare.
@@ -375,7 +570,6 @@ if(isset($_SESSION['lots'])){
                   </div>
                 </div>
               </section>
-              <?php } ?>
               <?php } ?>
               <!-- </div> -->
 

@@ -31,10 +31,10 @@
       $numeroLot = $lots->getId();
       $numeroCoupon = $lots->getCouponNoIncr();
       $vendeur = $lots->getVendeur();
-      $mailVendeur = $vendeur->getEmail();
-      $nom = $vendeur->getNom();
-      $prenom = $vendeur->getPrenom();
-      $tel = $vendeur->getTel();
+      $mailVendeur = "";
+      $nom = "";
+      $prenom = "";
+      $tel = "";
       $articles = Article::getArticlesByLot($numeroLot);
       if(!Lot::lotPossedeProduits($numeroLot)){
         $nombreArticles = 0;

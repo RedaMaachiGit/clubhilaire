@@ -28,7 +28,12 @@ class Controllerrestitution {
 
 	public static function prepPaiementLot(){
 		$numeroLot = $_POST['numeroLot'];
-		$numeroCheque = $_POST['numeroLot'];
+		$numeroCheque = "Pas de numero";
+		$typeDePaiement = "Liquide";
+		if(isset($_POST['inputNumero'])){
+			$numeroCheque = $_POST['inputNumero'];
+			$typeDePaiement = "Cheque";
+		}
 		$articles = unserialize(urldecode($_SESSION['articles']));
 		$lot = Lot::getLotByCoupon($numeroLot);
 		$vendeur = $lot->getVendeur();
@@ -41,8 +46,8 @@ class Controllerrestitution {
 		$journee = date('d/m/Y');
 		$ancienFond = Caisse::getLastFond();
 		$nouveauFond = $ancienFond - $montant;
-		$ecriture = new Caisse($journee,$nouveauFond,"Liquide",$montant, $beneficiaire,$Nom,$Prenom,"0000000000",
-		"Paiement de lot vendu","SQL","Pas de numero","Pas de commentaire");
+		$ecriture = new Caisse($journee,$nouveauFond,$typeDePaiement,$montant, $beneficiaire,$Nom,$Prenom,"0000000000",
+		"Paiement de lot vendu","SQL",$numeroCheque,"Pas de commentaire");
 		$lot->updateStatut("Prepaye");
 		$ecriture->setLot($lot);
 		$ecriture->setcoupon($numeroLot);

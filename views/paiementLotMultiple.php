@@ -14,7 +14,7 @@
     $prenomVendeur = $vendeur->getPrenom();
     $telVendeur = $vendeur->getTel();
   }
-  
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -117,7 +117,7 @@
             <h3 class="box-title">Ce lot numéro <?php echo $coupon; ?> contient (Il ne s'agit pas du numéro de coupon)</h3>
             <h3>Mail vendeur: <b><?php echo $mail; ?> </b> | Prix du lot: <b><?php echo $prix; ?>€</b></h3>
             <form id="modification" action="../controller/controllerCalculFraisDepot.php" method="post"><p>
-              <input type="hidden" name="numeroLot" id="numeroLot" value="<?php echo $coupon ?>" />
+              <input type="hidden" name="numeroLot" id="numeroLot" value="<?php echo $idLotActuel ?>" />
               <input type="hidden" name="formEnvoie" id="formEnvoie" value="multipleRetrait">
               <input type="submit" value="Retirer"></p></form>
           </div>

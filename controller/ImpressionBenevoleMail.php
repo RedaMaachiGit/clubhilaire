@@ -4,6 +4,7 @@
     include_once('../model/article.php');
     include_once('../model/modele.php');
     include_once('../model/marque.php');
+    $pageVide = true;
     if(isset($_POST['mail']) && !empty($_POST['mail'])){
       $mail = $_POST['mail'];
     } else if(isset($_GET['mail']) && !empty($_GET['mail'])){
@@ -50,17 +51,18 @@
       $idVendeur = $vendeur->getId();
       $lots = Lot::getLotByVendeur($idVendeur);
       $nombreLots = sizeof($lots);
-      for($k=0;$k<$nombreLots;$k++){
+
+    for($k=0;$k<$nombreLots;$k++){
       $numeroLot = $lots[$k]->getId();
       $vendeur = $lots[$k]->getVendeur();
       $prixLot = $lots[$k]->getPrix();
       $numeroLot = $lots[$k]->getId();
       $numeroCoupon = $lots[$k]->getCouponNoIncr();
       $vendeur = $lots[$k]->getVendeur();
-      $mailVendeur = $vendeur->getEmail();
-      $nom = $vendeur->getNom();
-      $prenom = $vendeur->getPrenom();
-      $tel = $vendeur->getTel();
+      $mailVendeur = "";
+      $nom = "";
+      $prenom = "";
+      $tel = "";
       $articles = Article::getArticlesByLot($numeroLot);
       $nombreArticles = sizeof($articles);
       if($numeroCoupon==-1 || empty($articles[0]) || $nombreArticles == 0){
@@ -74,7 +76,7 @@
       if(Lot::ficheImprime($numeroLot) == 0 && Lot::afficheImprime($numeroLot) == 0){
         $lots[$k]->updateStatut("En vente");
       }
-
+      $pageVide = false;
     ?>
   <body class="hold-transition skin-blue sidebar-mini" onload="window.print();">
 
@@ -217,7 +219,11 @@
   </table>
   <div style="page-break-after:always"></div>
   <?php } ?>
-  <?php } ?>
+  <?php }
+  if($pageVide){
+    echo "Auncun lot à imprimer";
+  }
+  ?>
 
 
 

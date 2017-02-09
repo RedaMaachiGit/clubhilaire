@@ -65,8 +65,8 @@ class ControllerCalculFraisDepot {
 		$lots = unserialize(urldecode(($_SESSION['lots'])));
 		$totalFraisDepot = 0;
 		foreach ($lots as $key=>$lot) {
-			if($lot->getCouponNoIncr() == $numeroLotARetirer){
-				$lot->updateStatut("Invalide");
+			if($lot->getId() == $numeroLotARetirer){
+				$lot->updateStatut("En preparation");
 				unset($lots[$key]);
 			}
 			$prixLot = $lot->getPrix();
