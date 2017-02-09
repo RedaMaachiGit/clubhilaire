@@ -1,13 +1,11 @@
 <?php
 session_start();
-
   include_once('../model/vendeur.php');
   include_once('../model/lot.php');
   include_once('../model/article.php');
   include_once('../model/modele.php');
   include_once('../model/marque.php');
   $lots = unserialize(urldecode(($_SESSION['lots'])));
-  session_unset();
   $_SESSION['lots'] = urlencode(serialize($lots));
   // $_SESSION['lots'] = urlencode(serialize($lots));
 ?>

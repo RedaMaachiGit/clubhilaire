@@ -8,7 +8,6 @@ include_once('../model/marque.php');
 // print_r($_SESSION);
 if(isset($_SESSION['lots'])){
   $lots = unserialize(urldecode(($_SESSION['lots'])));
-
   $multiple = true;
 } else if(isset($_GET['coupon'])){
   $lot = Lot::getLotByCoupon($_GET['coupon']);
