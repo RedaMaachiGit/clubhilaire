@@ -9,7 +9,7 @@
 
 	$lot= unserialize(urldecode(($_SESSION['lot'])));
 	$statut = $_SESSION['statut'];
-	if($statut === "En vente" || $statut === "Restitue" || $statut === "Prepaye" || $statut === "Paye remis" || $statut === "En attente impression" || $statut === "Vendu"){
+	if($statut === "Restitue" || $statut === "Prepaye" || $statut === "Paye remis"|| $statut === "Vendu"){
 			header('location:NumeroLotModification.html');
 	}
 	$vendeur = $lot->getVendeur();
@@ -202,7 +202,7 @@
 														<option value="3">Accessoire</option>
 													</select>
 											</div>
-											<input id="article[<?php echo $i; ?>].inputtypedematos" type="hidden" name="article[<?php echo $i; ?>][typedematos]" data-index='0'>
+											<input id="article[<?php echo $i; ?>].inputtypedematos" type="hidden" name="article[<?php echo $i; ?>][typedematos]" data-index='0' value="0">
 
 
 											<div class="form-group" name="article[<?php echo $i; ?>].marque">
@@ -338,7 +338,7 @@
 														<option value="3">Accessoire</option>
 													</select>
 											</div>
-<input id="article[<?php echo $i; ?>].inputtypedematos" type="hidden" name="article[<?php echo $i; ?>][typedematos]" data-index='0'>
+											<input id="article[<?php echo $i; ?>].inputtypedematos" type="hidden" name="article[<?php echo $i; ?>][typedematos]" data-index='0' value="1">
 
 
 											<div class="form-group" name="article[<?php echo $i; ?>].marque">
@@ -395,7 +395,7 @@
 														<option value="3">Accessoire</option>
 													</select>
 											</div>
-											<input id="article[<?php echo $i; ?>].inputtypedematos" type="hidden" name="article[<?php echo $i; ?>][typedematos]" data-index='0'>
+											<input id="article[<?php echo $i; ?>].inputtypedematos" type="hidden" name="article[<?php echo $i; ?>][typedematos]" data-index='0' value="2">
 
 
 											<div class="form-group" name="article[<?php echo $i; ?>].marque">
@@ -450,7 +450,7 @@
 														<option value="3" selected="selected">Accessoire</option>
 													</select>
 											</div>
-											<input id="article[<?php echo $i; ?>].inputtypedematos" type="hidden" name="article[<?php echo $i; ?>][typedematos]" data-index='0'>
+											<input id="article[<?php echo $i; ?>].inputtypedematos" type="hidden" name="article[<?php echo $i; ?>][typedematos]" data-index='0' value="3">
 
 
 											<div class="form-group" name="article[<?php echo $i; ?>].marque">

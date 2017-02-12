@@ -6,6 +6,7 @@ include_once('../model/article.php');
 include_once('../model/modele.php');
 include_once('../model/marque.php');
 // print_r($_SESSION);
+$multiple = false;
 if(isset($_SESSION['lots'])){
   $lots = unserialize(urldecode(($_SESSION['lots'])));
   $multiple = true;
