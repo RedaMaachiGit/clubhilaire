@@ -9,9 +9,6 @@
 
 	$lot= unserialize(urldecode(($_SESSION['lot'])));
 	$statut = $_SESSION['statut'];
-	if($statut === "Restitue" || $statut === "Prepaye" || $statut === "Paye remis"|| $statut === "Vendu"){
-			header('location:NumeroLotModification.html');
-	}
 	$vendeur = $lot->getVendeur();
 	$articles = unserialize(urldecode($_SESSION['articles']));
 
