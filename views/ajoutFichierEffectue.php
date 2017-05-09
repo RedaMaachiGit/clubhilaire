@@ -1,10 +1,17 @@
 <!DOCTYPE html>
+<?php
+  //echo("Numero lot: " . $_POST['numeroLot'] . "<br />\n"); //TRACE
+//  $connect = ConnexionDB(); // Je me connecte à la base de donnée
+
+//  $updateLot = "SELECT * FROM Lot WHERE numeroLot = '$id'" or die("Erreur lors de la consultation de données (updateLot)" . mysqli_error($connect));
+//  $req = $connect->query($updateLot);
+?>
 
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Fichier ajouté </title>
+  <title>Lot ajouté</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -51,62 +58,31 @@
   <aside class="main-sidebar">
 
     <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
 
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel">
-        <div class="pull-left image">
-          <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-        </div>
-        <div class="pull-left info">
-          <p>Vendeur dashboard</p>
-          <!-- Status -->
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-        </div>
-      </div>
-
-      <!-- search form (Optional) -->
-      <form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
-              <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-        </div>
-      </form>
-      <!-- /.search form -->
-
+      <!-- jQuery 2.2.3 -->
+      <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+      <script>
+          $(document).ready(function() {
+              $('#menu').load("common/sidebar.html");
+          });
+      </script>
       <!-- Sidebar Menu -->
-      <ul class="sidebar-menu">
-        <li class="header">HEADER</li>
-        <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-        <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
-        <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#">Link in level 2</a></li>
-            <li><a href="#">Link in level 2</a></li>
-          </ul>
-        </li>
-      </ul>
+      <div id='menu' class="sidebar-menu"/>
       <!-- /.sidebar-menu -->
-    </section>
-    <!-- /.sidebar -->
-  </aside>
 
+
+  </aside>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
+      <h1>
+         Ajout fichier effectué
+        <small></small>
+      </h1>
       <ol class="breadcrumb">
-        <li><a href="index.html"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Ajout fichier</li>
+        <li><a href="../index.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="../nouveauLot.html">   Ajout fichier effectué</a></li>
       </ol>
     </section>
 
@@ -119,14 +95,14 @@
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span></button>
-              <h4 class="modal-title"> Ajout fichier effectué</h4>
+              <h4 class="modal-title">  Ajout fichier effectué</h4>
             </div>
             <div class="modal-body">
-              <p style="font-size:30px"> Ajout fichier effectué:</p>
+              <p style="font-size:30px"> Ajout fichier effectué </p>
             </div>
             <div class="modal-footer">
               <!-- <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button> -->
-              <a href:"../index.html"><button type="button" class="btn btn-primary">Retourner à l'acceuil</button></a>
+              <a class = "btn btn-primary" href = "../index.html" role = "button">Retour</a>
             </div>
           </div>
           <!-- /.modal-content -->
@@ -239,7 +215,171 @@
 <script src="../dist/js/app.min.js"></script>
 
 
+<script>
+var paiementIndex = 0;
+var handleTypeChange = function(e) {
+  console.log(e.value);
+  console.log(e.dataset);
+  console.log(e.dataset.index);
+
+  var paiementIndex = e.dataset.index;
+  if ( e.value == '0') // Voile
+  {
+    console.log('TRACE CB');
+  }
+  else if ( e.value == '1') // sellette
+  {
+    console.log('TRACE cheque');
+  }
+  else if ( e.value == '2') // Parachute de secours
+  {
+    console.log('TRACE liquide');
+  }
+}
+$(document).ready(function() {
+
+    var marqueValidators = {
+            row: '.col-xs-4',   // The title is placed inside a <div class="col-xs-4"> element
+            validators: {
+                notEmpty: {
+                    message: 'La marque est requise'
+                }
+            }
+        },
+        modeleValidators = {
+            row: '.col-xs-4',
+            validators: {
+                notEmpty: {
+                    message: 'Le modele est requis'
+                }
+            }
+        }
+
+    $('#paiementForm')
+        // .formValidation({
+        //     framework: 'bootstrap',
+        //     icon: {
+        //         valid: 'glyphicon glyphicon-ok',
+        //         invalid: 'glyphicon glyphicon-remove',
+        //         validating: 'glyphicon glyphicon-refresh'
+        //     },
+        //     fields: {
+        //         'paiement[0].marque': marqueValidators,
+        //         'paiement[0].modele': modeleValidators
+        //         'paiement[0].ptvmax': ptvmaxValidators
+        //         'paiement[0].ptvmin': ptvminValidators
+        //         'paiement[0].taille': tailleValidators
+        //         'paiement[0].surface': surfaceValidators
+        //         'paiement[0].couleur': couleurValidators
+        //         'paiement[0].heure': heureValidators
+        //         'paiement[0].typeaccessoire': typeaccessoireValidators
+        //         'paiement[0].certificat': certificatValidators
+        //     }
+        // })
+
+        // Add button click handler
+        .on('click', '.addButton', function() {
+            console.log('TRACE');
+            paiementIndex++;
+            console.log(paiementIndex);
+            document.getElementById("index").value = paiementIndex + 1;
+            console.log(document.getElementById("index").value);
+            var $form = $('#paiementForm .box-body');
+            var $template = $('#paiementTemplate'),
+                $clone    = $template
+                                .clone()
+                                .removeClass('hide')
+                                .removeAttr('id')
+                                .attr('data-paiement-index', paiementIndex);
+            $form.append($clone);
+
+            // Update the name attributes
+            $clone
+                .find('[name="typedepaiement"]').attr('name', 'paiement[' + paiementIndex + '][typedepaiement]').end()
+                .find('[name="nom"]').attr('name', 'paiement[' + paiementIndex + '].nom').end()
+                .find('[name="prenom"]').attr('name', 'paiement[' + paiementIndex + '].prenom').end()
+                .find('[name="telephone"]').attr('name', 'paiement[' + paiementIndex + '].telephone').end()
+                .find('[name="numero"]').attr('name', 'paiement[' + paiementIndex + '].numero').end()
+                .find('[name="commentaire"]').attr('name', 'paiement[' + paiementIndex + '].commentaire').end()
+                .find('[name="montant"]').attr('name', 'paiement[' + paiementIndex + '].montant').end()
+                // Ici on clone les identifiants
+                .find('[id="inputtypedepaiement"]').attr('data-index', '' + paiementIndex).end()
+                .find('[id="inputtypedepaiement"]').attr('id', 'paiement[' + paiementIndex + '].inputtypedepaiement').end()
+                .find('[id="nomgroup"]').attr('id', 'paiement[' + paiementIndex + '].nomgroup').end()
+                .find('[id="prenomgroup"]').attr('id', 'paiement[' + paiementIndex + '].prenomgroup').end()
+                .find('[id="telephonegroup"]').attr('id', 'paiement[' + paiementIndex + '].telephonegroup').end()
+                .find('[id="numerogroup"]').attr('id', 'paiement[' + paiementIndex + '].numerogroup').end()
+                .find('[id="commentairegroup"]').attr('id', 'paiement[' + paiementIndex + '].commentairegroup').end()
+                .find('[id="montantgroup"]').attr('id', 'paiement[' + paiementIndex + '].montantgroup').end()
+
+                .find('[name="inputNom"]').attr('name', 'paiement[' + paiementIndex + '][inputNom]').end()
+                .find('[name="inputPrenom"]').attr('name', 'paiement[' + paiementIndex + '][inputPrenom]').end()
+                .find('[name="inputTelephone"]').attr('name', 'paiement[' + paiementIndex + '][inputTelephone]').end()
+                .find('[name="inputNumero"]').attr('name', 'paiement[' + paiementIndex + '][inputNumero]').end()
+                .find('[name="inputCommentaire"]').attr('name', 'paiement[' + paiementIndex + '][inputCommentaire]').end()
+                .find('[name="inputMontant"]').attr('name', 'paiement[' + paiementIndex + '][inputMontant]').end()
+
+                .find('[id="inputtypedepaiement"]').attr('id', 'paiement[' + paiementIndex + '][inputtypedepaiement]').end()
+                .find('[id="inputNom"]').attr('id', 'paiement[' + paiementIndex + '][inputNom]').end()
+                .find('[id="inputPrenom"]').attr('id', 'paiement[' + paiementIndex + '][inputPrenom]').end()
+                .find('[id="inputTelephone"]').attr('id', 'paiement[' + paiementIndex + '][inputTelephone]').end()
+                .find('[id="inputNumero"]').attr('id', 'paiement[' + paiementIndex + '][inputNumero]').end()
+                .find('[id="inputCommentaire"]').attr('id', 'paiement[' + paiementIndex + '][inputCommentaire]').end()
+                .find('[id="inputMontant"]').attr('id', 'paiement[' + paiementIndex + '][inputMontant]').end()
+
+            // Add new fields
+            // Note that we also pass the validator rules for new field as the third parameter
+            // $('#paiementForm')
+            //     .formValidation('addField', 'paiement[' + paiementIndex + '].typedematos', typeValidators)
+            //     .formValidation('addField', 'paiement[' + paiementIndex + '].marque', marqueValidators)
+            //     .formValidation('addField', 'paiement[' + paiementIndex + '].modele', modeleValidators)
+            //     .formValidation('addField', 'paiement[' + paiementIndex + '].ptvmax', ptvmaxValidators)
+            //     .formValidation('addField', 'paiement[' + paiementIndex + '].ptvmin', ptvminValidators)
+            //     .formValidation('addField', 'paiement[' + paiementIndex + '].taille', tailleValidators)
+            //     .formValidation('addField', 'paiement[' + paiementIndex + '].surface', surfaceValidators)
+            //     .formValidation('addField', 'paiement[' + paiementIndex + '].couleur', couleurValidators)
+            //     .formValidation('addField', 'paiement[' + paiementIndex + '].heure', heureValidators)
+            //     .formValidation('addField', 'paiement[' + paiementIndex + '].typeaccessoire', typeaccessoireValidators)
+            //     .formValidation('addField', 'paiement[' + paiementIndex + '].certificat', certificatValidators);
+
+        })
+        // Remove button click handler
+        .on('click', '.removeButton', function() {
+          document.getElementById("index").value --;
+            var $row  = $(this).parents('.form-group'),
+                index = $row.attr('data-paiement-index');
+
+            // Remove fields
+            // $('#paiementForm')
+            //     .formValidation('removeField', $row.find('[name="paiement[' + index + '].typedematos"]'))
+            //     .formValidation('removeField', $row.find('[name="paiement[' + index + '].marque"]'))
+            //     .formValidation('removeField', $row.find('[name="paiement[' + index + '].modele"]'))
+            //     .formValidation('removeField', $row.find('[name="paiement[' + index + '].ptvmax"]'))
+            //     .formValidation('removeField', $row.find('[name="paiement[' + index + '].ptvmin"]'))
+            //     .formValidation('removeField', $row.find('[name="paiement[' + index + '].taille"]'))
+            //     .formValidation('removeField', $row.find('[name="paiement[' + index + '].surface"]'))
+            //     .formValidation('removeField', $row.find('[name="paiement[' + index + '].couleur"]'))
+            //     .formValidation('removeField', $row.find('[name="paiement[' + index + '].heure"]'))
+            //     .formValidation('removeField', $row.find('[name="paiement[' + index + '].typeaccessoire"]'))
+            //     .formValidation('removeField', $row.find('[name="paiement[' + index + '].certificat"]'));
+
+            // Remove element containing the fields
+            $row.remove();
+        });
+
+        // $(document).on('change', $('#paiement['+ paiementIndex +'].inputtypedematos'), function() {
+        //     var e = document.getElementById("paiement["+ paiementIndex +"].inputtypedematos");
+        //     console.log(paiementIndex);
+        //
+        //   });
+
+});
+</script>
 
 
+<!-- Optionally, you can add Slimscroll and FastClick plugins.
+     Both of these plugins are recommended to enhance the
+     user experience. Slimscroll is required when using the
+     fixed layout. -->
 </body>
 </html>

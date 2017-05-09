@@ -77,13 +77,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Veuillez payer le lot rentré pour obtenir un numéro de coupon
+        Réduction ajoutée 
         <small></small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="../index.html"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="../nouveauLot.html"> Nouveau lot</a></li>
-        <li class="active">Lot rentré</li>
+        <li><a href="../nouveauLot.html">  Réduction ajoutée </a></li>
       </ol>
     </section>
 
@@ -96,14 +95,14 @@
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span></button>
-              <h4 class="modal-title">Votre lot a bien été entré</h4>
+              <h4 class="modal-title"> Réduction ajoutée </h4>
             </div>
             <div class="modal-body">
-              <p style="font-size:30px">Veuillez payer les frais de dépôt pour le lot rentré pour obtenir un numéro de coupon. Pour payer utiliser l'adresse mail suivante: <?php echo $_GET['mail'] ?></p>
+              <p style="font-size:30px"> Réduction ajoutée </p>
             </div>
             <div class="modal-footer">
               <!-- <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button> -->
-              <a class = "btn btn-primary" href = "../index.html" role = "button">J'ai retenu</a>
+              <a class = "btn btn-primary" href = "../index.html" role = "button">Retour</a>
             </div>
           </div>
           <!-- /.modal-content -->

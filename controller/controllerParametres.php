@@ -43,6 +43,16 @@
 			}
 			header('location:../views/parametres.php');
 		}
+		
+		public static function setPrix(){
+			if(isset($_POST['prix']) && !empty($_POST['prix'])){
+				echo 'ici';
+				$prix = $_POST['prix'];
+				echo $prix;
+				Administration::updatePrix($prix);
+			}
+			header('location:../views/parametres.php');
+		}
 
 
 
@@ -50,6 +60,11 @@
 	if(isset($_POST['formEnvoie'])){
 		if($_POST['formEnvoie'] == "marge"){
 			ControllerParametres::setMarge();
+		}
+	}
+	if(isset($_POST['formEnvoie'])){
+		if($_POST['formEnvoie'] == "prix"){
+			ControllerParametres::setPrix();
 		}
 	}
 	if(isset($_POST['formEnvoie'])){

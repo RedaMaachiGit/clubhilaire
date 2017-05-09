@@ -199,7 +199,7 @@
 												<?php if($articles[$i]->getTypeArticle() == 0) { ?>
 
 														<option value="0" selected="selected">Voile</option>
-														<option value="1">Selette</option>
+														<option value="1">sellette</option>
 														<option value="2">Parachute de secours</option>
 														<option value="3">Accessoire</option>
 													</select>
@@ -332,7 +332,7 @@
 												<?php }
 												else if($articles[$i]->getTypeArticle() == 1) { ?>
 														<option value="0">Voile</option>
-														<option value="1" selected="selected">Selette</option>
+														<option value="1" selected="selected">sellette</option>
 														<option value="2">Parachute de secours</option>
 														<option value="3">Accessoire</option>
 													</select>
@@ -369,10 +369,10 @@
 												</div>
 											</div>
 
-			                <div class="form-group" id="article[<?php echo $i; ?>].protectionSelettegroup" name="article[<?php echo $i; ?>].protectionSelette" style="display:none">
-			                  <label for="inputprotectionSelette" class="col-sm-2 control-label">Protection selette</label>
+			                <div class="form-group" id="article[<?php echo $i; ?>].protectionsellettegroup" name="article[<?php echo $i; ?>].protectionsellette" style="display:none">
+			                  <label for="inputprotectionsellette" class="col-sm-2 control-label">Protection sellette</label>
 			                  <div class="col-sm-10">
-			                    <input type="text" class="form-control" id="article[<?php echo $i; ?>].inputprotectionSelette" name="article[<?php echo $i; ?>][inputprotectionSelette]"  placeholder="Surface" />
+			                    <input type="text" class="form-control" id="article[<?php echo $i; ?>].inputprotectionsellette" name="article[<?php echo $i; ?>][inputprotectionsellette]"  placeholder="Surface" />
 			                  </div>
 			                </div>
 
@@ -386,7 +386,7 @@
 												<?php }
 													else if($articles[$i]->getTypeArticle() == 2) { ?>
 														<option value="0">Voile</option>
-														<option value="1">Selette</option>
+														<option value="1">sellette</option>
 														<option value="2" selected="selected">Parachute de secours</option>
 														<option value="3">Accessoire</option>
 													</select>
@@ -438,7 +438,7 @@
 												<?php }
 												else if($articles[$i]->getTypeArticle() == 3) { ?>
 														<option value="0">Voile</option>
-														<option value="1">Selette</option>
+														<option value="1">sellette</option>
 														<option value="2">Parachute de secours</option>
 														<option value="3" selected="selected">Accessoire</option>
 													</select>
@@ -510,7 +510,7 @@
 	                      <label>Type d'article</label>
 	                      <select class="col-sm-5 form-control" id="inputtypedematos" name="typedematos" data-index='0' onchange="handleTypeChange(this)">
 	                        <option value="0">Voile</option>
-	                        <option value="1">Selette</option>
+	                        <option value="1">sellette</option>
 	                        <option value="2">Parachute de secours</option>
 	                        <option value="3">Accessoire</option>
 	                      </select>
@@ -551,10 +551,10 @@
 	                      </div>
 	                  </div>
 
-										<div class="form-group" id="protectionSelettegroup" name="protectionSelette" style="display:none">
-											<label for="inputprotectionSelette" class="col-sm-2 control-label">Protection selette</label>
+										<div class="form-group" id="protectionsellettegroup" name="protectionsellette" style="display:none">
+											<label for="inputprotectionsellette" class="col-sm-2 control-label">Protection sellette</label>
 											<div class="col-sm-10">
-												<input type="text" class="form-control" id="inputprotectionSelette" name="inputprotectionSelette"  placeholder="Type de protection" />
+												<input type="text" class="form-control" id="inputprotectionsellette" name="inputprotectionsellette"  placeholder="Type de protection" />
 											</div>
 										</div>
 
@@ -740,8 +740,8 @@
 	    console.log('TRACE voile');
 	    var ptvmaxgroup = document.getElementById("article[" + articleIndex + "].ptvmaxgroup");
 	    ptvmaxgroup.style.display = "block";
-			var protectionSelettegroup = document.getElementById("article[" + articleIndex + "].protectionSelettegroup");
-			protectionSelettegroup.style.display = "none";
+			var protectionsellettegroup = document.getElementById("article[" + articleIndex + "].protectionsellettegroup");
+			protectionsellettegroup.style.display = "none";
 	    var ptvmingroup = document.getElementById("article[" + articleIndex + "].ptvmingroup");
 	    ptvmingroup.style.display = "block";
 			var homologation = document.getElementById("article[" + articleIndex + "].homologationGroup");
@@ -761,12 +761,12 @@
 	    var typeaccessoiregroup = document.getElementById("article[" + articleIndex + "].typeaccessoiregroup");
 	    typeaccessoiregroup.style.display = "none";
 	  }
-	  else if ( e.value == '1') // Selette
+	  else if ( e.value == '1') // sellette
 	  {
-	    console.log('TRACE selette');
+	    console.log('TRACE sellette');
 	    var ptvmaxgroup = document.getElementById("article[" + articleIndex + "].ptvmaxgroup");
 	    ptvmaxgroup.style.display = "none";
-			var surfacegroup = document.getElementById("article[" + articleIndex + "].protectionSelettegroup");
+			var surfacegroup = document.getElementById("article[" + articleIndex + "].protectionsellettegroup");
 			surfacegroup.style.display = "block";
 	    var ptvmingroup = document.getElementById("article[" + articleIndex + "].ptvmingroup");
 	    ptvmingroup.style.display = "none";
@@ -792,7 +792,7 @@
 	    console.log('TRACE para');
 	    var ptvmaxgroup = document.getElementById("article[" + articleIndex + "].ptvmaxgroup");
 	    ptvmaxgroup.style.display = "block";
-			var surfacegroup = document.getElementById("article[" + articleIndex + "].protectionSelettegroup");
+			var surfacegroup = document.getElementById("article[" + articleIndex + "].protectionsellettegroup");
 			surfacegroup.style.display = "none";
 	    var ptvmingroup = document.getElementById("article[" + articleIndex + "].ptvmingroup");
 	    ptvmingroup.style.display = "block";
@@ -818,7 +818,7 @@
 	    console.log('TRACE accessoire');
 	    var ptvmaxgroup = document.getElementById("article[" + articleIndex + "].ptvmaxgroup");
 	    ptvmaxgroup.style.display = "none";
-			var surfacegroup = document.getElementById("article[" + articleIndex + "].protectionSelettegroup");
+			var surfacegroup = document.getElementById("article[" + articleIndex + "].protectionsellettegroup");
 			surfacegroup.style.display = "none";
 	    var ptvmingroup = document.getElementById("article[" + articleIndex + "].ptvmingroup");
 	    ptvmingroup.style.display = "none";
@@ -900,7 +900,7 @@
 	                .find('[name="modele"]').attr('name', 'article[' + articleIndex + '].modele').end()
 									.find('[name="annee"]').attr('name', 'article[' + articleIndex + '].annee').end()
 									.find('[name="homologation"]').attr('name', 'article[' + articleIndex + '].homologation').end()
-									.find('[name="protectionSelette"]').attr('name', 'article[' + articleIndex + '].protectionSelette').end()
+									.find('[name="protectionsellette"]').attr('name', 'article[' + articleIndex + '].protectionsellette').end()
 	                .find('[name="ptvmax"]').attr('name', 'article[' + articleIndex + '].ptvmax').end()
 	                .find('[name="ptvmin"]').attr('name', 'article[' + articleIndex + '].ptvmin').end()
 	                .find('[name="taille"]').attr('name', 'article[' + articleIndex + '].taille').end()
@@ -915,7 +915,7 @@
 	                .find('[id="inputtypedematos"]').attr('id', 'article[' + articleIndex + '].inputtypedematos').end()
 	                .find('[id="marquegroup"]').attr('id', 'article[' + articleIndex + '].marquegroup').end()
 	                .find('[id="modelegroup"]').attr('id', 'article[' + articleIndex + '].modelegroup').end()
-									.find('[id="protectionSelettegroup"]').attr('id', 'article[' + articleIndex + '].protectionSelettegroup').end()
+									.find('[id="protectionsellettegroup"]').attr('id', 'article[' + articleIndex + '].protectionsellettegroup').end()
 									.find('[id="homologationGroup"]').attr('id', 'article[' + articleIndex + '].homologationGroup').end()
 	                .find('[id="ptvmaxgroup"]').attr('id', 'article[' + articleIndex + '].ptvmaxgroup').end()
 	                .find('[id="ptvmingroup"]').attr('id', 'article[' + articleIndex + '].ptvmingroup').end()
@@ -928,7 +928,7 @@
 	                .find('[id="suppressiongroup"]').attr('id', 'article[' + articleIndex + '].suppressiongroup').end()
 
 	                .find('[name="inputmarque"]').attr('name', 'article[' + articleIndex + '][inputmarque]').end()
-									.find('[name="inputprotectionSelette"]').attr('name', 'article[' + articleIndex + '][inputprotectionSelette]').end()
+									.find('[name="inputprotectionsellette"]').attr('name', 'article[' + articleIndex + '][inputprotectionsellette]').end()
 									.find('[name="inputannee"]').attr('name', 'article[' + articleIndex + '][inputannee]').end()
 									.find('[name="typehomologation"]').attr('name', 'article[' + articleIndex + '][typehomologation]').end()
 	                .find('[name="inputmodele"]').attr('name', 'article[' + articleIndex + '][inputmodele]').end()
@@ -945,7 +945,7 @@
 	                .find('[id="inputtypedematos"]').attr('id', 'article[' + articleIndex + '][inputtypedematos]').end()
 	                .find('[id="inputmarque"]').attr('id', 'article[' + articleIndex + '][inputmarque]').end()
 									.find('[id="inputtypehomologation"]').attr('id', 'article[' + articleIndex + '][inputtypehomologation]').end()
-									.find('[id="inputprotectionSelette"]').attr('id', 'article[' + articleIndex + '][inputprotectionSelette]').end()
+									.find('[id="inputprotectionsellette"]').attr('id', 'article[' + articleIndex + '][inputprotectionsellette]').end()
 	                .find('[id="inputmodele"]').attr('id', 'article[' + articleIndex + '][inputmodele]').end()
 	                .find('[id="inputptvmax"]').attr('id', 'article[' + articleIndex + '][inputptvmax]').end()
 	                .find('[id="inputptvmin"]').attr('id', 'article[' + articleIndex + '][inputptvmin]').end()

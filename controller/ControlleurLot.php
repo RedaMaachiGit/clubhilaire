@@ -40,7 +40,7 @@
 			echo("Certificat: " . $Certificat . "<br />\n");
 			echo("Suppression: " . $Suppression . "<br />\n");
 		} else if ($Type == 1){
- 			echo("Il s'agit d'une selette<br />\n");
+ 			echo("Il s'agit d'une sellette<br />\n");
 			echo("Marque: " . $Marque . "<br />\n");
 			echo("Modele: " . $Modele . "<br />\n");
 			echo("Taille: " . $Taille . "<br />\n");

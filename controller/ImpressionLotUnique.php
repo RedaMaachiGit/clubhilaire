@@ -181,10 +181,10 @@
         } else {
            $certificat = "";
         }
-        if(!empty($articles[$i]->getTypeProtectionSelette())) {
-           $typeProtectionSelette = $articles[$i]->getTypeProtectionSelette();
+        if(!empty($articles[$i]->getTypeProtectionsellette())) {
+           $typeProtectionsellette = $articles[$i]->getTypeProtectionsellette();
         } else {
-           $typeProtectionSelette = "";
+           $typeProtectionsellette = "";
         }
         if(!empty($articles[$i]->getTypeAccessoire())) {
            $typeAccessoire = $articles[$i]->getTypeAccessoire();
@@ -214,7 +214,7 @@
       <td class="tg-yw4l" colspan="4"><?php echo $type ." de marque ".$marque ." de modele ".$modele." ".
                                                  $taille ." ".$surfaceVoile ." ".$ptvmin ." ".
                                                  $ptvmax ." ".$heureVoile ." ".
-                                                 $certificat ." ".$typeProtectionSelette ." ".
+                                                 $certificat ." ".$typeProtectionsellette ." ".
                                                  $typeAccessoire ." ".$annee ." ".$homologation ." ".
                                                  $homologation; ?></td>
 

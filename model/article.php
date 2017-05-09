@@ -23,7 +23,7 @@ class Article
   private $_couleurVoile;
   private $_heureVolesVoile;
   private $_certificatRevisionVoile;
-  private $_typeProtectonSelette;
+  private $_typeProtectonSellette;
   private $_typeAccessoire;
 
 
@@ -33,7 +33,7 @@ class Article
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	 public function __construct($type, $lot, $marque,$modele, $ptvMin, $ptvMax, $taille, $surfaceVoile,
-	 $couleurVoile, $heureVolesVoile, $certificatRevisionVoile, $typeProtectionSelette, $typeAccessoire, $annee, $commentaire, $homologation){
+	 $couleurVoile, $heureVolesVoile, $certificatRevisionVoile, $typeProtectionSellette, $typeAccessoire, $annee, $commentaire, $homologation){
 		$this->setTypeArticle($type);
 		$this->setLot($lot);
 		$this->setMarque($marque);
@@ -45,7 +45,7 @@ class Article
 		$this->setCouleurVoile($couleurVoile);
 		$this->setHeureVoile($heureVolesVoile);
 		$this->setCertificat($certificatRevisionVoile);
-		$this->setTypeProtectionSelette($typeProtectionSelette);
+		$this->setTypeProtectionsellette($typeProtectionSellette);
 		$this->setTypeAccessoire($typeAccessoire);
 		$this->setAnnee($annee);
 		$this->setCommentaire($commentaire);
@@ -181,14 +181,14 @@ class Article
 		$this->_certificatRevisionVoile = $certificat;
 	  }
 
-	 //Getter typeProtectionSelette
-	 public function getTypeProtectionSelette(){
-		 return $this->_typeProtectonSelette;
+	 //Getter typeProtectionsellette
+	 public function getTypeProtectionsellette(){
+		 return $this->_typeProtectonSellette;
 	 }
 
-	 //Setter typeProtectionSelette
-	 public function setTypeProtectionSelette($typeProtectionSelette){
-		$this->_typeProtectonSelette = $typeProtectionSelette;
+	 //Setter typeProtectionsellette
+	 public function setTypeProtectionsellette($typeProtectionSellette){
+		$this->_typeProtectonSellette = $typeProtectionSellette;
 	  }
 
 	//Getter typeAccessoire
@@ -257,7 +257,7 @@ class Article
 	  $couleurVoile = $conn->real_escape_string($this->getCouleurVoile());
 	  $heureVoile = $conn->real_escape_string($this->getHeureVoile());
 	  $certificat = $conn->real_escape_string($this->getCertificat());
-	  $typeSelette = $conn->real_escape_string($this->getTypeProtectionSelette());
+	  $typesellette = $conn->real_escape_string($this->getTypeProtectionsellette());
 	  $typeAccessoire = $conn->real_escape_string($this->getTypeAccessoire());
 	  $annee = $conn->real_escape_string($this->getAnnee());
 	  $homologation = $conn->real_escape_string($this->getHomologation());
@@ -273,26 +273,26 @@ class Article
 		if($marque!=null){
 			$idM=$marque->getId();
 			if($annee!=null){
-				$query = "INSERT INTO article (idLot, idMarque, idModele, type, ptvMinimum, ptvMaximum, taille, annee, surfaceVoile, couleurVoile,heureVolesVoile, certificatRevisionVoile, typeProtectionSelette,
+				$query = "INSERT INTO article (idLot, idMarque, idModele, type, ptvMinimum, ptvMaximum, taille, annee, surfaceVoile, couleurVoile,heureVolesVoile, certificatRevisionVoile, typeProtectionsellette,
 				typeAccessoire, commentaire, homologation) VALUES ('".$idL."','".$idM."','".$idMod."','".$type."','".$ptvMin."','".$ptvMax."','".$taille."','".$annee."','".$surfaceVoile."'
-				,'".$couleurVoile."','".$heureVoile."','".$certificat."','".$typeSelette."','".$typeAccessoire."','".$commentaire."','".$homologation."')";
+				,'".$couleurVoile."','".$heureVoile."','".$certificat."','".$typesellette."','".$typeAccessoire."','".$commentaire."','".$homologation."')";
 			}
 			else{
-				$query = "INSERT INTO article (idLot, idMarque, idModele, type, ptvMinimum, ptvMaximum, taille, surfaceVoile, couleurVoile,heureVolesVoile, certificatRevisionVoile, typeProtectionSelette,
+				$query = "INSERT INTO article (idLot, idMarque, idModele, type, ptvMinimum, ptvMaximum, taille, surfaceVoile, couleurVoile,heureVolesVoile, certificatRevisionVoile, typeProtectionsellette,
 				typeAccessoire, commentaire, homologation) VALUES ('".$idL."','".$idM."','".$idMod."','".$type."','".$ptvMin."','".$ptvMax."','".$taille."','".$surfaceVoile."'
-				,'".$couleurVoile."','".$heureVoile."','".$certificat."','".$typeSelette."','".$typeAccessoire."','".$commentaire."','".$homologation."')";
+				,'".$couleurVoile."','".$heureVoile."','".$certificat."','".$typesellette."','".$typeAccessoire."','".$commentaire."','".$homologation."')";
 			}
 		}
 		else{
 			if($annee!=null){
-				$query = "INSERT INTO article (idLot, idModele, type, ptvMinimum, ptvMaximum, taille, annee, surfaceVoile, couleurVoile,heureVolesVoile, certificatRevisionVoile, typeProtectionSelette,
+				$query = "INSERT INTO article (idLot, idModele, type, ptvMinimum, ptvMaximum, taille, annee, surfaceVoile, couleurVoile,heureVolesVoile, certificatRevisionVoile, typeProtectionsellette,
 				typeAccessoire, commentaire, homologation) VALUES ('".$idL."','".$idMod."','".$type."','".$ptvMin."','".$ptvMax."','".$taille."','".$annee."','".$surfaceVoile."'
-				,'".$couleurVoile."','".$heureVoile."','".$certificat."','".$typeSelette."','".$typeAccessoire."','".$commentaire."','".$homologation."')";
+				,'".$couleurVoile."','".$heureVoile."','".$certificat."','".$typesellette."','".$typeAccessoire."','".$commentaire."','".$homologation."')";
 			}
 			else{
-				$query = "INSERT INTO article (idLot, idModele, type, ptvMinimum, ptvMaximum, taille, surfaceVoile, couleurVoile,heureVolesVoile, certificatRevisionVoile, typeProtectionSelette,
+				$query = "INSERT INTO article (idLot, idModele, type, ptvMinimum, ptvMaximum, taille, surfaceVoile, couleurVoile,heureVolesVoile, certificatRevisionVoile, typeProtectionsellette,
 				typeAccessoire, commentaire, homologation) VALUES ('".$idL."','".$idMod."','".$type."','".$ptvMin."','".$ptvMax."','".$taille."','".$surfaceVoile."'
-				,'".$couleurVoile."','".$heureVoile."','".$certificat."','".$typeSelette."','".$typeAccessoire."','".$commentaire."','".$homologation."')";
+				,'".$couleurVoile."','".$heureVoile."','".$certificat."','".$typesellette."','".$typeAccessoire."','".$commentaire."','".$homologation."')";
 			}
 		}
 	  }
@@ -300,25 +300,25 @@ class Article
 		if($marque!=null){
 			$idM=$marque->getId();
 			if($annee!=null){
-				$query = "INSERT INTO article (idLot, idMarque, type, ptvMinimum, ptvMaximum, taille, annee, surfaceVoile, couleurVoile,heureVolesVoile, certificatRevisionVoile, typeProtectionSelette,
+				$query = "INSERT INTO article (idLot, idMarque, type, ptvMinimum, ptvMaximum, taille, annee, surfaceVoile, couleurVoile,heureVolesVoile, certificatRevisionVoile, typeProtectionsellette,
 				typeAccessoire, commentaire, homologation) VALUES ('".$idL."','".$idM."','".$type."','".$ptvMin."','".$ptvMax."','".$taille."','".$annee."','".$surfaceVoile."'
-				,'".$couleurVoile."','".$heureVoile."','".$certificat."','".$typeSelette."','".$typeAccessoire."','".$commentaire."','".$homologation."')";
+				,'".$couleurVoile."','".$heureVoile."','".$certificat."','".$typesellette."','".$typeAccessoire."','".$commentaire."','".$homologation."')";
 			}
 			else{
-				$query = "INSERT INTO article (idLot, idMarque, type, ptvMinimum, ptvMaximum, taille, surfaceVoile, couleurVoile,heureVolesVoile, certificatRevisionVoile, typeProtectionSelette,
+				$query = "INSERT INTO article (idLot, idMarque, type, ptvMinimum, ptvMaximum, taille, surfaceVoile, couleurVoile,heureVolesVoile, certificatRevisionVoile, typeProtectionsellette,
 				typeAccessoire, commentaire, homologation) VALUES ('".$idL."','".$idM."','".$type."','".$ptvMin."','".$ptvMax."','".$taille."','".$surfaceVoile."'
-				,'".$couleurVoile."','".$heureVoile."','".$certificat."','".$typeSelette."','".$typeAccessoire."','".$commentaire."','".$homologation."')";
+				,'".$couleurVoile."','".$heureVoile."','".$certificat."','".$typesellette."','".$typeAccessoire."','".$commentaire."','".$homologation."')";
 			}
 		}
 		else{
 			if($annee!=null){
-				$query = "INSERT INTO article (idLot, type, ptvMinimum, ptvMaximum, taille, annee, surfaceVoile, couleurVoile,heureVolesVoile, certificatRevisionVoile, typeProtectionSelette,
+				$query = "INSERT INTO article (idLot, type, ptvMinimum, ptvMaximum, taille, annee, surfaceVoile, couleurVoile,heureVolesVoile, certificatRevisionVoile, typeProtectionsellette,
 				typeAccessoire, commentaire, homologation) VALUES ('".$idL."','".$type."','".$ptvMin."','".$ptvMax."','".$taille."','".$annee."','".$surfaceVoile."'
-				,'".$couleurVoile."','".$heureVoile."','".$certificat."','".$typeSelette."','".$typeAccessoire."','".$commentaire."','".$homologation."')";
+				,'".$couleurVoile."','".$heureVoile."','".$certificat."','".$typesellette."','".$typeAccessoire."','".$commentaire."','".$homologation."')";
 			}else{
-				$query = "INSERT INTO article (idLot, type, ptvMinimum, ptvMaximum, taille, surfaceVoile, couleurVoile,heureVolesVoile, certificatRevisionVoile, typeProtectionSelette,
+				$query = "INSERT INTO article (idLot, type, ptvMinimum, ptvMaximum, taille, surfaceVoile, couleurVoile,heureVolesVoile, certificatRevisionVoile, typeProtectionsellette,
 				typeAccessoire, commentaire, homologation) VALUES ('".$idL."','".$type."','".$ptvMin."','".$ptvMax."','".$taille."','".$surfaceVoile."'
-				,'".$couleurVoile."','".$heureVoile."','".$certificat."','".$typeSelette."','".$typeAccessoire."','".$commentaire."','".$homologation."')";
+				,'".$couleurVoile."','".$heureVoile."','".$certificat."','".$typesellette."','".$typeAccessoire."','".$commentaire."','".$homologation."')";
 			}
 		}
 	  }
@@ -585,23 +585,23 @@ class Article
 		$this->setCertificat($certificat);
 	 }
 
-	public function updateTypeProtectionSelette($typeProtectionSelette){
+	public function updateTypeProtectionsellette($typeProtectionSellette){
 		$id = $this->getId();
-		$query = "UPDATE article SET typeProtectionSelette ='$typeProtectionSelette' WHERE idLot=".$id;
+		$query = "UPDATE article SET typeProtectionsellette ='$typeProtectionSellette' WHERE idLot=".$id;
 		$db = new DB();
 		$db->connect();
 		$conn = $db->getConnectDb();
 		$conn->query("SET NAMES UTF8");
 		$res = $conn->query($query) or die(mysqli_error($conn));
 		$db->close();
-		$this->setTypeProtectionSelette($typeProtectionSelette);
+		$this->setTypeProtectionsellette($typeProtectionSellette);
 	 }
  	public function getLibelleTypeArticle(){
  		$type = $this->getTypeArticle();
  		if($type == 0){
       return "Voile";
     } else if($type == 1) {
-      return "Selette";
+      return "sellette";
     } else if($type == 2) {
       return "Parachute de secours";
     } else if($type == 3) {
