@@ -167,7 +167,7 @@
                     <label>Type d'article</label>
                     <select class="col-sm-5 form-control" id="article[0].inputtypedematos" name="article[0][typedematos]" data-index='0' onchange="handleTypeChange(this)">
                       <option value="0">Voile</option>
-                      <option value="1">Selette</option>
+                      <option value="1">sellette</option>
                       <option value="2">Parachute de secours</option>
                       <option value="3">Accessoire</option>
                     </select>
@@ -238,10 +238,10 @@
                   </div>
                 </div>
 
-                <div class="form-group" id="article[0].protectionSelettegroup" name="article[0].protectionSelette" style="display:none">
-                  <label for="inputprotectionSelette" class="col-sm-2 control-label">Protection selette</label>
+                <div class="form-group" id="article[0].protectionsellettegroup" name="article[0].protectionsellette" style="display:none">
+                  <label for="inputprotectionsellette" class="col-sm-2 control-label">Protection sellette</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="article[0].inputprotectionSelette" name="article[0][inputprotectionSelette]"  placeholder="Surface" />
+                    <input type="text" class="form-control" id="article[0].inputprotectionsellette" name="article[0][inputprotectionsellette]"  placeholder="Surface" />
                   </div>
                 </div>
 
@@ -298,7 +298,7 @@
                       <label>Type d'article</label>
                       <select class="col-sm-5 form-control" id="inputtypedematos" name="typedematos" data-index='0' onchange="handleTypeChange(this)">
                         <option value="0">Voile</option>
-                        <option value="1">Selette</option>
+                        <option value="1">sellette</option>
                         <option value="2">Parachute de secours</option>
                         <option value="3">Accessoire</option>
                       </select>
@@ -367,10 +367,10 @@
                     </div>
                   </div>
 
-                  <div class="form-group" id="protectionSelettegroup" name="protectionSelette" style="display:none">
-                    <label for="inputprotectionSelette" class="col-sm-2 control-label">Protection selette</label>
+                  <div class="form-group" id="protectionsellettegroup" name="protectionsellette" style="display:none">
+                    <label for="inputprotectionsellette" class="col-sm-2 control-label">Protection sellette</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputprotectionSelette" name="inputprotectionSelette"  placeholder="Type de protection" />
+                      <input type="text" class="form-control" id="inputprotectionsellette" name="inputprotectionsellette"  placeholder="Type de protection" />
                     </div>
                   </div>
 
@@ -531,8 +531,8 @@ var handleTypeChange = function(e) {
     taillegroup.style.display = "block";
     var surfacegroup = document.getElementById("article[" + articleIndex + "].surfacegroup");
     surfacegroup.style.display = "block";
-    var protectionSelettegroup = document.getElementById("article[" + articleIndex + "].protectionSelettegroup");
-    protectionSelettegroup.style.display = "none";
+    var protectionsellettegroup = document.getElementById("article[" + articleIndex + "].protectionsellettegroup");
+    protectionsellettegroup.style.display = "none";
     var couleurgroup = document.getElementById("article[" + articleIndex + "].couleurgroup");
     couleurgroup.style.display = "block";
     var heuregroup = document.getElementById("article[" + articleIndex + "].heuregroup");
@@ -542,9 +542,9 @@ var handleTypeChange = function(e) {
     var typeaccessoiregroup = document.getElementById("article[" + articleIndex + "].typeaccessoiregroup");
     typeaccessoiregroup.style.display = "none";
   }
-  else if ( e.value == '1') // Selette
+  else if ( e.value == '1') // sellette
   {
-    console.log('TRACE selette');
+    console.log('TRACE sellette');
     var ptvmaxgroup = document.getElementById("article[" + articleIndex + "].ptvmaxgroup");
     ptvmaxgroup.style.display = "none";
     var ptvmingroup = document.getElementById("article[" + articleIndex + "].ptvmingroup");
@@ -555,7 +555,7 @@ var handleTypeChange = function(e) {
     taillegroup.style.display = "block";
     var surfacegroup = document.getElementById("article[" + articleIndex + "].surfacegroup");
     surfacegroup.style.display = "none";
-    var surfacegroup = document.getElementById("article[" + articleIndex + "].protectionSelettegroup");
+    var surfacegroup = document.getElementById("article[" + articleIndex + "].protectionsellettegroup");
     surfacegroup.style.display = "block";
     var couleurgroup = document.getElementById("article[" + articleIndex + "].couleurgroup");
     couleurgroup.style.display = "none";
@@ -577,7 +577,7 @@ var handleTypeChange = function(e) {
     ptvmingroup.style.display = "block";
     var taillegroup = document.getElementById("article[" + articleIndex + "].taillegroup");
     taillegroup.style.display = "none";
-    var surfacegroup = document.getElementById("article[" + articleIndex + "].protectionSelettegroup");
+    var surfacegroup = document.getElementById("article[" + articleIndex + "].protectionsellettegroup");
     surfacegroup.style.display = "none";
     var surfacegroup = document.getElementById("article[" + articleIndex + "].surfacegroup");
     surfacegroup.style.display = "none";
@@ -600,7 +600,7 @@ var handleTypeChange = function(e) {
     ptvmingroup.style.display = "none";
     var homologation = document.getElementById("article[" + articleIndex + "].homologationGroup");
     homologation.style.display = "none";
-    var surfacegroup = document.getElementById("article[" + articleIndex + "].protectionSelettegroup");
+    var surfacegroup = document.getElementById("article[" + articleIndex + "].protectionsellettegroup");
     surfacegroup.style.display = "none";
     var taillegroup = document.getElementById("article[" + articleIndex + "].taillegroup");
     taillegroup.style.display = "none";
@@ -683,7 +683,7 @@ $(document).ready(function() {
                 .find('[name="marque"]').attr('name', 'article[' + articleIndex + '].marque').end()
                 .find('[name="annee"]').attr('name', 'article[' + articleIndex + '].annee').end()
                 .find('[name="homologation"]').attr('name', 'article[' + articleIndex + '].homologation').end()
-                .find('[name="protectionSelette"]').attr('name', 'article[' + articleIndex + '].protectionSelette').end()
+                .find('[name="protectionsellette"]').attr('name', 'article[' + articleIndex + '].protectionsellette').end()
                 .find('[name="modele"]').attr('name', 'article[' + articleIndex + '].modele').end()
                 .find('[name="ptvmax"]').attr('name', 'article[' + articleIndex + '].ptvmax').end()
                 .find('[name="ptvmin"]').attr('name', 'article[' + articleIndex + '].ptvmin').end()
@@ -697,7 +697,7 @@ $(document).ready(function() {
                 .find('[id="inputtypedematos"]').attr('data-index', '' + articleIndex).end()
                 .find('[id="inputtypedematos"]').attr('id', 'article[' + articleIndex + '].inputtypedematos').end()
                 .find('[id="marquegroup"]').attr('id', 'article[' + articleIndex + '].marquegroup').end()
-                .find('[id="protectionSelettegroup"]').attr('id', 'article[' + articleIndex + '].protectionSelettegroup').end()
+                .find('[id="protectionsellettegroup"]').attr('id', 'article[' + articleIndex + '].protectionsellettegroup').end()
                 .find('[id="modelegroup"]').attr('id', 'article[' + articleIndex + '].modelegroup').end()//homologationGroup
                 .find('[id="homologationGroup"]').attr('id', 'article[' + articleIndex + '].homologationGroup').end()
                 .find('[id="ptvmaxgroup"]').attr('id', 'article[' + articleIndex + '].ptvmaxgroup').end()
@@ -712,7 +712,7 @@ $(document).ready(function() {
                 .find('[name="inputmarque"]').attr('name', 'article[' + articleIndex + '][inputmarque]').end()
                 .find('[name="inputannee"]').attr('name', 'article[' + articleIndex + '][inputannee]').end()
                 .find('[name="typehomologation"]').attr('name', 'article[' + articleIndex + '][typehomologation]').end()
-                .find('[name="inputprotectionSelette"]').attr('name', 'article[' + articleIndex + '][inputprotectionSelette]').end()
+                .find('[name="inputprotectionsellette"]').attr('name', 'article[' + articleIndex + '][inputprotectionsellette]').end()
                 .find('[name="inputmodele"]').attr('name', 'article[' + articleIndex + '][inputmodele]').end()
                 .find('[name="inputptvmax"]').attr('name', 'article[' + articleIndex + '][inputptvmax]').end()
                 .find('[name="inputptvmin"]').attr('name', 'article[' + articleIndex + '][inputptvmin]').end()
@@ -727,7 +727,7 @@ $(document).ready(function() {
                 .find('[id="inputmarque"]').attr('id', 'article[' + articleIndex + '][inputmarque]').end()
                 .find('[id="inputannee"]').attr('id', 'article[' + articleIndex + '][inputannee]').end()
                 .find('[id="inputtypehomologation"]').attr('id', 'article[' + articleIndex + '][inputtypehomologation]').end()
-                .find('[id="inputprotectionSelette"]').attr('id', 'article[' + articleIndex + '][inputprotectionSelette]').end()
+                .find('[id="inputprotectionsellette"]').attr('id', 'article[' + articleIndex + '][inputprotectionsellette]').end()
                 .find('[id="inputmodele"]').attr('id', 'article[' + articleIndex + '][inputmodele]').end()
                 .find('[id="inputptvmax"]').attr('id', 'article[' + articleIndex + '][inputptvmax]').end()
                 .find('[id="inputptvmin"]').attr('id', 'article[' + articleIndex + '][inputptvmin]').end()

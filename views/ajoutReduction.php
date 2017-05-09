@@ -68,7 +68,7 @@ session_start();
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Ajout Frais de dépôt
+        Ajout Réduction
         <small></small>
       </h1>
       <ol class="breadcrumb">
@@ -85,7 +85,7 @@ session_start();
             <div class="col-xs-12">
               <div class="row">
                 <div class="col-xs-12">
-                  <label class="control-label" for="montantReduction"><i class="fa fa-bell-o"></i> Montant frais de dépôt</label>
+                  <label class="control-label" for="montantReduction"><i class="fa fa-bell-o"></i> Montant réduction</label>
 				  <div class="input-group">
                       <input type="hidden" class="form-control" id="vendeurId" name="vendeurId" value=<?php echo $_SESSION['id'];?> >
                   </div>

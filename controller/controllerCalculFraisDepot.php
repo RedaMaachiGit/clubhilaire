@@ -46,16 +46,22 @@ class ControllerCalculFraisDepot {
 			header('location:../views/paiementFraisDepotError.html');
 		}else{
 			$idVendeur = $vendeur->getId();
+			$reduction = $vendeur->getReduction();
 			$lots = Lot::getLotEnPreparationByVendeur($idVendeur);
 			$totalFraisDepot = 0;
-			for ($i =0 ; $i <= count($lots)-1; $i++) {
-				$prixLot = $lots[$i]->getPrix();
-				$fraisDepotLot = Administration::getFraisDepotByNiveau($prixLot);
-				$totalFraisDepot = $totalFraisDepot + $fraisDepotLot;
-			}
-			session_unset();
-			$_SESSION['lots'] = urlencode(serialize($lots));
-			$_SESSION['fraisDepot'] = $totalFraisDepot;
+			if($vendeur->getReduction() != null){
+                $totalFraisDepot =  count($lots) * $vendeur->getReduction();
+            }
+            else{
+                for ($i =0 ; $i <= count($lots)-1; $i++) {
+                $prixLot = $lots[$i]->getPrix();
+                $fraisDepotLot = Administration::getFraisDepotByNiveau($prixLot);
+                $totalFraisDepot = $totalFraisDepot + $fraisDepotLot;
+            }
+            }
+            session_unset();
+            $_SESSION['lots'] = urlencode(serialize($lots));
+            $_SESSION['fraisDepot'] = $totalFraisDepot;
 			header('location:../views/paiementLotMultiple.php');
 		}
 	}

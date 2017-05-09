@@ -17,7 +17,7 @@ class ControllerReduction {
 		$vendeur = Vendeur::getVendeurById($Idvendeur);
 		echo $vendeur->getId();
 		$vendeur->updateReduction($reduction);
-		header('location:../views/ReductionValider.php);
+		header('location:../views/ReductionValider.php');
 	}
 
 

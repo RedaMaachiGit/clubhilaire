@@ -16,18 +16,19 @@ class ControllerRechercheVendeur {
 		$mail = $_POST['mailVendeur'];
 		echo $mail;
 		$vendeur = Vendeur::getVendeurProByMail($mail);
-		echo ($vendeur->getId());
-		$_SESSION['id'] = $vendeur->getId();
-		echo $vendeur->getNom();
+		//echo ($vendeur->getId());
+		//echo $vendeur->getNom();
 		if($vendeur==null){
+			
 			header('location:../views/rechercheVendeurError.html');
-		}else
-			//$_SESSION['Vendeur']=urlencode(serialize($vendeur));
-			//header('location:../views/ajoutReduction.php');
+		}else{
+			$_SESSION['id'] = $vendeur->getId();
+			$_SESSION['Vendeur']=urlencode(serialize($vendeur));
+			header('location:../views/ajoutReduction.php');
 		}
 
 	}
-
+}
 ControllerRechercheVendeur::rechercheVendeurProByMail();
 
 ?>

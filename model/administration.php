@@ -92,6 +92,27 @@ class Administration
  	  $res = $conn->query($query) or die(mysqli_error($conn));
  	  $db->close();
  	 }
+	 
+	 public Static function updatePrix($prix){
+	  $id=1;
+ 	  $query = "UPDATE prix SET prix ='$prix' WHERE idPrix=".$id;
+ 	  $db = new DB();
+ 	  $db->connect();
+ 	  $conn = $db->getConnectDb();
+ 	  $res = $conn->query($query) or die(mysqli_error($conn));
+ 	  $db->close();
+ 	 }
+	 
+	 public Static function getPrix(){
+	  $query = "SELECT * FROM prix";
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      $res=mysqli_query($conn,$query);
+	  $row = mysqli_fetch_array($res);
+      $db->close();
+      return $row[0];
+	 }
 
 	 public static function getParams(){
      $query = "SELECT * FROM fraisdepotadmin";

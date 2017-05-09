@@ -120,7 +120,7 @@
                       <th>Couleur voile</th>
                       <th>Heure voles voile</th>
                       <th>Certificat revision voile</th>
-                      <th>Type protection selette</th>
+                      <th>Type protection sellette</th>
                       <th>Type accessoire</th>
                       <th>MarqueIndex</th>
                       <th>Modele</th>
@@ -144,7 +144,7 @@
                       <td><?php if(!empty($articles[$i]->getCouleurVoile())) { echo $articles[$i]->getCouleurVoile(); } else { echo "X";}?></td>
                       <td><?php if(!empty($articles[$i]->getHeureVoile())) { echo $articles[$i]->getHeureVoile(); } else { echo "X";}?></td>
                       <td><?php if(!empty($articles[$i]->getCertificat())) { echo $articles[$i]->getCertificat(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getTypeProtectionSelette())) { echo $articles[$i]->getTypeProtectionSelette(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($articles[$i]->getTypeProtectionsellette())) { echo $articles[$i]->getTypeProtectionsellette(); } else { echo "X";}?></td>
                       <td><?php if(!empty($articles[$i]->getTypeAccessoire())) { echo $articles[$i]->getTypeAccessoire(); } else { echo "X";}?></td>
                       <td><?php if(!empty($articles[$i]->getMarque()->getLibelle())) { echo $articles[$i]->getMarque()->getLibelle(); } else { echo "X";}?></td>
                       <td><?php if(!empty($articles[$i]->getModele()->getLibelle())) { echo $articles[$i]->getModele()->getLibelle(); } else { echo "X";}?></td>
@@ -164,7 +164,7 @@
                       <th>Couleur voile</th>
                       <th>Heure voles voile</th>
                       <th>Certificat revision voile</th>
-                      <th>Type protection selette</th>
+                      <th>Type protection sellette</th>
                       <th>Type accessoire</th>
                       <th>MarqueIndex</th>
                       <th>Modele</th>

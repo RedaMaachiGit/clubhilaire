@@ -133,6 +133,15 @@
               </div>
             </div>
           </div>
+		    <div class="box-body">
+            <div class="col-xs-6">
+              <label class="control-label" for="niveauDepotAdmin">Entrez le prix minimun d'un lot</label>
+              <div class="input-group">
+                <input class="form-control input-lg" name="prix" value="50" id="prix" type="text" placeholder="prix">
+                <input class="form-control input-lg" name="formEnvoie" type="hidden" id="formEnvoie" value="prix">
+              </div>
+            </div>
+          </div>
           <div class="box-footer">
             <button type="submit" value="Submit" class="btn btn-info center-block">Valider</button>
           </div>
