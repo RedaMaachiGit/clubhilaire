@@ -19,9 +19,9 @@
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="../ionicons-2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="../dist/css/skins/skin-blue.min.css">
@@ -74,7 +74,7 @@
 
 
   </aside>
-  
+
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -91,80 +91,109 @@
 
     <!-- Main content -->
     <section class="content">
-      <?php for ($j = 0; $j < $nombreLots; $j++) { $coupon = $lots[$j]->getCouponNoIncr(); $idLotActuel = $lots[$j]->getId() ?>
-        <div class="box">
-          <div class="box-header">
-            <?php if($coupon != -1){ ?>
-            <h3 class="box-title">Ce lot numéro <?php echo $coupon; ?> contient</h3>
-            <?php } ?>
-            <?php if($coupon == -1){ ?>
-            <h3 class="box-title">Ce lot n'a pas encore été validé. Mail du vendeur: <?php echo $lots[$j]->getVendeur()->getEmail(); ?></h3>
-            <?php } ?>
-          </div>
-
-
-          <!-- /.box-header -->
-          <div class="box-body">
-            <div id="example1_wrapper" class="box-body table-responsive no-padding">
-              <div class="row">
-                <div class="col-sm-12">
-                  <table id="example1" class="table table-hover">
-                    <thead>
-                    <tr>
-                      <th>Type</th>
-                      <th>PTV Minimum</th>
-                      <th>PTV Maximum</th>
-                      <th>Taille</th>
-                      <th>Annee</th>
-                      <th>Surface voile</th>
-                      <th>Couleur voile</th>
-                      <th>Heure voles voile</th>
-                      <th>Certificat revision voile</th>
-                      <th>Type protection sellette</th>
-                      <th>Type accessoire</th>
-                      <th>MarqueIndex</th>
-                      <th>Modele</th>
-                      <th>Homologation</th>
-                      <th>Commentaire</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                      <?php
+      <div class="box">
+        <div class="box-header">
+          <h3>L'ensemble des lots: </h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <div id="example1_wrapper" class="box-body table-responsive no-padding">
+            <div class="row">
+              <div class="col-sm-12">
+                <table id="example1" class="table table-hover">
+                  <thead>
+                  <tr>
+                    <th>Modifier</th>
+                    <th>Coupon</th>
+                    <th>Statut</th>
+                    <th>Mail vendeur</th>
+                    <th>Nom Prenom vendeur</th>
+                    <th>Tél vendeur</th>
+                    <th>Prix</th>
+                    <th>Num lot vendeur</th>
+                    <th>Type</th>
+                    <th>PTV Min</th>
+                    <th>PTV Max</th>
+                    <th>Taille</th>
+                    <th>Annee</th>
+                    <th>Surface voile</th>
+                    <th>Couleur voile</th>
+                    <th>Heure voile</th>
+                    <th>Certificat</th>
+                    <th>Type protection selette</th>
+                    <th>Type accessoire</th>
+                    <th>MarqueIndex</th>
+                    <th>Modele</th>
+                    <th>Homologation</th>
+                    <th>Commentaire</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                        for ($j = 0; $j < $nombreLots; $j++) {
+                          $coupon = $lots[$j]->getCouponNoIncr();
+                          $idLotActuel = $lots[$j]->getId();
                           $articles = Article::getArticlesByLot($idLotActuel);
                           $nombreArticles = sizeof($articles);
-
-                          for ($i = 0; $i < $nombreArticles; $i++) { // foreach ($shop as $row) : ?>
-                        <tr>
-                      <td><?php if(!empty($articles[$i]->getTypeArticle())) { $o = $articles[$i]->getLibelleTypeArticle(); echo $o; } else if(!empty($articles[$i]->getSurfaceVoile())){echo "Voile";} else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getPtvMin())) { echo $articles[$i]->getPtvMin(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getPtvMax())) { echo $articles[$i]->getPtvMax(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getTaille())) { echo $articles[$i]->getTaille(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getAnnee())) { echo $articles[$i]->getAnnee(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getSurfaceVoile())) { echo $articles[$i]->getSurfaceVoile(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getCouleurVoile())) { echo $articles[$i]->getCouleurVoile(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getHeureVoile())) { echo $articles[$i]->getHeureVoile(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getCertificat())) { echo $articles[$i]->getCertificat(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getTypeProtectionsellette())) { echo $articles[$i]->getTypeProtectionsellette(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getTypeAccessoire())) { echo $articles[$i]->getTypeAccessoire(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getMarque()->getLibelle())) { echo $articles[$i]->getMarque()->getLibelle(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getModele()->getLibelle())) { echo $articles[$i]->getModele()->getLibelle(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getHomologation())) { echo $articles[$i]->getHomologation(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getCommentaire())) { echo $articles[$i]->getCommentaire(); } else { echo "X";}?></td>
-                        </tr>
+                          for ($i = 0; $i < $nombreArticles; $i++) {
+                    ?>
+                    <tr>
+                      <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?>
+                          <?php if($coupon!=-1) { ?>
+                            <form id="modification" action="../controller/ControllerRechercheLot.php" method="post"><p>
+                              <input type="hidden" name="numeroLot" value="<?php echo $coupon ?>" />
+                              <input type="hidden" name="formEnvoie" value="modification" />
+                              <input type="submit" value="MODIFIER"></p></form>
+                          <?php } else { ?>
+                            NON MODIFIABLE </td>
+                          <?php } ?>
+                        </td>
+                      <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?><?php echo $coupon; ?></td>
+                      <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?><?php echo $lots[$j]->getStatut(); ?></td>
+                      <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?><?php echo $lots[$j]->getVendeur()->getEmail(); ?></td>
+                      <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?><?php echo $lots[$j]->getVendeur()->getNom(). " ". $lots[$j]->getVendeur()->getPrenom(); ?></td>
+                      <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?><?php echo $lots[$j]->getVendeur()->getTel(); ?></td>
+                      <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?><?php echo $lots[$j]->getPrix(); ?></td>
+                      <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?><?php echo $lots[$j]->getNumeroLotVendeur(); ?></td>
+                      <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?><?php if(!empty($articles[$i]->getLibelleTypeArticle())) { $o = $articles[$i]->getLibelleTypeArticle(); echo $o; } else { echo "NC";}?></td>
+                      <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?><?php if(!empty($articles[$i]->getPtvMin())) { echo $articles[$i]->getPtvMin(); } else { echo "NC";}?></td>
+                      <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?><?php if(!empty($articles[$i]->getPtvMax())) { echo $articles[$i]->getPtvMax(); } else { echo "NC";}?></td>
+                      <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?><?php if(!empty($articles[$i]->getTaille())) { echo $articles[$i]->getTaille(); } else { echo "NC";}?></td>
+                      <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?><?php if(!empty($articles[$i]->getAnnee())) { echo $articles[$i]->getAnnee(); } else { echo "NC";}?></td>
+                      <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?><?php if(!empty($articles[$i]->getSurfaceVoile())) { echo $articles[$i]->getSurfaceVoile(); } else { echo "NC";}?></td>
+                      <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?><?php if(!empty($articles[$i]->getCouleurVoile())) { echo $articles[$i]->getCouleurVoile(); } else { echo "NC";}?></td>
+                      <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?><?php if(!empty($articles[$i]->getHeureVoile())) { echo $articles[$i]->getHeureVoile(); } else { echo "NC";}?></td>
+                      <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?><?php if(!empty($articles[$i]->getCertificat())) { echo $articles[$i]->getCertificat(); } else { echo "NC";}?></td>
+                      <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?><?php if(!empty($articles[$i]->getTypeProtectionSelette())) { echo $articles[$i]->getTypeProtectionSelette(); } else { echo "NC";}?></td>
+                      <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?><?php if(!empty($articles[$i]->getTypeAccessoire())) { echo $articles[$i]->getTypeAccessoire(); } else { echo "NC";}?></td>
+                      <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?><?php if(!empty($articles[$i]->getMarque()->getLibelle())) { echo $articles[$i]->getMarque()->getLibelle(); } else { echo "NC";}?></td>
+                      <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?><?php if(!empty($articles[$i]->getModele()->getLibelle())) { echo $articles[$i]->getModele()->getLibelle(); } else { echo "NC";}?></td>
+                      <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?><?php if(!empty($articles[$i]->getHomologation())) { echo $articles[$i]->getHomologation(); } else { echo "NC";}?></td>
+                      <?php if($j%2==0){echo "<td BGCOLOR=\"#d2d6de\">";}else{echo "<td>";} ?><?php if(!empty($articles[$i]->getCommentaire())) { echo $articles[$i]->getCommentaire(); } else { echo "NC";}?></td>
+                    </tr>
+                      <?php } ?>
                       <?php } ?>
                     </tbody>
                     <tfoot>
                     <tr>
+                      <th>Modifier</th>
+                      <th>Coupon</th>
+                      <th>Statut</th>
+                      <th>Mail vendeur</th>
+                      <th>Nom Prenom vendeur</th>
+                      <th>Tél vendeur</th>
+                      <th>Prix</th>
+                      <th>Num lot vendeur</th>
                       <th>Type</th>
-                      <th>PTV Minimum</th>
-                      <th>PTV Maximum</th>
+                      <th>PTV Min</th>
+                      <th>PTV Max</th>
                       <th>Taille</th>
                       <th>Annee</th>
                       <th>Surface voile</th>
                       <th>Couleur voile</th>
-                      <th>Heure voles voile</th>
-                      <th>Certificat revision voile</th>
-                      <th>Type protection sellette</th>
+                      <th>Heure voile</th>
+                      <th>Certificat</th>
+                      <th>Type protection selette</th>
                       <th>Type accessoire</th>
                       <th>MarqueIndex</th>
                       <th>Modele</th>
@@ -179,7 +208,6 @@
           </div>
           <!-- /.box-body -->
         </div>
-      <?php } ?>
 
 
 
@@ -283,5 +311,46 @@
 <script src="../bootstrap/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../dist/js/app.min.js"></script>
+<script src="../dist/added/jquery.dataTables.min.js"></script>
+<script>
+$(document).ready(function() {
+    // Setup - add a text input to each footer cell
+    $('#example1 thead th').each( function () {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="'+title+'" />' );
+    } );
+
+    // DataTable
+    var table = $('#example1').DataTable({
+      "paging": false,
+      "lengthChange": false,
+      "searching": true,
+      "ordering": true,
+      "info": false,
+      "autoWidth": true
+    });
+
+    // Apply the search
+    table.columns().every( function () {
+        var that = this;
+
+        $( 'input', this.header() ).on( 'keyup change', function () {
+            if ( that.search() !== this.value ) {
+                that
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+} );
+
+</script>
+<style>
+thead input {
+        width: 100%;
+        padding: 3px;
+        box-sizing: border-box;
+    }
+</style>
 </body>
 </html>

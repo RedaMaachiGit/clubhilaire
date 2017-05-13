@@ -6,17 +6,13 @@
 	include_once('../model/article.php');
 	include_once('../model/modele.php');
 	include_once('../model/marque.php');
-	  //echo("Numero lot: " . $_POST['numeroLot'] . "<br />\n"); //TRACE
-		//$id = $_POST['numeroLot'];
-	//  $connect = ConnexionDB(); // Je me connecte à la base de donnée
-	//  $updateLot = "SELECT * FROM Lot WHERE numeroLot = '$id'" or die("Erreur lors de la consultation de données (updateLot)" . mysqli_error($connect));
-	//  $req = $connect->query($updateLot);
-		$lot= unserialize(urldecode(($_SESSION['lot'])));
-		$vendeur = $lot->getVendeur();
-		$articles = unserialize(urldecode($_SESSION['articles']));
-		// echo sizeof($articles);
-		//echo $articles[0]->getMarque()->getLibelle();
-		//echo $articles[0]->getTypeArticle();
+
+	$lot= unserialize(urldecode(($_SESSION['lot'])));
+	$statut = $_SESSION['statut'];
+	$vendeur = $lot->getVendeur();
+	$articles = unserialize(urldecode($_SESSION['articles']));
+
+	Lot::sortArrayByKey($articles,true,false); //String sort (descending order)
 	?>
 	<!DOCTYPE html>
 
@@ -29,10 +25,10 @@
 	  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	  <!-- Bootstrap 3.3.6 -->
 	  <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
-	  <!-- Font Awesome -->
-	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-	  <!-- Ionicons -->
-	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+		<!-- Font Awesome -->
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="../ionicons-2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css">
 	  <!-- Theme style -->
 	  <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
 	  <link rel="stylesheet" href="../dist/css/skins/skin-blue.min.css">
@@ -54,7 +50,11 @@
 
 	  <!-- Main Header -->
 	  <header class="main-header">
-
+			<script>
+	      function preventBack(){window.history.forward();}
+	      setTimeout("preventBack()", 0);
+	      window.onunload=function(){null};
+	    </script>
 	    <!-- Logo -->
 	    <a href="../index.html" class="logo">
 	      <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -173,10 +173,8 @@
 
 	                <div class="form-group">
 	                  <label for="inputPrix" class="col-sm-2 control-label">Prix du lot</label>
-
 	                  <div class="col-sm-10">
-	                    <input type="number" class="form-control" value="<?php echo $lot->getPrix(); ?>" id="inputPrix" name="inputPrix" placeholder="Prix du lot">
-	                  </div>
+	                    <input type="number" min="50" step="10" class="form-control" value="<?php echo $lot->getPrix(); ?>" id="inputPrix" name="inputPrix" placeholder="Prix du lot">
 	                  </div>
 	                </div>
 
@@ -191,26 +189,23 @@
 
 									<!-- The template for adding new field -->
 									<?php for ($i=0; $i<sizeof($articles); $i++) { ?>
-
-									<div class="col-sm-12 form-group">
-	                    <label>Type d'article</label>
-	                    <select class="col-sm-5 form-control" id="article[<?php echo $i; ?>].inputtypedematos" name="article[<?php echo $i; ?>][typedematos]" data-index='0' onchange="handleTypeChange(this)">
-
 												<?php if($articles[$i]->getTypeArticle() == 0) { ?>
-
+											<div class="col-sm-12 form-group">
+			                    <label>Type d'article</label>
+													<select disabled="disabled" class="col-sm-5 form-control" onchange="handleTypeChange(this)">
 														<option value="0" selected="selected">Voile</option>
 														<option value="1">sellette</option>
 														<option value="2">Parachute de secours</option>
 														<option value="3">Accessoire</option>
 													</select>
-									</div>
-
+											</div>
+											<input id="article[<?php echo $i; ?>].inputtypedematos" type="hidden" name="article[<?php echo $i; ?>][typedematos]" data-index='0' value="0">
 
 
 											<div class="form-group" name="article[<?php echo $i; ?>].marque">
 												<label for="inputmarque" class="col-sm-2 control-label">Marque</label>
 												<div class="col-sm-10">
-													<input type="text" class="autoc" id="article[<?php echo $i; ?>].inputmarque" value="<?php echo($articles[$i]->getMarque()->getLibelle()) ?>" name="article[<?php echo $i; ?>][inputmarque]" placeholder="Marque" />
+													<input type="text" class="autocMarque" id="article[<?php echo $i; ?>].inputmarque" value="<?php echo($articles[$i]->getMarque()->getLibelle()) ?>" name="article[<?php echo $i; ?>][inputmarque]" placeholder="Marque" />
 												</div>
 											</div>
 
@@ -225,7 +220,7 @@
 				              <div class="form-group" name="article[<?php echo $i; ?>].annee">
 				                <label for="inputannee" class="col-sm-2 control-label">Année</label>
 				                <div class="col-sm-10">
-				                  <input type="text" class="form-control" id="article[<?php echo $i; ?>].inputannee" value="<?php echo $articles[$i]->getAnnee() ?>" name="article[<?php echo $i; ?>][inputannee]" placeholder="Année" />
+				                  <input type="number" class="form-control" id="article[<?php echo $i; ?>].inputannee" value="<?php echo $articles[$i]->getAnnee() ?>" name="article[<?php echo $i; ?>][inputannee]" placeholder="Année" />
 				                </div>
 				              </div>
 
@@ -268,17 +263,17 @@
 				                  </div>
 				              </div>
 
-											<div class="form-group" id="article[<?php echo $i; ?>].ptvmaxgroup" name="article[<?php echo $i; ?>].ptvmax">
-												<label for="inputptvmax" class="col-sm-2 control-label">PTV Max</label>
-												<div class="col-sm-10">
-													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputptvmax" value="<?php echo($articles[$i]->getPtvMax()) ?>" name="article[<?php echo $i; ?>][inputptvmax]"  placeholder="PTV Maximum" />
-												</div>
-											</div>
-
 											<div class="form-group" id="article[<?php echo $i; ?>].ptvmingroup" name="article[<?php echo $i; ?>].ptvmin">
 												<label for="inputptvmin" class="col-sm-2 control-label">PTV Min</label>
 												<div class="col-sm-10">
 													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputptvmin"  value="<?php echo($articles[$i]->getPtvMin()) ?>" name="article[<?php echo $i; ?>][inputptvmin]"  placeholder="PTV Minimum" />
+												</div>
+											</div>
+
+											<div class="form-group" id="article[<?php echo $i; ?>].ptvmaxgroup" name="article[<?php echo $i; ?>].ptvmax">
+												<label for="inputptvmax" class="col-sm-2 control-label">PTV Max</label>
+												<div class="col-sm-10">
+													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputptvmax" value="<?php echo($articles[$i]->getPtvMax()) ?>" name="article[<?php echo $i; ?>][inputptvmax]"  placeholder="PTV Maximum" />
 												</div>
 											</div>
 
@@ -331,19 +326,22 @@
 											</div>
 												<?php }
 												else if($articles[$i]->getTypeArticle() == 1) { ?>
+											<div class="col-sm-12 form-group">
+			                    <label>Type d'article</label>
+													<select disabled="disabled" class="col-sm-5 form-control" onchange="handleTypeChange(this)">
 														<option value="0">Voile</option>
 														<option value="1" selected="selected">sellette</option>
 														<option value="2">Parachute de secours</option>
 														<option value="3">Accessoire</option>
 													</select>
 											</div>
-
+											<input id="article[<?php echo $i; ?>].inputtypedematos" type="hidden" name="article[<?php echo $i; ?>][typedematos]" data-index='0' value="1">
 
 
 											<div class="form-group" name="article[<?php echo $i; ?>].marque">
 												<label for="inputmarque" class="col-sm-2 control-label">Marque</label>
 												<div class="col-sm-10">
-													<input type="text" class="autoc" id="article[<?php echo $i; ?>].inputmarque" value="<?php echo($articles[$i]->getMarque()->getLibelle()) ?>" name="article[<?php echo $i; ?>][inputmarque]" placeholder="Marque" />
+													<input type="text" class="autocMarque" id="article[<?php echo $i; ?>].inputmarque" value="<?php echo($articles[$i]->getMarque()->getLibelle()) ?>" name="article[<?php echo $i; ?>][inputmarque]" placeholder="Marque" />
 												</div>
 											</div>
 
@@ -358,7 +356,7 @@
 				              <div class="form-group" name="article[<?php echo $i; ?>].annee">
 				                <label for="inputannee" class="col-sm-2 control-label">Année</label>
 				                <div class="col-sm-10">
-				                  <input type="text" class="form-control" id="article[<?php echo $i; ?>].inputannee" value="<?php echo $articles[$i]->getAnnee() ?>" name="article[<?php echo $i; ?>][inputannee]" placeholder="Année" />
+				                  <input type="number" class="form-control" id="article[<?php echo $i; ?>].inputannee" value="<?php echo $articles[$i]->getAnnee() ?>" name="article[<?php echo $i; ?>][inputannee]" placeholder="Année" />
 				                </div>
 				              </div>
 
@@ -385,19 +383,22 @@
 
 												<?php }
 													else if($articles[$i]->getTypeArticle() == 2) { ?>
+												<div class="col-sm-12 form-group">
+				                    <label>Type d'article</label>
+														<select disabled="disabled" class="col-sm-5 form-control" onchange="handleTypeChange(this)">
 														<option value="0">Voile</option>
 														<option value="1">sellette</option>
 														<option value="2" selected="selected">Parachute de secours</option>
 														<option value="3">Accessoire</option>
 													</select>
 											</div>
-
+											<input id="article[<?php echo $i; ?>].inputtypedematos" type="hidden" name="article[<?php echo $i; ?>][typedematos]" data-index='0' value="2">
 
 
 											<div class="form-group" name="article[<?php echo $i; ?>].marque">
 												<label for="inputmarque" class="col-sm-2 control-label">Marque</label>
 												<div class="col-sm-10">
-													<input type="text" class="autoc" id="article[<?php echo $i; ?>].inputmarque" value="<?php echo($articles[$i]->getMarque()->getLibelle()) ?>" name="article[<?php echo $i; ?>][inputmarque]" placeholder="Marque" />
+													<input type="text" class="autocMarque" id="article[<?php echo $i; ?>].inputmarque" value="<?php echo($articles[$i]->getMarque()->getLibelle()) ?>" name="article[<?php echo $i; ?>][inputmarque]" placeholder="Marque" />
 												</div>
 											</div>
 
@@ -416,17 +417,17 @@
 				                </div>
 				              </div>
 
-											<div class="form-group" id="article[<?php echo $i; ?>].ptvmaxgroup" name="article[<?php echo $i; ?>].ptvmax">
-												<label for="inputptvmax" class="col-sm-2 control-label">PTV Max</label>
-												<div class="col-sm-10">
-													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputptvmax" value="<?php echo($articles[$i]->getPtvMax()) ?>" name="article[<?php echo $i; ?>][inputptvmax]"  placeholder="PTV Maximum" />
-												</div>
-											</div>
-
 											<div class="form-group" id="article[<?php echo $i; ?>].ptvmingroup" name="article[<?php echo $i; ?>].ptvmin">
 												<label for="inputptvmin" class="col-sm-2 control-label">PTV Min</label>
 												<div class="col-sm-10">
 													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputptvmin" value="<?php echo($articles[$i]->getPtvMin()) ?>" name="article[<?php echo $i; ?>][inputptvmin]"  placeholder="PTV Minimum" />
+												</div>
+											</div>
+
+											<div class="form-group" id="article[<?php echo $i; ?>].ptvmaxgroup" name="article[<?php echo $i; ?>].ptvmax">
+												<label for="inputptvmax" class="col-sm-2 control-label">PTV Max</label>
+												<div class="col-sm-10">
+													<input type="text" class="form-control" id="article[<?php echo $i; ?>].inputptvmax" value="<?php echo($articles[$i]->getPtvMax()) ?>" name="article[<?php echo $i; ?>][inputptvmax]"  placeholder="PTV Maximum" />
 												</div>
 											</div>
 
@@ -435,21 +436,24 @@
 													<input type="checkbox" id="article[<?php echo $i; ?>].inputsuppression"  name="article[<?php echo $i; ?>][inputsuppression]" value="YES"> Supprimer article ? <output></output>
 												</label>
 											</div>
-												<?php }
-												else if($articles[$i]->getTypeArticle() == 3) { ?>
+											<?php }
+											else if($articles[$i]->getTypeArticle() == 3) { ?>
+											<div class="col-sm-12 form-group">
+			                    <label>Type d'article</label>
+													<select disabled="disabled" class="col-sm-5 form-control" data-index='0' onchange="handleTypeChange(this)">
 														<option value="0">Voile</option>
 														<option value="1">sellette</option>
 														<option value="2">Parachute de secours</option>
 														<option value="3" selected="selected">Accessoire</option>
 													</select>
 											</div>
-
+											<input id="article[<?php echo $i; ?>].inputtypedematos" type="hidden" name="article[<?php echo $i; ?>][typedematos]" data-index='0' value="3">
 
 
 											<div class="form-group" name="article[<?php echo $i; ?>].marque">
 												<label for="inputmarque" class="col-sm-2 control-label">Marque</label>
 												<div class="col-sm-10">
-													<input type="text" class="autoc" id="article[<?php echo $i; ?>].inputmarque" value="<?php echo($articles[$i]->getMarque()->getLibelle()) ?>" name="article[<?php echo $i; ?>][inputmarque]" placeholder="Marque" />
+													<input type="text" class="autocMarque" id="article[<?php echo $i; ?>].inputmarque" value="<?php echo($articles[$i]->getMarque()->getLibelle()) ?>" name="article[<?php echo $i; ?>][inputmarque]" placeholder="Marque" />
 												</div>
 											</div>
 
@@ -519,7 +523,7 @@
 	                  <div class="form-group" name="marque">
 	                    <label for="inputmarque" class="col-sm-2 control-label">Marque</label>
 	                    <div class="col-sm-10">
-	                      <input type="text" class="autoc" id="inputmarque" name="inputmarque" value="" placeholder="Marque" />
+	                      <input type="text" class="autocMarque" id="inputmarque" name="inputmarque" value="" placeholder="Marque" />
 	                    </div>
 	                  </div>
 
@@ -722,6 +726,8 @@
 
 	<!-- jQuery 2.2.3 -->
 	<!-- <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script> -->
+	<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+	<script src="../jquery-ui-1.12.1/jquery-ui.js"></script>
 	<!-- Bootstrap 3.3.6 -->
 	<script src="../bootstrap/js/bootstrap.min.js"></script>
 	<!-- AdminLTE App -->
@@ -893,6 +899,11 @@
 	                                .removeAttr('id')
 	                                .attr('data-article-index', articleIndex);
 	            $form.append($clone);
+
+							$('.autocMarque').autocomplete({
+							       minLength: 2,
+							       source: '../controller/automarque.php'
+							        });
 	            // Update the name attributes
 	            $clone
 	                .find('[name="typedematos"]').attr('name', 'article[' + articleIndex + '][typedematos]').end()
@@ -973,8 +984,8 @@
 	        })
 	        // Remove button click handler
 	        .on('click', '.removeButton', function() {
-						articleIndex--;
-						document.getElementById("index").value = articleIndex - 1;
+						// articleIndex--;
+						document.getElementById("index").value = articleIndex;
 	            var $row  = $(this).parents('.form-group'),
 	                index = $row.attr('data-article-index');
 	            // Remove fields
@@ -1006,39 +1017,22 @@
 	  var inputEmail = document.forms["articleForm"]["inputEmail"].value;
 	  var inputAdresse = document.forms["articleForm"]["inputAdresse"].value;
 	  var inputPrix = document.forms["articleForm"]["inputPrix"].value;
-	  if (inputPrix == "") {
-	      alert("Le prix du lot doit être renseigné");
-	      return false;
-	  } else if(inputPrix%10!=0) {
-	    alert("Le prix du lot doit être un multiple de 10");
-	    return false;
-	  }
-	  if (inputNom == "") {
-	      alert("Le nom doit être renseigné");
-	      return false;
-	  }
-	  if (inputPrenom == "") {
-	      alert("Le prenom doit être renseigné");
-	      return false;
-	  }
-	  if (inputTelephone == "") {
-	      alert("Le telephone doit être renseigné");
-	      return false;
-	  }
 	  if (inputEmail == "") {
 	      alert("Le email doit être renseigné");
 	      return false;
 	  }
-	  if (inputAdresse == "") {
-	      alert("Le adresse doit être renseigné");
-	      return false;
-	  }
+		if (inputPrix == "") {
+				alert("Le prix du lot doit être renseigné");
+				return false;
+		} else if(inputPrix%10!=0) {
+			alert("Le prix du lot doit être un multiple de 10");
+			return false;
+		}
+
 	}
 
-	$('.autoc').on("focus", function(){
-	      $(this).autocomplete({
+	$('.autocMarque').autocomplete({
 	       minLength: 2,
 	       source: '../controller/automarque.php'
 	        });
-	});
 	</script>

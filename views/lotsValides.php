@@ -12,9 +12,9 @@
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="../ionicons-2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="../dist/css/skins/skin-blue.min.css">
@@ -137,6 +137,25 @@
        <!-- /.box -->
      </div>
 
+      <div class="col-md-12">
+       <div class="modal-dialog">
+         <div class="modal-content">
+           <div class="modal-header">
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">×</span></button>
+             <h4 class="modal-title">Votre lot a bien été entré</h4>
+           </div>
+           <div class="modal-body">
+             <p style="font-size:30px">Veuillez payer les frais de dépôt pour le lot ajouté/validé pour obtenir un numéro de coupon. Pour payer utiliser l'adresse mail suivante: <?php echo $_GET['mail'] ?></p>
+           </div>
+           <div class="modal-footer">
+             <!-- <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button> -->
+             <a class = "btn btn-primary" href = "../index.html" role = "button">J'ai retenu</a>
+           </div>
+         </div>
+         <!-- /.modal-content -->
+       </div>
+      </div>
     </section>
     <!-- /.content -->
   </div>

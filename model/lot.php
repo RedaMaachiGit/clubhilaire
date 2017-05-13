@@ -113,6 +113,36 @@ class Lot
       //$row = $res->fetch_row();
       return $row[0];
  	  }
+
+    public static function ficheImprime($idLot){
+      $query1 = "SELECT fiche FROM lot WHERE idLot=".$idLot;
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      $res = $conn->query($query1) or die(mysqli_error($conn));
+      $row = $res->fetch_row();
+      $db->close();
+      if(strcmp($row[0],"OUI")){
+        return true;
+      } else {
+        return false;
+      }
+ 	  }
+
+    public static function afficheImprime($idLot){
+      $query1 = "SELECT affiche FROM lot WHERE idLot=".$idLot;
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      $res = $conn->query($query1) or die(mysqli_error($conn));
+      $row = $res->fetch_row();
+      $db->close();
+      if(strcmp($row[0],"OUI")){
+        return true;
+      } else {
+        return false;
+      }
+ 	  }
     //Getter numeroCoupon
    public function getCouponNoIncr(){
      return $this->_numeroCoupon;
@@ -371,6 +401,29 @@ class Lot
 	  }
 	 }
 
+   public static function getLotByNumPreEnPreparation($numPre){
+	  $db = new DB();
+	  $db->connect();
+	  $conn = $db->getConnectDb();
+	  $numPreInscription = $conn->real_escape_string($numPre);
+	  $query = "SELECT * FROM lot WHERE numeroPreInscription='$numPreInscription' AND statut=\"En preparation\"";
+	  $res = $conn->query($query) or die(mysqli_error($conn));
+	  $db->close();
+	  $row = $res->fetch_row();
+	  if(!empty($row)){
+		  $vendeur = Vendeur::getVendeurById((int)$row[6]);
+		  $acheteur = Acheteur::getAcheteurById((int)$row[5]);
+		  $lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],$vendeur);
+		  $lot->setId((int)$row[0]);
+		  $lot->setStatut((String)$row[4]);
+		  $lot->setAcheteur($acheteur);
+		  $lot->setNumPre($numPre);
+		  return $lot;
+	  }else{
+		  return null;
+	  }
+	 }
+
 
 	 public static function deleteLotById($idLot){
 	  $query = "DELETE FROM lot WHERE idLot=".$idLot;
@@ -413,7 +466,7 @@ class Lot
 	 }
 
    public static function getAllLot(){
-      $query = "SELECT * FROM lot";
+      $query = "SELECT * FROM lot WHERE statut<>\"Non valide\"";
       $db = new DB();
       $db->connect();
       $conn = $db->getConnectDb();
@@ -436,6 +489,30 @@ class Lot
 
    public function getLotEnVente(){
      $query = "SELECT * FROM lot WHERE statut='En vente'";
+     $db = new DB();
+     $db->connect();
+     $conn = $db->getConnectDb();
+    //  $resT = $conn->query($query) or die(mysqli_error($conn));
+    //  $rowT = $res->fetch_row();
+     $res=mysqli_query($conn,$query);
+     $i=0;
+     $lots = array();
+     while($row = mysqli_fetch_array($res)){
+     $i++;
+     $vendeur = Vendeur::getVendeurById((int)$row['idVendeur']);
+     $acheteur = Acheteur::getAcheteurById((int)$row['idAcheteur']);
+     $lot = new Lot((String)$row['numeroCoupon'],(String)$row['numeroLotVendeur'],(int)$row['prixVente'],$vendeur);
+     $lot->setId((int)$row['idLot']);
+     $lot->setStatut((String)$row['statut']);
+     $lot->setAcheteur($acheteur);
+     array_push($lots, $lot);
+     }
+     $db->close();
+     return $lots;
+    }
+
+   public static function getLotEnAttenteImpressionStatic(){
+     $query = "SELECT * FROM lot WHERE statut='En attente impression'";
      $db = new DB();
      $db->connect();
      $conn = $db->getConnectDb();
@@ -502,26 +579,64 @@ class Lot
 	  return $lots;
 	}
 
+  public static function lotPossedeProduits($idLot){
+    $query = "SELECT * FROM article WHERE idLot='$idLot'";
+    $db = new DB();
+    $db->connect();
+    $conn = $db->getConnectDb();
+    $res = $conn->query($query) or die(mysqli_error($conn));
+    $db->close();
+    $i = 0;
+    while($row = $res->fetch_row()) {
+      if($i==1){
+        return true;
+      }
+      $type = (int)$row[1];
+      $id = (String)$row[0];
+      $pTVMinimum = (String)$row[2];
+      $PTVMaximum = (String)$row[3];
+      $taille = (String)$row[4];
+      $annee = (int)$row[5];
+      $surfaceVoile = (String)$row[6];
+      $couleurVoile = (String)$row[7];
+      $heureVolesVoile = (String)$row[8];
+      $certificatRevisionVoile = (String)$row[9];
+      $typeProtectionSelette = (String)$row[10];
+      $typeAccessoire = (String)$row[11];
+      $idMarqueIndex = (int)$row[12];
+      $idModele = (int)$row[13];
+      $homologation = (String)$row[15];
+      $commentaire = (String)$row[16];
+      if($type != 0 || $pTVMinimum != "" || $PTVMaximum != "" || $taille != "" || $annee != 0 || $surfaceVoile != ""
+          || $couleurVoile !="" || $heureVolesVoile !="" || $certificatRevisionVoile !="" || $typeProtectionSelette !=""
+          || $typeAccessoire !="" || $idMarqueIndex != 0 || $idModele != 0
+          || $homologation != "EN A / DHV LTF-1" || $commentaire !="") {
+            return true;
+          }
+      $i++;
+    }
+    return false;
+  }
 
-	 public static function veriferPayerFraisDepot($idLot){
-		$statut = "En vente";
-		$query = "SELECT * FROM lot WHERE idLot=".$idLot." AND statut !='$statut'";
-		$db = new DB();
-		$db->connect();
-		$conn = $db->getConnectDb();
-		$res = $conn->query($query) or die(mysqli_error($conn));
-		$db->close();
-		$row = $res->fetch_row();
-		if(empty($row)){
-			return false;
-		}else{
-			return true;
-		}
-	}
+  public static function veriferPayerFraisDepot($idLot){
+    $statut = "En vente";
+    $query = "SELECT * FROM lot WHERE idLot=".$idLot." AND statut !='$statut'";
+    $db = new DB();
+    $db->connect();
+    $conn = $db->getConnectDb();
+    $res = $conn->query($query) or die(mysqli_error($conn));
+    $db->close();
+    $row = $res->fetch_row();
+    if(empty($row)){
+    	return false;
+    }else{
+    	return true;
+    }
+  }
 
 	 public static function getLotEnPreparationByVendeur($idVendeur){
-	  $statut = "En preparation";
-	  $query = "SELECT * FROM lot WHERE idVendeur=".$idVendeur." AND statut ='$statut'";
+    $statut2 = "En preparation";
+	  $query = "SELECT * FROM lot WHERE idVendeur='$idVendeur' AND statut ='$statut2'";
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -530,13 +645,13 @@ class Lot
 	  $lots = Array();
 	  while($row = $res->fetch_row())
 	  {
-		$vendeur = Vendeur::getVendeurById((int)$row[6]);
-		$acheteur = Acheteur::getAcheteurById((int)$row[5]);
-		$lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],$vendeur);
-		$lot->setId((int)$row[0]);
-		$lot->setStatut((String)$row[4]);
-		$lot->setAcheteur($acheteur);
-		array_push($lots,$lot);
+  		$vendeur = Vendeur::getVendeurById((int)$row[6]);
+  		$acheteur = Acheteur::getAcheteurById((int)$row[5]);
+  		$lot = new Lot((String)$row[1],(String)$row[2],(int)$row[3],$vendeur);
+  		$lot->setId((int)$row[0]);
+  		$lot->setStatut((String)$row[4]);
+  		$lot->setAcheteur($acheteur);
+  		array_push($lots,$lot);
 	  }
 	  return $lots;
 	 }
@@ -552,25 +667,33 @@ class Lot
 	  $db->close();
 	 }
 
+
+   public static function updateFicheAffiche($idLot, $fiche, $affiche){
+     Lot::updateFiche($idLot, $fiche);
+     Lot::updateAffiche($idLot, $affiche);
+     return;
+   }
+
+   public static function updateFiche($idLot, $fiche){
+    $query = "UPDATE lot SET fiche ='$fiche' WHERE idLot=".$idLot;
+	  $db = new DB();
+	  $db->connect();
+    $conn = $db->getConnectDb();
+    $res = $conn->query($query) or die(mysqli_error($conn));
+	  $db->close();
+	 }
+   public static function updateAffiche($idLot, $affiche){
+    $query1 = "UPDATE lot SET affiche ='$affiche' WHERE idLot=".$idLot;
+	  $db = new DB();
+	  $db->connect();
+    $conn = $db->getConnectDb();
+    $res1 = $conn->query($query1) or die(mysqli_error($conn));
+	  $db->close();
+	 }
+
 	public function updateStatut($statut){
 	  $id = $this->getId();
-    if(strcmp($statut, "Vendu")==0){
-      $query = "UPDATE lot SET statut =\"Vendu\" WHERE idLot=".$id;
-    } else if(strcmp($statut, "En preInscription")==0){
-	  $query = "UPDATE lot SET statut =\"En preInscription\" WHERE idLot=".$id;
-	} else if(strcmp($statut, "En preparation")==0){
-      $query = "UPDATE lot SET statut =\"En preparation\" WHERE idLot=".$id;
-    } else if(strcmp($statut, "Restitue")==0){
-      $query = "UPDATE lot SET statut =\"Restitue\" WHERE idLot=".$id;
-    } else if(strcmp($statut, "En vente")==0){
-      $query = "UPDATE lot SET statut =\"En vente\" WHERE idLot=".$id;
-    } else if(strcmp($statut, "En attente de restitution")==0){
-      $query = "UPDATE lot SET statut =\"En attente de restitution\" WHERE idLot=".$id;
-    } else if(strcmp($statut, "Non valide")==0){
-      $query = "UPDATE lot SET statut =\"Non valide\" WHERE idLot=".$id;
-    } else if(strcmp($statut, "Payé au vendeur")==0){
-      $query = "UPDATE lot SET statut =\"Payé au vendeur\" WHERE idLot=".$id;
-    }
+    $query = "UPDATE lot SET statut ='$statut' WHERE idLot=".$id;
 	  $db = new DB();
 	  $db->connect();
 	  $conn = $db->getConnectDb();
@@ -629,5 +752,24 @@ class Lot
 		  return true;
 	  }
 	 }
+
+   public static function sortArrayByKey(&$array,$string = false,$asc = true){
+       if($string){
+           usort($array,function ($a, $b) use(&$key,&$asc)
+           {
+               if($asc)    return strcmp(strtolower($a->getLibelleTypeArticle()), strtolower($b->getLibelleTypeArticle()));
+               else        return strcmp(strtolower($b->getLibelleTypeArticle()), strtolower($a->getLibelleTypeArticle()));
+           });
+       }else{
+           usort($array,function ($a, $b) use(&$key,&$asc)
+           {
+               if($a[$key] == $b[$key]){return 0;}
+               if($asc) return ($a->getLibelleTypeArticle() < $b->getLibelleTypeArticle()) ? -1 : 1;
+               else     return ($a->getLibelleTypeArticle() > $b->getLibelleTypeArticle()) ? -1 : 1;
+
+           });
+       }
+   }
+
 }
 ?>

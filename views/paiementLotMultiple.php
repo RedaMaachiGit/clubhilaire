@@ -5,18 +5,16 @@
   include_once('../model/article.php');
   include_once('../model/modele.php');
   $lots= unserialize(urldecode(($_SESSION['lots'])));
-
   $fraisDepot = $_SESSION['fraisDepot'];
   $_SESSION['lots']=urlencode(serialize($lots));
   $_SESSION['fraisDepot'] = $fraisDepot;
-  
-  //$nombreArticles = sizeof($articles);
-  $nombreLots = sizeof($lots);
+  foreach ($lots as $key => $lot) {
+    $vendeur = $lot->getVendeur();
+    $nomVendeur = $vendeur->getNom();
+    $prenomVendeur = $vendeur->getPrenom();
+    $telVendeur = $vendeur->getTel();
+  }
 
-  // $vendeur = $lot->getVendeur();
-  // $prixLot = $lot->getPrix();
-  // $numeroLot = $lot->getId();
-  // $numeroCoupon = $lot->getCouponNoIncr();
 ?>
 <!DOCTYPE html>
 <html>
@@ -29,9 +27,9 @@
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="../ionicons-2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="../dist/css/skins/skin-blue.min.css">
@@ -89,8 +87,14 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
+      <?php if(sizeof($lots) == 0) { ?>
+        <h1>
+          Pas de lots à payer
+          <small></small>
+        </h1>
+      <?php return false;} ?>
       <h1>
-        Paiement du dépôt pour les lots suivants <?php //for($i=0; $i<count($lots)-1 ; $i++){ echo ("   ".$lots[$i]->getCoupon());}?>
+        Paiement du dépôt pour les lots suivants <?php //for($i=0; $i<count($lots)-1 ; $i++){ echo ("   ".$lot->getCoupon());}?>
         <small>Vous êtes sur le point de recevoir le paiement pour plusieurs lots</small>
       </h1>
       <ol class="breadcrumb">
@@ -101,10 +105,21 @@
 
     <!-- Main content -->
     <section class="content">
-      <?php for ($j = 0; $j < $nombreLots; $j++) { $coupon = $lots[$j]->getCouponNoIncr(); $idLotActuel = $lots[$j]->getId() ?>
+      <?php foreach ($lots as $keyLot=>$lot) {
+        $coupon = $lot->getCouponNoIncr();
+        $idLotActuel = $lot->getId();
+        $prix = $lot->getPrix();
+        $vendeur = $lot->getVendeur();
+        $mail = $vendeur->getEmail();
+        ?>
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">Ce lot numéro <?php echo $coupon; ?> contient</h3>
+            <h3 class="box-title">Ce lot numéro <?php echo $coupon; ?> contient (Il ne s'agit pas du numéro de coupon)</h3>
+            <h3>Mail vendeur: <b><?php echo $mail; ?> </b> | Prix du lot: <b><?php echo $prix; ?>€</b></h3>
+            <form id="modification" action="../controller/controllerCalculFraisDepot.php" method="post"><p>
+              <input type="hidden" name="numeroLot" id="numeroLot" value="<?php echo $idLotActuel ?>" />
+              <input type="hidden" name="formEnvoie" id="formEnvoie" value="multipleRetrait">
+              <input type="submit" value="Retirer"></p></form>
           </div>
 
 
@@ -136,25 +151,25 @@
                     <tbody>
                       <?php
                           $articles = Article::getArticlesByLot($idLotActuel);
-                          $nombreArticles = sizeof($articles);
 
-                          for ($i = 0; $i < $nombreArticles; $i++) { // foreach ($shop as $row) : ?>
+                          foreach ($articles as $key=>$article) { // foreach ($shop as $row) :
+                             ?>
                         <tr>
-                      <td><?php if(!empty($articles[$i]->getTypeArticle())) { echo $articles[$i]->getLibelleTypeArticle(); } else if(!empty($articles[$i]->getSurfaceVoile())){echo "Voile";} else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getPtvMin())) { echo $articles[$i]->getPtvMin(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getPtvMax())) { echo $articles[$i]->getPtvMax(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getTaille())) { echo $articles[$i]->getTaille(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getAnnee())) { echo $articles[$i]->getAnnee(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getSurfaceVoile())) { echo $articles[$i]->getSurfaceVoile(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getCouleurVoile())) { echo $articles[$i]->getCouleurVoile(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getHeureVoile())) { echo $articles[$i]->getHeureVoile(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getCertificat())) { echo $articles[$i]->getCertificat(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getTypeProtectionsellette())) { echo $articles[$i]->getTypeProtectionsellette(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getTypeAccessoire())) { echo $articles[$i]->getTypeAccessoire(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getMarque()->getLibelle())) { echo $articles[$i]->getMarque()->getLibelle(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getModele()->getLibelle())) { echo $articles[$i]->getModele()->getLibelle(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getHomologation())) { echo $articles[$i]->getHomologation(); } else { echo "X";}?></td>
-                      <td><?php if(!empty($articles[$i]->getCommentaire())) { echo $articles[$i]->getCommentaire(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($article->getTypeArticle())) { echo $article->getLibelleTypeArticle(); } else if(!empty($article->getSurfaceVoile())){echo "Voile";} else { echo "X";}?></td>
+                      <td><?php if(!empty($article->getPtvMin())) { echo $article->getPtvMin(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($article->getPtvMax())) { echo $article->getPtvMax(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($article->getTaille())) { echo $article->getTaille(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($article->getAnnee())) { echo $article->getAnnee(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($article->getSurfaceVoile())) { echo $article->getSurfaceVoile(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($article->getCouleurVoile())) { echo $article->getCouleurVoile(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($article->getHeureVoile())) { echo $article->getHeureVoile(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($article->getCertificat())) { echo $article->getCertificat(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($article->getTypeProtectionSelette())) { echo $article->getTypeProtectionSelette(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($article->getTypeAccessoire())) { echo $article->getTypeAccessoire(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($article->getMarque()->getLibelle())) { echo $article->getMarque()->getLibelle(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($article->getModele()->getLibelle())) { echo $article->getModele()->getLibelle(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($article->getHomologation())) { echo $article->getHomologation(); } else { echo "X";}?></td>
+                      <td><?php if(!empty($article->getCommentaire())) { echo $article->getCommentaire(); } else { echo "X";}?></td>
                         </tr>
                       <?php } ?>
                     </tbody>
@@ -202,11 +217,11 @@
         <form id="paiementForm" class="form-horizontal" method="POST" action="../controller/paiementController.php" class="form-horizontal" onsubmit="return validateForm()">
           <div class="box-body">
             <div class="col-sm-12 form-group">
-                <label>Type d'paiement</label>
+                <label>Type de paiement</label>
                 <select class="col-sm-5 form-control" id="paiement[0].inputtypedepaiement" name="paiement[0][typedepaiement]" data-index='0' onchange="handleTypeChange(this)">
                   <option value="0">Carte Bancaire</option>
                   <option value="1">Chèque</option>
-                  <option value="2">Liquide</option>
+                  <option value="2" selected="selected">Liquide</option>
                 </select>
             </div>
 
@@ -216,21 +231,21 @@
             <div class="form-group" name="paiement[0].nomGroup">
               <label for="inputNom" class="col-sm-2 control-label">Nom</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputNom" name="paiement[0][inputNom]" value="" placeholder="Nom" />
+                <input type="text" class="form-control" id="inputNom" name="paiement[0][inputNom]" value="<?php echo $nomVendeur; ?>" placeholder="Nom" />
               </div>
             </div>
 
             <div class="form-group" name="paiement[0].prenomGroup">
               <label for="inputPrenom" class="col-sm-2 control-label">Prénom</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputPrenom" name="paiement[0][inputPrenom]" value="" placeholder="Prénom" />
+                <input type="text" class="form-control" id="inputPrenom" name="paiement[0][inputPrenom]" value="<?php echo $prenomVendeur; ?>" placeholder="Prénom" />
               </div>
             </div>
 
             <div class="form-group" name="paiement[0].telephoneGroup" id="paiement[0].telephoneGroup">
               <label for="inputTelephone" class="col-sm-2 control-label">Téléphone</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputTelephone" name="paiement[0][inputTelephone]" value="" placeholder="Téléphone" />
+                <input type="text" class="form-control" id="inputTelephone" name="paiement[0][inputTelephone]" value="<?php echo $telVendeur; ?>" placeholder="Téléphone" />
               </div>
             </div>
 
@@ -255,11 +270,10 @@
               </div>
             </div>
 
-            
-
             <div class="col-xs-1">
               <button type="button" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>
             </div>
+
           </div>
           <!-- /.box-body -->
           <div class="box-footer">
@@ -285,21 +299,21 @@
       <div class="form-group" name="nomGroup"  id="nomGroup">
         <label for="inputNom" class="col-sm-2 control-label">Nom</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="inputNom" name="inputNom" value="" placeholder="Nom" />
+          <input type="text" class="form-control" id="inputNom" name="inputNom" value="<?php echo $nomVendeur; ?>" placeholder="Nom" />
         </div>
       </div>
 
       <div class="form-group" name="prenomGroup" id="prenomGroup">
         <label for="inputPrenom" class="col-sm-2 control-label">Prénom</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="inputPrenom" name="inputPrenom" value="" placeholder="Prénom" />
+          <input type="text" class="form-control" id="inputPrenom" name="inputPrenom" value="<?php echo $prenomVendeur; ?>" placeholder="Prénom" />
         </div>
       </div>
 
       <div class="form-group" name="telephone" id="telephoneGroup">
         <label for="inputTelephone" class="col-sm-2 control-label">Téléphone</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="inputTelephone" name="inputTelephone" value="" placeholder="Téléphone" />
+          <input type="text" class="form-control" id="inputTelephone" name="inputTelephone" value="<?php echo $telVendeur; ?>" placeholder="Téléphone" />
         </div>
       </div>
 
@@ -615,13 +629,13 @@ function validateForm() {
   var index = document.getElementById("index").value
   var prix = "<?php echo $fraisDepot ?>";
   if(index == 0){
-    var nom = document.getElementsByName("paiement[0][inputNom]");
-    var prenom = document.getElementsByName("paiement[0][inputPrenom]");
-    var tel = document.getElementsByName("paiement[0][inputTelephone]");
-    if(nom[0].value == "" || prenom[0].value == "" || tel[0].value == ""){
-      alert("Veuillez rentrez le nom, prenom ainsi que le numéro de téléphone SVP.");
-      return false;
-    }
+    // var nom = document.getElementsByName("paiement[0][inputNom]");
+    // var prenom = document.getElementsByName("paiement[0][inputPrenom]");
+    // var tel = document.getElementsByName("paiement[0][inputTelephone]");
+    // if(nom[0].value == "" || prenom[0].value == "" || tel[0].value == ""){
+    //   alert("Veuillez rentrez le nom, prenom ainsi que le numéro de téléphone SVP.");
+    //   return false;
+    // }
     var elem = document.getElementsByName("paiement[0][inputMontant]");
     var montant = elem[0].value;
     if(montant != prix){
@@ -634,16 +648,12 @@ function validateForm() {
       var nom = document.getElementsByName("paiement[" + i + "][inputNom]");
       var prenom = document.getElementsByName("paiement[" + i + "][inputPrenom]");
       var tel = document.getElementsByName("paiement[" + i + "][inputTelephone]");
-      if(nom[0].value == "" || prenom[0].value == "" || tel[0].value == ""){
-        alert("Veuillez rentrez le nom, prenom ainsi que le numéro de téléphone SVP.");
+      var elem = document.getElementsByName("paiement[" + i + "][inputMontant]");
+      if(parseInt(elem[0].value) <= 0){
+        alert("Vous ne pouvez pas rentrez un paiement ni de 0 ni négatif.");
         return false;
       }
-      var elem = document.getElementsByName("paiement[" + i + "][inputMontant]");
       montant = parseInt(montant) + parseInt(elem[0].value);
-      console.log('Montant');
-      console.log(montant);
-      console.log('Prix lot');
-      console.log(prix);
     }
     if(montant != prix){
       alert("ATTENTION la somme des montants entrés ne correspond pas au prix du lot");

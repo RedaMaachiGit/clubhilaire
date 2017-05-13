@@ -18,8 +18,7 @@
 
             if (seconds_left <= 0)
             {
-              //  document.getElementById('timer_div').innerHTML = "You are Ready!";
-              window.setTimeout("location=('../views/imprimerLots.html');",0);
+              window.setTimeout("location=('../views/imprimerLots.php');",0);
                clearInterval(interval);
             }
           }, 1000);
@@ -40,7 +39,7 @@
           if (seconds_left <= 0)
           {
             //  document.getElementById('timer_div').innerHTML = "You are Ready!";
-            window.setTimeout("location=('../views/imprimerLots.html');",0);
+            window.setTimeout("location=('../views/imprimerLots.php');",0);
              clearInterval(interval);
           }
         }, 1000);
@@ -51,9 +50,14 @@
     $idVendeur = $vendeur->getId();
     $lots = Lot::getLotByVendeur($idVendeur);
     $nombreLots = sizeof($lots);
-
-
+    $pageVide = true;
 for ($j = 0; $j < $nombreLots; $j++) {
+    $nombreArticlesSuivants = 0;
+    if($j < $nombreLots-1){
+      $numeroLotSuivant = $lots[$j+1]->getId();
+      $articlesSuivants = Article::getArticlesByLot($numeroLotSuivant);
+      $nombreArticlesSuivants = sizeof($articlesSuivants);
+    }
     $numeroLot = $lots[$j]->getId();
     $vendeur = $lots[$j]->getVendeur();
     $prixLot = $lots[$j]->getPrix();
@@ -63,24 +67,30 @@ for ($j = 0; $j < $nombreLots; $j++) {
       continue;
     }
     $articles = Article::getArticlesByLot($numeroLot);
-    $nombreArticles = sizeof($articles);
-    if(empty($articles[0])){
+    if(!Lot::lotPossedeProduits($numeroLot)){
+      $nombreArticles = 0;
+    } else {
+      $nombreArticles = sizeof($articles);
+    }
+    if(empty($articles[0]) || $nombreArticles == 0){
       continue;
     }
+    if(Lot::afficheImprime($numeroLot) == 0){
+      continue;
+    } else {
+      Lot::updateAffiche($numeroLot, "OUI");
+    }
+    if(Lot::ficheImprime($numeroLot) == 0){
+      $lots[$j]->updateStatut("En vente");
+    }
     $principal = 0;
-    for ($k = 1; $k < $nombreArticles; $k++) {
-      if(!empty($articles[$k]->getTypeArticle())) {
-         $type = $articles[$k]->getLibelleTypeArticle();
-      } else if(!empty($articles[$k]->getSurfaceVoile())){
-         $type = "Voile";
-      } else {
-         $type = "";
-      }
+    $pageVide = false;
+    for ($k = 0; $k < $nombreArticles; $k++) {
+      $type = $articles[$k]->getLibelleTypeArticle();
       if(strcmp($type, "Voile") == 0){
         $principal = $k;
       }
     }
-
 ?>
 
 
@@ -89,20 +99,13 @@ for ($j = 0; $j < $nombreLots; $j++) {
 <div class="tg-wrap">
   <table class="tg">
   <tr>
-    <th class="tg-zul5"><?php if(!empty($articles[$principal]->getLibelleTypeArticle())) { echo $articles[$principal]->getLibelleTypeArticle(); } else { echo "X";}?></th>
-    <th class="tg-baqh"></th>
-    <th class="tg-baqh"></th>
-    <th class="tg-if35">Num coupon</th>
-    <th class="tg-zul5"><?php echo $numeroCoupon; ?></th>
-  </tr>
-  <tr>
     <td class="tg-if35" colspan="2">Marque</td>
-    <td class="tg-if35">Type</td>
+    <td class="tg-if35">Type(NumeroCoupon)</td>
     <td class="tg-if35" colspan="2">Prix</td>
   </tr>
   <tr>
     <td class="tg-0s10" colspan="2"><?php if(!empty($articles[$principal]->getMarque()->getLibelle())) { echo $articles[$principal]->getMarque()->getLibelle(); } else { echo "X";}?></td>
-    <td class="tg-0s10"><?php if(!empty($articles[$principal]->getLibelleTypeArticle())) { echo $articles[$principal]->getLibelleTypeArticle(); } else { echo "X";}?></td>
+    <td class="tg-0s10"><?php if(!empty($articles[$principal]->getLibelleTypeArticle())) { echo $articles[$principal]->getLibelleTypeArticle().$numeroCoupon; } else { echo "X";}?></td>
     <td class="tg-0s10" colspan="2"><?php echo $prixLot; ?></td>
   </tr>
   <?php if(!empty($articles[0]->getPtvMin())) { $ptvMin = $articles[$principal]->getPtvMin(); } else {  $ptvMin = "X";}
@@ -111,13 +114,15 @@ for ($j = 0; $j < $nombreLots; $j++) {
   ?>
   <tr>
     <td class="tg-if35" colspan="2">Modele</td>
+    <td class="tg-if35">Coupon</td>
     <td class="tg-if35">Année</td>
     <td class="tg-if35" colspan="2">Taille</td>
   </tr>
   <tr>
     <td class="tg-0s10" colspan="2"><?php if(!empty($articles[$principal]->getModele()->getLibelle())) { echo $articles[$principal]->getModele()->getLibelle(); } else { echo "X";}?></td>
+    <td class="tg-0s10"><?php echo $numeroCoupon;?></td>
     <td class="tg-0s10"><?php if(!empty($articles[$principal]->getAnnee())) { echo $articles[$principal]->getAnnee(); } else { echo "X";}?></td>
-    <td class="tg-0s10" colspan="2">Taille: <?php echo $taille. " / " .$ptvMin. " / " .$ptvMax ?></td>
+    <td class="tg-0s10" colspan="2"><?php echo $taille. " / " .$ptvMin. " / " .$ptvMax ?></td>
   </tr>
   <tr>
     <td class="tg-if35">Categorie</td>
@@ -126,24 +131,65 @@ for ($j = 0; $j < $nombreLots; $j++) {
     <td class="tg-if35">Heures de vol</td>
     <td class="tg-if35">Certificat</td>
   </tr>
+  <?php
+  if(!empty($articles[$principal]->getCouleurVoile())) { $couleur = $articles[$principal]->getCouleurVoile(); } else { $couleur = "Inconnue";}
+  $numWords = strlen($couleur);
+  if (($numWords >= 1) && ($numWords < 10)) {
+    $couleurTD = "<td class=\"tg-0s10\" style =\"font-size:25px\">". $couleur. "</td>";
+  }
+  else if (($numWords >= 10) && ($numWords < 20)) {
+    $couleurTD = "<td class=\"tg-0s10\" style =\"font-size:20px\">". $couleur. "</td>";
+  }
+  else if (($numWords >= 20) && ($numWords < 30)) {
+    $couleurTD = "<td class=\"tg-0s10\" style =\"font-size:15px\">". $couleur. "</td>";
+  }
+  else if (($numWords >= 30) && ($numWords < 40)) {
+    $couleurTD = "<td class=\"tg-0s10\" style =\"font-size:10px\">". $couleur. "</td>";
+  }
+  else {
+    $couleurTD = "<td class=\"tg-0s10\" style =\"font-size:10px\">". $couleur. "</td>";
+  }
+  if(!empty($articles[$principal]->getHomologation())) { $homologation = $articles[$principal]->getHomologation(); } else { $homologation = "NC";}
+  $numWords = strlen($homologation);
+  if (($numWords >= 1) && ($numWords < 10)) {
+    $homologationTD = "<td class=\"tg-0s10\" style =\"font-size:30px\">". $homologation. "</td>";
+  }
+  else if (($numWords >= 10) && ($numWords < 20)) {
+    $homologationTD = "<td class=\"tg-0s10\" style =\"font-size:30px\">". $homologation. "</td>";
+  }
+  else if (($numWords >= 20) && ($numWords < 30)) {
+    $homologationTD = "<td class=\"tg-0s10\" style =\"font-size:30px\">". $homologation. "</td>";
+  }
+  else if (($numWords >= 30) && ($numWords < 40)) {
+    $homologationTD = "<td class=\"tg-0s10\" style =\"font-size:30px\">". $homologation. "</td>";
+  }
+  else {
+    $homologationTD = "<td class=\"tg-0s10\" style =\"font-size:30px\">". $homologation. "</td>";
+  }
+  ?>
   <tr>
     <td class="tg-0s10">Parapente</td>
-    <td class="tg-0s10"><?php if(!empty($articles[$principal]->getHomologation())) { echo $articles[$principal]->getHomologation(); } else { echo "X";}?></td>
-    <td class="tg-0s10"><?php if(!empty($articles[$principal]->getCouleurVoile())) { echo $articles[$principal]->getCouleurVoile(); } else { echo "X";}?></td>
+    <?php echo $homologationTD; ?>
+    <?php echo $couleurTD; ?>
     <td class="tg-0s10"><?php if(!empty($articles[$principal]->getHeureVoile())) { echo $articles[$principal]->getHeureVoile(); } else { echo "X";}?></td>
-    <td class="tg-0s10"><?php if(!empty($articles[$principal]->getCertificat())) { echo $articles[$principal]->getCertificat(); } else { echo "X";}?></td>
+    <td class="tg-0s10"><?php if(!empty($articles[$principal]->getCertificat())) { echo "OUI"; } else { echo "NON";}?></td>
+  </tr>
+  <tr>
+    <td class="tg-wxgh" colspan="4">Articles supplémentaires dans le lot :</td>
+    <td class="tg-wxgh">Commentaires</td>
   </tr>
 
   <?php
       for ($i = 0; $i < $nombreArticles; $i++) {
+        if($i==1){
+  ?>
+
+  <?php
+}
         if($principal == $i){
           continue;
         }
   ?>
-    <tr>
-      <td class="tg-wxgh" colspan="4">Articles supplémentaires dans le lot :</td>
-      <td class="tg-wxgh">Commentaires</td>
-    </tr>
     <tr>
       <?php
       $idArticle = $articles[$i]->getId();
@@ -237,9 +283,14 @@ for ($j = 0; $j < $nombreLots; $j++) {
     }
   ?>
 </table></div>
-<div style="page-break-after:always"></div>
-<?php }
+<div style=\"page-break-after:always\"></div>
+  <?php
+
   }
+}
+if($pageVide){
+  echo "Auncun lot à imprimer";
+}
 ?>
 
 

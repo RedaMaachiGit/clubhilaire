@@ -8,8 +8,8 @@ include_once('../model/modele.php');
 class ControllerAjoutLot {
 
 		public static function ajoutArticle($i,$lot,$marque,$modele){
-			$ptvMax ="";
-			$ptvMin ="";
+			$ptvmax ="";
+			$ptvmin ="";
 			$taille ="";
 			$surface ="";
 			$couleur ="";
@@ -25,8 +25,8 @@ class ControllerAjoutLot {
 				$annne = $_POST['article'][$i]['inputannee'];
 			}
 			if($type == 0){
-				$ptvMax = $_POST['article'][$i]['inputptvmax'];
-				$ptvMin = $_POST['article'][$i]['inputptvmin'];
+				$ptvmax = $_POST['article'][$i]['inputptvmax'];
+				$ptvmin = $_POST['article'][$i]['inputptvmin'];
 				$annee = $_POST['article'][$i]['inputannee'];
 				if($_POST['article'][$i]['typehomologation'] == 0){
 					$homologation = "EN A / DHV LTF-1";
@@ -60,7 +60,7 @@ class ControllerAjoutLot {
 				$typeAccessoire = $_POST['article'][$i]['inputtypeaccessoire'];
 				$annee = $_POST['article'][$i]['inputannee'];
 			}
-		$article = new Article($type,$lot,$marque,$modele,$ptvMin,$ptvMax,$taille,$surface,$couleur,$heuresDeVol,
+		$article = new Article($type,$lot,$marque,$modele,$ptvmin,$ptvmax,$taille,$surface,$couleur,$heuresDeVol,
 		$certificat,$typeProtectionSelette,$typeAccessoire,$annee,"",$homologation);
 		$article->save();
 	}
@@ -100,6 +100,8 @@ class ControllerAjoutLot {
 				$newMarque = Marque::getMarqueByLibelle($marque); //la marque existe alors on la récupère
 			}
 			return $newMarque;
+		} else {
+			return "";
 		}
 	}
 
@@ -113,6 +115,8 @@ class ControllerAjoutLot {
 					$newModele = Modele::getModeleByLibelle($modele); //sinon on récupère le modele
 				}
 			return $newModele;
+		} else {
+			return "";
 		}
 	}
 
@@ -135,17 +139,20 @@ class ControllerAjoutLot {
 		} else {
 			$numberOfProducts = 1;
 		}
-		for ($i = 0; $i <= $numberOfProducts; $i++){		//Pour chaque article
+		for ($i = 0; $i <= $numberOfProducts+2; $i++){		//Pour chaque article
 			if(isset($_POST['article'][$i]['typedematos']) && $_POST['article'][$i]['typedematos'] >= 0 &&  $_POST['article'][$i]['typedematos'] <=3 ){
 				$marque = ControllerAjoutLot::ajoutMarque($i);
 				$modele = ControllerAjoutLot::ajoutModele($i,$marque);
 				ControllerAjoutLot::AjoutArticle($i,$lot,$marque,$modele);
 			}
 		}
+		header('location:../views/NumeroCoupon.php?mail='. $_POST['inputEmail']);
 	}
+
+
+
 }
+
 	ControllerAjoutLot::AjouterLot();
+
 ?>
-<script>
-	window.top.location='../views/NumeroCoupon.php?mail=<?php echo $_POST['inputEmail']; ?>';
-</script>

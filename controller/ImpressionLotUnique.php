@@ -16,13 +16,14 @@
             if (seconds_left <= 0)
             {
               //  document.getElementById('timer_div').innerHTML = "You are Ready!";
-              window.setTimeout("location=('../views/imprimerLots.html');",0);
+              window.setTimeout("location=('../views/imprimerLots.php');",0);
                clearInterval(interval);
             }
           }, 1000);
        </script>
 
     <?php
+    return false;
     } else {
       $numeroLot = $lots->getId();
       $vendeur = $lots->getVendeur();
@@ -30,8 +31,15 @@
       $numeroLot = $lots->getId();
       $numeroCoupon = $lots->getCouponNoIncr();
       $articles = Article::getArticlesByLot($numeroLot);
-      $nombreArticles = sizeof($articles);
-      if(empty($articles[0])){
+      if(!Lot::lotPossedeProduits($numeroLot)){
+        $nombreArticles = 0;
+      } else {
+        $nombreArticles = sizeof($articles);
+      }
+      if(Lot::afficheImprime($numeroLot) == 0){
+        return false;
+      }
+      if(empty($articles[0]) || $nombreArticles == 0){
         ?>
           <div id="timer_div">Pas d'article dans ce lot.</div>
           <script>
@@ -42,23 +50,22 @@
                 if (seconds_left <= 0)
                 {
                   //  document.getElementById('timer_div').innerHTML = "You are Ready!";
-                  window.setTimeout("location=('../views/imprimerLots.html');",0);
+                  window.setTimeout("location=('../views/imprimerLots.php');",0);
                    clearInterval(interval);
                 }
               }, 1000);
            </script>
 
         <?php
+          return false;
+        }
+      Lot::updateAffiche($numeroLot, "OUI");
+      if(Lot::ficheImprime($numeroLot) == 0){
+        $lots->updateStatut("En vente");
       }
       $principal = 0;
-      for ($k = 1; $k < $nombreArticles; $k++) {
-        if(!empty($articles[$k]->getTypeArticle())) {
-           $type = $articles[$k]->getLibelleTypeArticle();
-        } else if(!empty($articles[$k]->getSurfaceVoile())){
-           $type = "Voile";
-        } else {
-           $type = "";
-        }
+      for ($k = 0; $k < $nombreArticles; $k++) {
+        $type = $articles[$k]->getLibelleTypeArticle();
         if(strcmp($type, "Voile") == 0){
           $principal = $k;
         }
@@ -72,20 +79,13 @@
   <div class="tg-wrap">
     <table class="tg">
     <tr>
-      <th class="tg-zul5"><?php if(!empty($articles[$principal]->getLibelleTypeArticle())) { echo $articles[$principal]->getLibelleTypeArticle(); } else { echo "X";}?></th>
-      <th class="tg-baqh"></th>
-      <th class="tg-baqh"></th>
-      <th class="tg-if35">Num coupon</th>
-      <th class="tg-zul5"><?php echo $numeroCoupon; ?></th>
-    </tr>
-    <tr>
       <td class="tg-if35" colspan="2">Marque</td>
-      <td class="tg-if35">Type</td>
+      <td class="tg-if35">Type(NumeroCoupon)</td>
       <td class="tg-if35" colspan="2">Prix</td>
     </tr>
     <tr>
       <td class="tg-0s10" colspan="2"><?php if(!empty($articles[$principal]->getMarque()->getLibelle())) { echo $articles[$principal]->getMarque()->getLibelle(); } else { echo "X";}?></td>
-      <td class="tg-0s10"><?php if(!empty($articles[$principal]->getLibelleTypeArticle())) { echo $articles[$principal]->getLibelleTypeArticle(); } else { echo "X";}?></td>
+      <td class="tg-0s10"><?php if(!empty($articles[$principal]->getLibelleTypeArticle())) { echo $articles[$principal]->getLibelleTypeArticle().$numeroCoupon; } else { echo "X";}?></td>
       <td class="tg-0s10" colspan="2"><?php echo $prixLot; ?></td>
     </tr>
     <?php if(!empty($articles[0]->getPtvMin())) { $ptvMin = $articles[$principal]->getPtvMin(); } else {  $ptvMin = "X";}
@@ -94,13 +94,15 @@
     ?>
     <tr>
       <td class="tg-if35" colspan="2">Modele</td>
+      <td class="tg-if35">Coupon</td>
       <td class="tg-if35">Année</td>
       <td class="tg-if35" colspan="2">Taille / PTVMin / PTVMax</td>
     </tr>
     <tr>
       <td class="tg-0s10" colspan="2"><?php if(!empty($articles[$principal]->getModele()->getLibelle())) { echo $articles[$principal]->getModele()->getLibelle(); } else { echo "X";}?></td>
+      <td class="tg-0s10"><?php echo $numeroCoupon;?></td>
       <td class="tg-0s10"><?php if(!empty($articles[$principal]->getAnnee())) { echo $articles[$principal]->getAnnee(); } else { echo "X";}?></td>
-      <td class="tg-0s10" colspan="2">Taille: <?php echo $taille. " / " .$ptvMin. " / " .$ptvMax ?></td>
+      <td class="tg-0s10" colspan="2"><?php echo $taille. " / " .$ptvMin. " / " .$ptvMax ?></td>
     </tr>
     <tr>
       <td class="tg-if35">Categorie</td>
@@ -109,12 +111,31 @@
       <td class="tg-if35">Heures de vol</td>
       <td class="tg-if35">Certificat</td>
     </tr>
+    <?php
+    if(!empty($articles[$principal]->getCouleurVoile())) { $couleur = $articles[$principal]->getCouleurVoile(); } else { $couleur = "Inconnue";}
+    $numWords = strlen($couleur);
+    if (($numWords >= 1) && ($numWords < 10)) {
+      $couleurTD = "<td class=\"tg-0s10\" style =\"font-size:36px\">". $couleur. "</td>";
+    }
+    else if (($numWords >= 10) && ($numWords < 20)) {
+      $couleurTD = "<td class=\"tg-0s10\" style =\"font-size:30px\">". $couleur. "</td>";
+    }
+    else if (($numWords >= 20) && ($numWords < 30)) {
+      $couleurTD = "<td class=\"tg-0s10\" style =\"font-size:25px\">". $couleur. "</td>";
+    }
+    else if (($numWords >= 30) && ($numWords < 40)) {
+      $couleurTD = "<td class=\"tg-0s10\" style =\"font-size:20px\">". $couleur. "</td>";
+    }
+    else {
+      $couleurTD = "<td class=\"tg-0s10\" style =\"font-size:10px\">". $couleur. "</td>";
+    }
+    ?>
     <tr>
       <td class="tg-0s10">Parapente</td>
       <td class="tg-0s10"><?php if(!empty($articles[$principal]->getHomologation())) { echo $articles[$principal]->getHomologation(); } else { echo "X";}?></td>
-      <td class="tg-0s10"><?php if(!empty($articles[$principal]->getCouleurVoile())) { echo $articles[$principal]->getCouleurVoile(); } else { echo "X";}?></td>
+      <?php echo $couleurTD; ?>
       <td class="tg-0s10"><?php if(!empty($articles[$principal]->getHeureVoile())) { echo $articles[$principal]->getHeureVoile(); } else { echo "X";}?></td>
-      <td class="tg-0s10"><?php if(!empty($articles[$principal]->getCertificat())) { echo $articles[$principal]->getCertificat(); } else { echo "X";}?></td>
+      <td class="tg-0s10"><?php if(!empty($articles[$principal]->getCertificat())) { echo "OUI"; } else { echo "NON";}?></td>
     </tr>
 
     <?php

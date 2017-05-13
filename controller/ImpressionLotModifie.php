@@ -16,13 +16,14 @@
             if (seconds_left <= 0)
             {
               //  document.getElementById('timer_div').innerHTML = "You are Ready!";
-              window.setTimeout("location=('../views/imprimerLots.html');",0);
+              window.setTimeout("location=('../views/imprimerLots.php');",0);
                clearInterval(interval);
             }
           }, 1000);
        </script>
 
     <?php
+    return false;
     } else {
       $numeroLot = $lots->getId();
       $vendeur = $lots->getVendeur();
@@ -30,13 +31,17 @@
       $numeroLot = $lots->getId();
       $numeroCoupon = $lots->getCouponNoIncr();
       $articles = Article::getArticlesByLot($numeroLot);
-      $nombreArticles = sizeof($articles);
+      if(!Lot::lotPossedeProduits($numeroLot)){
+        $nombreArticles = 0;
+      } else {
+        $nombreArticles = sizeof($articles);
+      }
       $vendeur = $lots->getVendeur();
       $mailVendeur = $vendeur->getEmail();
       $nom = $vendeur->getNom();
       $prenom = $vendeur->getPrenom();
       $tel = $vendeur->getTel();
-      if(empty($articles[0])){
+      if(empty($articles[0]) || $nombreArticles == 0){
         ?>
           <div id="timer_div">Pas d'article dans ce lot.</div>
           <script>
@@ -47,7 +52,7 @@
                 if (seconds_left <= 0)
                 {
                   //  document.getElementById('timer_div').innerHTML = "You are Ready!";
-                  window.setTimeout("location=('../views/imprimerLots.html');",0);
+                  window.setTimeout("location=('../views/imprimerLots.php');",0);
                    clearInterval(interval);
                 }
               }, 1000);
@@ -56,14 +61,8 @@
         <?php
       }
       $principal = 0;
-      for ($k = 1; $k < $nombreArticles; $k++) {
-        if(!empty($articles[$k]->getTypeArticle())) {
-           $type = $articles[$k]->getLibelleTypeArticle();
-        } else if(!empty($articles[$k]->getSurfaceVoile())){
-           $type = "Voile";
-        } else {
-           $type = "";
-        }
+      for ($k = 0; $k < $nombreArticles; $k++) {
+        $type = $articles[$k]->getLibelleTypeArticle();
         if(strcmp($type, "Voile") == 0){
           $principal = $k;
         }

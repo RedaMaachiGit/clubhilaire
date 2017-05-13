@@ -107,5 +107,18 @@ class Coupon
 	  $db->close();
 	 }
 
+   public static function getCoupon() {
+     $query = "SELECT * FROM coupons";
+     $db = new DB();
+     $db->connect();
+     $conn = $db->getConnectDb();
+     $conn->query("SET NAMES UTF8");
+     $res = $conn->query($query) or die(mysqli_error($conn));
+     $row = $res->fetch_row();
+     $coupon = new Coupon((int)$row[1],(int)$row[2],(int)$row[4],(int)$row[3]);
+     $db->close();
+     return $coupon;
+    }
+
 }
 ?>

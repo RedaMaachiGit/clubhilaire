@@ -1,5 +1,6 @@
 <?php
 require_once('db.php');
+require_once('lot.php');
 
 
 
@@ -220,6 +221,50 @@ class Caisse
 	  $db->close();
 	 }
 
+    public static function getOuvertureCaisse($journee){
+      $query = "SELECT count(*) FROM caisse WHERE `typeTransaction`=\"Ouverture caisse\" AND journee='$journee'";
+      $query1 = "SELECT count(*) FROM caisse WHERE `typeTransaction`=\"Fermeture caisse\" AND journee='$journee'";
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      $res = mysqli_query($conn,$query);
+      $res1 = mysqli_query($conn,$query1);
+      $lotsString = 0;
+      while($row = mysqli_fetch_array($res)){
+        $nombreOuverture = (int)$row[0];
+      }
+      while($row1 = mysqli_fetch_array($res1)){
+        $nombreFermeture = (int)$row1[0];
+      }
+      if($nombreOuverture > $nombreFermeture){
+        return 0; // Refuser l'ouverture
+      } else {
+        return 1; // Accepter
+      }
+    }
+
+    public static function getFermetureCaisse($journee){
+      $query = "SELECT count(*) FROM caisse WHERE `typeTransaction`=\"Ouverture caisse\" AND journee='$journee'";
+      $query1 = "SELECT count(*) FROM caisse WHERE `typeTransaction`=\"Fermeture caisse\" AND journee='$journee'";
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      $res = mysqli_query($conn,$query);
+      $res1 = mysqli_query($conn,$query1);
+      $lotsString = 0;
+      while($row = mysqli_fetch_array($res)){
+        $nombreOuverture = (int)$row[0];
+      }
+      while($row1 = mysqli_fetch_array($res1)){
+        $nombreFermeture = (int)$row1[0];
+      }
+      if($nombreOuverture == 0 || $nombreOuverture == $nombreFermeture){
+        return 0; // Refuser la fermeture
+      } else {
+        return 1; // Accepter
+      }
+    }
+
     public function ouvrirFermerCaisse(){
       $journee = $this->getJournee();
       $fondCaisse = $this->getFonDeCaisse();
@@ -237,7 +282,7 @@ class Caisse
       $db = new DB();
       $db->connect();
       $conn = $db->getConnectDb();
-	  $conn->query("SET NAMES UTF8");
+	    $conn->query("SET NAMES UTF8");
       $query = "INSERT INTO caisse (journee,fondCaisse,typePaiement,montant,beneficiaire,nomEmetteur,prenomEmetteur,telephoneEmetteur,typeTransaction, numero,commentaire)
       VALUES ('".$journee."','".$fondCaisse."','".$typePaiement."','".$montant."','".$beneficiare."','".$nomEmetteur."','".$prenomEmetteur."','".$telephoneEmetteur."','".$typeTransaction."','".$numero."','".$commentaire."')";
 
@@ -254,14 +299,32 @@ class Caisse
 	  $conn->query("SET NAMES UTF8");
       $query = "INSERT INTO caisse (journee,fondCaisse,typePaiement,montant,beneficiaire,nomEmetteur,prenomEmetteur,telephoneEmetteur,typeTransaction, numero,commentaire)
       VALUES ('".$journee."','".$fondecaisse."','".$typePaiement."','".$montant."','".$beneficiare."','".$nomEmetteur."','".$prenomEmetteur."','".$telephoneEmetteur."','".$typeTransaction."','".$numero."','".$commentaire."')";
-		
+
       $res = $conn->query($query) or die(mysqli_error($conn));
       $idCaisse = $conn->insert_id;
 
-      for($i=0;$i<$nombreDeLots;$i++){
-        $numeroDeLot = $lots[$i]->getId();
-        $numeroDeCoupon = $lots[$i]->getCouponIncr();
-        $lots[$i]->updateCoupon($numeroDeCoupon);
+      foreach ($lots as $lot) {
+        $numeroDeLot = $lot->getId();
+        if($lot->getCouponNoIncr() == -1){
+          $numeroDeCoupon = $lot->getCouponIncr();
+        } else {
+          $numeroDeCoupon = $lot->getCouponNoIncr();
+        }
+        $lot->updateCoupon($numeroDeCoupon);
+        $queryForeign = "INSERT INTO paiementLot (idCaisse,idLot,numCoupon) VALUES ('".$idCaisse."','".$numeroDeLot."','".$numeroDeCoupon."')";
+        $resForeign = $conn->query($queryForeign) or die(mysqli_error($conn));
+      }
+      $db->close();
+    }
+
+    public function setMultipleLots($arrayOfLots){
+      $this->getId();
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      foreach ($arrayOfLots as $lot) {
+        $numeroDeLot = $lot->getId();
+        $numeroDeCoupon = $lot->getCouponNoIncr();
         $queryForeign = "INSERT INTO paiementLot (idCaisse,idLot,numCoupon) VALUES ('".$idCaisse."','".$numeroDeLot."','".$numeroDeCoupon."')";
         $resForeign = $conn->query($queryForeign) or die(mysqli_error($conn));
       }
@@ -309,11 +372,11 @@ class Caisse
      $conn = $db->getConnectDb();
      $res=mysqli_query($conn,$query);
      $row = $res->fetch_row();
-     if(!empty($row)){
-      return (int)$row[2];
- 	  }else{
- 		  return null;
- 	  }
+      if(!empty($row)){
+        return (int)$row[2];
+      }else{
+        return null;
+      }
    }
 
    public static function getNumberOfOperations(){
@@ -367,19 +430,72 @@ class Caisse
       $db->close();
       return $montantTotal;
     }
-
-    public static function getResultat(){
-      $query = "SELECT * FROM caisse WHERE typeTransaction = \"Paiement de frais de dépôt\"";
-      $query1 = "SELECT * FROM caisse WHERE typeTransaction = \"Vente de lots\"";
+    public static function getMontantPayeParTypePaiementCumul($typeDePaiement){
+      $query = "SELECT * FROM caisse WHERE typePaiement=\"" .$typeDePaiement."\"";
       $db = new DB();
       $db->connect();
       $conn = $db->getConnectDb();
       $res=mysqli_query($conn,$query);
+      $i=0;
+      $montantTotal = 0;
+      $paiements = array();
+      while($row = mysqli_fetch_array($res)){
+      $i++;
+      if((String)$row['beneficiaire']==="Caisse Club Hilaire"){
+        $montantTotal = $montantTotal + (int)$row['montant'];
+      } else {
+        $montantTotal = $montantTotal - (int)$row['montant'];
+      }
+
+      }
+      $db->close();
+      return $montantTotal;
+    }
+    public static function getMontantPayeParTypePaiementDebitCredit($typeDePaiement){
+      $query = "SELECT * FROM caisse WHERE typePaiement=\"" .$typeDePaiement."\"";
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      $res=mysqli_query($conn,$query);
+      $i=0;
+      $montantTotalPos = 0;
+      $montantTotalNeg = 0;
+      $paiements = array();
+      while($row = mysqli_fetch_array($res)){
+      $i++;
+      if((String)$row['beneficiaire']==="Caisse Club Hilaire"){
+        $montantTotalPos = $montantTotalPos + (int)$row['montant'];
+      } else {
+        $montantTotalNeg = $montantTotalNeg + (int)$row['montant'];
+      }
+
+      }
+      $db->close();
+      return [$montantTotalPos, $montantTotalNeg];
+    }
+
+    public static function getResultat(){
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      $conn->query("SET NAMES UTF8");
+      // $fraisDeDepot = $conn->real_escape_string("Paiement de frais de dépôt");
+      $query = "SELECT * FROM caisse WHERE typeTransaction =\"Paiement de frais de depot\"";
+      $query1 = "SELECT * FROM caisse WHERE typeTransaction = \"Vente de lot\"";
+      $query2 = "SELECT * FROM caisse WHERE typeTransaction = \"Ouverture caisse\"";
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      // $mysqli->query('SET NAMES utf8');
+      $res=mysqli_query($conn,$query);
       $res1=mysqli_query($conn,$query1);
+      $res2=mysqli_query($conn,$query2);
       $i=0;
       $j=0;
+      $k=0;
       $montantFraisDepot = 0;
       $montantVentes = 0;
+      $ouvertures = 0;
       while($row = mysqli_fetch_array($res)){
         $i++;
         $montantFraisDepot = $montantFraisDepot + (int)$row['montant'];
@@ -388,19 +504,31 @@ class Caisse
         $j++;
         $montantVentes = $montantVentes + (int)$row1['montant'];
       }
+      while($row2 = mysqli_fetch_array($res2)){
+        $k++;
+        $ouvertures = $ouvertures + (int)$row2['montant'];
+      }
       $db->close();
-      return $montantFraisDepot - $montantVentes;
+      return $montantFraisDepot + 0.1*$montantVentes;
     }
 
     public static function getNombreLotVendu(){
-      $query = "SELECT * FROM lot WHERE statut = \"Vendu\"";
+      $query = "SELECT * FROM lot WHERE (statut = \"Vendu\") OR (statut = \"Prepaye\") OR (statut = \"Paye remis\")";
+      $query1 = "SELECT DISTINCT(idLot) FROM paiementLot WHERE idLot IN (SELECT idLot FROM lot WHERE (statut = \"Vendu\") OR (statut = \"Prepaye\") OR (statut = \"Paye remis\"));";
       $db = new DB();
       $db->connect();
       $conn = $db->getConnectDb();
       $res=mysqli_query($conn,$query);
+      $res1=mysqli_query($conn,$query1);
       $rowCount = $res->num_rows;
+      $rowCount1 = $res1->num_rows;
       $db->close();
-      return $rowCount;
+      if($rowCount == $rowCount1){
+        return $rowCount;
+      } else {
+        return "Attention: nbre de lots vendu (".$rowCount.") différent du nbre de paiement enregistrés (".$rowCount1.")";
+      }
+
     }
 }
 

@@ -9,12 +9,13 @@
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="../ionicons-2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="../dist/css/skins/skin-blue.min.css">
+  <link rel="stylesheet" href="../jquery-ui-1.12.1/jquery-ui.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -81,22 +82,7 @@
 
     <!-- Main content -->
     <section class="content">
-      <!-- Form Element sizes -->
-      <div class="box box-success">
-        <div class="box-header with-border">
-          <h3 class="box-title">S'il s'agit d'un paiement pour un seul lot : veuillez saisir le numéro du lot</h3>
-        </div>
-        <form id="numeroLotForm" method="POST" action="../controller/controllerCalculFraisDepot.php" class="form-horizontal">
-          <div class="box-body">
-            <input class="form-control input-lg" name="numeroLotUnique"  type="text" id="numeroLotUnique" placeholder="Numéro lot">
-			<input class="form-control input-lg" name="formEnvoie" type="hidden" id="formEnvoie" value="unique">
-            <div class="box-footer">
-              <button type="submit" value="Submit" class="btn btn-info center-block">Payer</button>
-            </div>
-          </div>
-        </form>
-        <!-- /.box-body -->
-      </div>
+
 	  <!-- /.box -->
       <div class="box box-success">
         <div class="box-header with-border">
@@ -121,7 +107,7 @@
         <form id="numeroLotForm" method="POST" action="../controller/controllerCalculFraisDepot.php" class="form-horizontal">
           <div class="box-body">
       			<input class="form-control input-lg" name="formEnvoie" type="hidden" id="formEnvoie" value="multiple">
-            <input class="form-control input-lg" name="numeroLotMultiple"  id="numeroLotMultiple" type="text" placeholder="Email vendeur">
+            <input class="autocMail" name="numeroLotMultiple"  id="numeroLotMultiple" type="text" placeholder="Email vendeur">
             <div class="box-footer">
               <button type="submit" value="Submit" class="btn btn-info center-block">Payer</button>
             </div>
@@ -225,14 +211,20 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- REQUIRED JS SCRIPTS -->
-
 <!-- jQuery 2.2.3 -->
 <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="../jquery-ui-1.12.1/jquery-ui.js"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="../bootstrap/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../dist/js/app.min.js"></script>
+<script>
+$('.autocMail').autocomplete({
+       minLength: 2,
+       source: '../controller/automail.php'
+});
+$('.autocMail').addClass('form-control input-lg').removeClass('autocMail');
 
+</script>
 </body>
 </html>

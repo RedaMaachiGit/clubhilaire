@@ -16,13 +16,14 @@
             if (seconds_left <= 0)
             {
               //  document.getElementById('timer_div').innerHTML = "You are Ready!";
-              window.setTimeout("location=('../views/imprimerLots.html');",0);
+              window.setTimeout("location=('../views/imprimerLots.php');",0);
                clearInterval(interval);
             }
           }, 1000);
        </script>
 
     <?php
+      return false;
     } else {
       $numeroLot = $lots->getId();
       $vendeur = $lots->getVendeur();
@@ -30,13 +31,17 @@
       $numeroLot = $lots->getId();
       $numeroCoupon = $lots->getCouponNoIncr();
       $vendeur = $lots->getVendeur();
-      $mailVendeur = $vendeur->getEmail();
-      $nom = $vendeur->getNom();
-      $prenom = $vendeur->getPrenom();
-      $tel = $vendeur->getTel();
+      $mailVendeur = "";
+      $nom = "";
+      $prenom = "";
+      $tel = "";
       $articles = Article::getArticlesByLot($numeroLot);
-      $nombreArticles = sizeof($articles);
-      if(empty($articles[0])){
+      if(!Lot::lotPossedeProduits($numeroLot)){
+        $nombreArticles = 0;
+      } else {
+        $nombreArticles = sizeof($articles);
+      }
+      if(empty($articles[0]) || $nombreArticles == 0){
         ?>
           <div id="timer_div">Pas d'article dans ce lot.</div>
           <script>
@@ -46,17 +51,24 @@
 
                 if (seconds_left <= 0)
                 {
-                  //  document.getElementById('timer_div').innerHTML = "You are Ready!";
-                  window.setTimeout("location=('../views/imprimerLots.html');",0);
+                  window.setTimeout("location=('../views/imprimerLots.php');",0);
                    clearInterval(interval);
                 }
               }, 1000);
            </script>
 
         <?php
-      }
+      return false;
     }
-
+    }
+    if(Lot::ficheImprime($numeroLot) == 0){
+      return false;
+    } else {
+      Lot::updateFiche($numeroLot, "OUI");
+    }
+    if(Lot::afficheImprime($numeroLot) == 0){
+      $lots->updateStatut("En vente");
+    }
 
   ?>
   <body class="hold-transition skin-blue sidebar-mini" onload="window.print();">

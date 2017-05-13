@@ -9,9 +9,8 @@
 		public static function getParams(){
 			$params = Administration::getParams();
 			$marge = Administration::getMarge();
-			session_unset();
 			$_SESSION['params']= $params;
-			$_SESSION['marge']= $marge;
+			$_SESSION['marge']= $marge[0]['marge'];
 			header('location:../views/parametres.php');
 		}
 		public static function setParams(){
@@ -31,17 +30,17 @@
 				Administration::addFraisDepot($niveauDepotAdmin, $fraisDepotAdmin);
 			}
 			$params = Administration::getParams();
-			session_unset();
 			$_SESSION['params']= $params;
 			header('location:../views/parametres.php');
 		}
 
 		public static function setMarge(){
-			if(isset($_POST['marge']) && !empty($_POST['marge'])){
-				$marge = $_POST['marge'];
+			if(isset($_POST['newMarge']) && !empty($_POST['newMarge'])){
+				$marge = $_POST['newMarge'];
 				Administration::updateMarge($marge);
 			}
-			header('location:../views/parametres.php');
+			$_SESSION['marge']= $marge;
+			ControllerParametres::setParams();
 		}
 		
 		public static function setPrix(){
@@ -57,18 +56,9 @@
 
 
 	}
+
 	if(isset($_POST['formEnvoie'])){
-		if($_POST['formEnvoie'] == "marge"){
-			ControllerParametres::setMarge();
-		}
-	}
-	if(isset($_POST['formEnvoie'])){
-		if($_POST['formEnvoie'] == "prix"){
-			ControllerParametres::setPrix();
-		}
-	}
-	if(isset($_POST['formEnvoie'])){
-		ControllerParametres::setParams();
+		ControllerParametres::setMarge();
 	} else {
 		ControllerParametres::getParams();
 	}

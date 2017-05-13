@@ -7,12 +7,7 @@
   // print_r($_SESSION)
   $lots= unserialize(urldecode(($_SESSION['lots'])));
   $_SESSION['lots']=urlencode(serialize($lots));
-  //$nombreArticles = sizeof($articles);
   $nombreLots = sizeof($lots);
-  // $vendeur = $lot->getVendeur();
-  // $prixLot = $lot->getPrix();
-  // $numeroLot = $lot->getId();
-  // $numeroCoupon = $lot->getCouponNoIncr();
 ?>
 <!DOCTYPE html>
 <html>
@@ -26,9 +21,9 @@
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="../ionicons-2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="../dist/css/skins/skin-blue.min.css">
@@ -104,11 +99,15 @@
            continue;
          }
          $coupon = $lots[$j]->getCouponNoIncr();
+         $prix = $lots[$j]->getPrix();
+         $vendeur = $lots[$j]->getVendeur();
+         $mail = $vendeur->getEmail();
          $idLotActuel = $lots[$j]->getId()
       ?>
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">Ce lot numéro <?php echo $idLotActuel; ?> contient</h3>
+            <h3 class="box-title">Ce lot numéro <?php echo $idLotActuel; ?> contient. (Il ne s'agit pas du numéro de coupon)</h3>
+            <h2>Mail vendeur: <b><?php echo $mail; ?> </b> | Prix: <b><?php echo $prix; ?>€</b></h2>
           </div>
           <div class="box-header">
           <form id="validation" method="POST" action="../controller/controllerValidationLot.php" class="form-horizontal">
@@ -228,7 +227,7 @@
                              $commentaire = "X";
                           } ?>
 
-                         <td><a href="#" <?php echo "id=\"type$nombreTotalArticles\"";?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $type ?></a></td>
+                         <td><u><?php echo $type ?></u></td>
                          <td><a href="#" <?php echo "id=\"pTVMinimum$nombreTotalArticles\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $ptvmin ?></a></td>
                          <td><a href="#" <?php echo "id=\"PTVMaximum$nombreTotalArticles\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $ptvmax ?></a></td>
                          <td><a href="#" <?php echo "id=\"taille$nombreTotalArticles\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $taille ?></a></td>
@@ -331,8 +330,7 @@ $.fn.editable.defaults.mode = 'inline';
 //   dds[i].onclick = info(dds[i]);
 
 $(document).ready(function() {
-  console.log(2);
-  for (i = 0; i < 2; i++) {
+  for (i = 0; i < <?php echo $nombreTotalArticles ?>; i++) {
     $("#type" + i).editable();
     $("#pTVMinimum" + i).editable();
     $("#pTVMinimum" + i).editable();

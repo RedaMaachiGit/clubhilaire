@@ -25,15 +25,16 @@ class ControllerValidationLot {
 				}
 				if(isset($_POST['validation'.$i]) && !empty($_POST['validation'.$i])){
 						$lot = Lot::getLotById($_POST['idLot'.$i]);
-						$lot->updateStatut("En vente");
-						$numCoupon = $lot->getCouponIncr();
-						$lot->updateCoupon($numCoupon);
+						$vendeur = $lot->getVendeur();
+						$mail = $vendeur->getEmail();
+						$lot->updateStatut("En preparation");
+						// $numCoupon = $lot->getCouponIncr();
+						// $lot->updateCoupon($numCoupon);
 						// $lotvalide = array("numLot" => $_POST['coupon'.$i]);
 						array_push($lotsvalide, $_POST['idLot'.$i]);
 				} else {
 					$lot = Lot::getLotById($_POST['idLot'.$i]);
-					$lot->updateStatut("Non valide");
-					// $lotinvalide = array("numLot" => $_POST['coupon'.$i]);
+					$lot->updateStatut("Invalide");
 					array_push($lotsinvalide, $_POST['idLot'.$i]);
 				}
 			}
@@ -41,7 +42,7 @@ class ControllerValidationLot {
 			$_SESSION['lotsvalide'] = $lotsvalide;
 			$_SESSION['lotsinvalide'] = $lotsinvalide;
 		}
-		header('location:../views/lotsValides.php');
+		header('location:../views/lotsValides.php?mail='.$mail);
 	}
 }
 

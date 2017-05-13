@@ -1,15 +1,26 @@
-<!DOCTYPE html>
 <?php
+session_start();
 include_once('../model/vendeur.php');
 include_once('../model/lot.php');
 include_once('../model/article.php');
 include_once('../model/modele.php');
 include_once('../model/marque.php');
-if(isset($_GET['coupon'])){
+// print_r($_SESSION);
+$multiple = false;
+if(isset($_SESSION['lots'])){
+  $lots = unserialize(urldecode(($_SESSION['lots'])));
+  $multiple = true;
+} else if(isset($_GET['coupon'])){
   $lot = Lot::getLotByCoupon($_GET['coupon']);
   $articles = Article::getArticlesByLot($lot->getId());
+  $vendeur = $lot->getVendeur();
+  $nomVendeur = $vendeur->getNom();
+  $prenomVendeur = $vendeur->getPrenom();
+  $telVendeur = $vendeur->getTel();
+  $mailVendeur = $vendeur->getEMail();
 }
 ?>
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -20,9 +31,9 @@ if(isset($_GET['coupon'])){
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="../ionicons-2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="../dist/css/skins/skin-blue.min.css">
@@ -85,8 +96,8 @@ if(isset($_GET['coupon'])){
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <h1>
-          Vente de lot pour <?php echo $_GET['montant'] ?> €
-          <small>Vous êtes sur le point de vendre un lot</small>
+          Paiement d'un montant de: <?php echo $_GET['montant'] ?> €
+          <small>Vous avez reçu un paiement</small>
         </h1>
         <ol class="breadcrumb">
           <li><a href="../index.html"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -100,6 +111,53 @@ if(isset($_GET['coupon'])){
           <h4>Le paiement a bien été enregistré et vous avez récupéré <?php echo $_GET['montant'] ?> € tous moyens de paiement confondus !</h4>
           <p>Pensez bien mettre ce montant de la caisse.</p>
         </div>
+        <?php if(isset($_SESSION['correspondance'])){ ?>
+          <section class="invoice">
+            <!-- title row -->
+            <div class="row">
+              <div class="col-xs-12">
+                <h2 class="page-header">
+                  <i class="fa fa-globe"></i> Correspondance numero lot vendeur et numero coupon
+                  <small class="pull-right">Date: <?php echo date("j/m/Y"); ?></small>
+                </h2>
+              </div>
+              <!-- /.col -->
+            </div>
+            <div class="row">
+              <div class="col-xs-12 table-responsive">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Num Lot Vendeur</th>
+                      <th>Num Coupon</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                  <?php
+                    $tabCorrespondance = $_SESSION['correspondance'];
+                    for($i=0;$i<sizeof($tabCorrespondance);$i++){
+                  ?>
+                    <td><?php echo array_keys($tabCorrespondance)[$i]; ?></td>
+                    <td><?php echo array_values($tabCorrespondance)[$i]; ?></td>
+                  </tr>
+                  <?php
+                        $lot = Lot::getLotByCoupon(array_values($tabCorrespondance)[$i]);
+                        $vendeur = $lot->getVendeur();
+                        $typeVendeur = $vendeur->getTypeVendeur();
+                        if($typeVendeur === "professionnel"){
+                          $pro = true;
+                        }
+                      }
+                  ?>
+                </tbody>
+              </table>
+            </div>
+            <!-- /.col -->
+          </div>
+        </section>
+        <?php } ?>
+
 
         <?php if(isset($_GET['coupon'])){ ?>
           <!-- <div class="modal"> -->
@@ -122,8 +180,207 @@ if(isset($_GET['coupon'])){
               <!-- /.modal-content -->
             </div>
 
-            <!-- <div class="wrapper"> -->
-            <!-- Main content -->
+            <?php }
+              if($multiple){
+                foreach ($lots as $key => $lot){
+                  $articles = Article::getArticlesByLot($lot->getId());
+                  $vendeur = $lot->getVendeur();
+                  $nomVendeur = $vendeur->getNom();
+                  $prenomVendeur = $vendeur->getPrenom();
+                  $telVendeur = $vendeur->getTel();
+                  $mailVendeur = $vendeur->getEMail(); ?>
+                  <section class="invoice">
+                    <!-- title row -->
+                    <div class="row">
+                      <div class="col-xs-12">
+                        <h2 class="page-header">
+                          <i class="fa fa-globe"></i> Club Hilaire
+                          <small class="pull-right">Date: <?php echo date("j/m/Y"); ?></small>
+                        </h2>
+                      </div>
+                      <!-- /.col -->
+                    </div>
+                    <!-- info row -->
+                    <div class="row invoice-info">
+                      <div class="col-sm-4 invoice-col">
+                        From
+                        <address>
+                          <strong><?php echo $nomVendeur. " " .$prenomVendeur; ?></strong><br>
+                          Phone: <?php echo $telVendeur; ?><br>
+                          Email: <?php echo $mailVendeur; ?>
+                        </address>
+                      </div>
+                      <!-- /.col -->
+                      <div class="col-sm-4 invoice-col">
+                        To
+                        <address>
+                          <strong><?php echo $_GET['nom']." ".$_GET['prenom'] ?></strong><br>
+                          Phone: <?php echo $_GET['tel'] ?><br>
+                        </address>
+                      </div>
+                      <!-- /.col -->
+                      <div class="col-sm-4 invoice-col">
+                        <b>Paiement lot #<?php echo $_GET['coupon'] ?></b><br>
+                        <br>
+                        <b>Numero de coupon:</b> <?php echo $_GET['coupon'] ?><br>
+                        <b>Date de paiement:</b> <?php echo date("j/m/Y"); ?><br>
+                        <b>Compte:</b> Caisse du club Hil'Air
+                      </div>
+                      <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+
+                    <!-- Table row -->
+                    <div class="row">
+                      <div class="col-xs-12 table-responsive">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th>Quantité</th>
+                              <th>Produit</th>
+                              <th>Marque / Modele</th>
+                              <th>Commentaire</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <?php
+                            $nombreArticles = sizeof($articles);
+                            for ($i = 0; $i < $nombreArticles; $i++) {
+                              if(!empty($articles[$i]->getLibelleTypeArticle())) {
+                                $type = $articles[$i]->getLibelleTypeArticle();
+                              } else {
+                                $type = "";
+                              }
+                              if(!empty($articles[$i]->getPtvMin())) {
+                                $ptvmin = $articles[$i]->getPtvMin();
+                              } else {
+                                $ptvmin = "";
+                              }
+                              if(!empty($articles[$i]->getPtvMax())) {
+                                $ptvmax = $articles[$i]->getPtvMax();
+                              } else {
+                                $ptvmax = "";
+                              }
+                              if(!empty($articles[$i]->getTaille())) {
+                                $taille = $articles[$i]->getTaille();
+                              } else {
+                                $taille = "";
+                              }
+                              if(!empty($articles[$i]->getAnnee())) {
+                                $annee = $articles[$i]->getAnnee();
+                              } else {
+                                $annee = "";
+                              }
+                              if(!empty($articles[$i]->getSurfaceVoile())) {
+                                $surfaceVoile = $articles[$i]->getSurfaceVoile();
+                              } else {
+                                $surfaceVoile = "";
+                              }
+                              if(!empty($articles[$i]->getCouleurVoile())) {
+                                $couleurVoile = $articles[$i]->getCouleurVoile();
+                              } else {
+                                $couleurVoile = "";
+                              }
+                              if(!empty($articles[$i]->getHeureVoile())) {
+                                $heureVoile = $articles[$i]->getHeureVoile();
+                              } else {
+                                $heureVoile = "";
+                              }
+                              if(!empty($articles[$i]->getCertificat())) {
+                                $certificat = $articles[$i]->getCertificat();
+                              } else {
+                                $certificat = "";
+                              }
+                              if(!empty($articles[$i]->getTypeProtectionSelette())) {
+                                $typeProtectionSelette = $articles[$i]->getTypeProtectionSelette();
+                              } else {
+                                $typeProtectionSelette = "";
+                              }
+                              if(!empty($articles[$i]->getTypeAccessoire())) {
+                                $typeAccessoire = $articles[$i]->getTypeAccessoire();
+                              } else {
+                                $typeAccessoire = "";
+                              }
+                              if(!empty($articles[$i]->getMarque()->getLibelle())) {
+                                $marque = $articles[$i]->getMarque()->getLibelle();
+                              } else {
+                                $marque = "";
+                              }
+                              if(!empty($articles[$i]->getModele()->getLibelle())) {
+                                $modele = $articles[$i]->getModele()->getLibelle();
+                              } else {
+                                $modele = "";
+                              }
+                              if(!empty($articles[$i]->getHomologation())) {
+                                $homologation = $articles[$i]->getHomologation();
+                              } else {
+                                $homologation = "";
+                              }
+                              if(!empty($articles[$i]->getCommentaire())) {
+                                $commentaire = $articles[$i]->getCommentaire();
+                              } else {
+                                $commentaire = "";
+                              } ?>
+                              <tr>
+                                <td>1</td>
+                                <td><?php echo $type; ?></td>
+                                <td><?php echo $marque." / ".$modele; ?></td>
+                                <td><?php echo $commentaire; ?></td>
+                              </tr>
+                              <?php } ?>
+                            </tbody>
+                          </table>
+                        </div>
+                        <!-- /.col -->
+                      </div>
+                      <!-- /.row -->
+
+                      <div class="row">
+                        <!-- accepted payments column -->
+                        <div class="col-xs-6">
+                          <p class="lead">Méthodes de paiement:</p>
+
+                          <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                            Ceci est une preuve de paiement délivrée par le Club Hil'aie dans le cadre de la coup Icare.
+                          </p>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-xs-6">
+                          <p class="lead">Sommes payée</p>
+
+                          <div class="table-responsive">
+                            <table class="table">
+                              <tr>
+                                <th style="width:50%">Total:</th>
+                                <td><?php echo $lot->getPrix(); ?>€</td>
+                              </tr>
+                              <tr>
+                                <th>Frais de port:</th>
+                                <td>0€</td>
+                              </tr>
+                              <tr>
+                                <th>Total:</th>
+                                <td><?php echo $lot->getPrix() ?>€</td>
+                              </tr>
+                            </table>
+                          </div>
+                        </div>
+                        <!-- /.col -->
+                      </div>
+                      <!-- /.row -->
+
+                      <!-- /.content -->
+                      <!-- </div> -->
+                      <!-- /.content -->
+                      <div class="row no-print">
+                        <div class="col-xs-12">
+                          <a onClick="window.print()" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
+                        </div>
+                      </div>
+                    </section>
+        <?php }
+                }
+                if(isset($_GET['tel']) && isset($_GET['prenom']) && isset($_GET['nom']) && !$multiple){ ?>
             <section class="invoice">
               <!-- title row -->
               <div class="row">
@@ -140,11 +397,9 @@ if(isset($_GET['coupon'])){
                 <div class="col-sm-4 invoice-col">
                   From
                   <address>
-                    <strong>Club Hilaire, Inc.</strong><br>
-                    14 Chemin du Funiculaire<br>
-                    38660 Saint-Hilaire, France<br>
-                    Phone: (33) 123-5432<br>
-                    Email: info@clubhilaire.com
+                    <strong><?php echo $nomVendeur. " " .$prenomVendeur; ?></strong><br>
+                    Phone: <?php echo $telVendeur; ?><br>
+                    Email: <?php echo $mailVendeur; ?>
                   </address>
                 </div>
                 <!-- /.col -->
@@ -157,7 +412,7 @@ if(isset($_GET['coupon'])){
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
-                  <b>Facture #<?php echo $_GET['coupon'] ?></b><br>
+                  <b>Paiement lot #<?php echo $_GET['coupon'] ?></b><br>
                   <br>
                   <b>Numero de coupon:</b> <?php echo $_GET['coupon'] ?><br>
                   <b>Date de paiement:</b> <?php echo date("j/m/Y"); ?><br>
@@ -177,17 +432,14 @@ if(isset($_GET['coupon'])){
                         <th>Produit</th>
                         <th>Marque / Modele</th>
                         <th>Commentaire</th>
-                        <th>Total</th>
                       </tr>
                     </thead>
                     <tbody>
                       <?php
                       $nombreArticles = sizeof($articles);
                       for ($i = 0; $i < $nombreArticles; $i++) {
-                        if(!empty($articles[$i]->getTypeArticle())) {
+                        if(!empty($articles[$i]->getLibelleTypeArticle())) {
                           $type = $articles[$i]->getLibelleTypeArticle();
-                        } else if(!empty($articles[$i]->getSurfaceVoile())){
-                          $type = "Voile";
                         } else {
                           $type = "";
                         }
@@ -266,7 +518,6 @@ if(isset($_GET['coupon'])){
                           <td><?php echo $type; ?></td>
                           <td><?php echo $marque." / ".$modele; ?></td>
                           <td><?php echo $commentaire; ?></td>
-                          <td><?php echo ($lot->getPrix())/sizeof($articles) ?>€</td>
                         </tr>
                         <?php } ?>
                       </tbody>
@@ -280,12 +531,9 @@ if(isset($_GET['coupon'])){
                   <!-- accepted payments column -->
                   <div class="col-xs-6">
                     <p class="lead">Méthodes de paiement:</p>
-                    <img src="../../dist/img/credit/visa.png" alt="Visa">
-                    <img src="../../dist/img/credit/mastercard.png" alt="Mastercard">
-                    <img src="../../dist/img/credit/american-express.png" alt="American Express">
 
                     <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-                      Ceci est une facture délivrée par le Club Hil'aie dans le cadre de la coup Icare.
+                      Ceci est une preuve de paiement délivrée par le Club Hil'aie dans le cadre de la coup Icare.
                     </p>
                   </div>
                   <!-- /.col -->
@@ -296,11 +544,7 @@ if(isset($_GET['coupon'])){
                       <table class="table">
                         <tr>
                           <th style="width:50%">Total:</th>
-                          <td><?php echo $lot->getPrix() - (20 / 100) * $lot->getPrix() ?>€</td>
-                        </tr>
-                        <tr>
-                          <th>TVA (20%)</th>
-                          <td><?php echo (20 / 100) * $lot->getPrix(); ?>€</td>
+                          <td><?php echo $lot->getPrix(); ?>€</td>
                         </tr>
                         <tr>
                           <th>Frais de port:</th>
@@ -363,6 +607,13 @@ if(isset($_GET['coupon'])){
           <!-- AdminLTE App -->
           <script src="../dist/js/app.min.js"></script>
           <!-- AdminLTE for demo purposes -->
+          <?php if(isset($_SESSION['correspondance'])){ ?>
           <script src="../dist/js/demo.js"></script>
+          <?php if($pro){ ?>
+            <script type="text/javascript">
+              window.print();
+            </script>
+          <?php } ?>
+          <?php } ?>
         </body>
         </html>

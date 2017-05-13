@@ -14,16 +14,16 @@ class ControllerModificationLot {
 
 	public static function modificationArticle($i,$lot,$marque,$modele){
 		if(!isset($_POST['article'][$i]['inputsuppression'])){
-			$ptvMax ="";
-			$ptvMin ="";
-			$taille ="";
-			$surface ="";
-			$couleur ="";
-			$heuresDeVol ="";
-			$certificat ="";
-			$surface ="";
-			$typeProtectionSelette=$_POST['article'][$i]['inputprotectionSelette']; 
-			$annee= $_POST['article'][$i]['inputannee']; // A rajouter ?
+			$ptvMax = "";
+			$ptvMin = "";
+			$taille = "";
+			$surface = "";
+			$couleur = "";
+			$heuresDeVol = "";
+			$certificat = "";
+			$surface = "";
+			$typeProtectionSelette = "";
+			$annee = $_POST['article'][$i]['inputannee'];
 			$typeAccessoire="";
 			$typehomologation="";
 			$type = $_POST['article'][$i]['typedematos'];
@@ -44,8 +44,8 @@ class ControllerModificationLot {
 				$annee = $_POST['article'][$i]['inputannee'];
 				$typeProtectionSelette = $_POST['article'][$i]['inputprotectionSelette'];
 			} else if ($type == 2){
-				$Ptvmax = $_POST['article'][$i]['inputptvmax'];
-				$Ptvmin = $_POST['article'][$i]['inputptvmin'];
+				$ptvMax = $_POST['article'][$i]['inputptvmax'];
+				$ptvMin = $_POST['article'][$i]['inputptvmin'];
 				$annee = $_POST['article'][$i]['inputannee'];
 			} else if ($type == 3){
 				$typeAccessoire = $_POST['article'][$i]['inputtypeaccessoire'];
@@ -120,7 +120,9 @@ class ControllerModificationLot {
 	public static function modificationLot(){
 		$prixVente = $_POST['inputPrix'];
 		$lot= Lot::getLotById((int)$_POST['inputLot']);
+		$lot->updateStatut("En attente impression");
 		$idLot = $lot->getId();
+		Lot::updateFicheAffiche($idLot, "NON", "NON");
 		$coupon = $lot->getCouponNoIncr();
 		$vendeur = ControllerModificationLot::modifierVendeur($lot->getVendeur()->getId());
 		//echo "ID vendeur: " .$lot->getVendeur()->getId() . "<br>";
@@ -133,13 +135,12 @@ class ControllerModificationLot {
 		Article::deleteArticlesByIdLot($idLot);
 		for ($i =0; $i <= $numberOfProducts; $i++){		//Pour chaque article
 			if(isset($_POST['article'][$i]['typedematos']) && $_POST['article'][$i]['typedematos'] >= 0 &&  $_POST['article'][$i]['typedematos'] <=3 ){
-				// echo "Le fameux i: " .$i;
 				$marque = ControllerModificationLot::ajoutMarque($i);
 				$modele = ControllerModificationLot::ajoutModele($i,$marque);
 				ControllerModificationLot::modificationArticle($i,$lot,$marque,$modele);
 			}
 		}
-		header('location:../controller/impressionLotModifie.php?numeroLot=' .$coupon);
+		header('location:../views/imprimerLots.php?numeroCoupon=' .$coupon);
 	}
 
 
