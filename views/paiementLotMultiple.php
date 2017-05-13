@@ -140,7 +140,7 @@
                       <th>Couleur voile</th>
                       <th>Heure voles voile</th>
                       <th>Certificat revision voile</th>
-                      <th>Type protection selette</th>
+                      <th>Type protection sellette</th>
                       <th>Type accessoire</th>
                       <th>MarqueIndex</th>
                       <th>Modele</th>
@@ -184,7 +184,7 @@
                       <th>Couleur voile</th>
                       <th>Heure voles voile</th>
                       <th>Certificat revision voile</th>
-                      <th>Type protection selette</th>
+                      <th>Type protection sellette</th>
                       <th>Type accessoire</th>
                       <th>MarqueIndex</th>
                       <th>Modele</th>
@@ -465,7 +465,7 @@ var handleTypeChange = function(e) {
     var commentairegroup = document.getElementById("paiement[" + paiementIndex + "].commentaireGroup");
     commentairegroup.style.display = "none";
   }
-  else if ( e.value == '1') // Selette
+  else if ( e.value == '1') // sellette
   {
     console.log('TRACE cheque');
     console.log(paiementIndex);

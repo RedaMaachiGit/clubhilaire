@@ -42,6 +42,16 @@
 			$_SESSION['marge']= $marge;
 			ControllerParametres::setParams();
 		}
+		
+		public static function setPrix(){
+			if(isset($_POST['prix']) && !empty($_POST['prix'])){
+				echo 'ici';
+				$prix = $_POST['prix'];
+				echo $prix;
+				Administration::updatePrix($prix);
+			}
+			header('location:../views/parametres.php');
+		}
 
 
 

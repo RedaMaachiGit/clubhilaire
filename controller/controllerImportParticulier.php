@@ -40,6 +40,9 @@ class ControllerImportParticulier {
 			
 				$numPre = $objPHPExcel->getActiveSheet()->getCell("H".$ligne);
 				$prix =  htmlspecialchars($objPHPExcel->getActiveSheet()->getCell("BE".$ligne));
+				if((int)$prix%10!=0 or (int)$prix < (int)Administration::getPrix()){
+					header('location:../views/ajoutFichierNonEffectue.php');
+				}
 				$lot = new Lot(1,"pas de numero",$prix,$vendeur);
 				$lot->savePreInscription();
 				$lot->updateStatut("En preInscription");
@@ -62,11 +65,11 @@ class ControllerImportParticulier {
 					$marqueArticle = ControllerImportParticulier::ajoutMarque($marque);
 					$modeleArticle = ControllerImportParticulier::ajoutModele($marqueArticle,$modele,$categorie);
 					$article = new Article($typeMatos,$lot,$marqueArticle,$modeleArticle,$ptvmin,$ptvmax,$taille,$taille,$couleur,$nbHeureVole,
-					$certificat,"","",$annee,"",$homologation);
+					$certificat,"","",$annee,$commentaire,$homologation);
 					$article->save();
 				}
 					
-				//ajout de selette si présent
+				//ajout de sellette si présent
 				if($objPHPExcel->getActiveSheet()->getCell("AB".$ligne)!=""){
 					$typeMatos=1;
 					$categorie=  htmlspecialchars($objPHPExcel->getActiveSheet()->getCell("AB".$ligne));
@@ -78,7 +81,7 @@ class ControllerImportParticulier {
 					$marqueArticle = ControllerImportParticulier::ajoutMarque($marque);
 					$modeleArticle = ControllerImportParticulier::ajoutModele($marqueArticle,$modele,$categorie);
 					$article = new Article($typeMatos,$lot,$marqueArticle,$modeleArticle,$ptvmin,$ptvmax,$taille,$taille,$couleur,$nbHeureVole,
-					$certificat,"","",$annee,"",$homologation);
+					$certificat,"","",$annee,$commentaire,$homologation);
 					$article->save();
 				}
 				//ajout du secour si présent
@@ -94,7 +97,7 @@ class ControllerImportParticulier {
 					$marqueArticle = ControllerImportParticulier::ajoutMarque($marque);
 					$modeleArticle = ControllerImportParticulier::ajoutModele($marqueArticle,$modele,$categorie);
 					$article = new Article($typeMatos,$lot,$marqueArticle,$modeleArticle,$ptvmin,$ptvmax,$taille,$taille,$couleur,$nbHeureVole,
-					$certificat,"","",$annee,"",$homologation);
+					$certificat,"","",$annee,$commentaire,$homologation);
 					$article->save();
 				}
 				//ajout du Vario ou GPS
@@ -107,7 +110,7 @@ class ControllerImportParticulier {
 					$marqueArticle = ControllerImportEcole::ajoutMarque($marque);
 					$modeleArticle = ControllerImportEcole::ajoutModele($marqueArticle,$modele,$categorie);
 					$article = new Article($typeMatos,$lot,$marqueArticle,$modeleArticle,$ptvmin,$ptvmax,$taille,$taille,$couleur,$nbHeureVole,
-					$certificat,"","",$annee,"",$homologation);
+					$certificat,"","",$annee,$commentaire,$homologation);
 					$article->save();
 				}
 				//ajout radio
@@ -120,7 +123,7 @@ class ControllerImportParticulier {
 					$marqueArticle = ControllerImportParticulier::ajoutMarque($marque);
 					$modeleArticle = ControllerImportParticulier::ajoutModele($marqueArticle,$modele,$categorie);
 					$article = new Article($typeMatos,$lot,$marqueArticle,$modeleArticle,$ptvmin,$ptvmax,$taille,$taille,$couleur,$nbHeureVole,
-					$certificat,"","",$annee,"",$homologation);
+					$certificat,"","",$annee,$commentaire,$homologation);
 					$article->save();
 				}
 				//ajout accessoire
@@ -134,7 +137,7 @@ class ControllerImportParticulier {
 					$marqueArticle = ControllerImportParticulier::ajoutMarque($marque);
 					$modeleArticle = ControllerImportParticulier::ajoutModele($marqueArticle,$modele,$categorie);
 					$article = new Article($typeMatos,$lot,$marqueArticle,$modeleArticle,$ptvmin,$ptvmax,$taille,$taille,$couleur,$nbHeureVole,
-					$certificat,"","",$annee,"",$homologation);
+					$certificat,"","",$annee,$commentaire,$homologation);
 					$article->save();
 				}			
 			}

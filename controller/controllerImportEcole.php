@@ -40,6 +40,9 @@ class ControllerImportEcole {
 		$colonne = "B";
 		while ($objPHPExcel->getActiveSheet()->getCell($colonne.$ligne)!="") {
 			$prix = $objPHPExcel->getActiveSheet()->getCell("B".$ligne);
+			if($prix%10!=0  or $prix < (int)Administration::getPrix()){
+					header('location:../views/ajoutFichierNonEffectue.php');
+				}
 			$numeroLotVendeur = $objPHPExcel->getActiveSheet()->getCell("A".$ligne);
 			$numeroLotVendeur = $pieces = explode(" ", $numeroLotVendeur);
 			$lot = new Lot(1,$numeroLotVendeur[1],$prix,$vendeur);
@@ -52,7 +55,7 @@ class ControllerImportEcole {
 				$typeMatos = htmlspecialchars($objPHPExcel->getActiveSheet()->getCell($colonne.$ligne));
 				if(strcmp($typeMatos,"voile")==0){
 					$typeMatos=0;
-				}else if(strcmp($typeMatos,"selette")==0){
+				}else if(strcmp($typeMatos,"sellette")==0){
 					$typeMatos=1;
 				}else if(strcmp($typeMatos,"accessoire")==0){
 					$typeMatos=3;
@@ -90,7 +93,7 @@ class ControllerImportEcole {
 				$marqueArticle = ControllerImportEcole::ajoutMarque($marque);
 				$modeleArticle = ControllerImportEcole::ajoutModele($marqueArticle,$modele,$categorie);
 				$article = new Article($typeMatos,$lot,$marqueArticle,$modeleArticle,$ptvmin,$ptvmax,$taille,$surface,$couleur,$nbHeureVole,
-				$certificat,"","",$annee,"",$homologation);
+				$certificat,"","",$annee,$commentaire,$homologation);
 				$article->save();
 			}
 			$colonne = "B";

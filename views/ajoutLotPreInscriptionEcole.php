@@ -135,7 +135,7 @@
                       <th>Couleur voile</th>
                       <th>Heure voles voile</th>
                       <th>Certificat revision voile</th>
-                      <th>Type protection selette</th>
+                      <th>Type protection sellette</th>
                       <th>Type accessoire</th>
                       <th>MarqueIndex</th>
                       <th>Modele</th>
@@ -196,10 +196,10 @@
                           } else {
                              $certificat = "X";
                           }
-                          if(!empty($articles[$i]->getTypeProtectionSelette())) {
-                             $typeProtectionSelette = $articles[$i]->getTypeProtectionSelette();
+                          if(!empty($articles[$i]->getTypeProtectionsellette())) {
+                             $typeProtectionsellette = $articles[$i]->getTypeProtectionsellette();
                           } else {
-                             $typeProtectionSelette = "X";
+                             $typeProtectionsellette = "X";
                           }
                           if(!empty($articles[$i]->getTypeAccessoire())) {
                              $typeAccessoire = $articles[$i]->getTypeAccessoire();
@@ -236,7 +236,7 @@
                          <td><a href="#" <?php echo "id=\"couleurVoile$nombreTotalArticles\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $couleurVoile ?></a></td>
                          <td><a href="#" <?php echo "id=\"heureVolesVoile$nombreTotalArticles\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $heureVoile ?></a></td>
                          <td><a href="#" <?php echo "id=\"certificatRevisionVoile$nombreTotalArticles\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $certificat ?></a></td>
-                         <td><a href="#" <?php echo "id=\"typeProtectionSelette$nombreTotalArticles\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $typeProtectionSelette ?></a></td>
+                         <td><a href="#" <?php echo "id=\"typeProtectionsellette$nombreTotalArticles\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $typeProtectionsellette ?></a></td>
                          <td><a href="#" <?php echo "id=\"typeAccessoire$nombreTotalArticles\""; ?> data-type="text" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $typeAccessoire ?></a></td>
                          <td><a href="#" <?php echo "id=\"idMarque$nombreTotalArticles\""; ?>  data-source="../controller/allMarques.php" data-type="select" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $marque ?></a></td>
                          <td><a href="#" <?php echo "id=\"idModele$nombreTotalArticles\""; ?>  data-source="../controller/allModeles.php" data-type="select" data-pk="<?php echo $idArticle ?>" data-url="/../controller/changeBeforeValidation.php" data-title=""><?php echo $modele ?></a></td>
@@ -260,7 +260,7 @@
                       <th>Couleur voile</th>
                       <th>Heure voles voile</th>
                       <th>Certificat revision voile</th>
-                      <th>Type protection selette</th>
+                      <th>Type protection sellette</th>
                       <th>Type accessoire</th>
                       <th>MarqueIndex</th>
                       <th>Modele</th>
@@ -341,7 +341,7 @@ $(document).ready(function() {
     $("#couleurVoile" + i).editable();
     $("#heureVolesVoile" + i).editable();
     $("#certificatRevisionVoile" + i).editable();
-    $("#typeProtectionSelette" + i).editable();
+    $("#typeProtectionsellette" + i).editable();
     $("#typeAccessoire" + i).editable();
     $("#idMarque" + i).editable();
     $("#idModele" + i).editable();

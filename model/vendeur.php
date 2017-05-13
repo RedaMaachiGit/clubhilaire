@@ -13,7 +13,8 @@ class Vendeur
   private $_type;
   private $_numPre;
   private $_cheque;
-   
+  private $_reduction;
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////CONSTRUCTEUR////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////// 
@@ -125,6 +126,17 @@ class Vendeur
 	 public function setCheque($cheque){
 		$this->_cheque = $cheque;
 	  }
+	  
+	//Getter reduction 
+     public function getReduction(){
+        return $this->_reduction;
+      }
+
+    //Setter reduction 
+     public function setReduction($reduction){
+        $this->_reduction = $reduction;
+      }
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////FunctionToDataBase//////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -192,6 +204,7 @@ class Vendeur
 	  $row = $res->fetch_row();
 	  $vendeur = new Vendeur((String)$row[1],(String)$row[2],(String)$row[3],(String)$row[4],(String)$row[5],(String)$row[6],(String)$row[7], (Int)$row[8]);
 	  $vendeur->setId((int)$row[0]);
+	  $vendeur->setReduction((int)$row[9]);
 	  return $vendeur;
 	 }
 	 
@@ -211,9 +224,10 @@ class Vendeur
 	  $db->close();
 	  $row = $res->fetch_row();
 	  if(!empty($row)){
-		$vendeur = new Vendeur((String)$row[1],(String)$row[2],(String)$row[3],(String)$row[4],(String)$row[5],(String)$row[6],(String)$row[7], (Int)$row[8]);
-		$vendeur->setId((int)$row[0]);
-		return $vendeur;
+		  $vendeur = new Vendeur((String)$row[1],(String)$row[2],(String)$row[3],(String)$row[4],(String)$row[5],(String)$row[6],(String)$row[7], (Int)$row[8]);
+		  $vendeur->setId((int)$row[0]);
+		  $vendeur->setReduction((int)$row[9]);
+		  return $vendeur;
 	  }
 	  else{
 		  return null;
@@ -236,6 +250,7 @@ class Vendeur
 	  $row = $res->fetch_row();
 	  $vendeur = new Vendeur((String)$row[1],(String)$row[2],(String)$row[3],(String)$row[4],(String)$row[5],(String)$row[6],(String)$row[7], (Int)$row[8]);
 	  $vendeur->setId((int)$row[0]);
+	  $vendeur->setReduction((int)$row[9]);
 	  return $vendeur;
 	}
 	
@@ -432,6 +447,40 @@ class Vendeur
 	  $res = $conn->query($query) or die(mysqli_error($conn));
 	  $db->close();
 	 }
+	 
+	 public Static function getVendeurProByMail($mail){
+      $type='professionnel';
+      $query = "SELECT * FROM vendeur WHERE mail = '$mail' and type='$type'";
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      $res = $conn->query($query) or die(mysqli_error($conn));
+      $db->close();
+      $row = $res->fetch_row();
+            if(!empty($row)){
+        $vendeur = new Vendeur((String)$row[1],(String)$row[2],(String)$row[3],(String)$row[4],(String)$row[5],(String)$row[6],(String)$row[7], (Int)$row[8]);
+        $vendeur->setId((int)$row[0]);
+        $vendeur->setReduction((int)$row[9]);
+        return $vendeur;
+      }
+      else{
+          return null;
+      }
+     }
+	 
+	 public function updateReduction($reduction) {
+      $id = $this->getId();
+      $query = "UPDATE vendeur SET reduction =".$reduction." WHERE idVendeur=".$id;
+      $db = new DB();
+      $db->connect();
+      $conn = $db->getConnectDb();
+      $conn->query("SET NAMES UTF8");
+      $res = $conn->query($query) or die(mysqli_error($conn));
+      $this->setReduction($reduction);
+      $db->close();
+     }
+
+
 	 
 }
 ?>

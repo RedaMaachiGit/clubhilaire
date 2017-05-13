@@ -201,7 +201,7 @@
                     <th>Couleur voile</th>
                     <th>Heure voles voile</th>
                     <th>Certificat revision voile</th>
-                    <th>Type protection selette</th>
+                    <th>Type protection sellette</th>
                     <th>Type accessoire</th>
                     <th>MarqueIndex</th>
                     <th>Modele</th>
@@ -221,7 +221,7 @@
                     <td><?php if(!empty($articles[$j]->getCouleurVoile())) { echo $articles[$j]->getCouleurVoile(); } else { echo "X";}?></td>
                     <td><?php if(!empty($articles[$j]->getHeureVoile())) { echo $articles[$j]->getHeureVoile(); } else { echo "X";}?></td>
                     <td><?php if(!empty($articles[$j]->getCertificat())) { echo $articles[$j]->getCertificat(); } else { echo "X";}?></td>
-                    <td><?php if(!empty($articles[$j]->getTypeProtectionSelette())) { echo $articles[$j]->getTypeProtectionSelette(); } else { echo "X";}?></td>
+                    <td><?php if(!empty($articles[$j]->getTypeProtectionsellette())) { echo $articles[$j]->getTypeProtectionsellette(); } else { echo "X";}?></td>
                     <td><?php if(!empty($articles[$j]->getTypeAccessoire())) { echo $articles[$j]->getTypeAccessoire(); } else { echo "X";}?></td>
                     <td><?php if(!empty($articles[$j]->getMarque()->getLibelle())) { echo $articles[$j]->getMarque()->getLibelle(); } else { echo "X";}?></td>
                     <td><?php if(!empty($articles[$j]->getModele()->getLibelle())) { echo $articles[$j]->getModele()->getLibelle(); } else { echo "X";}?></td>
@@ -241,7 +241,7 @@
                     <th>Couleur voile</th>
                     <th>Heure voles voile</th>
                     <th>Certificat revision voile</th>
-                    <th>Type protection selette</th>
+                    <th>Type protection sellette</th>
                     <th>Type accessoire</th>
                     <th>MarqueIndex</th>
                     <th>Modele</th>

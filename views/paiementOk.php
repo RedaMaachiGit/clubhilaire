@@ -483,10 +483,10 @@ if(isset($_SESSION['lots'])){
                         } else {
                           $certificat = "";
                         }
-                        if(!empty($articles[$i]->getTypeProtectionSelette())) {
-                          $typeProtectionSelette = $articles[$i]->getTypeProtectionSelette();
+                        if(!empty($articles[$i]->getTypeProtectionsellette())) {
+                          $typeProtectionsellette = $articles[$i]->getTypeProtectionsellette();
                         } else {
-                          $typeProtectionSelette = "";
+                          $typeProtectionsellette = "";
                         }
                         if(!empty($articles[$i]->getTypeAccessoire())) {
                           $typeAccessoire = $articles[$i]->getTypeAccessoire();

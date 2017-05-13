@@ -46,6 +46,7 @@ class ControllerCalculFraisDepot {
 			header('location:../views/paiementFraisDepotError.html');
 		}else{
 			$idVendeur = $vendeur->getId();
+			$reduction = $vendeur->getReduction();
 			$lots = Lot::getLotEnPreparationByVendeur($idVendeur);
 			$totalFraisDepot = 0;
 			foreach ($lots as $lot) {

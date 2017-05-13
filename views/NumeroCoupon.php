@@ -225,7 +225,7 @@ var handleTypeChange = function(e) {
   {
     console.log('TRACE CB');
   }
-  else if ( e.value == '1') // Selette
+  else if ( e.value == '1') // sellette
   {
     console.log('TRACE cheque');
   }

@@ -1,4 +1,4 @@
-V<!DOCTYPE html>
+<!DOCTYPE html>
 <?php
   //echo("Numero lot: " . $_POST['numeroLot'] . "<br />\n"); //TRACE
 //  $connect = ConnexionDB(); // Je me connecte à la base de donnée
@@ -17,9 +17,9 @@ V<!DOCTYPE html>
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="../ionicons-2.0.1/css/ionicons.min.css">
-  <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="../dist/css/skins/skin-blue.min.css">
@@ -77,12 +77,12 @@ V<!DOCTYPE html>
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-         Erreur - Aucun lot correspondant
+        Prix non conforme
         <small></small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="../index.html"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="../nouveauLot.html">   Erreur - Aucun lot correspondant </a></li>
+        <li><a href="../nouveauLot.html">  Prix non conforme</a></li>
       </ol>
     </section>
 
@@ -95,14 +95,14 @@ V<!DOCTYPE html>
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span></button>
-              <h4 class="modal-title">  Erreur - Aucun lot correspondant </h4>
+              <h4 class="modal-title"> Prix non conforme</h4>
             </div>
             <div class="modal-body">
-              <p style="font-size:30px"> Erreur - Aucun lot correspondant </p>
+              <p style="font-size:30px"> Prix non conforme </p>
             </div>
             <div class="modal-footer">
               <!-- <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button> -->
-              <a class = "btn btn-primary" href = "../index.html" role = "button">Retourner à l'accueil</a>
+              <a class = "btn btn-primary" href = "../index.html" role = "button">Retour</a>
             </div>
           </div>
           <!-- /.modal-content -->

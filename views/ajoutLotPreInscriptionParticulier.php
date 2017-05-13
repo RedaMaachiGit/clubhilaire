@@ -174,7 +174,7 @@
 												<?php if($articles[$i]->getTypeArticle() == 0) { ?>
 
 														<option value="0" selected="selected">Voile</option>
-														<option value="1">Selette</option>
+														<option value="1">sellette</option>
 														<option value="2">Parachute de secours</option>
 														<option value="3">Accessoire</option>
 													</select>
@@ -261,7 +261,7 @@
 												<?php }
 												else if($articles[$i]->getTypeArticle() == 1) { ?>
 														<option value="0">Voile</option>
-														<option value="1" selected="selected">Selette</option>
+														<option value="1" selected="selected">sellette</option>
 														<option value="2">Parachute de secours</option>
 														<option value="3">Accessoire</option>
 													</select>
@@ -301,7 +301,7 @@
 												<?php }
 													else if($articles[$i]->getTypeArticle() == 2) { ?>
 														<option value="0">Voile</option>
-														<option value="1">Selette</option>
+														<option value="1">sellette</option>
 														<option value="2" selected="selected">Parachute de secours</option>
 														<option value="3">Accessoire</option>
 													</select>
@@ -346,7 +346,7 @@
 												<?php }
 												else if($articles[$i]->getTypeArticle() == 3) { ?>
 														<option value="0">Voile</option>
-														<option value="1">Selette</option>
+														<option value="1">sellette</option>
 														<option value="2">Parachute de secours</option>
 														<option value="3" selected="selected">Accessoire</option>
 													</select>
@@ -411,7 +411,7 @@
 	                      <label>Type d'article</label>
 	                      <select class="col-sm-5 form-control" id="inputtypedematos" name="typedematos" data-index='0' onchange="handleTypeChange(this)">
 	                        <option value="0">Voile</option>
-	                        <option value="1">Selette</option>
+	                        <option value="1">sellette</option>
 	                        <option value="2">Parachute de secours</option>
 	                        <option value="3">Accessoire</option>
 	                      </select>
@@ -630,9 +630,9 @@
 	    var typeaccessoiregroup = document.getElementById("article[" + articleIndex + "].typeaccessoiregroup");
 	    typeaccessoiregroup.style.display = "none";
 	  }
-	  else if ( e.value == '1') // Selette
+	  else if ( e.value == '1') // sellette
 	  {
-	    console.log('TRACE selette');
+	    console.log('TRACE sellette');
 	    var ptvmaxgroup = document.getElementById("article[" + articleIndex + "].ptvmaxgroup");
 	    ptvmaxgroup.style.display = "none";
 	    var ptvmingroup = document.getElementById("article[" + articleIndex + "].ptvmingroup");

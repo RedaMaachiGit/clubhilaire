@@ -129,7 +129,6 @@
                   </tr>
                   </thead>
                   <tbody>
-
                     <?php
                         for ($j = 0; $j < $nombreLots; $j++) {
                           $coupon = $lots[$j]->getCouponNoIncr();
